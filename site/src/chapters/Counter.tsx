@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { content } from "../content.ts";
 import { ChapterFrame } from "../components/ChapterFrame.tsx";
+import { useI18n } from "../lib/locale-context.ts";
 import { elapsedParts, fillTemplate } from "../lib/pure.ts";
 import type { ChapterProps } from "../types.ts";
 
 export function Counter({ onBack }: ChapterProps) {
+  const { t } = useI18n();
   const chapter = content.chapters.find((item) => item.id === "counter");
   const [now, setNow] = useState(() => new Date());
 
@@ -14,30 +16,30 @@ export function Counter({ onBack }: ChapterProps) {
   }, []);
 
   const parts = elapsedParts(content.startDate, now);
-  const sentence = fillTemplate(parts.future ? content.together.future : content.together.past, {
+  const sentence = fillTemplate(t(parts.future ? content.together.future : content.together.past), {
     days: parts.days,
     hours: parts.hours,
     minutes: parts.minutes,
     seconds: parts.seconds,
   });
   const cells = [
-    ["days", parts.days, "ngày"],
-    ["hours", parts.hours, "giờ"],
-    ["minutes", parts.minutes, "phút"],
-    ["seconds", parts.seconds, "giây"],
+    ["days", parts.days, t(content.ui.unitDays)],
+    ["hours", parts.hours, t(content.ui.unitHours)],
+    ["minutes", parts.minutes, t(content.ui.unitMinutes)],
+    ["seconds", parts.seconds, t(content.ui.unitSeconds)],
   ] as const;
 
   return (
     <ChapterFrame
-      kicker={chapter?.kicker ?? ""}
-      title={chapter?.title ?? ""}
-      lede={chapter?.lede ?? ""}
+      kicker={t(chapter?.kicker)}
+      title={t(chapter?.title)}
+      lede={t(chapter?.lede)}
       onBack={onBack}
     >
-      <div className="ticks" aria-hidden="true">
+      <div className="clock" aria-hidden="true">
         {cells.map(([key, value, label]) => (
-          <div key={key}>
-            <span className="tick">{value}</span>
+          <div key={key} className="tick-cell">
+            <span className="tick">{String(value).padStart(2, "0")}</span>
             <span>{label}</span>
           </div>
         ))}

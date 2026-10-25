@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { content } from "../content.ts";
+import { useI18n } from "../lib/locale-context.ts";
 import { Hearts } from "./Hearts.tsx";
 
 type FinaleProps = {
@@ -9,10 +10,13 @@ type FinaleProps = {
 };
 
 export function Finale({ saidYes, onYes, onBack }: FinaleProps) {
+  const { t } = useI18n();
   const stageRef = useRef<HTMLDivElement>(null);
   const noRef = useRef<HTMLButtonElement>(null);
   const lock = useRef(false);
   const [pos, setPos] = useState({ x: 24, y: 24 });
+  const [tease, setTease] = useState("");
+  const [teaseIndex, setTeaseIndex] = useState(0);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -23,8 +27,6 @@ export function Finale({ saidYes, onYes, onBack }: FinaleProps) {
       y: Math.max(8, stage.clientHeight - button.offsetHeight - 16),
     });
   }, []);
-  const [tease, setTease] = useState("");
-  const [teaseIndex, setTeaseIndex] = useState(0);
 
   function jump(clientX?: number, clientY?: number) {
     if (lock.current) return;
@@ -50,28 +52,27 @@ export function Finale({ saidYes, onYes, onBack }: FinaleProps) {
     }
     setPos({ x, y });
     const lines = content.finale.teases;
-    if (lines.length) {
-      setTease(lines[teaseIndex % lines.length] ?? "");
-      setTeaseIndex((index) => index + 1);
-    }
+    const line = lines[teaseIndex % lines.length];
+    if (line) setTease(t(line));
+    setTeaseIndex((index) => index + 1);
   }
 
   return (
     <section className="scene finale">
       <Hearts active={saidYes} />
       <button type="button" className="back" onClick={onBack}>
-        ← {content.ui.back}
+        ← {t(content.ui.back)}
       </button>
       {saidYes ? (
         <>
-          <h1>{content.finale.yesTitle}</h1>
-          <p className="lede">{content.finale.yesBody}</p>
+          <h1>{t(content.finale.yesTitle)}</h1>
+          <p className="lede">{t(content.finale.yesBody)}</p>
         </>
       ) : (
         <>
-          <h1>{content.finale.question}</h1>
+          <h1>{t(content.finale.question)}</h1>
           <button type="button" className="btn btn-gold yes-btn" onClick={onYes}>
-            {content.finale.yes}
+            {t(content.finale.yes)}
           </button>
           <div className="finale-stage" ref={stageRef}>
             <button
@@ -92,7 +93,7 @@ export function Finale({ saidYes, onYes, onBack }: FinaleProps) {
                 }
               }}
             >
-              {content.finale.no}
+              {t(content.finale.no)}
             </button>
           </div>
           <p className="hint" role="status">

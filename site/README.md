@@ -2,9 +2,11 @@
 
 Website sinh nhật, mobile-first. Mọi chữ và ảnh em thấy trên trang đều lấy từ [`content.json`](./content.json). Đổi nội dung là sửa file đó, không cần đụng code.
 
-Bản đang commit là **nội dung giả**: tên, biệt danh, ảnh gradient, nhạc tạo bằng code. Parker thay bằng đồ thật khi sẵn sàng.
+Bản đang commit là **nội dung giả**: tên gọi là **J**, biệt danh, ảnh gradient, nhạc tạo bằng code. Parker thay bằng đồ thật khi sẵn sàng.
 
-Mật khẩu giả để vào cổng: `bé yêu`.
+Trang có hai ngôn ngữ, tiếng Việt và tiếng Anh. Nút **VI / EN** ở góc trái nhớ lựa chọn trong `localStorage` (`lilj.locale.v1`).
+
+Mật khẩu giả để vào cổng: `bé yêu`. Mật khẩu chỉ có một chuỗi, không dịch.
 
 ## Chạy trên máy
 
@@ -46,13 +48,22 @@ Trang có `noindex` để đỡ bị Google nhặt. Gỡ thẻ đó trong `index
 
 File nằm ở `site/content.json`. Sau khi sửa, chạy lại `npm run dev` hoặc build. Các chuỗi giao diện (nút, gợi ý, thư) cũng nằm trong file này.
 
+Mọi câu người dùng đọc được viết thành một cặp:
+
+```json
+{ "vi": "Câu tiếng Việt", "en": "The English line" }
+```
+
+Cả hai ngôn ngữ đều bắt buộc, không để trống. `npm run build` sẽ báo nếu thiếu. Những khóa **không** dịch, vẫn là một chuỗi thường: `gate.password`, `startDate`, `music`, `id`, `src`, `pair`, `answer`, `candles`, `tone`, `author`, và ba tên `meta.herName`, `meta.constellationName`, `meta.monogram` (bản mẫu đang là `J`).
+
 | Khóa | Ý nghĩa |
 | --- | --- |
-| `meta.title` | Tên vũ trụ, hiện ở cổng và bầu trời. |
-| `meta.herName` | Tên gọi nhỏ, hiện phía trên bầu trời. |
-| `meta.constellationName` | Tên hiện giữa chòm sao sau khi mở đủ 7 chương. |
-| `meta.monogram` | Một chữ trên con dấu sáp. |
-| `gate.password` | Biệt danh đúng. So khớp không phân biệt hoa thường, gộp khoảng trắng. **Phải đúng dấu.** Đây là khoá tình cảm, không phải bảo mật: ai xem mã nguồn sẽ thấy. |
+| `meta.title` | Tên vũ trụ, hiện ở cổng và bầu trời. Cặp `{vi, en}`. |
+| `meta.description` | Mô tả trang, đổi theo ngôn ngữ. |
+| `meta.herName` | Tên gọi nhỏ, hiện phía trên bầu trời. Một chuỗi. Bản mẫu: `J`. |
+| `meta.constellationName` | Tên hiện giữa chòm sao sau khi mở đủ 7 chương. Một chuỗi. Bản mẫu: `J`. |
+| `meta.monogram` | Một chữ trên con dấu sáp. Một chuỗi. Bản mẫu: `J`. |
+| `gate.password` | Biệt danh đúng, một chuỗi cho cả hai ngôn ngữ. So khớp không phân biệt hoa thường, gộp khoảng trắng. **Phải đúng dấu.** Đây là khoá tình cảm, không phải bảo mật: ai xem mã nguồn sẽ thấy. |
 | `gate.question` | Câu trên cổng. Bản mẫu: "Ai đang tới đây vậy?" |
 | `gate.placeholder` / `gate.submit` / `gate.empty` | Ô nhập, nút, câu khi bỏ trống. |
 | `gate.hints` | Mảng gợi ý khi nhập sai. Xoay vòng. |
@@ -66,7 +77,7 @@ File nằm ở `site/content.json`. Sau khi sửa, chạy lại `npm run dev` ho
 | `quizSummary` | Câu tổng kết. Chỗ trống `{ok}` và `{total}`. |
 | `memoryCopy` | Chữ trong trò nhớ. `{n}` là số lượt. |
 | `dreams` | `text` là ước, `detail` là dòng nhỏ. Em tích được; trình duyệt nhớ. |
-| `friendNotes` | `author`, `text`, `tone`: `gold`, `blush`, `sage`, `sky`, `cream`. Tone lạ sẽ thành `cream`. |
+| `friendNotes` | `author` là một chuỗi (tên riêng). `text` là cặp `{vi, en}`. `tone`: `gold`, `blush`, `sage`, `sky`, `cream`. Tone lạ sẽ thành `cream`. |
 | `together.past` | Câu khi `startDate` đã qua. Chỗ trống: `{days}` `{hours}` `{minutes}` `{seconds}`. |
 | `together.future` | Câu khi ngày bắt đầu còn ở tương lai. Cùng các chỗ trống. |
 | `cake` | Bánh. `candles` từ 1 đến 8. `letter` là thư máy đánh chữ, xuống dòng bằng `\n`. |
@@ -81,9 +92,9 @@ Ví dụ thêm một ảnh:
 {
   "id": "p9",
   "src": "/photos/anh-bien.webp",
-  "alt": "Hai đứa ở biển",
-  "caption": "Biển tháng sáu",
-  "compliment": "Em nhìn sóng lâu hơn anh nhìn em.",
+  "alt": { "vi": "Hai đứa ở biển", "en": "The two of us at the sea" },
+  "caption": { "vi": "Biển tháng sáu", "en": "June sea" },
+  "compliment": { "vi": "Em nhìn sóng lâu hơn anh nhìn em.", "en": "You watched the waves longer than I watched you." },
   "pair": true
 }
 ```
@@ -120,6 +131,8 @@ Khóa `lilj.progress.v1` trong `localStorage`:
 - đang tắt tiếng hay không
 
 Nút **Đặt lại** ở cuối bầu trời xóa khóa này. Hoặc xóa tay trong DevTools.
+
+Ngôn ngữ nằm ở khóa riêng `lilj.locale.v1` (`vi` hoặc `en`). Đặt lại tiến độ không đổi ngôn ngữ.
 
 ## Bố cục trang
 

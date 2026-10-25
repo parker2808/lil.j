@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { content } from "../content.ts";
 import { ChapterFrame } from "../components/ChapterFrame.tsx";
+import type { Copy } from "../lib/i18n.ts";
+import { useI18n } from "../lib/locale-context.ts";
 import { fillTemplate, shuffle } from "../lib/pure.ts";
 import type { ChapterProps } from "../types.ts";
 
@@ -8,7 +10,7 @@ type Card = {
   uid: string;
   photoId: string;
   src: string;
-  alt: string;
+  alt: Copy;
 };
 
 function buildDeck(): Card[] {
@@ -22,6 +24,7 @@ function buildDeck(): Card[] {
 }
 
 export function Memory({ progress, update, onBack }: ChapterProps) {
+  const { t } = useI18n();
   const chapter = content.chapters.find((item) => item.id === "memory");
   const [deck, setDeck] = useState(buildDeck);
   const [flipped, setFlipped] = useState<string[]>([]);
@@ -77,15 +80,15 @@ export function Memory({ progress, update, onBack }: ChapterProps) {
 
   return (
     <ChapterFrame
-      kicker={chapter?.kicker ?? ""}
-      title={chapter?.title ?? ""}
-      lede={chapter?.lede ?? ""}
+      kicker={t(chapter?.kicker)}
+      title={t(chapter?.title)}
+      lede={t(chapter?.lede)}
       onBack={onBack}
     >
       <p className="count">
-        {fillTemplate(content.memoryCopy.moves, { n: moves })}
+        {fillTemplate(t(content.memoryCopy.moves), { n: moves })}
         {progress.memoryBest != null
-          ? ` · ${fillTemplate(content.memoryCopy.best, { n: progress.memoryBest })}`
+          ? ` · ${fillTemplate(t(content.memoryCopy.best), { n: progress.memoryBest })}`
           : ""}
       </p>
       <div className="memory-grid">
@@ -104,7 +107,7 @@ export function Memory({ progress, update, onBack }: ChapterProps) {
                 className="hit"
                 onClick={() => onFlip(card)}
                 disabled={up}
-                aria-label={up ? card.alt : content.memoryCopy.back}
+                aria-label={up ? t(card.alt) : t(content.memoryCopy.back)}
               />
             </div>
           );
@@ -112,9 +115,9 @@ export function Memory({ progress, update, onBack }: ChapterProps) {
       </div>
       {won && (
         <div className="win">
-          <p>{content.memoryCopy.win}</p>
+          <p>{t(content.memoryCopy.win)}</p>
           <button type="button" className="btn" onClick={again}>
-            {content.memoryCopy.again}
+            {t(content.memoryCopy.again)}
           </button>
         </div>
       )}

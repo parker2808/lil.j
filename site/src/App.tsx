@@ -1,11 +1,16 @@
-import { lazy, Suspense, useState, type ComponentType, type LazyExoticComponent } from "react";
+import { lazy, Suspense, useState, type ComponentType, type LazyExoticComponent, type ReactNode } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { content, validateContent } from "./content.ts";
 import { Envelope } from "./components/Envelope.tsx";
 import { Gate } from "./components/Gate.tsx";
+import { LanguageToggle } from "./components/LanguageToggle.tsx";
 import { MusicButton } from "./components/MusicButton.tsx";
+import { Starfield } from "./components/Starfield.tsx";
 import { Universe } from "./components/Universe.tsx";
+import { useI18n } from "./lib/locale-context.ts";
 import { startMusic } from "./lib/music.ts";
 import { loadProgress } from "./lib/progress.ts";
+import { useReducedMotion } from "./lib/useReducedMotion.ts";
 import { useProgress } from "./lib/useProgress.ts";
 import type { ChapterProps, Scene } from "./types.ts";
 
@@ -38,6 +43,8 @@ function firstScene(): Scene {
 }
 
 export function App() {
+  const { t } = useI18n();
+  const reduced = useReducedMotion();
   const problem = validateContent(content);
   const { progress, update } = useProgress();
   const [scene, setScene] = useState<Scene>(firstScene);
@@ -47,7 +54,9 @@ export function App() {
   if (problem) {
     return (
       <main className="scene">
-        <h1>{content.ui.contentError}</h1>
+        <Starfield />
+        <LanguageToggle />
+        <h1>{t(content.ui.contentError)}</h1>
         <p>{problem}</p>
       </main>
     );
@@ -59,8 +68,7 @@ export function App() {
   }
 
   function openEnvelope() {
-    void startMusic(content.music, progress.muted).catch(() => setMusicNote(content.ui.musicBlocked));
-    update((current) => ({ ...current, envelopeOpened: true }));
+    void startMusic(content.music, progress.muted).catch(() => setMusicNote(t(content.ui.musicBlocked)));
   }
 
   function openStar(id: string) {
@@ -73,65 +81,93 @@ export function App() {
   }
 
   const ChapterView = chapter ? CHAPTERS[chapter] : null;
+  let sceneKey: string = scene;
+  let node: ReactNode = null;
+
+  if (scene === "gate") {
+    node = <Gate onUnlock={unlock} />;
+  } else if (scene === "envelope") {
+    node = (
+      <Envelope
+        open={progress.envelopeOpened}
+        onOpen={() => {
+          openEnvelope();
+          update((current) => ({ ...current, envelopeOpened: true }));
+        }}
+        onEnter={() => setScene("universe")}
+      />
+    );
+  } else if (scene === "universe" && ChapterView) {
+    sceneKey = `chapter-${chapter}`;
+    node = (
+      <Suspense fallback={<p className="scene loading">{t(content.ui.loading)}</p>}>
+        <ChapterView progress={progress} update={update} onBack={() => setChapter(null)} />
+      </Suspense>
+    );
+  } else if (scene === "universe") {
+    node = (
+      <Universe
+        progress={progress}
+        onOpenStar={openStar}
+        onCake={() => setScene("cake")}
+        onLetters={() => setScene("letters")}
+        onFinale={() => setScene("finale")}
+      />
+    );
+  } else if (scene === "cake") {
+    node = (
+      <Suspense fallback={<p className="scene loading">{t(content.ui.loading)}</p>}>
+        <Cake
+          progress={progress}
+          update={update}
+          onBack={() => setScene("universe")}
+          onNext={() => setScene("letters")}
+        />
+      </Suspense>
+    );
+  } else if (scene === "letters") {
+    node = (
+      <Suspense fallback={<p className="scene loading">{t(content.ui.loading)}</p>}>
+        <Letters
+          progress={progress}
+          update={update}
+          onBack={() => setScene("universe")}
+          onNext={() => setScene("finale")}
+        />
+      </Suspense>
+    );
+  } else {
+    node = (
+      <Suspense fallback={<p className="scene loading">{t(content.ui.loading)}</p>}>
+        <Finale
+          saidYes={progress.saidYes}
+          onYes={() => update((current) => ({ ...current, saidYes: true }))}
+          onBack={() => setScene("universe")}
+        />
+      </Suspense>
+    );
+  }
 
   return (
     <>
-      {scene === "gate" && <Gate onUnlock={unlock} />}
-      {scene === "envelope" && (
-        <Envelope
-          open={progress.envelopeOpened}
-          onOpen={openEnvelope}
-          onEnter={() => setScene("universe")}
-        />
-      )}
-      {scene === "universe" && !ChapterView && (
-        <Universe
-          progress={progress}
-          onOpenStar={openStar}
-          onCake={() => setScene("cake")}
-          onLetters={() => setScene("letters")}
-          onFinale={() => setScene("finale")}
-        />
-      )}
-      {scene === "universe" && ChapterView && (
-        <Suspense fallback={<p className="scene loading">{content.ui.loading}</p>}>
-          <ChapterView progress={progress} update={update} onBack={() => setChapter(null)} />
-        </Suspense>
-      )}
-      {scene === "cake" && (
-        <Suspense fallback={<p className="scene loading">{content.ui.loading}</p>}>
-          <Cake
-            progress={progress}
-            update={update}
-            onBack={() => setScene("universe")}
-            onNext={() => setScene("letters")}
-          />
-        </Suspense>
-      )}
-      {scene === "letters" && (
-        <Suspense fallback={<p className="scene loading">{content.ui.loading}</p>}>
-          <Letters
-            progress={progress}
-            update={update}
-            onBack={() => setScene("universe")}
-            onNext={() => setScene("finale")}
-          />
-        </Suspense>
-      )}
-      {scene === "finale" && (
-        <Suspense fallback={<p className="scene loading">{content.ui.loading}</p>}>
-          <Finale
-            saidYes={progress.saidYes}
-            onYes={() => update((current) => ({ ...current, saidYes: true }))}
-            onBack={() => setScene("universe")}
-          />
-        </Suspense>
-      )}
+      <Starfield />
+      <LanguageToggle />
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={sceneKey}
+          initial={reduced ? false : { opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={reduced ? { opacity: 1 } : { opacity: 0, y: -12 }}
+          transition={{ duration: reduced ? 0 : 0.42, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {node}
+        </motion.div>
+      </AnimatePresence>
       {progress.gateUnlocked && (
         <MusicButton
           muted={progress.muted}
           onMuted={(muted) => update((current) => ({ ...current, muted }))}
-          onBlocked={() => setMusicNote(content.ui.musicBlocked)}
+          onBlocked={() => setMusicNote(t(content.ui.musicBlocked))}
         />
       )}
       {musicNote && (

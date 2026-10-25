@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { content } from "../content.ts";
+import { useI18n } from "../lib/locale-context.ts";
 import { musicIsPlaying, setMusicMuted, startMusic } from "../lib/music.ts";
 
 type MusicButtonProps = {
@@ -9,8 +10,9 @@ type MusicButtonProps = {
 };
 
 export function MusicButton({ muted, onMuted, onBlocked }: MusicButtonProps) {
+  const { t } = useI18n();
   const [busy, setBusy] = useState(false);
-  const label = muted || !musicIsPlaying() ? content.ui.musicOn : content.ui.musicOff;
+  const label = muted || !musicIsPlaying() ? t(content.ui.musicOn) : t(content.ui.musicOff);
 
   async function onClick() {
     if (busy) return;

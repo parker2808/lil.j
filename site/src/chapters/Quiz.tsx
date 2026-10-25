@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { content } from "../content.ts";
 import { ChapterFrame } from "../components/ChapterFrame.tsx";
+import { useI18n } from "../lib/locale-context.ts";
 import { fillTemplate } from "../lib/pure.ts";
 import type { ChapterProps } from "../types.ts";
 
 export function Quiz({ progress, update, onBack }: ChapterProps) {
+  const { t } = useI18n();
   const chapter = content.chapters.find((item) => item.id === "quiz");
   const total = content.quiz.length;
   const answered = content.quiz.filter((question) => typeof progress.quiz[question.id] === "number").length;
@@ -22,9 +24,9 @@ export function Quiz({ progress, update, onBack }: ChapterProps) {
 
   return (
     <ChapterFrame
-      kicker={chapter?.kicker ?? ""}
-      title={chapter?.title ?? ""}
-      lede={chapter?.lede ?? ""}
+      kicker={t(chapter?.kicker)}
+      title={t(chapter?.title)}
+      lede={t(chapter?.lede)}
       onBack={onBack}
     >
       {question ? (
@@ -32,7 +34,7 @@ export function Quiz({ progress, update, onBack }: ChapterProps) {
           <p className="count">
             {step + 1}/{total}
           </p>
-          <h2>{question.question}</h2>
+          <h2>{t(question.question)}</h2>
           <div className="options">
             {question.options.map((option, index) => {
               const picked = progress.quiz[question.id];
@@ -52,7 +54,10 @@ export function Quiz({ progress, update, onBack }: ChapterProps) {
                   disabled={locked}
                   onClick={() => choose(index)}
                 >
-                  {option}
+                  <span className="opt-index" aria-hidden="true">
+                    {String.fromCharCode(65 + index)}
+                  </span>
+                  <span>{t(option)}</span>
                 </button>
               );
             })}
@@ -60,20 +65,20 @@ export function Quiz({ progress, update, onBack }: ChapterProps) {
           {typeof progress.quiz[question.id] === "number" && (
             <>
               <p className="note">
-                {progress.quiz[question.id] === question.answer ? question.rightNote : question.wrongNote}
+                {progress.quiz[question.id] === question.answer ? t(question.rightNote) : t(question.wrongNote)}
               </p>
               <button type="button" className="btn" onClick={() => setStep(step + 1)}>
-                {step + 1 >= total ? content.ui.summaryTitle : content.ui.nextQuestion}
+                {step + 1 >= total ? t(content.ui.summaryTitle) : t(content.ui.nextQuestion)}
               </button>
             </>
           )}
         </div>
       ) : (
         <div className="quiz">
-          <h2>{content.ui.summaryTitle}</h2>
-          <p className="lede">{fillTemplate(content.quizSummary, { ok: correct, total })}</p>
+          <h2>{t(content.ui.summaryTitle)}</h2>
+          <p className="lede">{fillTemplate(t(content.quizSummary), { ok: correct, total })}</p>
           <button type="button" className="btn" onClick={() => setStep(0)}>
-            {content.ui.seeAgain}
+            {t(content.ui.seeAgain)}
           </button>
         </div>
       )}

@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useRef } from "react";
 import { content } from "../content.ts";
 import { ChapterFrame } from "../components/ChapterFrame.tsx";
-import type { ChapterProps, Scratch as ScratchItem } from "../types.ts";
+import { useI18n } from "../lib/locale-context.ts";
+import type { ChapterProps } from "../types.ts";
 
 export function Scratch({ progress, update, onBack }: ChapterProps) {
+  const { t } = useI18n();
   const chapter = content.chapters.find((item) => item.id === "scratch");
 
   const reveal = useCallback((id: string) => {
@@ -14,16 +16,18 @@ export function Scratch({ progress, update, onBack }: ChapterProps) {
 
   return (
     <ChapterFrame
-      kicker={chapter?.kicker ?? ""}
-      title={chapter?.title ?? ""}
-      lede={chapter?.lede ?? ""}
+      kicker={t(chapter?.kicker)}
+      title={t(chapter?.title)}
+      lede={t(chapter?.lede)}
       onBack={onBack}
     >
       <div className="scratch-list">
         {content.scratches.map((item) => (
           <ScratchCard
             key={item.id}
-            item={item}
+            id={item.id}
+            cover={t(item.cover)}
+            reveal={t(item.reveal)}
             revealed={progress.scratched.includes(item.id)}
             onReveal={reveal}
           />
@@ -34,11 +38,15 @@ export function Scratch({ progress, update, onBack }: ChapterProps) {
 }
 
 function ScratchCard({
-  item,
+  id,
+  cover,
+  reveal,
   revealed,
   onReveal,
 }: {
-  item: ScratchItem;
+  id: string;
+  cover: string;
+  reveal: string;
   revealed: boolean;
   onReveal: (id: string) => void;
 }) {
@@ -84,7 +92,7 @@ function ScratchCard({
       ctx.font = "600 16px 'Be Vietnam Pro', sans-serif";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.fillText(item.cover, width / 2, height / 2);
+      ctx.fillText(cover, width / 2, height / 2);
     };
 
     const point = (event: PointerEvent) => {
@@ -122,7 +130,7 @@ function ScratchCard({
     };
 
     const maybeDone = () => {
-      if (cleared()) onReveal(item.id);
+      if (cleared()) onReveal(id);
     };
 
     const down = (event: PointerEvent) => {
@@ -157,12 +165,12 @@ function ScratchCard({
       canvas.removeEventListener("pointerup", up);
       canvas.removeEventListener("pointercancel", up);
     };
-  }, [item.cover, item.id, onReveal, revealed]);
+  }, [cover, id, onReveal, revealed]);
 
   return (
     <article className="scratch">
-      <p className="scratch-reveal">{item.reveal}</p>
-      {!revealed && <canvas ref={canvasRef} className="scratch-canvas" aria-label={item.cover} />}
+      <p className="scratch-reveal">{reveal}</p>
+      {!revealed && <canvas ref={canvasRef} className="scratch-canvas" aria-label={cover} />}
     </article>
   );
 }

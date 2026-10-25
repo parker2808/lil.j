@@ -1,5 +1,6 @@
 import { Component, type ReactNode } from "react";
 import { content } from "../content.ts";
+import { readLocale, text } from "../lib/i18n.ts";
 
 type BoundaryProps = {
   children: ReactNode;
@@ -20,7 +21,7 @@ export class Boundary extends Component<BoundaryProps, BoundaryState> {
     if (this.state.failed) {
       return (
         <main className="scene">
-          <p>{content.ui.crash}</p>
+          <p>{text(content.ui.crash, readLocale())}</p>
         </main>
       );
     }

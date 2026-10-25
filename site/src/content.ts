@@ -1,4 +1,5 @@
 import raw from "../content.json";
+import { collectCopyProblems } from "./lib/i18n.ts";
 import type { Content } from "./types.ts";
 
 export const content = raw as Content;
@@ -16,6 +17,8 @@ const REQUIRED_CHAPTERS = [
 export function validateContent(value: Content): string | null {
   if (!value?.gate?.password?.trim()) return "content.json thiếu gate.password.";
   if (!value.meta?.constellationName?.trim()) return "content.json thiếu meta.constellationName.";
+  if (!value.meta?.herName?.trim()) return "content.json thiếu meta.herName.";
+  if (!value.meta?.monogram?.trim()) return "content.json thiếu meta.monogram.";
   if (!Array.isArray(value.chapters)) return "content.json thiếu danh sách chương.";
   const ids = value.chapters.map((chapter) => chapter.id);
   for (const id of REQUIRED_CHAPTERS) {
@@ -54,7 +57,12 @@ export function validateContent(value: Content): string | null {
   if (!Array.isArray(value.openWhen) || value.openWhen.length < 1) {
     return "content.json thiếu thư Mở khi.";
   }
-  if (!value.cake?.letter) return "content.json thiếu thư trên bánh.";
-  if (!value.finale?.question) return "content.json thiếu câu hỏi cuối.";
-  return null;
+  if (!value.cake?.letter?.vi?.trim() || !value.cake?.letter?.en?.trim()) {
+    return "content.json thiếu thư trên bánh (cả vi và en).";
+  }
+  if (!value.finale?.question?.vi?.trim() || !value.finale?.question?.en?.trim()) {
+    return "content.json thiếu câu hỏi cuối (cả vi và en).";
+  }
+  const copyProblem = collectCopyProblems(value)[0];
+  return copyProblem ?? null;
 }

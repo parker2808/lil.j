@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { content } from "../content.ts";
+import { useI18n } from "../lib/locale-context.ts";
 import { clearProgress } from "../lib/progress.ts";
 import { fillTemplate, STAR_LAYOUT } from "../lib/pure.ts";
 import type { Progress } from "../types.ts";
@@ -13,6 +14,7 @@ type UniverseProps = {
 };
 
 export function Universe({ progress, onOpenStar, onCake, onLetters, onFinale }: UniverseProps) {
+  const { t } = useI18n();
   const lineRef = useRef<SVGPolylineElement>(null);
   const played = useRef(false);
   const chapters = STAR_LAYOUT.map((star) => {
@@ -20,9 +22,8 @@ export function Universe({ progress, onOpenStar, onCake, onLetters, onFinale }: 
     return { ...star, chapter };
   }).filter((star) => star.chapter);
   const opened = progress.openedChapters;
-  const total = STAR_LAYOUT.length;
   const count = STAR_LAYOUT.filter((star) => opened.includes(star.id)).length;
-  const complete = count === total;
+  const complete = count === STAR_LAYOUT.length;
   const points = [...STAR_LAYOUT, STAR_LAYOUT[0]]
     .map((star) => `${star?.x ?? 0},${star?.y ?? 0}`)
     .join(" ");
@@ -52,7 +53,7 @@ export function Universe({ progress, onOpenStar, onCake, onLetters, onFinale }: 
   }, [complete]);
 
   function reset() {
-    if (window.confirm(content.ui.resetConfirm)) {
+    if (window.confirm(t(content.ui.resetConfirm))) {
       clearProgress();
       window.location.reload();
     }
@@ -61,9 +62,9 @@ export function Universe({ progress, onOpenStar, onCake, onLetters, onFinale }: 
   return (
     <section className="scene universe">
       <p className="kicker">{content.meta.herName}</p>
-      <h1>{content.meta.title}</h1>
-      <p className="lede">{complete ? content.ui.formed : content.ui.waiting}</p>
-      <p className="count">{fillTemplate(content.ui.lit, { n: count })}</p>
+      <h1>{t(content.meta.title)}</h1>
+      <p className="lede">{complete ? t(content.ui.formed) : t(content.ui.waiting)}</p>
+      <p className="count">{fillTemplate(t(content.ui.lit), { n: count })}</p>
       <div className="sky-map">
         <svg className="links" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
           {complete && <polyline ref={lineRef} points={points} />}
@@ -71,7 +72,7 @@ export function Universe({ progress, onOpenStar, onCake, onLetters, onFinale }: 
         {complete && <p className="constellation-name">{content.meta.constellationName}</p>}
         {chapters.map((star, index) => {
           const isOn = opened.includes(star.id);
-          const title = star.chapter?.title ?? star.id;
+          const title = t(star.chapter?.title);
           return (
             <button
               key={star.id}
@@ -83,10 +84,10 @@ export function Universe({ progress, onOpenStar, onCake, onLetters, onFinale }: 
                 ["--delay" as string]: `${index * 0.28}s`,
               }}
               onClick={() => onOpenStar(star.id)}
-              aria-label={`${title}, ${isOn ? content.ui.starOpened : content.ui.starClosed}`}
+              aria-label={`${title}, ${isOn ? t(content.ui.starOpened) : t(content.ui.starClosed)}`}
             >
               <span className="star-core" />
-              <span className="star-label">{star.chapter?.star}</span>
+              <span className="star-label">{t(star.chapter?.star)}</span>
             </button>
           );
         })}
@@ -94,18 +95,18 @@ export function Universe({ progress, onOpenStar, onCake, onLetters, onFinale }: 
       {complete && (
         <div className="doors">
           <button type="button" className="btn" onClick={onCake}>
-            {content.ui.doorCake}
+            {t(content.ui.doorCake)}
           </button>
           <button type="button" className="btn" onClick={onLetters}>
-            {content.ui.doorLetters}
+            {t(content.ui.doorLetters)}
           </button>
           <button type="button" className="btn btn-gold" onClick={onFinale}>
-            {content.ui.doorFinale}
+            {t(content.ui.doorFinale)}
           </button>
         </div>
       )}
       <button type="button" className="reset" onClick={reset}>
-        {content.ui.reset}
+        {t(content.ui.reset)}
       </button>
     </section>
   );

@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { content } from "../content.ts";
+import { useI18n } from "../lib/locale-context.ts";
 import { nicknamesMatch } from "../lib/pure.ts";
 
 type GateProps = {
@@ -7,11 +8,12 @@ type GateProps = {
 };
 
 export function Gate({ onUnlock }: GateProps) {
+  const { t } = useI18n();
   const [value, setValue] = useState("");
   const [hintIndex, setHintIndex] = useState(-1);
   const [shaking, setShaking] = useState(false);
   const [empty, setEmpty] = useState(false);
-  const hint = hintIndex >= 0 ? content.gate.hints[hintIndex % content.gate.hints.length] : "";
+  const hint = hintIndex >= 0 ? content.gate.hints[hintIndex % content.gate.hints.length] : undefined;
 
   useEffect(() => {
     if (!shaking) return;
@@ -37,32 +39,34 @@ export function Gate({ onUnlock }: GateProps) {
 
   return (
     <section className="gate">
-      <p className="kicker">{content.meta.title}</p>
-      <h1>{content.gate.question}</h1>
-      <form onSubmit={onSubmit} className={shaking ? "shake" : undefined}>
-        <label className="sr-only" htmlFor="nickname">
-          {content.gate.placeholder}
+      <p className="kicker">{t(content.meta.title)}</p>
+      <div className="monogram-orb" aria-hidden="true">
+        {content.meta.monogram}
+      </div>
+      <h1>{t(content.gate.question)}</h1>
+      <form onSubmit={onSubmit} className={shaking ? "gate-card shake" : "gate-card"}>
+        <label className="field">
+          <input
+            id="nickname"
+            value={value}
+            placeholder=" "
+            autoComplete="off"
+            autoCapitalize="none"
+            autoCorrect="off"
+            spellCheck={false}
+            enterKeyHint="go"
+            onChange={(event) => setValue(event.target.value)}
+          />
+          <span>{t(content.gate.placeholder)}</span>
         </label>
-        <input
-          id="nickname"
-          className="line-input"
-          value={value}
-          placeholder={content.gate.placeholder}
-          autoComplete="off"
-          autoCapitalize="none"
-          autoCorrect="off"
-          spellCheck={false}
-          enterKeyHint="go"
-          onChange={(event) => setValue(event.target.value)}
-        />
         <button type="submit" className="btn btn-gold">
-          {content.gate.submit}
+          {t(content.gate.submit)}
         </button>
       </form>
       <p className="hint" role="status">
-        {empty ? content.gate.empty : hint}
+        {empty ? t(content.gate.empty) : t(hint)}
       </p>
-      <p className="seal-caption">{content.envelope.sealCaption}</p>
+      <p className="seal-caption">{t(content.envelope.sealCaption)}</p>
     </section>
   );
 }

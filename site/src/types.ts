@@ -1,3 +1,7 @@
+import type { Copy } from "./lib/i18n.ts";
+
+export type { Copy } from "./lib/i18n.ts";
+
 export type ChapterId =
   | "gallery"
   | "scratch"
@@ -11,150 +15,159 @@ export type Scene = "gate" | "envelope" | "universe" | "cake" | "letters" | "fin
 
 export type Chapter = {
   id: string;
-  star: string;
-  kicker: string;
-  title: string;
-  lede: string;
+  star: Copy;
+  kicker: Copy;
+  title: Copy;
+  lede: Copy;
 };
 
 export type Photo = {
   id: string;
   src: string;
-  alt: string;
-  caption: string;
-  compliment: string;
+  alt: Copy;
+  caption: Copy;
+  compliment: Copy;
   pair: boolean;
 };
 
 export type Scratch = {
   id: string;
-  cover: string;
-  reveal: string;
+  cover: Copy;
+  reveal: Copy;
 };
 
 export type QuizQuestion = {
   id: string;
-  question: string;
-  options: string[];
+  question: Copy;
+  options: Copy[];
   answer: number;
-  rightNote: string;
-  wrongNote: string;
+  rightNote: Copy;
+  wrongNote: Copy;
 };
 
 export type Dream = {
   id: string;
-  text: string;
-  detail: string;
+  text: Copy;
+  detail: Copy;
 };
 
 export type FriendNote = {
   id: string;
   author: string;
   tone: string;
-  text: string;
+  text: Copy;
 };
 
 export type Letter = {
   id: string;
-  label: string;
-  body: string;
+  label: Copy;
+  body: Copy;
 };
 
 export type Content = {
   meta: {
-    title: string;
+    title: Copy;
+    description: Copy;
     herName: string;
     constellationName: string;
     monogram: string;
   };
   gate: {
     password: string;
-    question: string;
-    placeholder: string;
-    submit: string;
-    empty: string;
-    hints: string[];
+    question: Copy;
+    placeholder: Copy;
+    submit: Copy;
+    empty: Copy;
+    hints: Copy[];
   };
   startDate: string;
   music: string;
   envelope: {
-    greeting: string;
-    sealCaption: string;
-    openHint: string;
-    body: string;
-    enter: string;
+    greeting: Copy;
+    sealCaption: Copy;
+    openHint: Copy;
+    body: Copy;
+    enter: Copy;
   };
   chapters: Chapter[];
   photos: Photo[];
   scratches: Scratch[];
   quiz: QuizQuestion[];
-  quizSummary: string;
+  quizSummary: Copy;
   memoryCopy: {
-    moves: string;
-    best: string;
-    win: string;
-    again: string;
-    back: string;
+    moves: Copy;
+    best: Copy;
+    win: Copy;
+    again: Copy;
+    back: Copy;
   };
   dreams: Dream[];
   friendNotes: FriendNote[];
   together: {
-    past: string;
-    future: string;
+    past: Copy;
+    future: Copy;
   };
   cake: {
-    title: string;
-    kicker: string;
-    lede: string;
+    title: Copy;
+    kicker: Copy;
+    lede: Copy;
     candles: number;
-    mic: string;
-    micStop: string;
-    listening: string;
-    micError: string;
-    tapHint: string;
-    letterTitle: string;
-    letter: string;
-    skip: string;
-    next: string;
+    mic: Copy;
+    micStop: Copy;
+    listening: Copy;
+    micError: Copy;
+    tapHint: Copy;
+    letterTitle: Copy;
+    letter: Copy;
+    skip: Copy;
+    next: Copy;
   };
   openWhen: Letter[];
   lettersCopy: {
-    title: string;
-    kicker: string;
-    lede: string;
-    sealed: string;
-    openedNote: string;
-    next: string;
+    title: Copy;
+    kicker: Copy;
+    lede: Copy;
+    sealed: Copy;
+    openedNote: Copy;
+    next: Copy;
   };
   finale: {
-    question: string;
-    yes: string;
-    no: string;
-    teases: string[];
-    yesTitle: string;
-    yesBody: string;
+    question: Copy;
+    yes: Copy;
+    no: Copy;
+    teases: Copy[];
+    yesTitle: Copy;
+    yesBody: Copy;
   };
   ui: {
-    back: string;
-    loading: string;
-    lit: string;
-    waiting: string;
-    formed: string;
-    doorCake: string;
-    doorLetters: string;
-    doorFinale: string;
-    musicOn: string;
-    musicOff: string;
-    musicBlocked: string;
-    reset: string;
-    resetConfirm: string;
-    starOpened: string;
-    starClosed: string;
-    nextQuestion: string;
-    seeAgain: string;
-    summaryTitle: string;
-    contentError: string;
-    crash: string;
+    back: Copy;
+    loading: Copy;
+    lit: Copy;
+    waiting: Copy;
+    formed: Copy;
+    doorCake: Copy;
+    doorLetters: Copy;
+    doorFinale: Copy;
+    musicOn: Copy;
+    musicOff: Copy;
+    musicBlocked: Copy;
+    reset: Copy;
+    resetConfirm: Copy;
+    starOpened: Copy;
+    starClosed: Copy;
+    nextQuestion: Copy;
+    seeAgain: Copy;
+    summaryTitle: Copy;
+    contentError: Copy;
+    crash: Copy;
+    flip: Copy;
+    candleOn: Copy;
+    candleOut: Copy;
+    language: Copy;
+    unitDays: Copy;
+    unitHours: Copy;
+    unitMinutes: Copy;
+    unitSeconds: Copy;
   };
 };
 

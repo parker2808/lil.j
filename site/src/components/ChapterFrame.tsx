@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { content } from "../content.ts";
+import { useI18n } from "../lib/locale-context.ts";
 
 type ChapterFrameProps = {
   kicker: string;
@@ -10,11 +11,13 @@ type ChapterFrameProps = {
 };
 
 export function ChapterFrame({ kicker, title, lede, onBack, children }: ChapterFrameProps) {
+  const { t } = useI18n();
+
   return (
     <section className="scene chapter">
       <div className="chapter-top">
         <button type="button" className="back" onClick={onBack}>
-          ← {content.ui.back}
+          ← {t(content.ui.back)}
         </button>
       </div>
       <p className="kicker">{kicker}</p>

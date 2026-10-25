@@ -1,8 +1,10 @@
 import { content } from "../content.ts";
 import { ChapterFrame } from "../components/ChapterFrame.tsx";
+import { useI18n } from "../lib/locale-context.ts";
 import type { ChapterProps } from "../types.ts";
 
 export function Gallery({ progress, update, onBack }: ChapterProps) {
+  const { t } = useI18n();
   const chapter = content.chapters.find((item) => item.id === "gallery");
 
   function toggle(id: string) {
@@ -19,14 +21,16 @@ export function Gallery({ progress, update, onBack }: ChapterProps) {
 
   return (
     <ChapterFrame
-      kicker={chapter?.kicker ?? ""}
-      title={chapter?.title ?? ""}
-      lede={chapter?.lede ?? ""}
+      kicker={t(chapter?.kicker)}
+      title={t(chapter?.title)}
+      lede={t(chapter?.lede)}
       onBack={onBack}
     >
       <div className="polaroids">
         {content.photos.map((photo, index) => {
           const flipped = progress.flippedPhotos.includes(photo.id);
+          const caption = t(photo.caption);
+          const compliment = t(photo.compliment);
           return (
             <div key={photo.id} className="tilt">
               <div className={flipped ? "polaroid is-flipped" : "polaroid"}>
@@ -40,19 +44,17 @@ export function Gallery({ progress, update, onBack }: ChapterProps) {
                       loading={index < 2 ? "eager" : "lazy"}
                       decoding="async"
                     />
-                    <span className="caption">{photo.caption}</span>
+                    <span className="caption">{caption}</span>
                   </div>
                   <div className="face face-back">
-                    <span>{photo.compliment}</span>
+                    <span>{compliment}</span>
                   </div>
                 </div>
                 <button
                   type="button"
                   className="hit"
                   aria-pressed={flipped}
-                  aria-label={
-                    flipped ? `${photo.caption}. ${photo.compliment}` : `${photo.caption}. Chạm để lật`
-                  }
+                  aria-label={flipped ? `${caption}. ${compliment}` : `${caption}. ${t(content.ui.flip)}`}
                   onClick={() => toggle(photo.id)}
                 />
               </div>

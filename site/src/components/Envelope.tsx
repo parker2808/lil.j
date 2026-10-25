@@ -1,4 +1,5 @@
 import { content } from "../content.ts";
+import { useI18n } from "../lib/locale-context.ts";
 import { Hearts } from "./Hearts.tsx";
 
 type EnvelopeProps = {
@@ -8,19 +9,21 @@ type EnvelopeProps = {
 };
 
 export function Envelope({ open, onOpen, onEnter }: EnvelopeProps) {
+  const { t } = useI18n();
+
   return (
     <section className="scene envelope-scene">
       <Hearts active={open} />
-      <p className="kicker">{content.meta.title}</p>
-      <p className="seal-caption">{content.envelope.sealCaption}</p>
+      <p className="kicker">{t(content.meta.title)}</p>
+      <p className="seal-caption">{t(content.envelope.sealCaption)}</p>
       <div className={open ? "envelope is-open" : "envelope"}>
         <div className="env-pocket">
           <div className="env-paper" aria-hidden={!open}>
-            <p className="greet">{content.envelope.greeting}</p>
-            <p>{content.envelope.body}</p>
+            <p className="greet">{t(content.envelope.greeting)}</p>
+            <p>{t(content.envelope.body)}</p>
             {open && (
               <button type="button" className="btn btn-gold" onClick={onEnter}>
-                {content.envelope.enter}
+                {t(content.envelope.enter)}
               </button>
             )}
           </div>
@@ -29,12 +32,12 @@ export function Envelope({ open, onOpen, onEnter }: EnvelopeProps) {
           {!open && (
             <button type="button" className="wax" onClick={onOpen}>
               <span aria-hidden="true">{content.meta.monogram}</span>
-              <span className="sr-only">{content.envelope.openHint}</span>
+              <span className="sr-only">{t(content.envelope.openHint)}</span>
             </button>
           )}
         </div>
       </div>
-      {!open && <p className="hint">{content.envelope.openHint}</p>}
+      {!open && <p className="hint">{t(content.envelope.openHint)}</p>}
     </section>
   );
 }

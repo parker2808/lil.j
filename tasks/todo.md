@@ -12,7 +12,7 @@
 - [x] Optional Node `compress` script (sharp → WebP ~1200px)
 - [x] README tiếng Việt (hướng dẫn + giới hạn)
 - [x] Offline selftest + compress smoke test
-- [ ] Commit, push, mở PR
+- [x] Commit, push, mở PR (#1)
 
 ## Review
 

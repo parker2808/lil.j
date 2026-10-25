@@ -1,0 +1,17 @@
+{
+  "name": "lilj-fb-photo-compress",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Nén ảnh Facebook đã tải xuống thành WebP ~1200px cho website birthday",
+  "type": "module",
+  "scripts": {
+    "compress": "node compress.mjs",
+    "start": "node compress.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "sharp": "^0.33.5"
+  }
+}

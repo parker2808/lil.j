@@ -1,0 +1,403 @@
+{
+  "meta": {
+    "title": "Vũ trụ của em",
+    "herName": "Lan",
+    "constellationName": "Lan",
+    "monogram": "L"
+  },
+  "gate": {
+    "password": "bé yêu",
+    "question": "Ai đang tới đây vậy?",
+    "placeholder": "Biệt danh của em",
+    "submit": "Vào",
+    "empty": "Em nhập biệt danh đã.",
+    "hints": [
+      "Hình như không phải em.",
+      "Là biệt danh anh hay gọi, không phải tên trong giấy tờ.",
+      "Viết hoa hay thường cũng được.",
+      "Hai tiếng thôi.",
+      "Nhớ cả dấu.",
+      "Có chữ yêu ở trong đó."
+    ]
+  },
+  "startDate": "2024-02-14T19:30:00+07:00",
+  "music": "/music/nen.wav",
+  "envelope": {
+    "greeting": "Gửi Lan,",
+    "sealCaption": "Một phong thư niêm bằng sáp.",
+    "openHint": "Chạm vào con dấu để mở",
+    "body": "Anh gom vài vì sao, một chiếc bánh, và những câu chưa kịp nói. Tất cả nằm sau con dấu này.",
+    "enter": "Bước vào vũ trụ"
+  },
+  "chapters": [
+    {
+      "id": "gallery",
+      "star": "Ảnh",
+      "kicker": "Polaroid",
+      "title": "Những tấm ảnh",
+      "lede": "Chạm vào ảnh. Mặt sau có một câu anh giấu."
+    },
+    {
+      "id": "scratch",
+      "star": "Cào",
+      "kicker": "Thẻ cào",
+      "title": "Những điều anh thương",
+      "lede": "Cào lớp vàng bằng ngón tay. Mỗi thẻ là một điều."
+    },
+    {
+      "id": "quiz",
+      "star": "Đố",
+      "kicker": "Một trò nhỏ",
+      "title": "Anh hiểu em bao nhiêu?",
+      "lede": "Không có điểm để khoe. Chỉ là anh muốn nhớ đúng."
+    },
+    {
+      "id": "memory",
+      "star": "Nhớ",
+      "kicker": "Lật ảnh",
+      "title": "Trò chơi trí nhớ",
+      "lede": "Tìm hai tấm giống nhau."
+    },
+    {
+      "id": "dreams",
+      "star": "Ước",
+      "kicker": "Danh sách",
+      "title": "Ước mơ của hai đứa",
+      "lede": "Những điều mình sẽ làm. Em tích được — trình duyệt này sẽ nhớ."
+    },
+    {
+      "id": "friends",
+      "star": "Bạn",
+      "kicker": "Giấy note",
+      "title": "Lời từ bạn bè",
+      "lede": "Họ gửi vài dòng. Anh chỉ là người dán lên tường."
+    },
+    {
+      "id": "counter",
+      "star": "Ngày",
+      "kicker": "Đồng hồ",
+      "title": "Đã bên nhau",
+      "lede": "Từng giây vẫn đang chạy, kể cả khi em không mở trang này."
+    }
+  ],
+  "photos": [
+    {
+      "id": "p1",
+      "src": "/photos/01.svg",
+      "alt": "Minh họa buổi chiều bên cửa sổ",
+      "caption": "Chiều cửa sổ",
+      "compliment": "Ánh sáng chiều hợp với em hơn là với bất cứ thứ gì anh từng thấy.",
+      "pair": true
+    },
+    {
+      "id": "p2",
+      "src": "/photos/02.svg",
+      "alt": "Minh họa biển lúc chạng vạng",
+      "caption": "Biển gần tối",
+      "compliment": "Em đứng im, gió làm hộ phần nói.",
+      "pair": true
+    },
+    {
+      "id": "p3",
+      "src": "/photos/03.svg",
+      "alt": "Minh họa đèn lồng trong đêm",
+      "caption": "Đèn lồng",
+      "compliment": "Em thích những thứ sáng vừa đủ, không cần cả thành phố phải biết.",
+      "pair": true
+    },
+    {
+      "id": "p4",
+      "src": "/photos/04.svg",
+      "alt": "Minh họa con phố mưa",
+      "caption": "Mưa",
+      "compliment": "Trời mưa mà em vẫn gửi anh một câu rất khô.",
+      "pair": true
+    },
+    {
+      "id": "p5",
+      "src": "/photos/05.svg",
+      "alt": "Minh họa ly cà phê trên bàn",
+      "caption": "Cà phê",
+      "compliment": "Ly của em luôn nguội trước, vì em kể chuyện.",
+      "pair": true
+    },
+    {
+      "id": "p6",
+      "src": "/photos/06.svg",
+      "alt": "Minh họa quầy hoa",
+      "caption": "Hoa",
+      "compliment": "Em không cần hoa. Nhưng anh vẫn muốn mang.",
+      "pair": true
+    },
+    {
+      "id": "p7",
+      "src": "/photos/07.svg",
+      "alt": "Minh họa cửa sổ tàu đêm",
+      "caption": "Tàu đêm",
+      "compliment": "Em ngủ dựa cửa kính, và anh không dám thở mạnh.",
+      "pair": false
+    },
+    {
+      "id": "p8",
+      "src": "/photos/08.svg",
+      "alt": "Minh họa trăng trên sân thượng",
+      "caption": "Trăng",
+      "compliment": "Có những đêm anh nhìn lên và nhớ ra em cũng đang ở dưới cùng một trời.",
+      "pair": false
+    }
+  ],
+  "scratches": [
+    {
+      "id": "s1",
+      "cover": "Cào nhẹ",
+      "reveal": "Cách em đọc tin nhắn rồi mỉm cười trước khi trả lời."
+    },
+    {
+      "id": "s2",
+      "cover": "Thêm một lớp",
+      "reveal": "Giọng em khi vừa tỉnh, còn dính ngủ."
+    },
+    {
+      "id": "s3",
+      "cover": "Ở dưới này",
+      "reveal": "Em nhớ những điều nhỏ anh quên mình từng kể."
+    },
+    {
+      "id": "s4",
+      "cover": "Cào tiếp đi",
+      "reveal": "Tay em lạnh, và em vẫn đưa cho anh."
+    },
+    {
+      "id": "s5",
+      "cover": "Lớp vàng này",
+      "reveal": "Em giận rất ngắn, nhưng thương rất dai."
+    },
+    {
+      "id": "s6",
+      "cover": "Điều cuối",
+      "reveal": "Cái nhìn em dành cho đồ ăn ngon. Anh muốn được nhìn như vậy."
+    }
+  ],
+  "quiz": [
+    {
+      "id": "q1",
+      "question": "Buổi sáng em thích mở mắt bằng gì?",
+      "options": ["Cà phê sữa", "Trà nóng", "Nước lạnh"],
+      "answer": 0,
+      "rightNote": "Anh nhớ mà. Sữa trước, đắng sau.",
+      "wrongNote": "Anh nhớ là cà phê sữa. Để anh thuộc lại."
+    },
+    {
+      "id": "q2",
+      "question": "Khi mệt, em muốn anh làm gì?",
+      "options": ["Nói nhiều cho vui", "Ngồi im cạnh em", "Đưa giải pháp ngay"],
+      "answer": 1,
+      "rightNote": "Ngồi im cũng là một cách ở lại.",
+      "wrongNote": "Lần sau anh sẽ ngồi im trước đã."
+    },
+    {
+      "id": "q3",
+      "question": "Món em hay nhắc khi đói là gì?",
+      "options": ["Phở", "Bún bò", "Cơm tấm"],
+      "answer": 2,
+      "rightNote": "Cơm tấm, thêm trứng. Anh ghi rồi.",
+      "wrongNote": "Hình như là cơm tấm. Anh sẽ không quên nữa."
+    },
+    {
+      "id": "q4",
+      "question": "Em dễ mềm lòng nhất khi nào?",
+      "options": ["Được khen", "Được ôm", "Nghe một bài hát cũ"],
+      "answer": 1,
+      "rightNote": "Vậy thì anh ôm, không cần diễn văn.",
+      "wrongNote": "Anh đoán lệch. Câu đúng là được ôm."
+    },
+    {
+      "id": "q5",
+      "question": "Cuối tuần lý tưởng của em là gì?",
+      "options": ["Ở nhà cả ngày", "Đi thật xa", "Đi lòng vòng, không kế hoạch"],
+      "answer": 2,
+      "rightNote": "Không bản đồ. Anh đi theo.",
+      "wrongNote": "Em thích đi lòng vòng hơn. Anh nhớ rồi."
+    }
+  ],
+  "quizSummary": "Anh đúng {ok}/{total}. Phần còn lại anh học tiếp.",
+  "memoryCopy": {
+    "moves": "Lượt: {n}",
+    "best": "Ít lượt nhất: {n}",
+    "win": "Em tìm thấy hết rồi. Anh cũng đang cố nhớ cho đủ.",
+    "again": "Chơi lại",
+    "back": "Mặt sau"
+  },
+  "dreams": [
+    {
+      "id": "d1",
+      "text": "Dậy sớm xem bình minh một lần, rồi được phép ngủ bù.",
+      "detail": "Không cần cảnh đẹp. Chỉ cần cùng thức."
+    },
+    {
+      "id": "d2",
+      "text": "Nấu một bữa không ai phải rửa nồi một mình.",
+      "detail": "Anh rửa. Em nếm."
+    },
+    {
+      "id": "d3",
+      "text": "Đi tàu đêm đến một tỉnh cả hai chưa có kỷ niệm.",
+      "detail": "Vé cứng, không cần khách sạn sang."
+    },
+    {
+      "id": "d4",
+      "text": "Học một bài hát đủ để hát sai cùng nhau.",
+      "detail": "Sai cũng được tính."
+    },
+    {
+      "id": "d5",
+      "text": "Giữ một chậu cây sống quá một năm.",
+      "detail": "Tưới thay phiên."
+    },
+    {
+      "id": "d6",
+      "text": "In một cuốn ảnh mỏng, chỉ những tấm không cần giải thích.",
+      "detail": "Để ở ngăn kéo, không phải để khoe."
+    },
+    {
+      "id": "d7",
+      "text": "Một ngày không điện thoại. Chỉ có nhau và đồ ăn.",
+      "detail": "Máy để ở phòng khác."
+    }
+  ],
+  "friendNotes": [
+    {
+      "id": "f1",
+      "author": "Minh",
+      "tone": "gold",
+      "text": "Sinh nhật vui nha. Nhớ giữ người hay làm em cười."
+    },
+    {
+      "id": "f2",
+      "author": "Hà",
+      "tone": "blush",
+      "text": "Chúc em một tuổi mới dịu như cách em đối với mọi người."
+    },
+    {
+      "id": "f3",
+      "author": "Khoa",
+      "tone": "sky",
+      "text": "Anh bạn anh ấy nhờ tớ viết. Tớ viết thật: em rất được chiều, và điều đó hợp lý."
+    },
+    {
+      "id": "f4",
+      "author": "Trang",
+      "tone": "cream",
+      "text": "Ước em luôn có một chỗ để về, kể cả khi chỗ đó chỉ là một tin nhắn."
+    },
+    {
+      "id": "f5",
+      "author": "Nam",
+      "tone": "sage",
+      "text": "Ăn ngon, ngủ đủ, và đừng tin những lời chúc quá dài. Lời này ngắn thôi."
+    },
+    {
+      "id": "f6",
+      "author": "My",
+      "tone": "blush",
+      "text": "Em xứng đáng những ngày không phải cố gắng."
+    },
+    {
+      "id": "f7",
+      "author": "Phát",
+      "tone": "gold",
+      "text": "Chúc em tuổi mới bớt lo. Việc lo để tụi tớ phụ."
+    },
+    {
+      "id": "f8",
+      "author": "Quỳnh",
+      "tone": "cream",
+      "text": "Hôm nay được phép nhận hết. Mai hẵng nghĩ đến người khác."
+    }
+  ],
+  "together": {
+    "past": "Đã bên nhau {days} ngày {hours} giờ {minutes} phút {seconds} giây",
+    "future": "Còn {days} ngày {hours} giờ {minutes} phút {seconds} giây nữa là tới ngày mình bắt đầu"
+  },
+  "cake": {
+    "title": "Một chiếc bánh cho em",
+    "kicker": "Sinh nhật",
+    "lede": "Thổi vào mic, hoặc chạm từng ngọn nến.",
+    "candles": 5,
+    "mic": "Bật mic để thổi",
+    "micStop": "Dừng mic",
+    "listening": "Đang nghe… thổi một hơi.",
+    "micError": "Không mở được mic. Em chạm vào nến cũng được.",
+    "tapHint": "Chạm một ngọn nến để tắt.",
+    "letterTitle": "Sau khi nến tắt",
+    "letter": "Lan à,\n\nHôm nay anh không định nói gì thật to. Chỉ muốn em biết: trong cái ngày em được sinh ra, thế giới đã có một người mà anh sẽ tìm thấy sau này.\n\nCảm ơn em vì những buổi tối bình thường. Vì cách em gửi ảnh mây. Vì cả những lần mình im. Anh học được từ em rằng ở lại cũng là một cách nói yêu.\n\nThổi nến xong rồi thì ước một điều. Anh không hỏi điều đó là gì. Anh chỉ đứng đây, giữ que diêm, phòng khi em cần thắp lại.\n\nSinh nhật vui, em.\nAnh.",
+    "skip": "Đọc hết",
+    "next": "Những lá thư mở khi…"
+  },
+  "openWhen": [
+    {
+      "id": "sad",
+      "label": "Mở khi buồn",
+      "body": "Em không cần hết buồn ngay bây giờ.\n\nNếu đang ở giữa một ngày nặng, hãy làm một việc rất nhỏ: uống nước, hoặc ra cửa sổ một phút. Anh không viết lá này để bảo em vui lên. Anh chỉ muốn em biết là em không phải mang hết một mình.\n\nKhi nào em muốn, kể anh nghe — dài cũng được, vụn cũng được. Anh đọc."
+    },
+    {
+      "id": "miss",
+      "label": "Mở khi nhớ anh",
+      "body": "Anh cũng đang nhớ em, có thể đúng giây này.\n\nNếu nhớ mà không tiện gọi, hãy mở ảnh bất kỳ trong vũ trụ này. Anh giấu một câu ở mặt sau mỗi tấm. Coi như anh đang nói nhỏ.\n\nCòn nếu tiện: gọi. Anh sẽ bắt máy như thể đang đợi, vì thật ra là đang đợi."
+    },
+    {
+      "id": "angry",
+      "label": "Mở khi giận anh",
+      "body": "Em giận là có lý do. Anh không viết lá này để em hết giận cho nhanh.\n\nCứ giận đủ. Anh sẽ không đòi em dịu xuống để anh dễ chịu. Khi em muốn nói, anh nghe mà không ngắt. Khi em chưa muốn nói, anh vẫn ở đây — hơi xa một chút, không biến mất.\n\nAnh xin lỗi trước cho những lần anh làm em phải mở lá thư này."
+    },
+    {
+      "id": "awake",
+      "label": "Mở khi mất ngủ",
+      "body": "Đêm dài thì đếm chậm thôi.\n\nHít vào đếm bốn, thở ra đếm sáu. Không cần thiền cho đúng. Nếu đầu vẫn ồn, hãy đọc lại một ước mơ trong danh sách của hai đứa — chọn cái nhỏ nhất, cái không cần vé máy bay.\n\nAnh không bảo em ngủ ngay. Anh chỉ ngồi cùng em đến khi mí mắt chịu thua."
+    }
+  ],
+  "lettersCopy": {
+    "title": "Mở khi…",
+    "kicker": "Hộp thư",
+    "lede": "Mỗi lá mở được một lần trong ngày. Mai niêm lại, em có thể mở nữa.",
+    "sealed": "Chạm để mở",
+    "openedNote": "Hôm nay em đã mở lá này. Mai mình niêm lại.",
+    "next": "Một câu hỏi cuối"
+  },
+  "finale": {
+    "question": "Cho anh yêu em thêm một năm nữa nhé?",
+    "yes": "Có",
+    "no": "Không",
+    "teases": [
+      "Nút này nhát lắm.",
+      "Chạy đâu vậy?",
+      "Em thử nút bên kia xem.",
+      "Không có cửa đâu.",
+      "Anh vẫn đứng đây."
+    ],
+    "yesTitle": "Vậy là thêm một năm.",
+    "yesBody": "Anh nghe thấy rồi. Anh sẽ giữ. Và năm sau, anh hỏi lại."
+  },
+  "ui": {
+    "back": "Về bầu trời",
+    "loading": "Đang mở…",
+    "lit": "Đã thắp {n}/7 vì sao",
+    "waiting": "Khi đủ bảy vì sao, bầu trời sẽ gọi tên em.",
+    "formed": "Các vì sao vừa gọi tên em.",
+    "doorCake": "Bánh sinh nhật",
+    "doorLetters": "Mở khi…",
+    "doorFinale": "Câu hỏi cuối",
+    "musicOn": "Bật nhạc",
+    "musicOff": "Tắt nhạc",
+    "musicBlocked": "Trình duyệt đang chặn nhạc. Chạm nút nhạc giúp anh.",
+    "reset": "Đặt lại",
+    "resetConfirm": "Xóa hết dấu vết trên trình duyệt này?",
+    "starOpened": "đã mở",
+    "starClosed": "chưa mở",
+    "nextQuestion": "Câu tiếp",
+    "seeAgain": "Xem lại",
+    "summaryTitle": "Kết quả nhỏ",
+    "contentError": "content.json đang lệch. Anh xem lại giúp em.",
+    "crash": "Có gì đó lệch quỹ đạo. Em tải lại trang giúp anh."
+  }
+}

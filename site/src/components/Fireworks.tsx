@@ -1,4 +1,5 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useReducedMotion } from "../lib/useReducedMotion.ts";
 
 type Bit = {
@@ -17,6 +18,11 @@ const COLORS = ["#fff7fb", "#f7c6dc", "#d7c6f6", "#c9e2f8", "#f8d4c6", "#ffe4f0"
 export function Fireworks({ bursts = 7 }: { bursts?: number }) {
   const ref = useRef<HTMLCanvasElement>(null);
   const reduced = useReducedMotion();
+  const [mount, setMount] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setMount(document.getElementById("fx-mount"));
+  }, []);
 
   useEffect(() => {
     if (reduced) return;
@@ -28,28 +34,35 @@ export function Fireworks({ bursts = 7 }: { bursts?: number }) {
     let alive = true;
     const bits: Bit[] = [];
     let born = 0;
+    let cool = 0;
 
-    const resize = () => {
-      const rect = canvas.getBoundingClientRect();
+    const fit = () => {
+      const width = Math.max(1, canvas.clientWidth);
+      const height = Math.max(1, canvas.clientHeight);
       const dpr = Math.min(2, window.devicePixelRatio || 1);
-      canvas.width = Math.max(1, Math.floor(rect.width * dpr));
-      canvas.height = Math.max(1, Math.floor(rect.height * dpr));
+      const nextW = Math.floor(width * dpr);
+      const nextH = Math.floor(height * dpr);
+      if (canvas.width !== nextW || canvas.height !== nextH) {
+        canvas.width = nextW;
+        canvas.height = nextH;
+      }
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      return { width, height };
     };
 
     const boom = (x: number, y: number) => {
-      const count = 46;
+      const count = 42;
       for (let index = 0; index < count; index += 1) {
         const angle = (Math.PI * 2 * index) / count + Math.random() * 0.25;
-        const speed = 0.8 + Math.random() * 2.6;
+        const speed = 0.7 + Math.random() * 2.4;
         bits.push({
           x,
           y,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
           life: 0,
-          max: 0.9 + Math.random() * 0.7,
-          size: 1.6 + Math.random() * 2.6,
+          max: 0.9 + Math.random() * 0.8,
+          size: 1.5 + Math.random() * 2.4,
           color: COLORS[index % COLORS.length] ?? "#fff",
         });
       }
@@ -57,45 +70,75 @@ export function Fireworks({ bursts = 7 }: { bursts?: number }) {
 
     const frame = () => {
       if (!alive) return;
-      const width = canvas.clientWidth;
-      const height = canvas.clientHeight;
+      const { width, height } = fit();
       ctx.clearRect(0, 0, width, height);
-      if (born < bursts && bits.length < bursts * 46) {
-        if (born === 0 || Math.random() > 0.82) {
-          boom(width * (0.18 + Math.random() * 0.64), height * (0.12 + Math.random() * 0.46));
-          born += 1;
-        }
+      cool += 1;
+      const room = bits.reduce((sum, bit) => sum + (bit.life < bit.max ? 1 : 0), 0);
+      if (room < 120 && cool > 18 && (born < bursts || Math.random() > 0.55)) {
+        const y = Math.random() > 0.4
+          ? height * (0.05 + Math.random() * 0.14)
+          : height * (0.62 + Math.random() * 0.22);
+        boom(width * (0.1 + Math.random() * 0.8), y);
+        born += 1;
+        cool = 0;
       }
-      for (const bit of bits) {
+      for (let index = bits.length - 1; index >= 0; index -= 1) {
+        const bit = bits[index];
+        if (!bit || bit.life >= bit.max) {
+          bits.splice(index, 1);
+          continue;
+        }
         bit.life += 0.016;
         bit.x += bit.vx;
         bit.y += bit.vy;
-        bit.vy += 0.015;
+        bit.vy += 0.012;
         bit.vx *= 0.992;
         const fade = 1 - bit.life / bit.max;
         ctx.globalAlpha = Math.max(0, fade);
         ctx.fillStyle = bit.color;
-        ctx.shadowColor = bit.color;
-        ctx.shadowBlur = 12;
         ctx.beginPath();
-        ctx.arc(bit.x, bit.y, bit.size, 0, Math.PI * 2);
+        ctx.arc(bit.x, bit.y, bit.size * (0.7 + fade), 0, Math.PI * 2);
         ctx.fill();
       }
-      ctx.shadowBlur = 0;
+      softenEdges(ctx, width, height);
       ctx.globalAlpha = 1;
-      if (born < bursts || bits.some((bit) => bit.life < bit.max)) raf = window.requestAnimationFrame(frame);
+      raf = window.requestAnimationFrame(frame);
     };
 
-    resize();
+    const observer = new ResizeObserver(() => fit());
+    observer.observe(canvas.parentElement ?? canvas);
+    window.visualViewport?.addEventListener("resize", fit);
     raf = window.requestAnimationFrame(frame);
     return () => {
       alive = false;
+      observer.disconnect();
+      window.visualViewport?.removeEventListener("resize", fit);
       window.cancelAnimationFrame(raf);
     };
-  }, [bursts, reduced]);
+  }, [bursts, reduced, mount]);
 
-  if (reduced) return null;
-  return <canvas ref={ref} className="fx-canvas fireworks-layer" aria-hidden="true" />;
+  if (reduced || !mount) return null;
+  return createPortal(<canvas ref={ref} className="fx-canvas fireworks-layer" aria-hidden="true" />, mount);
+}
+
+function softenEdges(ctx: CanvasRenderingContext2D, width: number, height: number) {
+  ctx.save();
+  ctx.globalCompositeOperation = "destination-in";
+  const vertical = ctx.createLinearGradient(0, 0, 0, height);
+  vertical.addColorStop(0, "rgba(0,0,0,0)");
+  vertical.addColorStop(0.06, "rgba(0,0,0,1)");
+  vertical.addColorStop(0.9, "rgba(0,0,0,1)");
+  vertical.addColorStop(1, "rgba(0,0,0,0)");
+  ctx.fillStyle = vertical;
+  ctx.fillRect(0, 0, width, height);
+  const horizontal = ctx.createLinearGradient(0, 0, width, 0);
+  horizontal.addColorStop(0, "rgba(0,0,0,0)");
+  horizontal.addColorStop(0.05, "rgba(0,0,0,1)");
+  horizontal.addColorStop(0.95, "rgba(0,0,0,1)");
+  horizontal.addColorStop(1, "rgba(0,0,0,0)");
+  ctx.fillStyle = horizontal;
+  ctx.fillRect(0, 0, width, height);
+  ctx.restore();
 }
 
 const PASTEL = ["#fff7fb", "#f7c6dc", "#e7d4ff", "#c9e2f8", "#ffd0e4"];

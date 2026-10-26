@@ -60,20 +60,27 @@ export function Gate({ onUnlock }: GateProps) {
       </div>
       <Reveal text={t(content.gate.question)} />
       <form onSubmit={onSubmit} className={shaking ? "gate-form shake" : "gate-form"}>
-        <label className="gate-field">
-          <input
-            id="nickname"
-            value={value}
-            placeholder=" "
-            autoComplete="off"
-            autoCapitalize="none"
-            autoCorrect="off"
-            spellCheck={false}
-            enterKeyHint="go"
-            onChange={(event) => setValue(event.target.value)}
-          />
-          <span>{t(content.gate.placeholder)}</span>
-          <button type="submit" className="gate-go" aria-label={t(content.gate.submit)}>
+        <div className="gate-field">
+          <label>
+            <input
+              id="nickname"
+              value={value}
+              placeholder=" "
+              autoComplete="off"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
+              enterKeyHint="go"
+              onChange={(event) => setValue(event.target.value)}
+            />
+            <span>{t(content.gate.placeholder)}</span>
+          </label>
+          <button
+            type="submit"
+            className="gate-go"
+            aria-label={t(content.gate.submit)}
+            onPointerDown={(event) => event.preventDefault()}
+          >
             <svg viewBox="0 0 20 20" aria-hidden="true">
               <path
                 d="M4 10h11M11 5l5 5-5 5"
@@ -85,7 +92,7 @@ export function Gate({ onUnlock }: GateProps) {
               />
             </svg>
           </button>
-        </label>
+        </div>
       </form>
       <p className="hint" role="status">
         {empty ? t(content.gate.empty) : t(hint)}

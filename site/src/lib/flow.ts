@@ -96,15 +96,15 @@ export function stepDone(
     case "gate":
       return progress.gateUnlocked;
     case "sky":
-      return progress.skyDone;
+    case "counter":
+    case "friends":
+      return true;
     case "birth":
       return progress.birthSeen;
     case "gallery":
       return progress.flippedPhotos.length > 0;
     case "quiz":
       return quizIds.every((qid) => typeof progress.quiz[qid] === "number");
-    case "counter":
-      return progress.counterSeen;
     case "cake": {
       const out = new Set(progress.candlesOut.filter((index) => index >= 0 && index < candleCount));
       return out.size >= candleCount;
@@ -117,8 +117,6 @@ export function stepDone(
       return scratchIds.length > 0 && scratchIds.every((sid) => progress.scratched.includes(sid));
     case "letters":
       return letterIds.length > 0 && letterIds.every((lid) => Boolean(progress.openWhen[lid]));
-    case "friends":
-      return progress.friendsSeen;
     case "dreams":
       return progress.dreamsDone.length > 0;
     case "finale":

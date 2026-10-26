@@ -200,11 +200,11 @@ export function App() {
 
   const done = stepDone(stepId, progress, CANDLES, QUIZ_IDS, SCRATCH_IDS, LETTER_IDS);
   const flowAction: StickyAction | null =
-    stepId === "letter" || stepId === "gate" || quizAction
+    stepId === "letter" || stepId === "gate" || quizAction || !done
       ? null
       : {
           label: t(content.flow.next),
-          disabled: !done,
+          disabled: false,
           onClick: () => go(step + 1),
         };
   const stickyAction = quizAction ?? flowAction;
@@ -310,6 +310,7 @@ export function App() {
   return (
     <StickyNextContext.Provider value={stickyValue}>
       <Starfield />
+      <div id="fx-mount" className="fx-mount" />
       <header className="chrome" ref={headerRef}>
         <div className="chrome-row">
           <LanguageToggle />
@@ -402,7 +403,7 @@ export function App() {
         </div>
         {stickyAction && (
           <StickyNext
-            motionKey={`${stepId}-${stickyAction.label}-${stickyAction.disabled ? "wait" : "go"}`}
+            motionKey={`${stepId}-${stickyAction.label}`}
             label={stickyAction.label}
             disabled={stickyAction.disabled}
             reduced={reduced}

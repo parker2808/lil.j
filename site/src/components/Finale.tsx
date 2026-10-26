@@ -63,10 +63,10 @@ export function Finale({ saidYes, onYes }: FinaleProps) {
       <Hearts active={saidYes} />
       {saidYes && <Fireworks />}
       {saidYes ? (
-        <>
+        <div className="finale-copy">
           <Reveal text={t(content.finale.yesTitle)} />
           <p className="lede">{t(content.finale.yesBody)}</p>
-        </>
+        </div>
       ) : (
         <>
           <Reveal text={t(content.finale.question)} />

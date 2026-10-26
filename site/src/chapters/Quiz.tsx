@@ -18,10 +18,10 @@ export function Quiz({ progress, update }: ChapterProps) {
   const correct = content.quiz.filter((item) => progress.quiz[item.id] === item.answer).length;
   const answered = question ? typeof progress.quiz[question.id] === "number" : false;
   useRegisterSticky(
-    question
+    question && answered
       ? {
           label: t(content.ui.nextQuestion),
-          disabled: !answered,
+          disabled: false,
           onClick: () => setStep((current) => current + 1),
         }
       : null,

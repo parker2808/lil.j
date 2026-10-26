@@ -28,7 +28,8 @@
   --safe-left: env(safe-area-inset-left, 0px);
   --safe-right: env(safe-area-inset-right, 0px);
   --header-h: 72px;
-  --footer-h: 44px;
+  --footer-h: 60px;
+  --footer-pad: max(16px, calc(var(--safe-bottom) + 8px));
   --stage-fade: 32px;
   --text-eyebrow: 12px;
   --text-secondary: 14px;
@@ -54,9 +55,12 @@ html, body {
   position: fixed;
   inset: 0;
   width: 100%;
+  max-width: 100%;
   height: 100%;
   margin: 0;
   overflow: hidden;
+  overflow-x: hidden;
+  overflow-x: clip;
   overscroll-behavior: none;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
@@ -100,11 +104,15 @@ body::after {
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
   height: 100%;
   height: 100dvh;
   max-height: 100%;
   min-height: 0;
   overflow: hidden;
+  overflow-x: hidden;
+  overflow-x: clip;
   overscroll-behavior: none;
 }
 
@@ -177,7 +185,10 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   z-index: 0;
   width: 100%;
   height: 100%;
+  max-width: 100%;
   pointer-events: none;
+  overflow: clip;
+  contain: paint;
 }
 
 .stage,
@@ -209,7 +220,7 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   display: flex;
   align-items: center;
   gap: 6px;
-  min-height: 36px;
+  min-height: 44px;
 }
 
 .chrome-row > * { pointer-events: auto; }
@@ -220,21 +231,27 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   position: relative;
   z-index: 1;
   flex: 1 1 auto;
+  min-width: 0;
   min-height: 0;
+  max-width: 100%;
   margin-left: var(--safe-left);
   margin-right: var(--safe-right);
   display: flex;
   flex-direction: column;
+  overflow-x: clip;
 }
 
 .stage {
   position: relative;
   flex: 1 1 auto;
+  min-width: 0;
   min-height: 0;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   padding-bottom: var(--stage-fade);
   overflow-x: hidden;
+  overflow-x: clip;
   overflow-y: auto;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
@@ -243,9 +260,17 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   mask-image: linear-gradient(180deg, #000 0, #000 calc(100% - var(--stage-fade)), transparent 100%);
 }
 
+:root.keyboard-open .stage {
+  -webkit-mask-image: none;
+  mask-image: none;
+  padding-bottom: 0;
+}
+
 .stage-pane {
   flex: 1 0 auto;
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
   min-height: 100%;
   display: flex;
   flex-direction: column;
@@ -255,6 +280,8 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   position: relative;
   z-index: 1;
   width: min(520px, 100%);
+  min-width: 0;
+  max-width: 100%;
   margin: 0 auto;
   padding: 4px 16px 12px;
 }
@@ -366,8 +393,8 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 }
 
 .lang button {
-  min-width: 34px;
-  min-height: 28px;
+  min-width: 44px;
+  min-height: 44px;
   border: none;
   border-radius: var(--radius-pill);
   background: transparent;
@@ -554,12 +581,13 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   color: var(--gold);
 }
 
-.gate-go {
+.gate-go,
+.wish-go {
   position: absolute;
-  right: 6px;
+  right: 5px;
   top: 50%;
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   display: grid;
   place-items: center;
   padding: 0;
@@ -574,20 +602,26 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   box-shadow: 0 8px 16px rgba(224, 140, 176, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
-.gate-go svg { position: relative; z-index: 1; width: 18px; height: 18px; }
+.gate-go svg,
+.wish-go svg { position: relative; z-index: 1; width: 18px; height: 18px; pointer-events: none; }
 
-.gate-go::after {
+.gate-go::after,
+.wish-go::after {
   content: "";
   position: absolute;
   inset: 0;
+  pointer-events: none;
   background: linear-gradient(110deg, transparent 32%, rgba(255, 255, 255, 0.8) 50%, transparent 68%);
   transform: translateX(-130%);
   animation: shimmer 3.2s ease-in-out infinite;
 }
 
-.gate-go:active { transform: translateY(-50%) scale(0.94); }
-.gate-go:focus { outline: none; }
-.gate-go:focus-visible { outline: 2px solid #fff7fb; outline-offset: 2px; }
+.gate-go:active,
+.wish-go:active { transform: translateY(-50%) scale(0.94); }
+.gate-go:focus,
+.wish-go:focus { outline: none; }
+.gate-go:focus-visible,
+.wish-go:focus-visible { outline: 2px solid #fff7fb; outline-offset: 2px; }
 
 @keyframes gate-spin { to { transform: rotate(360deg); } }
 
@@ -597,7 +631,7 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 
 .env-pocket {
   position: relative;
-  width: min(88vw, 340px);
+  width: min(88%, 340px);
   height: 220px;
   margin: 28px auto 0;
   perspective: 900px;
@@ -747,9 +781,11 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 .sky-map {
   position: relative;
   width: min(100%, 720px);
+  max-width: 100%;
   aspect-ratio: 1;
   height: auto;
   margin: 4px auto 0;
+  overflow: clip;
 }
 
 .links {
@@ -872,11 +908,14 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 .polaroids {
   display: flex;
   gap: 16px;
-  margin: 20px -22px 0;
-  padding: 10px 22px 28px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: 20px 0 0;
+  padding: 10px 16px 28px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  scroll-padding-inline: 22px;
+  scroll-padding-inline: 16px;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -1410,7 +1449,7 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 
 .candle {
   position: relative;
-  width: 30px;
+  width: 44px;
   height: 108px;
   padding: 0;
   border: none;
@@ -1714,8 +1753,8 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   flex: none;
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border-radius: 50%;
   border: 1px solid rgba(247, 196, 220, 0.4);
@@ -1740,8 +1779,8 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   flex: none;
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border-radius: 50%;
   border: 1px solid rgba(247, 196, 220, 0.4);
@@ -1883,8 +1922,8 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   position: relative;
   z-index: 1;
   flex: none;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border-radius: 50%;
   border: 1px solid rgba(247, 196, 220, 0.4);
@@ -1902,8 +1941,8 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  height: calc(44px + var(--safe-bottom));
-  padding: 0 calc(var(--safe-right) + 12px) var(--safe-bottom) calc(var(--safe-left) + 12px);
+  height: calc(44px + var(--footer-pad));
+  padding: 0 calc(var(--safe-right) + 12px) var(--footer-pad) calc(var(--safe-left) + 12px);
   background: transparent;
   border: none;
   box-shadow: none;
@@ -1913,8 +1952,19 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 }
 
 :root.keyboard-open .flow { display: none; }
+:root.keyboard-open .wish-copy .kicker,
 :root.keyboard-open .wish-copy .lede,
-:root.keyboard-open .wish-read { display: none; }
+:root.keyboard-open .wish-stars { display: none; }
+:root.keyboard-open .wish-copy {
+  max-height: none;
+  overflow: visible;
+}
+:root.keyboard-open .wish-copy h1 { font-size: 20px; margin-bottom: 0; }
+:root.keyboard-open .wish-read { margin-top: 6px; }
+:root.keyboard-open .wish-read:empty { display: none; }
+:root.keyboard-open .wish-scene { min-height: 0; }
+:root.keyboard-open .wish-sky { overflow: visible; }
+:root.keyboard-open .wish-form { margin-top: 8px; }
 
 .flow-copy {
   flex: 1 1 auto;
@@ -1976,8 +2026,8 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   align-self: center;
   width: max-content;
   max-width: 100%;
-  height: 40px;
-  min-height: 40px;
+  height: 44px;
+  min-height: 44px;
   padding: 0 14px 0 16px;
   border: none;
   border-radius: var(--radius-pill);
@@ -1995,7 +2045,7 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 }
 
 .sticky-next:not(:disabled) {
-  animation: next-glow 2.8s ease-in-out infinite;
+  animation: next-glow 0.9s ease-out 1;
 }
 
 .sticky-next:disabled {
@@ -2014,6 +2064,8 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   left: auto;
   right: auto;
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
   display: flex;
   pointer-events: auto;
   justify-content: flex-start;
@@ -2102,8 +2154,8 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 
 .constellation-hit {
   position: absolute;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   transform: translate(-50%, -50%);
   border: none;
   border-radius: 50%;
@@ -2162,8 +2214,10 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 .wish-flight {
   position: absolute;
   inset: 0;
+  z-index: 4;
   width: 100%;
   height: 100%;
+  max-width: 100%;
   pointer-events: none;
 }
 
@@ -2202,82 +2256,201 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 .wish-star {
   position: absolute;
   z-index: 2;
-  width: 18px;
-  height: 18px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border: none;
   border-radius: 50%;
-  background: var(--hue, #fff7fb);
-  box-shadow: 0 0 14px 5px color-mix(in srgb, var(--hue, #f7c6dc) 75%, white);
+  background: radial-gradient(circle, var(--hue, #fff7fb) 0 6px, transparent 7.5px);
   transform: translate(-50%, -50%);
   animation: twinkle 2.8s ease-in-out infinite;
 }
 
-.wish-star.is-on { transform: translate(-50%, -50%) scale(1.35); }
+.wish-star::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--hue, #fff7fb);
+  box-shadow: 0 0 14px 5px color-mix(in srgb, var(--hue, #f7c6dc) 75%, white);
+  pointer-events: none;
+}
 
-.wish-pill {
+.wish-star.is-on { transform: translate(-50%, -50%) scale(1.2); }
+
+.wish-form {
   position: relative;
-  z-index: 3;
+  z-index: 5;
   flex: none;
-  margin: 8px 12px 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 6px 6px 16px;
-  border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 228, 240, 0.55);
-  background: rgba(255, 244, 250, 0.16);
-  box-shadow: 0 0 28px rgba(247, 196, 220, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(16px);
+  width: min(100%, 340px);
+  margin: 8px auto 12px;
 }
 
-.wish-field { flex: 1; min-width: 0; }
-.wish-pill input {
-  width: 100%;
-  min-height: 44px;
-  border: none;
-  background: transparent;
-  color: #fff7fb;
-  font-size: 16px;
-  outline: none;
+.gate-field > label,
+.wish-field > label {
+  display: block;
 }
-.wish-pill input::placeholder { color: rgba(255, 247, 251, 0.62); }
-.wish-pill .btn {
-  flex: none;
-  min-height: 44px;
-  padding-inline: 16px;
-  white-space: nowrap;
+
+.wish-field {
+  position: relative;
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+
+.wish-field input {
+  width: 100%;
+  height: 54px;
+  padding: 16px 58px 0 22px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 228, 240, 0.48);
+  background: rgba(255, 245, 250, 0.1);
+  font-size: var(--text-body);
+  line-height: 1.2;
+  outline: none;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.wish-field span {
+  position: absolute;
+  left: 22px;
+  top: 17px;
+  color: var(--muted);
   font-size: var(--text-secondary);
-  line-height: 1;
+  line-height: var(--leading-body);
+  pointer-events: none;
+  transition: top 0.2s ease, color 0.2s ease, font-size 0.2s ease, letter-spacing 0.2s ease;
+}
+
+.wish-field input:focus {
+  border-color: #f7d5e6;
+  box-shadow:
+    0 0 0 4px rgba(247, 196, 220, 0.16),
+    0 0 22px rgba(247, 196, 220, 0.38);
+}
+
+.wish-field input:focus + span,
+.wish-field input:not(:placeholder-shown) + span {
+  top: 6px;
+  font-size: 11px;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
 }
 
 .hand-sheet {
+  position: relative;
   margin: 12px auto 0;
-  padding: 18px 16px 20px;
+  padding: 22px 18px 26px;
   text-align: left;
   border-radius: var(--radius-lg);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.72), transparent 26%),
-    var(--paper);
+    radial-gradient(120% 80% at 50% -10%, rgba(255, 255, 255, 0.92), transparent 48%),
+    linear-gradient(165deg, #fff9f6 0%, #ffe7f1 46%, #f6e3ee 100%);
   color: var(--paper-ink);
-  box-shadow: 0 24px 50px rgba(74, 36, 96, 0.22);
-  transform: rotate(-0.35deg);
+  box-shadow:
+    inset 0 0 36px rgba(255, 214, 228, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.72),
+    0 22px 48px rgba(90, 40, 80, 0.16);
+  overflow: hidden;
 }
 
-.hand-line {
-  margin: 0;
+.hand-sheet::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.28;
+  background-image: radial-gradient(rgba(120, 72, 96, 0.28) 0.55px, transparent 0.65px);
+  background-size: 3px 3px;
+}
+
+.letter-head,
+.letter-body,
+.letter-sign { position: relative; z-index: 1; }
+
+.letter-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.letter-date {
+  color: #a86b86;
+  font-size: var(--text-eyebrow);
+  line-height: var(--leading-eyebrow);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.letter-seal {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #7a3d58;
+  background: radial-gradient(circle at 35% 30%, #fff, #f6c3d4 46%, #e095b0);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.65), 0 8px 14px rgba(176, 84, 116, 0.22);
+}
+
+.letter-seal svg { width: 18px; height: 18px; }
+
+.letter-body {
   font-family: var(--sans);
   font-weight: 500;
-  font-size: 17px;
+  font-size: var(--text-letter);
   line-height: 1.55;
+  overflow-wrap: break-word;
 }
 
-.hand-line.is-ink {
-  animation: ink-write 0.72s ease both;
+.ink-word {
+  display: inline-block;
+  white-space: pre-wrap;
+  animation: word-in 0.46s ease both;
 }
 
-.hand-line.is-blank { min-height: 0.7rem; }
+.ink-break { display: block; height: 0.8em; }
+.ink-line { display: block; height: 0; }
 
+.ink-caret {
+  display: inline-block;
+  width: 2px;
+  height: 0.95em;
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  background: #c96d82;
+  box-shadow: 0 0 8px rgba(247, 198, 220, 0.95);
+  animation: caret-blink 1s steps(1) infinite;
+}
+
+.letter-sign {
+  display: block;
+  width: 132px;
+  height: 52px;
+  margin-top: 18px;
+}
+
+.letter-sign path {
+  fill: none;
+  stroke: #6d3550;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 240;
+  stroke-dashoffset: 240;
+  animation: sign-draw 1.3s ease forwards;
+}
+
+.letter-scene { padding-bottom: calc(var(--stage-fade) + 28px); }
 .letter-scene .btn { margin-top: 16px; }
 
 .toast {
@@ -2285,10 +2458,90 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   bottom: auto;
 }
 
-@media (min-width: 800px) {
+.wish-sky.is-flying .wish-stars { animation: sky-parallax 3.4s ease-in-out; }
+
+.scene:has(.polaroids) { padding-left: 0; padding-right: 0; }
+.scene:has(.polaroids) > :not(.polaroids) { padding-left: 16px; padding-right: 16px; }
+
+@media (min-width: 660px) and (min-height: 640px) {
+  :root {
+    --text-eyebrow: 13px;
+    --text-secondary: 15px;
+    --text-body: 17px;
+    --text-letter: 19px;
+    --text-h2: 26px;
+    --text-h1: 34px;
+    --text-hero: clamp(64px, 7vw, 84px);
+  }
+
+  .chrome {
+    padding-left: max(28px, calc(var(--safe-left) + 28px));
+    padding-right: max(28px, calc(var(--safe-right) + 28px));
+  }
+
+  .flow {
+    width: min(1040px, calc(100% - 48px));
+    margin-inline: auto;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .stage-pane { justify-content: safe center; }
+
+  .scene,
+  .gate,
+  .letter-scene { width: min(640px, 100%); }
+
+  .universe.scene,
   .birth-scene,
   .wish-scene,
-  .letter-scene { width: min(720px, 100%); }
+  .finale,
+  .scene:has(.polaroids),
+  .scene:has(.memory-grid) {
+    width: min(960px, 100%);
+  }
+
+  .wish-scene {
+    flex: 0 1 auto;
+    min-height: 0;
+    align-self: center;
+  }
+  .wish-sky {
+    flex: none;
+    height: auto;
+    min-height: 0;
+  }
+  .wish-stars {
+    flex: none;
+    height: clamp(150px, 22vh, 220px);
+    min-height: 150px;
+  }
+
+  .sky-map { width: min(100%, 640px); }
+  .chart { width: min(100%, 520px); }
+  .cake-stage { width: min(100%, 420px); }
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --text-body: 18px;
+    --text-letter: 20px;
+    --text-h2: 28px;
+    --text-h1: 40px;
+    --text-hero: clamp(72px, 5vw, 92px);
+  }
+
+  .scene,
+  .gate,
+  .letter-scene { width: min(680px, 100%); }
+
+  .universe.scene,
+  .birth-scene,
+  .wish-scene,
+  .finale,
+  .scene:has(.polaroids) { width: min(1040px, 100%); }
+
+  .sky-map { width: min(100%, 720px); }
 }
 
 .reveal { display: flex; flex-wrap: wrap; justify-content: inherit; gap: 0.28em; }
@@ -2315,27 +2568,53 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   animation: burst 0.9s ease forwards;
 }
 
+.fx-mount {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  pointer-events: none;
+  overflow: clip;
+  contain: paint;
+}
+
 .fx-canvas, .petals {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+  max-width: 100%;
   pointer-events: none;
 }
 
 .fireworks-layer,
 .gate-burst-canvas {
-  position: fixed;
+  position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+  max-width: 100%;
   pointer-events: none;
 }
 
-.fireworks-layer { z-index: 30; }
+.fireworks-layer { z-index: 1; }
 .gate-burst-canvas { z-index: 1; }
 
 .finale, .letter-scene { position: relative; }
+
+.finale-copy {
+  position: relative;
+  z-index: 2;
+}
+
+.finale h1,
+.finale .lede {
+  text-shadow:
+    0 2px 16px rgba(42, 18, 58, 0.82),
+    0 0 2px rgba(42, 18, 58, 0.9);
+}
 
 .petals i {
   position: absolute;
@@ -2394,6 +2673,24 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   to { clip-path: inset(0 0 0 0); opacity: 1; }
 }
 
+@keyframes word-in {
+  from { opacity: 0; filter: blur(6px); transform: translateY(7px); }
+  to { opacity: 1; filter: none; transform: none; }
+}
+
+@keyframes caret-blink {
+  0%, 45% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes sign-draw { to { stroke-dashoffset: 0; } }
+
+@keyframes sky-parallax {
+  0% { transform: translate3d(0, 8px, 0); }
+  42% { transform: translate3d(-12px, 18px, 0); }
+  100% { transform: none; }
+}
+
 @keyframes spark-pop {
   from { transform: scale(0.2); opacity: 0; }
   35% { opacity: 1; }
@@ -2436,7 +2733,43 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   .cake-stage { padding-top: 64px; }
   .constellation-name, .odo-hero { font-size: clamp(48px, 14vw, 64px); }
   .wish-copy { max-height: 42%; }
-  .wish-pill { margin-bottom: 8px; }
+  .wish-form { margin-bottom: 8px; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover:not(:disabled),
+  .option:hover:not(:disabled),
+  .seal-card:hover,
+  .sticky-next:hover:not(:disabled) {
+    transform: translateY(-1px);
+    border-color: rgba(255, 236, 244, 0.85);
+  }
+
+  .btn-gold:hover:not(:disabled),
+  .sticky-next:hover:not(:disabled),
+  .gate-go:hover,
+  .wish-go:hover {
+    filter: brightness(1.06);
+  }
+
+  .tilt:nth-child(odd):hover .polaroid,
+  .tilt:nth-child(even):hover .polaroid { transform: translateY(-4px) rotate(0deg); }
+  .wish-star:hover { transform: translate(-50%, -50%) scale(1.18); }
+  .mem:not(.is-up):hover .mem-inner { transform: translateY(-2px); }
+  .candle:hover .flame-outer { transform: translateX(-50%) scale(1.08); }
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+.option:focus-visible,
+.seal-card:focus-visible,
+.candle:focus-visible,
+.constellation-hit:focus-visible,
+.wish-star:focus-visible,
+.hit:focus-visible {
+  outline: 2px solid #f7d5e6;
+  outline-offset: 3px;
 }
 
 @media (max-width: 360px) {

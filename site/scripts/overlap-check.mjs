@@ -13,6 +13,19 @@ const VIEWPORTS = [
   { name: "390x844", width: 390, height: 844 },
   { name: "430x932", width: 430, height: 932 },
   { name: "844x390", width: 844, height: 390 },
+  { name: "507x768", width: 507, height: 768 },
+  { name: "678x1024", width: 678, height: 1024 },
+  { name: "768x1024", width: 768, height: 1024 },
+  { name: "1024x768", width: 1024, height: 768 },
+  { name: "744x1133", width: 744, height: 1133 },
+  { name: "1133x744", width: 1133, height: 744 },
+  { name: "820x1180", width: 820, height: 1180 },
+  { name: "1180x820", width: 1180, height: 820 },
+  { name: "1024x1366", width: 1024, height: 1366 },
+  { name: "1366x1024", width: 1366, height: 1024 },
+  { name: "1280x800", width: 1280, height: 800 },
+  { name: "1440x900", width: 1440, height: 900 },
+  { name: "1920x1080", width: 1920, height: 1080 },
 ];
 
 const pickedViews = (process.env.OVERLAP_VIEWPORTS || "")
@@ -24,13 +37,25 @@ const toolbarOffsets = (process.env.OVERLAP_TOOLBAR || "0,80")
   .split(",")
   .map((item) => Number(item.trim()))
   .filter((item) => Number.isFinite(item) && item >= 0);
-const viewports = baseViewports.flatMap((viewport) =>
-  (toolbarOffsets.length ? toolbarOffsets : [0]).map((bar) => ({
+function deviceKind(width, height) {
+  const short = Math.min(width, height);
+  const long = Math.max(width, height);
+  if (short <= 430 && long <= 940) return "phone";
+  if (width >= 1200 && height <= 1100 && width / height >= 1.5) return "desktop";
+  if (width >= 500 && width <= 700) return "split";
+  return "ipad";
+}
+
+const viewports = baseViewports.flatMap((viewport) => {
+  const kind = deviceKind(viewport.width, viewport.height);
+  const bars = kind === "phone" ? (toolbarOffsets.length ? toolbarOffsets : [0]) : [0];
+  return bars.map((bar) => ({
     name: bar > 0 ? `${viewport.name}-bar${bar}` : viewport.name,
     width: viewport.width,
     height: Math.max(240, viewport.height - bar),
-  })),
-);
+    kind,
+  }));
+});
 const locales = (process.env.OVERLAP_LOCALES || "vi,en").split(",").map((item) => item.trim()).filter(Boolean);
 const devModes = (process.env.OVERLAP_DEV || "1,0").split(",").map((item) => item.trim()).filter(Boolean);
 const states = (process.env.OVERLAP_STATES || "done,pending").split(",").map((item) => item.trim()).filter(Boolean);
@@ -40,8 +65,13 @@ const base = process.env.OVERLAP_URL || "http://127.0.0.1:4173";
 const ownServer = !process.env.OVERLAP_URL;
 
 function safeFor(viewport) {
-  if (viewport.width > viewport.height) return { top: "0px", bottom: "21px", left: "47px", right: "47px" };
-  return { top: "47px", bottom: "34px", left: "0px", right: "0px" };
+  const kind = viewport.kind || deviceKind(viewport.width, viewport.height);
+  if (kind === "phone") {
+    if (viewport.width > viewport.height) return { top: "0px", bottom: "21px", left: "47px", right: "47px" };
+    return { top: "47px", bottom: "34px", left: "0px", right: "0px" };
+  }
+  if (kind === "ipad") return { top: "24px", bottom: "20px", left: "0px", right: "0px" };
+  return { top: "0px", bottom: "0px", left: "0px", right: "0px" };
 }
 
 function progressFor(stepIndex, done) {
@@ -237,8 +267,19 @@ async function audit(page, label) {
       failures.push({ kind, detail, where });
     }
 
-    if (document.documentElement.scrollWidth > vw + 2 || document.body.scrollWidth > vw + 2) {
-      push("page-overflow", `scrollWidth ${Math.max(document.documentElement.scrollWidth, document.body.scrollWidth)} > ${vw}`);
+    const doc = document.documentElement;
+    if (doc.scrollWidth > doc.clientWidth + 1) {
+      push("page-overflow", `document scrollWidth ${doc.scrollWidth} > clientWidth ${doc.clientWidth}`);
+    }
+    if (document.body.scrollWidth > document.body.clientWidth + 1) {
+      push("page-overflow", `body scrollWidth ${document.body.scrollWidth} > clientWidth ${document.body.clientWidth}`);
+    }
+    const app = document.getElementById("root");
+    if (app && app.scrollWidth > app.clientWidth + 1) {
+      push("page-overflow", `root scrollWidth ${app.scrollWidth} > clientWidth ${app.clientWidth}`);
+    }
+    if (doc.scrollWidth > vw + 2 || document.body.scrollWidth > vw + 2) {
+      push("page-overflow", `scrollWidth ${Math.max(doc.scrollWidth, document.body.scrollWidth)} > ${vw}`);
     }
 
     const scroller = document.scrollingElement;
@@ -258,6 +299,11 @@ async function audit(page, label) {
     const regions = [chrome, footer].filter((el) => el && getComputedStyle(el).display !== "none");
 
     const nextBtn = document.querySelector(".sticky-next");
+    const stepName = document.querySelector("[data-step]")?.getAttribute("data-step") || "";
+    const pending = /\bpending\b/.test(where);
+    const passive = stepName === "sky" || stepName === "counter" || stepName === "friends";
+    const noNext = stepName === "gate" || stepName === "letter";
+    const expectNext = !noNext && (!pending || passive);
     if (document.querySelector(".stage-dock")) push("footer-compact", "dock is still in the layout");
     if (keyboard && nextBtn) {
       const nextStyle = getComputedStyle(nextBtn);
@@ -274,8 +320,16 @@ async function audit(page, label) {
       if (!mask || mask === "none") push("stage-fade", "missing mask");
     }
     const footerShown = footer && getComputedStyle(footer).display !== "none";
+    const nextShown = Boolean(
+      nextBtn && getComputedStyle(nextBtn).display !== "none" && nextBtn.getBoundingClientRect().height > 1 &&
+        !(nextBtn.closest(".flow") && getComputedStyle(nextBtn.closest(".flow")).display === "none"),
+    );
+    if (!keyboard && expectNext && !nextShown) push("sticky-next", "missing on a ready step");
+    if (!keyboard && !expectNext && nextShown) push("sticky-next", "shown before the step is done");
+    if (nextShown && nextBtn?.disabled) push("sticky-next", "rendered disabled");
     if (!keyboard && footerShown) {
-      const expected = 44 + safe.bottom;
+      const expectedPad = Math.max(16, safe.bottom + 8);
+      const expected = 44 + expectedPad;
       if (Math.abs(footer.offsetHeight - expected) > 2) {
         push("footer-compact", `height ${Math.round(footer.offsetHeight)} expected ${Math.round(expected)}`);
       }
@@ -301,7 +355,8 @@ async function audit(page, label) {
           }
         }
         const footerBox = boxOf(footer);
-        const contentBottom = footerBox.bottom - safe.bottom;
+        const padBottom = parseFloat(getComputedStyle(footer).paddingBottom) || 0;
+        const contentBottom = footerBox.bottom - padBottom;
         const contentMid = (footerBox.top + contentBottom) / 2;
         const nextMid = (nextBox.top + nextBox.bottom) / 2;
         if (Math.abs(contentMid - nextMid) > 3) {
@@ -338,9 +393,11 @@ async function audit(page, label) {
       if (blur && blur !== "none") push("footer-clear", `backdrop ${blur}`);
       const padTop = parseFloat(flowStyle.paddingTop) || 0;
       const padBottom = parseFloat(flowStyle.paddingBottom) || 0;
-      if (Math.abs(padTop - (padBottom - safe.bottom)) > 3) {
-        push("footer-clear", `padding ${Math.round(padTop)} / ${Math.round(padBottom - safe.bottom)}`);
+      const expectedPad = Math.max(16, safe.bottom + 8);
+      if (Math.abs(padBottom - expectedPad) > 2) {
+        push("footer-clear", `pad-bottom ${Math.round(padBottom)} expected ${Math.round(expectedPad)}`);
       }
+      if (padTop > 2) push("footer-clear", `pad-top ${Math.round(padTop)}`);
     }
 
     if (stage) {
@@ -415,6 +472,23 @@ async function audit(page, label) {
     }
     if (document.querySelector(".clock, .together .sentence")) {
       push("counter-digits", "old clock or duplicate sentence is still in the counter");
+    }
+
+    const touch = /\b(507x768|678x1024|768x1024|1024x768|744x1133|1133x744|820x1180|1180x820|1024x1366|1366x1024)\b/.test(where);
+    if (touch && !keyboard) {
+      const targets = [...document.querySelectorAll("button, a, input, textarea")].filter((el) => {
+        if (el.closest(".dev-jump, .sr-only, .starfield")) return false;
+        const style = getComputedStyle(el);
+        return style.display !== "none" && style.visibility !== "hidden" && Number(style.opacity) > 0;
+      });
+      for (const el of targets) {
+        const visible = visibleBox(el);
+        if (!visible) continue;
+        if (visible.width < 42 || visible.height < 42) {
+          push("touch-target", `${describe(el)} ${Math.round(visible.width)}×${Math.round(visible.height)}`);
+          break;
+        }
+      }
     }
 
     if (keyboard) {
@@ -529,7 +603,7 @@ async function extras(page, id, label) {
     found.push(...(await scrollAudit(page, `${label} wish-star`)));
   }
   if (id === "gate" || id === "wish") {
-    const field = page.locator(id === "gate" ? ".gate input" : ".wish-pill input");
+    const field = page.locator(id === "gate" ? ".gate input" : ".wish-field input");
     await field.focus();
     await page.waitForFunction(() => document.documentElement.classList.contains("keyboard-open"));
     await page.waitForFunction(() => getComputedStyle(document.querySelector(".flow")).display === "none");

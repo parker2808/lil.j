@@ -162,6 +162,7 @@ export function Cake({ progress, update }: CakeProps) {
                     <i />
                     <i />
                     <i />
+                    <i />
                   </span>
                 )}
                 <span className="stick" aria-hidden="true" />
@@ -310,7 +311,7 @@ function Confetti() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, width, height);
       let alive = false;
-      for (const piece of pieces) {
+      pieces.forEach((piece, index) => {
         piece.x += piece.vx;
         piece.y += piece.vy;
         piece.rot += piece.spin;
@@ -322,7 +323,18 @@ function Confetti() {
         ctx.fillStyle = piece.color;
         ctx.fillRect(-piece.size / 2, -piece.size / 4, piece.size, piece.size / 2);
         ctx.restore();
-      }
+        if (index % 4 === 0) {
+          ctx.globalAlpha = Math.max(0, 1 - piece.y) * 0.9;
+          ctx.fillStyle = "#fff7fb";
+          ctx.shadowColor = "#fff";
+          ctx.shadowBlur = 8;
+          ctx.beginPath();
+          ctx.arc(piece.x * width, piece.y * height, 1.7, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.shadowBlur = 0;
+          ctx.globalAlpha = 1;
+        }
+      });
       if (alive) raf = window.requestAnimationFrame(draw);
     };
     raf = window.requestAnimationFrame(draw);

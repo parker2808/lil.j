@@ -3,7 +3,7 @@ import { content } from "../content.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import { fadeMusic } from "../lib/music.ts";
 import { useReducedMotion } from "../lib/useReducedMotion.ts";
-import { Petals } from "./Fireworks.tsx";
+import { Petals, StarFall } from "./Fireworks.tsx";
 import { Reveal } from "./Reveal.tsx";
 
 type FinalLetterProps = {
@@ -37,12 +37,13 @@ export function FinalLetter({ already, onDone }: FinalLetterProps) {
 
   return (
     <section className="scene letter-scene">
+      <StarFall />
       <p className="kicker">{t(content.finalLetter.kicker)}</p>
       <Reveal text={t(content.finalLetter.title)} />
       <p className="lede">{t(content.finalLetter.lede)}</p>
       <div className="hand-sheet" aria-live="polite">
         {lines.slice(0, shown).map((line, index) => (
-          <p key={`${index}-${line}`} className={line.trim() ? "hand-line" : "hand-line is-blank"}>
+          <p key={`${index}-${line}`} className={line.trim() ? "hand-line is-ink" : "hand-line is-blank"}>
             {line.trim() ? line : "\u00a0"}
           </p>
         ))}

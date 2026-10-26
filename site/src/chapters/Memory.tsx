@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { content } from "../content.ts";
 import { ChapterFrame } from "../components/ChapterFrame.tsx";
+import { Spark } from "../components/Fireworks.tsx";
 import type { Copy } from "../lib/i18n.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import { fillTemplate, shuffle } from "../lib/pure.ts";
@@ -31,6 +32,7 @@ export function Memory({ progress, update }: ChapterProps) {
   const [matched, setMatched] = useState<string[]>([]);
   const [moves, setMoves] = useState(0);
   const [lock, setLock] = useState(false);
+  const [cheer, setCheer] = useState(0);
   const timerRef = useRef(0);
   const pairCount = new Set(deck.map((card) => card.photoId)).size;
   const won = matched.length > 0 && matched.length === pairCount;
@@ -51,6 +53,7 @@ export function Memory({ progress, update }: ChapterProps) {
       const nextMatched = [...matched, first.photoId];
       setMatched(nextMatched);
       setFlipped([]);
+      setCheer((count) => count + 1);
       if (nextMatched.length === pairCount) {
         update((current) => {
           const best = current.memoryBest == null ? nextMoves : Math.min(current.memoryBest, nextMoves);
@@ -90,6 +93,7 @@ export function Memory({ progress, update }: ChapterProps) {
           ? ` · ${fillTemplate(t(content.memoryCopy.best), { n: progress.memoryBest })}`
           : ""}
       </p>
+      <Spark play={cheer} />
       <div className="memory-grid">
         {deck.map((card) => {
           const matchedCard = matched.includes(card.photoId);

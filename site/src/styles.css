@@ -164,6 +164,7 @@ h2 {
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
+  perspective: 1400px;
 }
 
 .stage-pane {
@@ -488,6 +489,11 @@ h2 {
 
 .wax:active { transform: translate(-50%, -50%) scale(0.96); }
 
+.wax.is-crack {
+  pointer-events: none;
+  animation: seal-crack 0.48s ease forwards;
+}
+
 .wax-small {
   position: relative;
   left: auto;
@@ -555,6 +561,10 @@ h2 {
   vector-effect: non-scaling-stroke;
   opacity: 0;
   filter: drop-shadow(0 0 6px rgba(247, 196, 220, 0.8));
+}
+
+.links.is-drawn polyline {
+  animation: line-glow 2.2s ease-in-out infinite;
 }
 
 .star {
@@ -686,7 +696,7 @@ h2 {
   display: block;
   aspect-ratio: 4 / 5.15;
   transform-style: preserve-3d;
-  transition: transform 0.7s ease;
+  transition: transform 0.85s cubic-bezier(0.18, 0.9, 0.22, 1.12);
 }
 
 .polaroid.is-flipped .polaroid-inner { transform: rotateY(180deg); }
@@ -698,6 +708,18 @@ h2 {
   flex-direction: column;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+}
+
+.face-front { overflow: hidden; }
+
+.face-front::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, 0.55) 50%, transparent 62%);
+  transform: translateX(-130%);
+  animation: shimmer 5.2s ease-in-out infinite;
+  pointer-events: none;
 }
 
 .face-front img {
@@ -758,14 +780,17 @@ h2 {
   line-height: 1.25;
 }
 
-.scratch-canvas {
+.scratch-canvas,
+.scratch-glitter {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   touch-action: none;
-  cursor: crosshair;
 }
+
+.scratch-canvas { cursor: crosshair; }
+.scratch-glitter { pointer-events: none; }
 
 .quiz { margin-top: 18px; }
 .quiz h2 { margin: 10px 0 18px; font-size: clamp(1.8rem, 7vw, 2.3rem); }
@@ -855,10 +880,27 @@ h2 {
   display: block;
   aspect-ratio: 1 / 1;
   transform-style: preserve-3d;
-  transition: transform 0.45s ease;
+  transition: transform 0.55s cubic-bezier(0.18, 0.9, 0.22, 1.12);
 }
 
 .mem.is-up .mem-inner { transform: rotateY(180deg); }
+
+.mem.is-up::after {
+  content: "";
+  position: absolute;
+  top: 10%;
+  right: 12%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow:
+    -16px 20px 0 -1px #f7c6dc,
+    -26px 4px 0 -2px #fff7fb,
+    6px 24px 0 -1px #e7d4ff;
+  pointer-events: none;
+  animation: spark-pop 0.7s ease both;
+}
 
 .mem-face {
   position: absolute;
@@ -1005,7 +1047,7 @@ h2 {
   font-size: clamp(3rem, 14vw, 4.4rem);
   line-height: 0.9;
   color: #ffe4f6;
-  text-shadow: 0 0 24px rgba(247, 196, 220, 0.45);
+  text-shadow: 0 0 18px rgba(255, 228, 246, 0.95), 0 0 36px rgba(247, 196, 220, 0.55);
 }
 
 .tick-cell span:last-child {
@@ -1093,7 +1135,7 @@ h2 {
 .flame-outer {
   inset: 0;
   background: radial-gradient(circle at 50% 80%, #fff6ee 0 14%, #f8c4b0 40%, #f08aaa 72%, transparent 76%);
-  filter: blur(0.2px);
+  filter: blur(0.2px) drop-shadow(0 0 8px rgba(255, 170, 120, 0.95));
   animation: flicker 0.16s infinite alternate;
 }
 
@@ -1129,6 +1171,7 @@ h2 {
 
 .smoke i:nth-child(2) { animation-delay: 0.12s; width: 8px; height: 8px; }
 .smoke i:nth-child(3) { animation-delay: 0.28s; }
+.smoke i:nth-child(4) { animation-delay: 0.42s; width: 12px; height: 12px; left: 6px; }
 
 .mic-box, .letter-block {
   display: grid;
@@ -1400,8 +1443,10 @@ h2 {
 }
 
 @keyframes smoke {
-  from { transform: translate(-40%, 4px) scale(0.5); opacity: 0.7; }
-  to { transform: translate(10%, -52px) scale(1.8); opacity: 0; }
+  0% { transform: translate(-40%, 4px) scale(0.4); opacity: 0; }
+  18% { opacity: 0.8; }
+  55% { transform: translate(16%, -30px) scale(1.25); opacity: 0.45; }
+  100% { transform: translate(-10%, -72px) scale(2.1); opacity: 0; }
 }
 
 .step-back {
@@ -1724,13 +1769,11 @@ h2 {
 .wish-pill input::placeholder { color: rgba(255, 247, 251, 0.62); }
 .wish-pill .btn {
   flex: none;
-  max-width: 46%;
-  min-width: 0;
   min-height: 44px;
-  padding-inline: 14px;
-  white-space: normal;
-  line-height: 1.15;
-  text-align: center;
+  padding-inline: 16px;
+  white-space: nowrap;
+  font-size: 0.95rem;
+  line-height: 1;
 }
 
 .hand-sheet {
@@ -1751,7 +1794,10 @@ h2 {
   font-family: Charm, var(--serif);
   font-size: 1.55rem;
   line-height: 1.45;
-  animation: fade-in 0.55s ease both;
+}
+
+.hand-line.is-ink {
+  animation: ink-write 0.72s ease both;
 }
 
 .hand-line.is-blank { min-height: 0.7rem; }
@@ -1775,7 +1821,11 @@ h2 {
 .reveal-mask { display: inline-block; overflow: hidden; }
 .reveal-word { display: inline-block; }
 
-.digit { display: inline-block; animation: digit-in 0.45s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.digit {
+  display: inline-block;
+  animation: digit-in 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+  text-shadow: 0 0 16px rgba(255, 228, 246, 0.95);
+}
 
 .constellation-name.is-on, .constellation-name { animation: pulse-name 2.8s ease-in-out infinite; }
 
@@ -1803,6 +1853,18 @@ h2 {
   pointer-events: none;
 }
 
+.fireworks-layer,
+.gate-burst-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.fireworks-layer { z-index: 30; }
+.gate-burst-canvas { z-index: 1; }
+
 .finale, .letter-scene { position: relative; }
 
 .petals i {
@@ -1823,8 +1885,34 @@ h2 {
 }
 
 @keyframes digit-in {
-  from { transform: translateY(40%); opacity: 0; }
+  from { transform: translateY(110%); opacity: 0.15; }
   to { transform: none; opacity: 1; }
+}
+
+@keyframes line-glow {
+  50% {
+    stroke: #fff7fb;
+    filter:
+      drop-shadow(0 0 4px rgba(255, 247, 251, 0.95))
+      drop-shadow(0 0 12px rgba(247, 196, 220, 0.9));
+  }
+}
+
+@keyframes seal-crack {
+  35% { transform: translate(-50%, -50%) scale(1.08) rotate(-8deg); filter: brightness(1.35); }
+  68% { clip-path: polygon(0 8%, 48% 0, 40% 42%, 62% 16%, 74% 55%, 100% 28%, 100% 100%, 0 100%); opacity: 1; }
+  100% { transform: translate(-42%, -70%) scale(0.62) rotate(16deg); opacity: 0; }
+}
+
+@keyframes ink-write {
+  from { clip-path: inset(0 100% 0 0); opacity: 0.15; }
+  to { clip-path: inset(0 0 0 0); opacity: 1; }
+}
+
+@keyframes spark-pop {
+  from { transform: scale(0.2); opacity: 0; }
+  35% { opacity: 1; }
+  to { transform: scale(1.25); opacity: 0; }
 }
 
 @keyframes pulse-name {

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { content } from "../content.ts";
 import { ChapterFrame } from "../components/ChapterFrame.tsx";
+import { Spark } from "../components/Fireworks.tsx";
 import { useI18n } from "../lib/locale-context.ts";
 import { fillTemplate } from "../lib/pure.ts";
 import type { ChapterProps } from "../types.ts";
@@ -11,6 +12,7 @@ export function Quiz({ progress, update }: ChapterProps) {
   const total = content.quiz.length;
   const answered = content.quiz.filter((question) => typeof progress.quiz[question.id] === "number").length;
   const [step, setStep] = useState(answered >= total ? total : answered);
+  const [cheer, setCheer] = useState(0);
   const question = content.quiz[step];
   const correct = content.quiz.filter((item) => progress.quiz[item.id] === item.answer).length;
 
@@ -20,6 +22,7 @@ export function Quiz({ progress, update }: ChapterProps) {
       ...current,
       quiz: { ...current.quiz, [question.id]: index },
     }));
+    if (index === question.answer) setCheer((count) => count + 1);
   }
 
   return (
@@ -30,6 +33,7 @@ export function Quiz({ progress, update }: ChapterProps) {
     >
       {question ? (
         <div className="quiz">
+          <Spark play={cheer} />
           <p className="count">
             {step + 1}/{total}
           </p>

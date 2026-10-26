@@ -8,6 +8,7 @@ function isTextField(node: EventTarget | null): node is HTMLInputElement | HTMLT
 /** Tracks the visual viewport and hides the bottom bar while a text field is focused or the keyboard shrinks the view. */
 export function bindViewport(): () => void {
   const root = document.documentElement;
+  let scrollTimer = 0;
 
   const sync = () => {
     const vv = window.visualViewport;
@@ -26,17 +27,22 @@ export function bindViewport(): () => void {
     }
     if (focused && keyboard) {
       const field = document.activeElement;
+      const nudge = () => {
+        if (!(field instanceof HTMLElement) || document.activeElement !== field) return;
+        const stage = document.querySelector(".stage");
+        if (!(stage instanceof HTMLElement)) return;
+        const fieldBox = field.getBoundingClientRect();
+        const stageBox = stage.getBoundingClientRect();
+        const delta = fieldBox.top - stageBox.top - (stageBox.height - fieldBox.height) / 2;
+        if (Math.abs(delta) > 1) stage.scrollTop += delta;
+      };
+      nudge();
       window.requestAnimationFrame(() => {
-        window.requestAnimationFrame(() => {
-          if (!(field instanceof HTMLElement)) return;
-          const stage = document.querySelector(".stage");
-          if (!(stage instanceof HTMLElement)) return;
-          const fieldBox = field.getBoundingClientRect();
-          const stageBox = stage.getBoundingClientRect();
-          const delta = fieldBox.top - stageBox.top - (stageBox.height - fieldBox.height) / 2;
-          if (Math.abs(delta) > 1) stage.scrollTop += delta;
-        });
+        nudge();
+        window.requestAnimationFrame(nudge);
       });
+      window.clearTimeout(scrollTimer);
+      scrollTimer = window.setTimeout(nudge, 60);
     }
   };
 
@@ -47,6 +53,7 @@ export function bindViewport(): () => void {
   window.addEventListener("focusin", sync);
   window.addEventListener("focusout", sync);
   return () => {
+    window.clearTimeout(scrollTimer);
     window.visualViewport?.removeEventListener("resize", sync);
     window.visualViewport?.removeEventListener("scroll", sync);
     window.removeEventListener("resize", sync);

@@ -48,10 +48,10 @@
       "en": "Write one thing. Send it, and it becomes a streak of light."
     },
     "placeholder": { "vi": "Điều em ước", "en": "What you wish" },
-    "send": { "vi": "Gửi lên trời", "en": "Send it up" },
+    "send": { "vi": "Gửi đi", "en": "Send" },
     "empty": { "vi": "Em viết một câu đã.", "en": "Write a line first." },
     "sent": { "vi": "Ước của em đang ở trên kia.", "en": "Your wish is up there now." },
-    "more": { "vi": "Gửi thêm một ước", "en": "Send another wish" },
+    "more": { "vi": "Thêm", "en": "More" },
     "saved": { "vi": "Những ước em đã gửi", "en": "Wishes you've sent" }
   },
   "finalLetter": {

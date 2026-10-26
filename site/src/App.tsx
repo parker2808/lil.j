@@ -2,6 +2,7 @@ import { lazy, Suspense, useCallback, useEffect, useRef, useState, type ReactNod
 import { AnimatePresence, motion } from "framer-motion";
 import { content, validateContent } from "./content.ts";
 import { Envelope } from "./components/Envelope.tsx";
+import { GateBurst } from "./components/Fireworks.tsx";
 import { Gate } from "./components/Gate.tsx";
 import { LanguageToggle } from "./components/LanguageToggle.tsx";
 import { MusicButton } from "./components/MusicButton.tsx";
@@ -110,6 +111,10 @@ export function App() {
     const watch = (element: HTMLElement | null, name: "--header-h" | "--footer-h") => {
       if (!element) return () => {};
       const apply = () => {
+        if (name === "--footer-h" && document.documentElement.classList.contains("keyboard-open")) {
+          document.documentElement.style.setProperty(name, "0px");
+          return;
+        }
         const hidden = getComputedStyle(element).display === "none";
         document.documentElement.style.setProperty(name, hidden ? "0px" : `${element.offsetHeight}px`);
       };
@@ -162,7 +167,7 @@ export function App() {
         unlocked: Math.max(current.unlocked, 1),
       }));
       setOpening(false);
-    }, reduced ? 0 : 880);
+    }, reduced ? 0 : 1200);
   }
 
   const done = stepDone(stepId, progress, CANDLES, QUIZ_IDS, SCRATCH_IDS, LETTER_IDS);
@@ -318,10 +323,14 @@ export function App() {
             key={stepId}
             className="stage-pane"
             data-step={stepId}
-            initial={reduced ? false : { opacity: 0, y: 28, scale: 1.045, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-            exit={reduced ? { opacity: 1 } : { opacity: 0, y: -24, scale: 0.97, filter: "blur(8px)" }}
-            transition={{ duration: reduced ? 0 : 0.68, ease: [0.22, 1, 0.36, 1] }}
+            initial={reduced ? false : { opacity: 0, y: 48, scale: 1.12, rotateX: 10, filter: "blur(16px)" }}
+            animate={
+              reduced
+                ? { opacity: 1 }
+                : { opacity: 1, y: 0, scale: 1, rotateX: 0, filter: "blur(0px)" }
+            }
+            exit={reduced ? undefined : { opacity: 0, y: -36, scale: 0.92, rotateX: -8, filter: "blur(14px)" }}
+            transition={{ duration: reduced ? 0 : 0.78, ease: [0.16, 1, 0.3, 1] }}
           >
             {node}
           </motion.div>
@@ -354,7 +363,7 @@ export function App() {
           )}
         </AnimatePresence>
       </footer>
-      {opening && <div className="gate-burst" aria-hidden="true" />}
+      {opening && <GateBurst />}
       {musicNote && (
         <p className="toast" role="status">
           {musicNote}

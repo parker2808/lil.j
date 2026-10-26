@@ -288,6 +288,26 @@ async function audit(page, label) {
           const pad = parseFloat(getComputedStyle(stage).paddingBottom) || 0;
           if (pad < 12) push("sticky-next", `stage padding-bottom ${pad}px`);
         }
+        if (footer && getComputedStyle(footer).display !== "none") {
+          const gap = boxOf(footer).top - nextBox.bottom;
+          if (gap < 6 || gap > 20) push("sticky-next", `footer gap ${Math.round(gap)}px`);
+        }
+      }
+    }
+
+    if (footer && getComputedStyle(footer).display !== "none") {
+      const flowStyle = getComputedStyle(footer);
+      const bg = flowStyle.backgroundColor;
+      if (bg !== "rgba(0, 0, 0, 0)" && bg !== "transparent") push("footer-clear", `background ${bg}`);
+      if (flowStyle.backgroundImage && flowStyle.backgroundImage !== "none") {
+        push("footer-clear", `image ${flowStyle.backgroundImage.slice(0, 60)}`);
+      }
+      const blur = flowStyle.backdropFilter || flowStyle.getPropertyValue("-webkit-backdrop-filter");
+      if (blur && blur !== "none") push("footer-clear", `backdrop ${blur}`);
+      const padTop = parseFloat(flowStyle.paddingTop) || 0;
+      const padBottom = parseFloat(flowStyle.paddingBottom) || 0;
+      if (Math.abs(padTop - (padBottom - safe.bottom)) > 3) {
+        push("footer-clear", `padding ${Math.round(padTop)} / ${Math.round(padBottom - safe.bottom)}`);
       }
     }
 

@@ -170,6 +170,7 @@ export function Starfield() {
       gyro.y = Math.max(-1, Math.min(1, (beta - 35) / 40));
     };
     const askGyro = () => {
+      if (typeof DeviceOrientationEvent === "undefined") return;
       const ctor = DeviceOrientationEvent as unknown as { requestPermission?: () => Promise<string> };
       if (typeof ctor.requestPermission !== "function") return;
       void ctor.requestPermission().then((state) => {

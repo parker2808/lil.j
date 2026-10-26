@@ -12,7 +12,7 @@ import { StickyNextContext, type StickyAction } from "./components/sticky-next-c
 import { Universe } from "./components/Universe.tsx";
 import { FLOW, clampStep, stepDone, type StepId } from "./lib/flow.ts";
 import { useI18n } from "./lib/locale-context.ts";
-import { restoreMusicVolume, startMusic } from "./lib/music.ts";
+import { bindMusicVisibility, restoreMusicVolume, startMusic } from "./lib/music.ts";
 import { bindViewport } from "./lib/viewport.ts";
 import { clearProgress } from "./lib/progress.ts";
 import { fillTemplate } from "./lib/pure.ts";
@@ -118,6 +118,7 @@ export function App() {
   }, [progress.friendsSeen, stepId, update]);
 
   useEffect(() => bindViewport(), []);
+  useEffect(() => bindMusicVisibility(content.music), []);
 
   useEffect(() => {
     const watch = (element: HTMLElement | null, name: "--header-h" | "--footer-h" | "--dock-h") => {

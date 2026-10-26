@@ -22,7 +22,6 @@ function rememberMusic(): void {
 }
 
 export function MusicCredit() {
-  const { t } = useI18n();
   const [track, setTrack] = useState(currentTrack);
   const [playing, setPlaying] = useState(musicIsPlaying);
 
@@ -33,14 +32,10 @@ export function MusicCredit() {
     });
   }, []);
 
-  const now = playing && track ? `${track.title} · ${track.artist}` : "";
+  if (!playing || !track) return null;
+  const now = track.artist ? `${track.title} · ${track.artist}` : track.title;
 
-  return (
-    <p className="music-credit">
-      {t(content.music.credit)}
-      {now ? <span className="music-now">{now}</span> : null}
-    </p>
-  );
+  return <p className="music-credit">{now}</p>;
 }
 
 type MusicButtonProps = {

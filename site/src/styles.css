@@ -1896,6 +1896,7 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   margin: 0;
   text-align: right;
   color: rgba(255, 247, 251, 0.72);
+  overflow-wrap: anywhere;
   font-family: var(--sans);
   font-style: normal;
   font-weight: 500;
@@ -3479,7 +3480,7 @@ input:focus-visible,
 
 @media (max-height: 700px) {
   .gallery-scene:not(.is-stack) > .lede { display: none; }
-  .galaxy { height: clamp(180px, calc(100dvh - 448px), 280px); }
+  .galaxy { height: clamp(180px, calc(100dvh - 420px), 280px); }
   .stack-flip { height: min(200px, 32vh); aspect-ratio: auto; }
 }
 

@@ -15,10 +15,10 @@ const HERO = layoutGroup(HERO_ID, 12, 48, 32, 36, 1.15);
 
 /** Real stick-figures, parked in separate slots so the birthday sky stays readable. */
 const NOTE_SLOTS: Record<string, [number, number, number, number]> = {
-  cas: [42, 12, 24, 16],
-  aur: [76, 24, 10, 10],
-  tau: [64, 36, 22, 14],
-  ori: [58, 54, 30, 28],
+  cas: [32, 6, 30, 14],
+  lyr: [68, 12, 22, 16],
+  aql: [8, 24, 18, 14],
+  cyg: [54, 34, 28, 26],
 };
 
 function layoutGroup(

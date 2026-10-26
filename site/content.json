@@ -23,25 +23,26 @@
   },
   "startDate": "2024-02-14T19:30:00+07:00",
   "music": {
-    "credit": { "vi": "Nhạc · MondayHopes", "en": "Music · MondayHopes" },
     "tracks": [
+      { "title": "From The Start", "artist": "Laufey", "src": "/music/from-the-start.mp3" },
+      { "title": "Bewitched", "artist": "Laufey", "src": "/music/bewitched.mp3" },
+      { "title": "Valentine", "artist": "Laufey", "src": "/music/valentine.mp3" },
+      { "title": "Glue Song", "artist": "beabadoobee", "src": "/music/glue-song.mp3" },
       { "title": "Echoes of the Stars", "artist": "sleepvolume", "src": "/music/echoes-of-the-stars.mp3" },
-      { "title": "Dream of Little Prince", "artist": "SergeQuadrado", "src": "/music/dream-of-little-prince.mp3" },
-      { "title": "Twinkle Like a Star", "artist": "MondayHopes", "src": "/music/twinkle-like-a-star.mp3" }
+      { "title": "Twinkle Twinkle Little Star (Grand Piano)", "src": "/music/twinkle-twinkle-little-star.mp3" }
     ],
     "birthday": {
       "title": "Happy Birthday Music Box Loop",
-      "artist": "SergeQuadrado",
       "src": "/music/happy-birthday-music-box.mp3"
     }
   },
   "birth": {
-    "when": "2002-11-18T21:30:00+07:00",
+    "when": "2002-11-18T16:45:00+07:00",
     "lat": 20.97,
     "lon": 105.78,
     "place": { "vi": "Hà Đông, Hà Nội", "en": "Hà Đông, Hà Nội, Vietnam" },
-    "kicker": { "vi": "Đêm em sinh ra", "en": "The night you were born" },
-    "title": { "vi": "Bản đồ sao đêm em sinh ra", "en": "The sky the night you were born" },
+    "kicker": { "vi": "Chiều em sinh ra", "en": "The afternoon you were born" },
+    "title": { "vi": "Bản đồ sao chiều em sinh ra", "en": "The sky the afternoon you were born" },
     "lede": {
       "vi": "Chạm những ngôi sao đang nhấp nháy để đọc lời nhắn.",
       "en": "Tap the pulsing stars to read each note."
@@ -63,7 +64,7 @@
         }
       },
       {
-        "id": "tau",
+        "id": "lyr",
         "title": { "vi": "Chiếc mặt phụng phịu", "en": "Your little pout" },
         "body": {
           "vi": "Nhất là mỗi lần anh trêu em. Ừ, anh để ý hết đấy. :)))",
@@ -71,7 +72,7 @@
         }
       },
       {
-        "id": "aur",
+        "id": "cyg",
         "title": { "vi": "Nụ cười của em", "en": "Your smile" },
         "body": {
           "vi": "Một trong những điều anh thích nhìn thấy nhất, nhất là khi biết mình là người khiến em cười.",
@@ -79,7 +80,7 @@
         }
       },
       {
-        "id": "ori",
+        "id": "aql",
         "title": { "vi": "Tương lai của em", "en": "Your future" },
         "body": {
           "vi": "Anh mong thế giới sẽ cho em thật nhiều lý do để mỉm cười.",
@@ -130,8 +131,8 @@
       "en": "I wrote it slowly. You can read it that way too."
     },
     "body": {
-      "vi": "J,\n\nĐêm em sinh ra, trời Hà Nội đã có những vì sao anh vừa vẽ cho em.\n\nAnh đã ngồi với những tấm ảnh, với từng câu đố, và với những ngọn nến tắt.\n\nĐiều em vừa gửi lên trời, anh không hỏi lại. Nó ở trên đó, nhỏ thôi, nhưng là của em.\n\nCảm ơn em đã đi hết con đường này.\n\nSinh nhật vui.\nAnh vẫn ở đây.",
-      "en": "J,\n\nThe night you were born, the Hanoi sky already held the stars I just drew for you.\n\nI sat with the pictures, with every question, and with the candles after they went out.\n\nThe wish you just sent, I won't ask it back. It's up there, small, and it's yours.\n\nThank you for walking the whole way.\n\nHappy birthday.\nI'm still here."
+      "vi": "J,\n\nChiều em sinh ra, trời Hà Nội đã có những vì sao anh vừa vẽ cho em.\n\nAnh đã ngồi với những tấm ảnh, với từng câu đố, và với những ngọn nến tắt.\n\nĐiều em vừa gửi lên trời, anh không hỏi lại. Nó ở trên đó, nhỏ thôi, nhưng là của em.\n\nCảm ơn em đã đi hết con đường này.\n\nSinh nhật vui.\nAnh vẫn ở đây.",
+      "en": "J,\n\nThe afternoon you were born, the Hanoi sky already held the stars I just drew for you.\n\nI sat with the pictures, with every question, and with the candles after they went out.\n\nThe wish you just sent, I won't ask it back. It's up there, small, and it's yours.\n\nThank you for walking the whole way.\n\nHappy birthday.\nI'm still here."
     },
     "skip": { "vi": "Đọc hết", "en": "Read it all" },
     "replay": { "vi": "Đọc lại", "en": "Read it again" },

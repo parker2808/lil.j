@@ -86,7 +86,7 @@ export type Letter = {
 
 export type MusicTrack = {
   title: string;
-  artist: string;
+  artist?: string;
   src: string;
 };
 
@@ -108,7 +108,6 @@ export type Content = {
   };
   startDate: string;
   music: {
-    credit: Copy;
     tracks: MusicTrack[];
     birthday?: MusicTrack;
   };

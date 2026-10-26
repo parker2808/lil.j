@@ -42,20 +42,30 @@ assert.deepEqual(countdownParts("2026-11-18T00:00:00+07:00", Date.UTC(2026, 10, 
 assert.equal(content.lock.unlockAt, "2026-11-18T00:00:00+07:00");
 assert.equal(content.constellations.lyr.en, "Lyra");
 assert.equal(content.ui.musicHint.en, "Tap for music");
-assert.equal(content.music.credit.en, "Music · MondayHopes");
+assert.equal(content.music.credit, undefined);
 assert.deepEqual(
-  content.music.tracks.map((track) => `${track.title} · ${track.artist}`),
+  content.music.tracks.map((track) => (track.artist ? `${track.title} · ${track.artist}` : track.title)),
   [
+    "From The Start · Laufey",
+    "Bewitched · Laufey",
+    "Valentine · Laufey",
+    "Glue Song · beabadoobee",
     "Echoes of the Stars · sleepvolume",
-    "Dream of Little Prince · SergeQuadrado",
-    "Twinkle Like a Star · MondayHopes",
+    "Twinkle Twinkle Little Star (Grand Piano)",
   ],
 );
 assert.equal(content.music.birthday.title, "Happy Birthday Music Box Loop");
-assert.equal(content.music.birthday.artist, "SergeQuadrado");
+assert.equal(content.music.birthday.src, "/music/happy-birthday-music-box.mp3");
+assert.equal(
+  content.music.tracks.some((track) => track.src === content.music.birthday.src),
+  false,
+);
 for (const track of [...content.music.tracks, content.music.birthday]) {
   assert.match(track.src, /^\/music\/.+\.mp3$/);
 }
+assert.equal(content.birth.when, "2002-11-18T16:45:00+07:00");
+assert.match(formatZoned(content.birth.when, "en"), /16:45/);
+assert.match(formatZoned(content.birth.when, "vi"), /16:45/);
 for (let current = 0; current < 3; current += 1) {
   for (let n = 0; n < 20; n += 1) {
     const next = nextTrackIndex(3, current);
@@ -73,6 +83,14 @@ const polaris = altAz(2.5303, 89.2642, 21.0278, 105.8342, born);
 assert.ok(polaris.alt > 18 && polaris.alt < 24, `polaris alt ${polaris.alt}`);
 assert.ok(polaris.az < 20 || polaris.az > 340, `polaris az ${polaris.az}`);
 const sky = projectSky(21.0278, 105.8342, born, content.constellations);
+const birthSky = projectSky(content.birth.lat, content.birth.lon, new Date(content.birth.when), content.constellations);
+const birthUp = new Set(birthSky.labels.map((label) => label.id));
+for (const id of ["cas", "lyr", "cyg", "aql", "sco"]) assert.equal(birthUp.has(id), true, `${id} should be up`);
+for (const id of ["ori", "tau", "aur"]) assert.equal(birthUp.has(id), false, `${id} should have set`);
+assert.deepEqual(
+  content.birth.notes.map((note) => note.id),
+  ["cas", "lyr", "cyg", "aql"],
+);
 assert.equal(sky.labels.find((item) => item.id === "lyr")?.name.en, "Lyra");
 const visible = sky.stars.filter((star) => star.visible);
 assert.ok(visible.length >= 12, `visible stars ${visible.length}`);

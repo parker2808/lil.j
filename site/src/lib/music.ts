@@ -100,7 +100,7 @@ function fadePlayer(player: HTMLAudioElement, target: number, ms: number): Promi
 
 function makePlayer(kind: "bed" | "guest"): HTMLAudioElement {
   const player = new Audio();
-  player.preload = "none";
+  player.preload = "metadata";
   player.volume = 0;
   player.addEventListener("play", emit);
   player.addEventListener("pause", emit);

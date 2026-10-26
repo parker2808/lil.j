@@ -29,7 +29,8 @@ export const content: Content = {
 };
 
 function musicTrackProblem(track: MusicTrack | undefined, label: string): string | null {
-  if (!track?.title?.trim() || !track.artist?.trim()) return `${label} thiếu title hoặc artist.`;
+  if (!track?.title?.trim()) return `${label} thiếu title.`;
+  if (track.artist != null && !track.artist.trim()) return `${label} có artist trống.`;
   if (!track.src?.startsWith("/music/")) return `${label} cần src bắt đầu bằng /music/.`;
   return null;
 }
@@ -82,9 +83,6 @@ export function validateContent(value: Content): string | null {
   if (!value.startDate || Number.isNaN(Date.parse(value.startDate))) {
     return "startDate không phải ngày hợp lệ.";
   }
-  if (!value.music?.credit?.vi?.trim() || !value.music?.credit?.en?.trim()) {
-    return "content.json thiếu music.credit.";
-  }
   if (!Array.isArray(value.music.tracks) || value.music.tracks.length < 2) {
     return "content.json cần ít nhất 2 bài trong music.tracks.";
   }
@@ -98,6 +96,7 @@ export function validateContent(value: Content): string | null {
   if (value.music.birthday) {
     const problem = musicTrackProblem(value.music.birthday, "music.birthday");
     if (problem) return problem;
+    if (seenSrc.has(value.music.birthday.src)) return "music.birthday không nằm trong playlist ngẫu nhiên.";
   }
   if (!Array.isArray(value.scratches) || value.scratches.length < 1) {
     return "content.json thiếu thẻ cào.";

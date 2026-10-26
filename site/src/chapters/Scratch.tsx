@@ -96,7 +96,10 @@ function ScratchCard({
       }
       ctx.globalAlpha = 1;
       ctx.fillStyle = "#6a3454";
-      const label = Math.max(14, Math.min(16, Math.round(height / 12)));
+      const rootStyle = getComputedStyle(document.documentElement);
+      const bodyPx = Number.parseFloat(rootStyle.getPropertyValue("--text-body")) || 14;
+      const letterPx = Number.parseFloat(rootStyle.getPropertyValue("--text-letter")) || 16;
+      const label = Math.round(Math.max(bodyPx, Math.min(letterPx, height / 12)));
       ctx.font = `600 ${label}px Inter, ui-sans-serif, sans-serif`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";

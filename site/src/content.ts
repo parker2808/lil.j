@@ -1,7 +1,7 @@
 import rawJson from "../content.json";
 import { FLOW } from "./lib/flow.ts";
 import { collectCopyProblems } from "./lib/i18n.ts";
-import { CONSTELLATION_IDS } from "./lib/stars.ts";
+import { CONSTELLATION_IDS, projectSky } from "./lib/stars.ts";
 import type { Content, Copy, Era, Photo } from "./types.ts";
 import { lockProblem } from "./lib/lock.ts";
 
@@ -95,6 +95,40 @@ export function validateContent(value: Content): string | null {
   if (!value.finale?.question?.vi?.trim() || !value.finale?.question?.en?.trim()) {
     return "content.json thiếu câu hỏi cuối (cả vi và en).";
   }
+  if (!Array.isArray(value.birth?.notes) || value.birth.notes.length !== 4) {
+    return "content.json cần đúng 4 lời nhắn trên bầu trời sinh (birth.notes).";
+  }
+  const seenNotes = new Set<string>();
+  for (const note of value.birth.notes) {
+    if (!note?.id || !CONSTELLATION_IDS.includes(note.id)) {
+      return `birth.notes có chòm sao không hợp lệ (${note?.id ?? "?"}).`;
+    }
+    if (seenNotes.has(note.id)) return `birth.notes trùng chòm sao ${note.id}.`;
+    seenNotes.add(note.id);
+    if (!note.title?.vi?.trim() || !note.title?.en?.trim() || !note.body?.vi?.trim() || !note.body?.en?.trim()) {
+      return `birth.notes.${note.id} thiếu title hoặc body.`;
+    }
+  }
+  if (!value.birth.progress?.vi?.includes("{n}") || !value.birth.progress?.en?.includes("{total}")) {
+    return "birth.progress cần {n} và {total}.";
+  }
+  if (!value.birth.sign?.vi?.trim() || !value.birth.sign?.en?.trim()) {
+    return "content.json thiếu birth.sign.";
+  }
+  if (!Array.isArray(value.memoryCopy?.lines) || value.memoryCopy.lines.length !== 5) {
+    return "content.json cần đúng 5 lời nhắn khi ghép cặp (memoryCopy.lines).";
+  }
+  const galleryKeys = ["backToGalaxy", "eraProgress", "nextEra", "seen", "pending"] as const;
+  for (const key of galleryKeys) {
+    const copy = value.galleryCopy?.[key];
+    if (!copy?.vi?.trim() || !copy?.en?.trim()) return `content.json thiếu galleryCopy.${key}.`;
+  }
+  for (const locale of ["vi", "en"] as const) {
+    const pattern = value.galleryCopy.eraProgress[locale];
+    if (!pattern.includes("{n}") || !pattern.includes("{total}") || !pattern.includes("{photo}") || !pattern.includes("{photos}")) {
+      return "galleryCopy.eraProgress cần {n}, {total}, {photo} và {photos}.";
+    }
+  }
   if (!value.birth?.when || Number.isNaN(Date.parse(value.birth.when))) {
     return "birth.when không phải ngày hợp lệ.";
   }
@@ -103,6 +137,11 @@ export function validateContent(value: Content): string | null {
   }
   if (typeof value.birth.lon !== "number" || value.birth.lon < -180 || value.birth.lon > 180) {
     return "birth.lon phải từ -180 đến 180.";
+  }
+  const birthSky = projectSky(value.birth.lat, value.birth.lon, new Date(value.birth.when), value.constellations);
+  const visibleNotes = new Set(birthSky.labels.map((label) => label.id));
+  for (const id of seenNotes) {
+    if (!visibleNotes.has(id)) return `birth.notes.${id} không hiện trên bầu trời đêm sinh, nên không bấm được.`;
   }
   if (!value.finalLetter?.body?.vi?.trim() || !value.finalLetter?.body?.en?.trim()) {
     return "content.json thiếu lá thư cuối (cả vi và en).";

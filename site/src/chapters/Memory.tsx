@@ -94,6 +94,18 @@ export function Memory({ progress, update }: ChapterProps) {
           : ""}
       </p>
       <Spark play={cheer} />
+      <div className={matched.length > 0 ? "pair-toast" : "pair-toast is-idle"} role="status" aria-live="polite">
+        {matched.length > 0 ? (
+          <p>
+            {t(content.memoryCopy.lines[(matched.length - 1) % content.memoryCopy.lines.length] ?? content.memoryCopy.win)}
+          </p>
+        ) : null}
+        {won ? (
+          <button type="button" className="btn" onClick={again}>
+            {t(content.memoryCopy.again)}
+          </button>
+        ) : null}
+      </div>
       <div className="memory-grid">
         {deck.map((card) => {
           const matchedCard = matched.includes(card.photoId);
@@ -117,14 +129,6 @@ export function Memory({ progress, update }: ChapterProps) {
           );
         })}
       </div>
-      {won && (
-        <div className="win">
-          <p>{t(content.memoryCopy.win)}</p>
-          <button type="button" className="btn" onClick={again}>
-            {t(content.memoryCopy.again)}
-          </button>
-        </div>
-      )}
     </ChapterFrame>
   );
 }

@@ -59,18 +59,26 @@ function Stack({
   flipped,
   reduced,
   controlRef,
+  eraIndex,
+  eraCount,
+  hasNext,
   onAdvance,
   onBack,
+  onNext,
   onFlip,
   onOpen,
 }: {
   era: Era;
   index: number;
+  eraIndex: number;
+  eraCount: number;
+  hasNext: boolean;
   flipped: string[];
   reduced: boolean;
   controlRef: RefObject<StackControl>;
   onAdvance: () => void;
   onBack: () => void;
+  onNext: () => void;
   onFlip: (id: string) => void;
   onOpen: (photo: EraPhoto) => void;
 }) {
@@ -304,20 +312,37 @@ function Stack({
     };
   }, [controlRef, index, photos, reduced]);
 
-  const backLabel = t(content.galleryCopy.back);
-  const countLabel = fillTemplate(t(content.galleryCopy.progress), {
-    n: Math.min(index + 1, photos.length),
-    total: photos.length,
+  const photoN = Math.min(index + 1, photos.length);
+  const progressLabel = fillTemplate(t(content.galleryCopy.eraProgress), {
+    n: eraIndex + 1,
+    total: eraCount,
+    photo: photoN,
+    photos: photos.length,
   });
+  const backLabel = t(content.galleryCopy.backToGalaxy);
 
   return (
     <div className="stack-view">
-      <button type="button" className="back stack-back" onClick={onBack}>
-        {backLabel}
-      </button>
+      <header className="stack-head">
+        <button type="button" className="pill-back" onClick={onBack}>
+          {backLabel}
+        </button>
+        <h2 className="stack-era">{t(era.title)}</h2>
+        <p className="stack-count">{progressLabel}</p>
+      </header>
       {visible.length === 0 ? (
-        <div className="stack-empty">
-          <p>{t(content.galleryCopy.empty)}</p>
+        <div className="era-end">
+          <p className="era-end-title">{t(content.galleryCopy.empty)}</p>
+          <div className="era-end-actions">
+            <button type="button" className="btn" onClick={onBack}>
+              {backLabel}
+            </button>
+            {hasNext ? (
+              <button type="button" className="btn btn-gold" onClick={onNext}>
+                {t(content.galleryCopy.nextEra)}
+              </button>
+            ) : null}
+          </div>
         </div>
       ) : (
         <div className={arriving ? "stack-deck is-arriving" : "stack-deck"}>
@@ -393,7 +418,6 @@ function Stack({
             <span style={{ transform: `scaleX(${Math.min(index + 1, photos.length) / photos.length})` }} />
           </span>
         )}
-        <p className="stack-count">{countLabel}</p>
       </div>
     </div>
   );
@@ -662,18 +686,53 @@ export function Gallery({ progress, update }: ChapterProps) {
         onOpen={openEra}
       />
       {mode.kind === "orbit" || !era ? (
-        <p className="orbit-hint">{t(content.galleryCopy.orbit)}</p>
+        <div className="era-legend-wrap">
+          <p className="orbit-hint">{t(content.galleryCopy.orbit)}</p>
+          <ul className="era-legend">
+            {content.eras.map((item) => {
+              const seen = progress.erasViewed.includes(item.id);
+              return (
+                <li key={item.id}>
+                  <button
+                    type="button"
+                    className={seen ? "is-seen" : undefined}
+                    onClick={() => openEra(item.id)}
+                  >
+                    <span className="era-legend-mark" aria-hidden="true" />
+                    <span className="era-legend-name">{t(item.title)}</span>
+                    <span className="era-legend-state">{seen ? t(content.galleryCopy.seen) : t(content.galleryCopy.pending)}</span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       ) : (
         <Stack
           era={era}
           index={mode.index}
+          eraIndex={content.eras.findIndex((item) => item.id === era.id)}
+          eraCount={content.eras.length}
+          hasNext={content.eras.findIndex((item) => item.id === era.id) < content.eras.length - 1}
           flipped={progress.flippedPhotos}
           reduced={reduced}
           controlRef={controlRef}
           onAdvance={() => {
-            setMode((current) => (current.kind === "stack" ? { ...current, index: current.index + 1 } : current));
+            setMode((current) => {
+              if (current.kind !== "stack") return current;
+              const currentEra = content.eras.find((item) => item.id === current.eraId);
+              const max = currentEra?.photos.length ?? current.index;
+              return { ...current, index: Math.min(current.index + 1, max) };
+            });
           }}
           onBack={() => backRef.current()}
+          onNext={() => {
+            const index = content.eras.findIndex((item) => item.id === era.id);
+            const next = content.eras[index + 1];
+            if (!next) return;
+            setFocusIndex(index + 1);
+            setMode({ kind: "stack", eraId: next.id, index: 0 });
+          }}
           onFlip={toggleFlip}
           onOpen={setFullPhoto}
         />

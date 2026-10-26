@@ -3,7 +3,7 @@
     "title": { "vi": "Vũ trụ của em", "en": "Your universe" },
     "description": { "vi": "Vũ trụ của em — một món quà sinh nhật.", "en": "Your universe — a birthday gift." },
     "herName": "J",
-    "constellationName": "J",
+    "constellationName": "JOLIE",
     "monogram": "J"
   },
   "gate": {
@@ -24,21 +24,57 @@
   "startDate": "2024-02-14T19:30:00+07:00",
   "music": "/music/nen.wav",
   "birth": {
-    "when": "2002-08-18T21:30:00+07:00",
-    "lat": 21.0278,
-    "lon": 105.8342,
-    "place": { "vi": "Hà Nội", "en": "Hanoi" },
+    "when": "2002-11-18T21:30:00+07:00",
+    "lat": 20.97,
+    "lon": 105.78,
+    "place": { "vi": "Hà Đông, Hà Nội", "en": "Hà Đông, Hà Nội, Vietnam" },
     "kicker": { "vi": "Đêm em sinh ra", "en": "The night you were born" },
     "title": { "vi": "Bản đồ sao đêm em sinh ra", "en": "The sky the night you were born" },
     "lede": {
-      "vi": "Đúng giờ, đúng chỗ. Chạm một chòm sao để nghe tên.",
-      "en": "The right hour, the right place. Tap a constellation to hear its name."
+      "vi": "Chạm những ngôi sao đang nhấp nháy để đọc lời nhắn.",
+      "en": "Tap the pulsing stars to read each note."
     },
     "north": { "vi": "B", "en": "N" },
     "east": { "vi": "Đ", "en": "E" },
     "south": { "vi": "N", "en": "S" },
     "west": { "vi": "T", "en": "W" },
-    "caption": { "vi": "{when} · {place}", "en": "{when} · {place}" }
+    "caption": { "vi": "{when} · {place}", "en": "{when} · {place}" },
+    "progress": { "vi": "{n}/{total} lời nhắn", "en": "{n}/{total} notes" },
+    "sign": { "vi": "Cung của em", "en": "Your sign" },
+    "notes": [
+      {
+        "id": "cas",
+        "title": { "vi": "Sự quan tâm của em", "en": "Your kindness" },
+        "body": {
+          "vi": "Em khiến việc quan tâm đến người khác trở thành một điều rất tự nhiên.",
+          "en": "You make caring feel like the most natural thing in the world."
+        }
+      },
+      {
+        "id": "tau",
+        "title": { "vi": "Chiếc mặt phụng phịu", "en": "Your little pout" },
+        "body": {
+          "vi": "Nhất là mỗi lần anh trêu em. Ừ, anh để ý hết đấy. :)))",
+          "en": "Especially when I tease you. Yes, I notice it every time. :)))"
+        }
+      },
+      {
+        "id": "aur",
+        "title": { "vi": "Nụ cười của em", "en": "Your smile" },
+        "body": {
+          "vi": "Một trong những điều anh thích nhìn thấy nhất, nhất là khi biết mình là người khiến em cười.",
+          "en": "One of my favorite things to see, especially when I know I caused it."
+        }
+      },
+      {
+        "id": "ori",
+        "title": { "vi": "Tương lai của em", "en": "Your future" },
+        "body": {
+          "vi": "Anh mong thế giới sẽ cho em thật nhiều lý do để mỉm cười.",
+          "en": "I hope the world gives you a thousand reasons to smile."
+        }
+      }
+    ]
   },
   "constellations": {
     "umi": { "vi": "Tiểu Hùng", "en": "Ursa Minor" },
@@ -102,7 +138,7 @@
     "hints": {
       "gate": { "vi": "Nhập biệt danh anh hay gọi.", "en": "Type the nickname I use for you." },
       "sky": { "vi": "Xem các vì sao gọi tên em.", "en": "Watch the stars say your name." },
-      "birth": { "vi": "Chạm một chòm sao để nghe tên.", "en": "Tap a constellation to hear its name." },
+      "birth": { "vi": "Chạm những sao nhấp nháy để đọc hết lời nhắn.", "en": "Tap the pulsing stars until every note is open." },
       "gallery": { "vi": "Xem hết một thời.", "en": "See one era through." },
       "quiz": { "vi": "Trả lời hết các câu.", "en": "Answer every question." },
       "counter": { "vi": "Ở lại một lát với đồng hồ.", "en": "Stay with the clock for a moment." },
@@ -192,6 +228,11 @@
     "count": { "vi": "{n} ảnh", "en": "{n} photos" },
     "progress": { "vi": "{n} / {total}", "en": "{n} / {total}" },
     "back": { "vi": "Ngân hà", "en": "The galaxy" },
+    "backToGalaxy": { "vi": "← Về ngân hà", "en": "← Back to the galaxy" },
+    "eraProgress": { "vi": "Thời {n}/{total} · ảnh {photo}/{photos}", "en": "Era {n} of {total} · photo {photo}/{photos}" },
+    "nextEra": { "vi": "Thời tiếp theo", "en": "Next era" },
+    "seen": { "vi": "Đã xem", "en": "Seen" },
+    "pending": { "vi": "Chưa xem", "en": "Not yet" },
     "empty": { "vi": "Hết thời này rồi.", "en": "That's the end of this era." },
     "close": { "vi": "Đóng ảnh", "en": "Close the photo" },
     "orbit": { "vi": "Chạm một cụm sao để mở thời đó.", "en": "Tap a cluster to open that era." }
@@ -356,7 +397,14 @@
       "en": "You found them all. I'm trying to remember enough, too."
     },
     "again": { "vi": "Chơi lại", "en": "Play again" },
-    "back": { "vi": "Mặt sau", "en": "Face down" }
+    "back": { "vi": "Mặt sau", "en": "Face down" },
+    "lines": [
+      { "vi": "Một khoảnh khắc nhỏ, một kỷ niệm dễ thương.", "en": "A little moment, a lovely memory." },
+      { "vi": "Anh vẫn nhớ tấm này. Còn em?", "en": "I remember this one. Do you?" },
+      { "vi": "Bằng chứng rằng chẳng cần dịp đặc biệt để vui vẻ cùng nhau.", "en": "Proof that we don’t need a special occasion to have fun." },
+      { "vi": "Vẫn còn rất nhiều kỷ niệm đang chờ phía trước.", "en": "More memories waiting to be made." },
+      { "vi": "Điều anh thích nhất trong tấm ảnh này à? Là em.", "en": "My favorite part of this photo? You." }
+    ]
   },
   "dreams": [
     {

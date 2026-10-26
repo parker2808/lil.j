@@ -1969,22 +1969,26 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 }
 
 .music.is-first {
+  border-color: rgba(244, 196, 226, 0.95);
   box-shadow:
-    0 0 0 2px rgba(255, 214, 230, 0.95),
-    0 0 8px rgba(244, 160, 196, 0.55);
-  animation: music-invite 1.8s ease-in-out infinite;
+    0 0 0 2px rgba(232, 176, 220, 0.9),
+    0 0 0 6px rgba(196, 168, 232, 0.32),
+    0 0 16px rgba(244, 176, 214, 0.55);
+  animation: music-ring 2.2s ease-in-out infinite;
 }
 
-@keyframes music-invite {
+@keyframes music-ring {
   0%, 100% {
     box-shadow:
-      0 0 0 2px rgba(255, 214, 230, 0.8),
-      0 0 6px rgba(244, 160, 196, 0.35);
+      0 0 0 2px rgba(255, 214, 230, 0.72),
+      0 0 0 5px rgba(196, 168, 232, 0.18),
+      0 0 12px rgba(244, 176, 214, 0.4);
   }
   50% {
     box-shadow:
-      0 0 0 2px rgba(255, 228, 240, 1),
-      0 0 10px rgba(244, 150, 190, 0.7);
+      0 0 0 2px rgba(255, 232, 244, 1),
+      0 0 0 8px rgba(186, 160, 232, 0.38),
+      0 0 20px rgba(244, 176, 214, 0.78);
   }
 }
 
@@ -2123,6 +2127,21 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   font-size: var(--text-secondary);
   line-height: var(--leading-body);
   backdrop-filter: blur(12px);
+  animation: toast-in 0.28s ease;
+}
+
+.toast.is-leaving {
+  animation: toast-out 0.34s ease forwards;
+  pointer-events: none;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes toast-out {
+  to { opacity: 0; transform: translateY(-8px); }
 }
 
 .loading { color: var(--muted); padding-top: 30vh; text-align: center; }

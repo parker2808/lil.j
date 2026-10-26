@@ -42,10 +42,12 @@ type MusicButtonProps = {
   muted: boolean;
   onMuted: (muted: boolean) => void;
   onBlocked: () => void;
+  onPress: () => void;
   onInvite: (invite: boolean) => void;
+  hintVisible: boolean;
 };
 
-export function MusicButton({ onMuted, onBlocked, onInvite }: MusicButtonProps) {
+export function MusicButton({ onMuted, onBlocked, onPress, onInvite, hintVisible }: MusicButtonProps) {
   const { t } = useI18n();
   const [playing, setPlaying] = useState(musicIsPlaying);
   const [heard, setHeard] = useState(() => {
@@ -72,6 +74,7 @@ export function MusicButton({ onMuted, onBlocked, onInvite }: MusicButtonProps) 
   useEffect(() => () => onInvite(false), [onInvite]);
 
   async function onClick() {
+    onPress();
     const turningOff = musicIsPlaying();
     onMuted(turningOff);
     try {
@@ -92,7 +95,7 @@ export function MusicButton({ onMuted, onBlocked, onInvite }: MusicButtonProps) 
       onClick={() => void onClick()}
       aria-pressed={playing}
       aria-label={label}
-      aria-describedby={invite ? "music-hint" : undefined}
+      aria-describedby={hintVisible ? "music-hint" : undefined}
     >
       {playing ? (
         <span className="eq" aria-hidden="true">

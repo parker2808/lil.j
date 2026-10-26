@@ -13,7 +13,7 @@ import { StickyNextContext, type StickyAction } from "./components/sticky-next-c
 import { Universe } from "./components/Universe.tsx";
 import { FLOW, clampStep, stepDone, type StepId } from "./lib/flow.ts";
 import { useI18n } from "./lib/locale-context.ts";
-import { bindMusicVisibility, bindPlaylist, playBirthday, restoreMusicVolume, resumePlaylist, startMusic } from "./lib/music.ts";
+import { bindMusicVisibility, bindPlaylist, musicIsPlaying, playBirthday, restoreMusicVolume, resumePlaylist, startMusic, subscribeMusic } from "./lib/music.ts";
 import { bindViewport } from "./lib/viewport.ts";
 import { isBeforeUnlock } from "./lib/lock.ts";
 import { clearProgress, restartedProgress } from "./lib/progress.ts";
@@ -45,8 +45,14 @@ export function App() {
   const reduced = useReducedMotion();
   const problem = validateContent(content);
   const { progress, update } = useProgress();
-  const [musicNote, setMusicNote] = useState("");
+  const [musicNoteOn, setMusicNoteOn] = useState(false);
+  const [musicNoteLeaving, setMusicNoteLeaving] = useState(false);
+  const [blockedCue, setBlockedCue] = useState(false);
   const [musicInvite, setMusicInvite] = useState(false);
+  const blockedOnce = useRef(false);
+  const noteVisible = useRef(false);
+  const noteTimer = useRef<number | null>(null);
+  const fadeTimer = useRef<number | null>(null);
   const [opening, setOpening] = useState(false);
   const [askReset, setAskReset] = useState(false);
   const [{ dev, forceLock }] = useState(() => {
@@ -126,6 +132,44 @@ export function App() {
     }, 1800);
     return () => window.clearTimeout(timer);
   }, [progress.friendsSeen, stepId, update]);
+
+  const clearNoteTimers = useCallback(() => {
+    if (noteTimer.current != null) window.clearTimeout(noteTimer.current);
+    if (fadeTimer.current != null) window.clearTimeout(fadeTimer.current);
+    noteTimer.current = null;
+    fadeTimer.current = null;
+  }, []);
+
+  const hideMusicNote = useCallback(() => {
+    if (!noteVisible.current) return;
+    if (noteTimer.current != null) window.clearTimeout(noteTimer.current);
+    noteTimer.current = null;
+    setMusicNoteLeaving(true);
+    if (fadeTimer.current != null) window.clearTimeout(fadeTimer.current);
+    fadeTimer.current = window.setTimeout(() => {
+      noteVisible.current = false;
+      setMusicNoteOn(false);
+      setMusicNoteLeaving(false);
+      fadeTimer.current = null;
+    }, reduced ? 0 : 340);
+  }, [reduced]);
+
+  const showMusicNote = useCallback((fromUser: boolean) => {
+    if (!fromUser && blockedOnce.current) return;
+    blockedOnce.current = true;
+    setBlockedCue(true);
+    clearNoteTimers();
+    noteVisible.current = true;
+    setMusicNoteLeaving(false);
+    setMusicNoteOn(true);
+    noteTimer.current = window.setTimeout(() => hideMusicNote(), 3000);
+  }, [clearNoteTimers, hideMusicNote]);
+
+  useEffect(() => clearNoteTimers, [clearNoteTimers]);
+
+  useEffect(() => subscribeMusic(() => {
+    if (musicIsPlaying()) hideMusicNote();
+  }), [hideMusicNote]);
 
   useEffect(() => bindViewport(), []);
   useEffect(() => {
@@ -208,7 +252,7 @@ export function App() {
   function unlock() {
     if (opening) return;
     setOpening(true);
-    void startMusic(progress.muted).catch(() => setMusicNote(t(content.ui.musicBlocked)));
+    void startMusic(progress.muted).catch(() => showMusicNote(false));
     window.setTimeout(() => {
       update((current) => ({
         ...current,
@@ -359,13 +403,15 @@ export function App() {
               <MusicButton
                 muted={progress.muted}
                 onMuted={(muted) => update((current) => ({ ...current, muted }))}
-                onBlocked={() => setMusicNote(t(content.ui.musicBlocked))}
+                onBlocked={() => showMusicNote(true)}
+                onPress={hideMusicNote}
                 onInvite={setMusicInvite}
+                hintVisible={musicInvite && !blockedCue}
               />
             </div>
           )}
         </div>
-        {released && progress.gateUnlocked && musicInvite && (
+        {released && progress.gateUnlocked && musicInvite && !blockedCue && (
           <p className="music-hint" id="music-hint">
             {t(content.ui.musicHint)}
           </p>
@@ -479,9 +525,9 @@ export function App() {
         </div>
       )}
       {opening && <GateBurst />}
-      {musicNote && (
-        <p className="toast" role="status">
-          {musicNote}
+      {musicNoteOn && (
+        <p className={musicNoteLeaving ? "toast is-leaving" : "toast"} role="status">
+          {t(content.ui.musicBlocked)}
         </p>
       )}
     </StickyNextContext.Provider>

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Reveal } from "./Reveal.tsx";
 
 type ChapterFrameProps = {
   kicker: string;
@@ -11,7 +12,7 @@ export function ChapterFrame({ kicker, title, lede, children }: ChapterFrameProp
   return (
     <section className="scene chapter">
       <p className="kicker">{kicker}</p>
-      <h1>{title}</h1>
+      <Reveal text={title} />
       <p className="lede">{lede}</p>
       {children}
     </section>

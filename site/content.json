@@ -545,6 +545,7 @@
     },
     "sealed": { "vi": "Chạm để mở", "en": "Touch to open" },
     "openedNote": { "vi": "Hôm nay em đã mở lá này. Mai mình niêm lại.", "en": "You opened this one today. We'll seal it again tomorrow." },
+    "close": { "vi": "Gấp thư lại", "en": "Fold it closed" },
     "next": { "vi": "Một câu hỏi cuối", "en": "One last question" }
   },
   "finale": {

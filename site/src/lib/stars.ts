@@ -273,7 +273,7 @@ export function altAz(raHours: number, decDeg: number, latDeg: number, lonDeg: n
 }
 
 export function starRadius(mag: number): number {
-  return Math.max(0.55, Math.min(2.7, 2.15 - mag * 0.42));
+  return Math.max(0.9, Math.min(3.3, 2.7 - mag * 0.42));
 }
 
 export type PlottedStar = Star & Horizontal & { x: number; y: number; visible: boolean };

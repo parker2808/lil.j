@@ -4,6 +4,7 @@ import { useI18n } from "../lib/locale-context.ts";
 import { fillTemplate } from "../lib/pure.ts";
 import { useReducedMotion } from "../lib/useReducedMotion.ts";
 import type { Progress } from "../types.ts";
+import { Reveal } from "./Reveal.tsx";
 import { Typewriter } from "./Typewriter.tsx";
 
 type CakeProps = {
@@ -138,7 +139,7 @@ export function Cake({ progress, update }: CakeProps) {
   return (
     <section className="scene cake-scene">
       <p className="kicker">{t(content.cake.kicker)}</p>
-      <h1>{t(content.cake.title)}</h1>
+      <Reveal text={t(content.cake.title)} />
       <p className="lede">{t(content.cake.lede)}</p>
       <div className="cake-stage">
         <div className="candle-row">
@@ -237,9 +238,6 @@ function CakeArt() {
         d="M48 176 h264 a16 16 0 0 1 16 16 v34 c0 22 -66 34 -148 34 s-148 -12 -148 -34 v-34 a16 16 0 0 1 16 -16z"
         fill="url(#spongeBot)"
       />
-      <path d="M64 214 h232" stroke="#e7a0b8" strokeWidth="11" strokeLinecap="round" />
-      <path d="M64 214 h232" stroke="#fff4f8" strokeWidth="2.2" strokeLinecap="round" />
-      <ellipse cx="64" cy="214" rx="7" ry="5.5" fill="#fff4f8" />
       <path d="M58 214 c-8 10 -2 22 8 18 c6 -8 4 -16 0 -18z" fill="#e7a0b8" />
 
       <path d="M70 176 c8 22 8 36 16 36 s12 -16 16 -36" fill="url(#icing)" />

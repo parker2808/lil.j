@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { stepDone } from "../src/lib/flow.ts";
+import { FLOW, FLOW_VERSION, FLOW_WITH_FRIENDS, INCLUDE_FRIENDS, PREVIOUS_FLOW, migrateIndex, stepDone } from "../src/lib/flow.ts";
 import { elapsedParts, fillTemplate, formatZoned, nicknamesMatch, todayKey } from "../src/lib/pure.ts";
 import { altAz, projectSky } from "../src/lib/stars.ts";
 
@@ -71,5 +71,19 @@ assert.equal(stepDone("cake", { ...blank, candlesOut: [0, 1, 2, 2] }, 5, []), fa
 assert.equal(stepDone("cake", { ...blank, candlesOut: [0, 1, 2, 3, 4] }, 5, []), true);
 assert.equal(stepDone("wish", { ...blank, wishes: [{ text: "  " }] }, 1, []), false);
 assert.equal(stepDone("wish", { ...blank, wishes: [{ text: "ở bên" }] }, 1, []), true);
+
+assert.equal(INCLUDE_FRIENDS, false);
+assert.equal(FLOW_VERSION, 3);
+assert.equal(FLOW.length, 15);
+assert.equal(FLOW.includes("friends"), false);
+assert.equal(FLOW_WITH_FRIENDS.length, 16);
+assert.equal(FLOW[migrateIndex(2, FLOW_WITH_FRIENDS.indexOf("friends"))], "dreams");
+assert.equal(FLOW[migrateIndex(2, FLOW_WITH_FRIENDS.indexOf("wish"))], "wish");
+assert.equal(FLOW[migrateIndex(2, FLOW_WITH_FRIENDS.indexOf("letter"))], "letter");
+assert.equal(FLOW[migrateIndex(1, PREVIOUS_FLOW.indexOf("wish"))], "wish");
+assert.equal(FLOW[migrateIndex(1, PREVIOUS_FLOW.indexOf("letter"))], "letter");
+assert.equal(FLOW[migrateIndex(3, FLOW.indexOf("letters"))], "letters");
+assert.equal(migrateIndex(3, 0), 0);
+assert.equal(migrateIndex(3, 99), FLOW.length - 1);
 
 console.log("selfcheck ok");

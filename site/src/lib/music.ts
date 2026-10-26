@@ -59,3 +59,29 @@ export function restoreMusicVolume(): void {
   stopFade();
   if (audio && !audio.muted) audio.volume = REST_VOLUME;
 }
+
+/** A short bell, only while the visit's music is actually playing. */
+export function playChime(): void {
+  if (!audio || audio.paused || audio.muted) return;
+  const Ctx =
+    window.AudioContext ??
+    (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+  if (!Ctx) return;
+  const context = new Ctx();
+  const now = context.currentTime;
+  const notes = [880, 1318];
+  for (const [index, freq] of notes.entries()) {
+    const osc = context.createOscillator();
+    const gain = context.createGain();
+    osc.type = "sine";
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(0.08, now + 0.02 + index * 0.08);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.55 + index * 0.08);
+    osc.connect(gain);
+    gain.connect(context.destination);
+    osc.start(now + index * 0.08);
+    osc.stop(now + 0.7 + index * 0.08);
+  }
+  window.setTimeout(() => void context.close(), 1200);
+}

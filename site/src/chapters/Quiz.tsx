@@ -63,7 +63,7 @@ export function Quiz({ progress, update }: ChapterProps) {
           </div>
           {typeof progress.quiz[question.id] === "number" && (
             <>
-              <p className="note">
+              <p className={progress.quiz[question.id] === question.answer ? "quiz-note is-right" : "quiz-note"}>
                 {progress.quiz[question.id] === question.answer ? t(question.rightNote) : t(question.wrongNote)}
               </p>
               <button type="button" className="btn" onClick={() => setStep(step + 1)}>

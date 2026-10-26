@@ -176,6 +176,7 @@ export type Content = {
     lede: Copy;
     sealed: Copy;
     openedNote: Copy;
+    close: Copy;
     next: Copy;
   };
   finale: {

@@ -92,9 +92,10 @@ export function Memory({ progress, update }: ChapterProps) {
       </p>
       <div className="memory-grid">
         {deck.map((card) => {
-          const up = flipped.includes(card.uid) || matched.includes(card.photoId);
+          const matchedCard = matched.includes(card.photoId);
+          const up = flipped.includes(card.uid) || matchedCard;
           return (
-            <div key={card.uid} className={up ? "mem is-up" : "mem"}>
+            <div key={card.uid} className={matchedCard ? "mem is-up is-matched" : up ? "mem is-up" : "mem"}>
               <div className="mem-inner" aria-hidden="true">
                 <div className="mem-face mem-back">{content.meta.monogram}</div>
                 <div className="mem-face mem-front">

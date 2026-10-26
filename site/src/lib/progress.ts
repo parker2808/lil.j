@@ -1,4 +1,4 @@
-import { FLOW, FLOW_VERSION, PREVIOUS_FLOW, clampStep } from "./flow.ts";
+import { FLOW_VERSION, migrateIndex } from "./flow.ts";
 import type { Progress, Wish } from "../types.ts";
 
 export const PROGRESS_KEY = "lilj.progress.v1";
@@ -118,12 +118,7 @@ function resumeIndex(record: Record<string, unknown>, key: "step" | "unlocked", 
     if (key === "unlocked") return resumeIndex(record, "step", gateUnlocked);
     return gateUnlocked ? 1 : 0;
   }
-  const index = Math.floor(raw);
-  if (record.flowVersion === FLOW_VERSION) return clampStep(index);
-  const id = PREVIOUS_FLOW[index];
-  if (!id) return clampStep(index);
-  const placed = FLOW.indexOf(id);
-  return placed < 0 ? clampStep(index) : placed;
+  return migrateIndex(record.flowVersion, raw);
 }
 
 export function saveProgress(progress: Progress): void {

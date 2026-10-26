@@ -3,6 +3,8 @@ import { content } from "../content.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import { fadeMusic } from "../lib/music.ts";
 import { useReducedMotion } from "../lib/useReducedMotion.ts";
+import { Petals } from "./Fireworks.tsx";
+import { Reveal } from "./Reveal.tsx";
 
 type FinalLetterProps = {
   already: boolean;
@@ -36,7 +38,7 @@ export function FinalLetter({ already, onDone }: FinalLetterProps) {
   return (
     <section className="scene letter-scene">
       <p className="kicker">{t(content.finalLetter.kicker)}</p>
-      <h1>{t(content.finalLetter.title)}</h1>
+      <Reveal text={t(content.finalLetter.title)} />
       <p className="lede">{t(content.finalLetter.lede)}</p>
       <div className="hand-sheet" aria-live="polite">
         {lines.slice(0, shown).map((line, index) => (
@@ -50,9 +52,10 @@ export function FinalLetter({ already, onDone }: FinalLetterProps) {
           {t(content.finalLetter.skip)}
         </button>
       )}
+      {done && <Petals />}
       {done && (
         <>
-          <p className="note">{t(content.finalLetter.closing)}</p>
+          <p className="letter-close">{t(content.finalLetter.closing)}</p>
           <button type="button" className="btn" onClick={() => setShown(0)}>
             {t(content.finalLetter.replay)}
           </button>

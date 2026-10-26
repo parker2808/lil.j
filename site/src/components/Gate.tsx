@@ -2,6 +2,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { content } from "../content.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import { nicknamesMatch } from "../lib/pure.ts";
+import { Reveal } from "./Reveal.tsx";
 
 type GateProps = {
   onUnlock: () => void;
@@ -43,7 +44,7 @@ export function Gate({ onUnlock }: GateProps) {
       <div className="monogram-orb" aria-hidden="true">
         {content.meta.monogram}
       </div>
-      <h1>{t(content.gate.question)}</h1>
+      <Reveal text={t(content.gate.question)} />
       <form onSubmit={onSubmit} className={shaking ? "gate-card shake" : "gate-card"}>
         <label className="field">
           <input

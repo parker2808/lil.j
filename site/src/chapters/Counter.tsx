@@ -3,6 +3,19 @@ import { content } from "../content.ts";
 import { ChapterFrame } from "../components/ChapterFrame.tsx";
 import { useI18n } from "../lib/locale-context.ts";
 import { elapsedParts, fillTemplate } from "../lib/pure.ts";
+function Roll({ value }: { value: number }) {
+  const text = String(value).padStart(2, "0");
+  return (
+    <span className="tick" aria-hidden="true">
+      {text.split("").map((digit, index) => (
+        <span key={`${index}-${digit}`} className="digit">
+          {digit}
+        </span>
+      ))}
+    </span>
+  );
+}
+
 export function Counter() {
   const { t } = useI18n();
   const chapter = content.chapters.find((item) => item.id === "counter");
@@ -36,7 +49,7 @@ export function Counter() {
       <div className="clock" aria-hidden="true">
         {cells.map(([key, value, label]) => (
           <div key={key} className="tick-cell">
-            <span className="tick">{String(value).padStart(2, "0")}</span>
+            <Roll value={value} />
             <span>{label}</span>
           </div>
         ))}

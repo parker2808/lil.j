@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useEffect, useState, type ReactNode } from "react";
+import { lazy, Suspense, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { content, validateContent } from "./content.ts";
 import { Envelope } from "./components/Envelope.tsx";
@@ -10,6 +10,7 @@ import { Universe } from "./components/Universe.tsx";
 import { FLOW, clampStep, stepDone, type StepId } from "./lib/flow.ts";
 import { useI18n } from "./lib/locale-context.ts";
 import { restoreMusicVolume, startMusic } from "./lib/music.ts";
+import { bindViewport } from "./lib/viewport.ts";
 import { clearProgress } from "./lib/progress.ts";
 import { fillTemplate } from "./lib/pure.ts";
 import { useReducedMotion } from "./lib/useReducedMotion.ts";
@@ -40,9 +41,12 @@ export function App() {
   const problem = validateContent(content);
   const { progress, update } = useProgress();
   const [musicNote, setMusicNote] = useState("");
+  const [opening, setOpening] = useState(false);
   const [dev] = useState(() => new URLSearchParams(window.location.search).get("dev") === "1");
+  const headerRef = useRef<HTMLElement>(null);
+  const footerRef = useRef<HTMLElement>(null);
   const step = clampStep(progress.step);
-  const stepId = FLOW[step] ?? "gate";
+  const stepId = (FLOW[step] ?? "gate") as StepId;
 
   const mark = useCallback(
     (key: "skyDone" | "birthSeen" | "letterDone") => {
@@ -100,9 +104,35 @@ export function App() {
     return () => window.clearTimeout(timer);
   }, [progress.friendsSeen, stepId, update]);
 
+  useEffect(() => bindViewport(), []);
+
+  useEffect(() => {
+    const watch = (element: HTMLElement | null, name: "--header-h" | "--footer-h") => {
+      if (!element) return () => {};
+      const apply = () => {
+        const hidden = getComputedStyle(element).display === "none";
+        document.documentElement.style.setProperty(name, hidden ? "0px" : `${element.offsetHeight}px`);
+      };
+      apply();
+      const observer = new ResizeObserver(apply);
+      observer.observe(element);
+      return () => observer.disconnect();
+    };
+    const stopHeader = watch(headerRef.current, "--header-h");
+    const stopFooter = watch(footerRef.current, "--footer-h");
+    return () => {
+      stopHeader();
+      stopFooter();
+    };
+  }, [dev, stepId]);
+
   useEffect(() => {
     if (!dev) return;
-    document.querySelector(".dev-jump [aria-current='step']")?.scrollIntoView({ inline: "center", block: "nearest" });
+    const bar = document.querySelector(".dev-jump");
+    const current = bar?.querySelector("[aria-current='step']");
+    if (!(bar instanceof HTMLElement) || !(current instanceof HTMLElement)) return;
+    const left = current.offsetLeft - bar.clientWidth / 2 + current.clientWidth / 2;
+    bar.scrollTo({ left: Math.max(0, left) });
   }, [dev, step]);
 
   useEffect(() => {
@@ -121,13 +151,18 @@ export function App() {
   }
 
   function unlock() {
-    update((current) => ({
-      ...current,
-      gateUnlocked: true,
-      step: Math.max(current.step, 1),
-      unlocked: Math.max(current.unlocked, 1),
-    }));
+    if (opening) return;
+    setOpening(true);
     void startMusic(content.music, progress.muted).catch(() => setMusicNote(t(content.ui.musicBlocked)));
+    window.setTimeout(() => {
+      update((current) => ({
+        ...current,
+        gateUnlocked: true,
+        step: Math.max(current.step, 1),
+        unlocked: Math.max(current.unlocked, 1),
+      }));
+      setOpening(false);
+    }, reduced ? 0 : 880);
   }
 
   const done = stepDone(stepId, progress, CANDLES, QUIZ_IDS, SCRATCH_IDS, LETTER_IDS);
@@ -232,51 +267,67 @@ export function App() {
   }
 
   return (
-    <>
+    <div className="shell">
       <Starfield />
-      <LanguageToggle />
-      {step > 0 && (
-        <button type="button" className="step-back" onClick={() => go(step - 1)} aria-label={t(content.flow.back)}>
-          ←
-        </button>
-      )}
-      {dev && (
-        <div className="dev-jump">
-          {FLOW.map((id, index) => (
-            <button
-              key={id}
-              type="button"
-              aria-current={index === step ? "step" : undefined}
-              aria-label={fillTemplate(t(content.flow.devJump), { n: index + 1 })}
-              onClick={() => go(index, true)}
-            >
-              {index + 1}
+      <header className="chrome" ref={headerRef}>
+        <div className="chrome-row">
+          <LanguageToggle />
+          {step > 0 && (
+            <button type="button" className="step-back" onClick={() => go(step - 1)} aria-label={t(content.flow.back)}>
+              ←
             </button>
-          ))}
-          <button
-            type="button"
-            aria-label={t(content.ui.reset)}
-            onClick={() => {
-              clearProgress();
-              window.location.reload();
-            }}
-          >
-            ×
-          </button>
+          )}
+          <span className="chrome-spacer" />
+          {progress.gateUnlocked && (
+            <MusicButton
+              muted={progress.muted}
+              onMuted={(muted) => update((current) => ({ ...current, muted }))}
+              onBlocked={() => setMusicNote(t(content.ui.musicBlocked))}
+            />
+          )}
         </div>
-      )}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={stepId}
-          initial={reduced ? false : { opacity: 0, y: 28, scale: 0.985 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={reduced ? { opacity: 1 } : { opacity: 0, y: -22, scale: 1.01 }}
-          transition={{ duration: reduced ? 0 : 0.72, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {node}
-        </motion.div>
-      </AnimatePresence>
-      <footer className="flow">
+        {dev && (
+          <div className="dev-jump">
+            {FLOW.map((id, index) => (
+              <button
+                key={id}
+                type="button"
+                aria-current={index === step ? "step" : undefined}
+                aria-label={fillTemplate(t(content.flow.devJump), { n: index + 1 })}
+                onClick={() => go(index, true)}
+              >
+                {index + 1}
+              </button>
+            ))}
+            <button
+              type="button"
+              aria-label={t(content.ui.reset)}
+              onClick={() => {
+                clearProgress();
+                window.location.reload();
+              }}
+            >
+              ×
+            </button>
+          </div>
+        )}
+      </header>
+      <div className="stage">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={stepId}
+            className="stage-pane"
+            data-step={stepId}
+            initial={reduced ? false : { opacity: 0, y: 28, scale: 1.045, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+            exit={reduced ? { opacity: 1 } : { opacity: 0, y: -24, scale: 0.97, filter: "blur(8px)" }}
+            transition={{ duration: reduced ? 0 : 0.68, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {node}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+      <footer className="flow" ref={footerRef}>
         <p className="sr-only">{fillTemplate(t(content.flow.progress), { n: step + 1, total: FLOW.length })}</p>
         <div className="dots" aria-hidden="true">
           {FLOW.map((id: StepId, index) => (
@@ -303,18 +354,12 @@ export function App() {
           )}
         </AnimatePresence>
       </footer>
-      {progress.gateUnlocked && (
-        <MusicButton
-          muted={progress.muted}
-          onMuted={(muted) => update((current) => ({ ...current, muted }))}
-          onBlocked={() => setMusicNote(t(content.ui.musicBlocked))}
-        />
-      )}
+      {opening && <div className="gate-burst" aria-hidden="true" />}
       {musicNote && (
         <p className="toast" role="status">
           {musicNote}
         </p>
       )}
-    </>
+    </div>
   );
 }

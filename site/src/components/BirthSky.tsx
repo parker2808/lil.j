@@ -15,7 +15,10 @@ export function BirthSky({ onSeen }: BirthSkyProps) {
   const { t, locale } = useI18n();
   const [active, setActive] = useState<string | null>(null);
   const when = useMemo(() => new Date(content.birth.when), []);
-  const sky = useMemo(() => projectSky(content.birth.lat, content.birth.lon, when), [when]);
+  const sky = useMemo(
+    () => projectSky(content.birth.lat, content.birth.lon, when, content.constellations),
+    [when],
+  );
   const formatted = formatZoned(content.birth.when, locale);
   const caption = fillTemplate(t(content.birth.caption), {
     when: formatted,

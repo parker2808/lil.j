@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { content } from "../content.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import { fadeMusic } from "../lib/music.ts";
+import { formatDotted } from "../lib/pure.ts";
 import { useReducedMotion } from "../lib/useReducedMotion.ts";
 import { Petals, StarFall } from "./Fireworks.tsx";
 import { Reveal } from "./Reveal.tsx";
@@ -26,7 +27,7 @@ export function FinalLetter({ already, onDone, onRestart }: FinalLetterProps) {
   const skipAll = ((already && !replay) || reduced) && shown === 0;
   const count = skipAll ? tokens.length : shown;
   const done = count >= tokens.length;
-  const dateLabel = formatBirth(content.birth.when);
+  const dateLabel = formatDotted(content.birth.when, t(content.ui.dottedDate));
 
   useEffect(() => {
     fadeMusic(8000);
@@ -181,10 +182,4 @@ function delayFor(token: Token | undefined): number {
   const pause = /[.!?…]$/.test(token.text) ? 200 : /[,;:]$/.test(token.text) ? 100 : 0;
   const base = token.kind === "char" ? 46 : 50 + (token.text.length % 3) * 6;
   return base + pause;
-}
-
-function formatBirth(when: string): string {
-  const [year, month, day] = when.slice(0, 10).split("-");
-  if (!year || !month || !day) return when.slice(0, 10);
-  return `${day}.${month}.${year}`;
 }

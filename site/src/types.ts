@@ -123,6 +123,7 @@ export type Content = {
   scratches: Scratch[];
   quiz: QuizQuestion[];
   quizSummary: Copy;
+  quizMarks: Copy;
   memoryCopy: {
     moves: Copy;
     best: Copy;
@@ -132,6 +133,9 @@ export type Content = {
   };
   dreams: Dream[];
   friendNotes: FriendNote[];
+  friendsCopy: {
+    sign: Copy;
+  };
   together: {
     past: Copy;
     future: Copy;
@@ -166,6 +170,7 @@ export type Content = {
     west: Copy;
     caption: Copy;
   };
+  constellations: Record<string, Copy>;
   wish: {
     kicker: Copy;
     title: Copy;
@@ -246,6 +251,9 @@ export type Content = {
     unitHours: Copy;
     unitMinutes: Copy;
     unitSeconds: Copy;
+    langVi: Copy;
+    langEn: Copy;
+    dottedDate: Copy;
   };
 };
 

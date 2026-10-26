@@ -26,6 +26,12 @@ export function formatZoned(iso: string, locale: "vi" | "en"): string {
   return new Intl.DateTimeFormat(tag, { dateStyle: "long", timeStyle: "short", timeZone: "UTC" }).format(shifted);
 }
 
+export function formatDotted(iso: string, template: string): string {
+  const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
+  if (!match) return iso.slice(0, 10);
+  return fillTemplate(template, { y: match[1], m: match[2], d: match[3] });
+}
+
 export function todayKey(date = new Date()): string {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");

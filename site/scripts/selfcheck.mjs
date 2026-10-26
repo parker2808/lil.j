@@ -1,9 +1,12 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { FLOW, FLOW_VERSION, FLOW_WITH_FRIENDS, INCLUDE_FRIENDS, PREVIOUS_FLOW, migrateIndex, stepDone } from "../src/lib/flow.ts";
 import { readLocale } from "../src/lib/i18n.ts";
 import { cloudinarySrcSet, cloudinaryUrl } from "../src/lib/images.ts";
-import { elapsedParts, fillTemplate, formatZoned, nicknamesMatch, todayKey } from "../src/lib/pure.ts";
+import { elapsedParts, fillTemplate, formatDotted, formatZoned, nicknamesMatch, todayKey } from "../src/lib/pure.ts";
 import { altAz, projectSky } from "../src/lib/stars.ts";
+
+const content = JSON.parse(readFileSync(new URL("../content.json", import.meta.url), "utf8"));
 
 assert.equal(nicknamesMatch("  Bé   YÊU ", "bé yêu"), true);
 assert.equal(nicknamesMatch("be yeu", "bé yêu"), false);
@@ -24,12 +27,16 @@ assert.equal(fillTemplate("Đã bên nhau {days} ngày {hours} giờ", { days: 3
 assert.equal(todayKey(new Date(2026, 9, 5, 23, 30)), "2026-10-05");
 assert.match(formatZoned("2002-08-18T21:30:00+07:00", "vi"), /21:30/);
 assert.match(formatZoned("2002-08-18T21:30:00+07:00", "en"), /21:30/);
+assert.equal(formatDotted("2023-04-02", "{d}.{m}.{y}"), "02.04.2023");
+assert.equal(content.constellations.lyr.en, "Lyra");
+assert.equal(content.ui.musicHint.en, "Tap for music");
 
 const born = new Date("2002-08-18T21:30:00+07:00");
 const polaris = altAz(2.5303, 89.2642, 21.0278, 105.8342, born);
 assert.ok(polaris.alt > 18 && polaris.alt < 24, `polaris alt ${polaris.alt}`);
 assert.ok(polaris.az < 20 || polaris.az > 340, `polaris az ${polaris.az}`);
-const sky = projectSky(21.0278, 105.8342, born);
+const sky = projectSky(21.0278, 105.8342, born, content.constellations);
+assert.equal(sky.labels.find((item) => item.id === "lyr")?.name.en, "Lyra");
 const visible = sky.stars.filter((star) => star.visible);
 assert.ok(visible.length >= 12, `visible stars ${visible.length}`);
 assert.equal(visible.some((star) => star.id === "vega"), true);

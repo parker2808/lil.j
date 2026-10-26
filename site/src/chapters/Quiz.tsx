@@ -69,7 +69,7 @@ export function Quiz({ progress, update }: ChapterProps) {
                   onClick={() => choose(index)}
                 >
                   <span className="opt-index" aria-hidden="true">
-                    {String.fromCharCode(65 + index)}
+                    {t(content.quizMarks)[index] ?? String.fromCharCode(65 + index)}
                   </span>
                   <span>{t(option)}</span>
                 </button>

@@ -5,7 +5,7 @@ import { ChapterFrame } from "../components/ChapterFrame.tsx";
 import { SpiralGalaxy, type SpiralGalaxyHandle } from "../components/SpiralGalaxy.tsx";
 import { cloudinarySrcSet, cloudinaryUrl } from "../lib/images.ts";
 import { useI18n } from "../lib/locale-context.ts";
-import { fillTemplate } from "../lib/pure.ts";
+import { fillTemplate, formatDotted } from "../lib/pure.ts";
 import { useReducedMotion } from "../lib/useReducedMotion.ts";
 import type { ChapterProps, Era, EraPhoto } from "../types.ts";
 
@@ -34,12 +34,6 @@ function hash(id: string): number {
 
 function tiltOf(id: string): number {
   return ((hash(id) % 121) - 60) / 10;
-}
-
-function dottedDate(value: string): string {
-  const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(value);
-  if (!match) return value;
-  return `${match[3]}.${match[2]}.${match[1]}`;
 }
 
 function delivered(src: string, width: number, widths: number[], sizes: string) {
@@ -332,7 +326,7 @@ function Stack({
             const caption = t(photo.caption);
             const compliment = t(photo.compliment);
             const isFlipped = flipped.includes(photo.id);
-            const date = dottedDate(photo.date);
+            const date = formatDotted(photo.date, t(content.ui.dottedDate));
             return (
               <div
                 key={photo.id}

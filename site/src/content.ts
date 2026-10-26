@@ -1,7 +1,8 @@
 import rawJson from "../content.json";
 import { FLOW } from "./lib/flow.ts";
 import { collectCopyProblems } from "./lib/i18n.ts";
-import type { Content, Era, Photo } from "./types.ts";
+import { CONSTELLATION_IDS } from "./lib/stars.ts";
+import type { Content, Copy, Era, Photo } from "./types.ts";
 
 type RawContent = Omit<Content, "photos">;
 
@@ -102,6 +103,28 @@ export function validateContent(value: Content): string | null {
   }
   if (!value.finalLetter?.body?.vi?.trim() || !value.finalLetter?.body?.en?.trim()) {
     return "content.json thiếu lá thư cuối (cả vi và en).";
+  }
+  if (!value.constellations) return "content.json thiếu tên chòm sao.";
+  for (const id of CONSTELLATION_IDS) {
+    const name = value.constellations[id];
+    if (!name?.vi?.trim() || !name?.en?.trim()) return `content.json thiếu constellations.${id}.`;
+  }
+  const requiredCopy: [Copy | undefined, string][] = [
+    [value.ui?.langVi, "ui.langVi"],
+    [value.ui?.langEn, "ui.langEn"],
+    [value.ui?.dottedDate, "ui.dottedDate"],
+    [value.ui?.musicHint, "ui.musicHint"],
+    [value.friendsCopy?.sign, "friendsCopy.sign"],
+    [value.quizMarks, "quizMarks"],
+  ];
+  for (const [copy, path] of requiredCopy) {
+    if (!copy?.vi?.trim() || !copy?.en?.trim()) return `content.json thiếu ${path}.`;
+  }
+  for (const locale of ["vi", "en"] as const) {
+    const pattern = value.ui.dottedDate[locale];
+    if (!pattern.includes("{d}") || !pattern.includes("{m}") || !pattern.includes("{y}")) {
+      return "ui.dottedDate cần {d}, {m} và {y}.";
+    }
   }
   for (const id of FLOW) {
     const hint = value.flow?.hints?.[id];

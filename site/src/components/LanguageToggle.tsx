@@ -2,9 +2,9 @@ import { content } from "../content.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import type { Locale } from "../lib/i18n.ts";
 
-const OPTIONS: { id: Locale; label: string }[] = [
-  { id: "vi", label: "VI" },
-  { id: "en", label: "EN" },
+const OPTIONS: { id: Locale; label: (typeof content.ui)["langVi"] }[] = [
+  { id: "vi", label: content.ui.langVi },
+  { id: "en", label: content.ui.langEn },
 ];
 
 export function LanguageToggle() {
@@ -19,7 +19,7 @@ export function LanguageToggle() {
           aria-pressed={locale === option.id}
           onClick={() => setLocale(option.id)}
         >
-          {option.label}
+          {t(option.label)}
         </button>
       ))}
     </div>

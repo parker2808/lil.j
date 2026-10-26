@@ -1,7 +1,7 @@
 import { content } from "../content.ts";
 import { ChapterFrame } from "../components/ChapterFrame.tsx";
 import { useI18n } from "../lib/locale-context.ts";
-import { tiltFromId } from "../lib/pure.ts";
+import { fillTemplate, tiltFromId } from "../lib/pure.ts";
 
 const TONES = new Set(["gold", "blush", "sage", "sky", "cream"]);
 
@@ -23,7 +23,7 @@ export function Friends() {
             style={{ ["--tilt" as string]: `${tiltFromId(note.id)}deg` }}
           >
             <p>{t(note.text)}</p>
-            <span>— {note.author}</span>
+            <span>{fillTemplate(t(content.friendsCopy.sign), { name: note.author })}</span>
           </li>
         ))}
       </ul>

@@ -40,6 +40,26 @@
     "west": { "vi": "T", "en": "W" },
     "caption": { "vi": "{when} · {place}", "en": "{when} · {place}" }
   },
+  "constellations": {
+    "umi": { "vi": "Tiểu Hùng", "en": "Ursa Minor" },
+    "uma": { "vi": "Gấu Lớn", "en": "Ursa Major" },
+    "cas": { "vi": "Tiên Hậu", "en": "Cassiopeia" },
+    "lyr": { "vi": "Thiên Cầm", "en": "Lyra" },
+    "cyg": { "vi": "Thiên Nga", "en": "Cygnus" },
+    "aql": { "vi": "Thiên Ưng", "en": "Aquila" },
+    "sco": { "vi": "Thiên Yết", "en": "Scorpius" },
+    "boo": { "vi": "Mục Phu", "en": "Boötes" },
+    "vir": { "vi": "Xử Nữ", "en": "Virgo" },
+    "leo": { "vi": "Sư Tử", "en": "Leo" },
+    "ori": { "vi": "Lạp Hộ", "en": "Orion" },
+    "tau": { "vi": "Kim Ngưu", "en": "Taurus" },
+    "cma": { "vi": "Đại Khuyển", "en": "Canis Major" },
+    "cmi": { "vi": "Tiểu Khuyển", "en": "Canis Minor" },
+    "gem": { "vi": "Song Tử", "en": "Gemini" },
+    "aur": { "vi": "Ngự Phu", "en": "Auriga" },
+    "cru": { "vi": "Nam Thập Tự", "en": "Crux" },
+    "sgr": { "vi": "Nhân Mã", "en": "Sagittarius" }
+  },
   "wish": {
     "kicker": { "vi": "Gửi lên trời", "en": "Up to the sky" },
     "title": { "vi": "Ước nguyện gửi sao", "en": "Wish upon a star" },
@@ -327,6 +347,7 @@
     "vi": "Anh đúng {ok}/{total}. Phần còn lại anh học tiếp.",
     "en": "I got {ok}/{total}. I'll keep learning the rest."
   },
+  "quizMarks": { "vi": "ABC", "en": "ABC" },
   "memoryCopy": {
     "moves": { "vi": "Lượt: {n}", "en": "Moves: {n}" },
     "best": { "vi": "Ít lượt nhất: {n}", "en": "Fewest moves: {n}" },
@@ -454,6 +475,9 @@
       "text": { "vi": "Hôm nay được phép nhận hết. Mai hẵng nghĩ đến người khác.", "en": "Today you're allowed to receive everything. Tomorrow can be for other people." }
     }
   ],
+  "friendsCopy": {
+    "sign": { "vi": "— {name}", "en": "— {name}" }
+  },
   "together": {
     "past": {
       "vi": "Đã bên nhau {days} ngày {hours} giờ {minutes} phút {seconds} giây",
@@ -575,6 +599,9 @@
     "unitDays": { "vi": "ngày", "en": "days" },
     "unitHours": { "vi": "giờ", "en": "hours" },
     "unitMinutes": { "vi": "phút", "en": "minutes" },
-    "unitSeconds": { "vi": "giây", "en": "seconds" }
+    "unitSeconds": { "vi": "giây", "en": "seconds" },
+    "langVi": { "vi": "VI", "en": "VI" },
+    "langEn": { "vi": "EN", "en": "EN" },
+    "dottedDate": { "vi": "{d}.{m}.{y}", "en": "{d}.{m}.{y}" }
   }
 }

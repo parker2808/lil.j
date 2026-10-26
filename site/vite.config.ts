@@ -1,7 +1,34 @@
-import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import react from "@vitejs/plugin-react";
+import { defineConfig, type Plugin } from "vite";
 
-// https://vite.dev/config/
+function escapeHtml(value: string): string {
+  return value.replace(/[&<>"']/g, (char) => {
+    if (char === "&") return "&amp;";
+    if (char === "<") return "&lt;";
+    if (char === ">") return "&gt;";
+    if (char === '"') return "&quot;";
+    return "&#39;";
+  });
+}
+
+/** First paint uses the English title and description from content.json. */
+function contentMeta(): Plugin {
+  const file = fileURLToPath(new URL("./content.json", import.meta.url));
+  return {
+    name: "content-meta",
+    transformIndexHtml(html) {
+      const content = JSON.parse(readFileSync(file, "utf8")) as {
+        meta: { title: { en: string }; description: { en: string } };
+      };
+      return html
+        .replaceAll("__CONTENT_TITLE__", escapeHtml(content.meta.title.en))
+        .replaceAll("__CONTENT_DESCRIPTION__", escapeHtml(content.meta.description.en));
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [react()],
-})
+  plugins: [contentMeta(), react()],
+});

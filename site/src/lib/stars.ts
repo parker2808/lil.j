@@ -10,7 +10,6 @@ export type Star = {
 
 export type Constellation = {
   id: string;
-  name: Copy;
   lines: [string, string][];
 };
 
@@ -89,12 +88,10 @@ export const CATALOG: Star[] = [
 export const CONSTELLATIONS: Constellation[] = [
   {
     id: "umi",
-    name: { vi: "Tiểu Hùng", en: "Ursa Minor" },
     lines: [["polaris", "kochab"]],
   },
   {
     id: "uma",
-    name: { vi: "Gấu Lớn", en: "Ursa Major" },
     lines: [
       ["dubhe", "merak"],
       ["merak", "phecda"],
@@ -107,7 +104,6 @@ export const CONSTELLATIONS: Constellation[] = [
   },
   {
     id: "cas",
-    name: { vi: "Tiên Hậu", en: "Cassiopeia" },
     lines: [
       ["caph", "schedar"],
       ["schedar", "gamma-cas"],
@@ -117,7 +113,6 @@ export const CONSTELLATIONS: Constellation[] = [
   },
   {
     id: "lyr",
-    name: { vi: "Thiên Cầm", en: "Lyra" },
     lines: [
       ["vega", "sheliak"],
       ["sheliak", "sulafat"],
@@ -126,7 +121,6 @@ export const CONSTELLATIONS: Constellation[] = [
   },
   {
     id: "cyg",
-    name: { vi: "Thiên Nga", en: "Cygnus" },
     lines: [
       ["deneb", "sadr"],
       ["sadr", "albireo"],
@@ -136,7 +130,6 @@ export const CONSTELLATIONS: Constellation[] = [
   },
   {
     id: "aql",
-    name: { vi: "Thiên Ưng", en: "Aquila" },
     lines: [
       ["tarazed", "altair"],
       ["altair", "alshain"],
@@ -144,7 +137,6 @@ export const CONSTELLATIONS: Constellation[] = [
   },
   {
     id: "sco",
-    name: { vi: "Thiên Yết", en: "Scorpius" },
     lines: [
       ["acrab", "dschubba"],
       ["dschubba", "pi-sco"],
@@ -158,7 +150,6 @@ export const CONSTELLATIONS: Constellation[] = [
   },
   {
     id: "boo",
-    name: { vi: "Mục Phu", en: "Boötes" },
     lines: [
       ["arcturus", "izar"],
       ["izar", "nekkar"],
@@ -166,7 +157,6 @@ export const CONSTELLATIONS: Constellation[] = [
   },
   {
     id: "vir",
-    name: { vi: "Xử Nữ", en: "Virgo" },
     lines: [
       ["spica", "porrima"],
       ["porrima", "vindemiatrix"],
@@ -174,7 +164,6 @@ export const CONSTELLATIONS: Constellation[] = [
   },
   {
     id: "leo",
-    name: { vi: "Sư Tử", en: "Leo" },
     lines: [
       ["regulus", "algieba"],
       ["algieba", "zosma"],
@@ -183,7 +172,6 @@ export const CONSTELLATIONS: Constellation[] = [
   },
   {
     id: "ori",
-    name: { vi: "Lạp Hộ", en: "Orion" },
     lines: [
       ["betelgeuse", "bellatrix"],
       ["bellatrix", "rigel"],
@@ -195,12 +183,10 @@ export const CONSTELLATIONS: Constellation[] = [
   },
   {
     id: "tau",
-    name: { vi: "Kim Ngưu", en: "Taurus" },
     lines: [["aldebaran", "elnath"]],
   },
   {
     id: "cma",
-    name: { vi: "Đại Khuyển", en: "Canis Major" },
     lines: [
       ["sirius", "mirzam"],
       ["sirius", "wezen"],
@@ -209,22 +195,18 @@ export const CONSTELLATIONS: Constellation[] = [
   },
   {
     id: "cmi",
-    name: { vi: "Tiểu Khuyển", en: "Canis Minor" },
     lines: [],
   },
   {
     id: "gem",
-    name: { vi: "Song Tử", en: "Gemini" },
     lines: [["castor", "pollux"]],
   },
   {
     id: "aur",
-    name: { vi: "Ngự Phu", en: "Auriga" },
     lines: [],
   },
   {
     id: "cru",
-    name: { vi: "Nam Thập Tự", en: "Crux" },
     lines: [
       ["acrux", "gacrux"],
       ["mimosa", "delta-cru"],
@@ -232,13 +214,14 @@ export const CONSTELLATIONS: Constellation[] = [
   },
   {
     id: "sgr",
-    name: { vi: "Nhân Mã", en: "Sagittarius" },
     lines: [
       ["kaus-a", "kaus-m"],
       ["kaus-m", "nunki"],
     ],
   },
 ];
+
+export const CONSTELLATION_IDS = CONSTELLATIONS.map((item) => item.id);
 
 export type Horizontal = { alt: number; az: number };
 
@@ -312,7 +295,12 @@ function project(alt: number, az: number): { x: number; y: number } {
   };
 }
 
-export function projectSky(lat: number, lon: number, date: Date): SkyPlot {
+export function projectSky(
+  lat: number,
+  lon: number,
+  date: Date,
+  names: Record<string, Copy> = {},
+): SkyPlot {
   const byId = new Map<string, PlottedStar>();
   const stars = CATALOG.map((star) => {
     const horizontal = altAz(star.ra, star.dec, lat, lon, date);
@@ -344,7 +332,7 @@ export function projectSky(lat: number, lon: number, date: Date): SkyPlot {
     if (visible.length === 0) continue;
     const x = visible.reduce((sum, star) => sum + star.x, 0) / visible.length;
     const y = visible.reduce((sum, star) => sum + star.y, 0) / visible.length;
-    labels.push({ id: group.id, name: group.name, x, y });
+    labels.push({ id: group.id, name: names[group.id] ?? { vi: group.id, en: group.id }, x, y });
   }
 
   return { stars, lines, labels };

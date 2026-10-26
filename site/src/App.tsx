@@ -4,16 +4,18 @@ import { content, validateContent } from "./content.ts";
 import { Envelope } from "./components/Envelope.tsx";
 import { GateBurst } from "./components/Fireworks.tsx";
 import { Gate } from "./components/Gate.tsx";
+import { LockScreen } from "./components/LockScreen.tsx";
 import { LanguageToggle } from "./components/LanguageToggle.tsx";
-import { MusicButton } from "./components/MusicButton.tsx";
+import { MusicButton, MusicCredit } from "./components/MusicButton.tsx";
 import { Starfield } from "./components/Starfield.tsx";
 import { StickyNext } from "./components/StickyNext.tsx";
 import { StickyNextContext, type StickyAction } from "./components/sticky-next-context.ts";
 import { Universe } from "./components/Universe.tsx";
 import { FLOW, clampStep, stepDone, type StepId } from "./lib/flow.ts";
 import { useI18n } from "./lib/locale-context.ts";
-import { bindMusicVisibility, restoreMusicVolume, startMusic } from "./lib/music.ts";
+import { bindMusicVisibility, bindPlaylist, playBirthday, restoreMusicVolume, resumePlaylist, startMusic } from "./lib/music.ts";
 import { bindViewport } from "./lib/viewport.ts";
+import { isBeforeUnlock } from "./lib/lock.ts";
 import { clearProgress, restartedProgress } from "./lib/progress.ts";
 import { fillTemplate } from "./lib/pure.ts";
 import { useReducedMotion } from "./lib/useReducedMotion.ts";
@@ -47,7 +49,14 @@ export function App() {
   const [musicInvite, setMusicInvite] = useState(false);
   const [opening, setOpening] = useState(false);
   const [askReset, setAskReset] = useState(false);
-  const [dev] = useState(() => new URLSearchParams(window.location.search).get("dev") === "1");
+  const [{ dev, forceLock }] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const devOn = params.get("dev") === "1";
+    return { dev: devOn, forceLock: devOn && params.get("lock") === "1" };
+  });
+  const [released, setReleased] = useState(
+    () => (dev && !forceLock) || !isBeforeUnlock(content.lock?.unlockAt),
+  );
   const headerRef = useRef<HTMLElement>(null);
   const footerRef = useRef<HTMLElement>(null);
   const [quizAction, setQuizAction] = useState<StickyAction | null>(null);
@@ -119,7 +128,10 @@ export function App() {
   }, [progress.friendsSeen, stepId, update]);
 
   useEffect(() => bindViewport(), []);
-  useEffect(() => bindMusicVisibility(content.music), []);
+  useEffect(() => {
+    bindPlaylist(content.music.tracks);
+    return bindMusicVisibility();
+  }, []);
 
   useEffect(() => {
     const watch = (element: HTMLElement | null, name: "--header-h" | "--footer-h") => {
@@ -143,7 +155,7 @@ export function App() {
       stopHeader();
       stopFooter();
     };
-  }, [dev, stepId]);
+  }, [dev, released, stepId]);
 
   useEffect(() => {
     if (!dev) return;
@@ -156,6 +168,15 @@ export function App() {
 
   useEffect(() => {
     if (stepId !== "letter") restoreMusicVolume();
+  }, [stepId]);
+
+  useEffect(() => {
+    const birthday = content.music.birthday;
+    if (stepId !== "cake" || !birthday) return;
+    void playBirthday(birthday);
+    return () => {
+      void resumePlaylist();
+    };
   }, [stepId]);
 
   useEffect(() => {
@@ -187,7 +208,7 @@ export function App() {
   function unlock() {
     if (opening) return;
     setOpening(true);
-    void startMusic(content.music, progress.muted).catch(() => setMusicNote(t(content.ui.musicBlocked)));
+    void startMusic(progress.muted).catch(() => setMusicNote(t(content.ui.musicBlocked)));
     window.setTimeout(() => {
       update((current) => ({
         ...current,
@@ -315,13 +336,13 @@ export function App() {
       <header className="chrome" ref={headerRef}>
         <div className="chrome-row">
           <LanguageToggle />
-          {step > 0 && (
+          {released && step > 0 && (
             <button type="button" className="step-back" onClick={() => go(step - 1)} aria-label={t(content.flow.back)}>
               ←
             </button>
           )}
           <span className="chrome-spacer" />
-          {progress.gateUnlocked && (
+          {released && progress.gateUnlocked && (
             <div className="chrome-tools">
               <button type="button" className="journey-reset" aria-label={t(content.ui.reset)} onClick={() => setAskReset(true)}>
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -344,12 +365,13 @@ export function App() {
             </div>
           )}
         </div>
-        {progress.gateUnlocked && musicInvite && (
+        {released && progress.gateUnlocked && musicInvite && (
           <p className="music-hint" id="music-hint">
             {t(content.ui.musicHint)}
           </p>
         )}
-        {dev && (
+        {released && progress.gateUnlocked && <MusicCredit />}
+        {released && dev && (
           <div className="dev-jump">
             {FLOW.map((id, index) => (
               <button
@@ -378,44 +400,62 @@ export function App() {
       <div className="stage-shell">
         <div className="stage">
           <AnimatePresence mode="wait">
-            <motion.div
-              key={stepId}
-              className="stage-pane"
-              data-step={stepId}
-              initial={reduced ? false : { opacity: 0, y: 48, scale: 1.12, rotateX: 10, filter: "blur(16px)" }}
-              animate={
-                reduced
-                  ? { opacity: 1 }
-                  : { opacity: 1, y: 0, scale: 1, rotateX: 0, filter: "blur(0px)" }
-              }
-              exit={reduced ? undefined : { opacity: 0, y: -36, scale: 0.92, rotateX: -8, filter: "blur(14px)" }}
-              transition={{ duration: reduced ? 0 : 0.78, ease: [0.16, 1, 0.3, 1] }}
-            >
-              {node}
-            </motion.div>
+            {!released ? (
+              <motion.div
+                key="lock"
+                className="stage-pane"
+                data-step={stepId}
+                initial={reduced ? false : { opacity: 0, y: 28 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={reduced ? undefined : { opacity: 0, y: -24, filter: "blur(10px)" }}
+                transition={{ duration: reduced ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <LockScreen onOpen={() => setReleased(true)} />
+              </motion.div>
+            ) : (
+              <motion.div
+                key={stepId}
+                className="stage-pane"
+                data-step={stepId}
+                initial={reduced ? false : { opacity: 0, y: 48, scale: 1.12, rotateX: 10, filter: "blur(16px)" }}
+                animate={
+                  reduced
+                    ? { opacity: 1 }
+                    : { opacity: 1, y: 0, scale: 1, rotateX: 0, filter: "blur(0px)" }
+                }
+                exit={reduced ? undefined : { opacity: 0, y: -36, scale: 0.92, rotateX: -8, filter: "blur(14px)" }}
+                transition={{ duration: reduced ? 0 : 0.78, ease: [0.16, 1, 0.3, 1] }}
+              >
+                {node}
+              </motion.div>
+            )}
           </AnimatePresence>
         </div>
       </div>
-      <footer className="flow" ref={footerRef}>
-        <p className="sr-only">{fillTemplate(t(content.flow.progress), { n: step + 1, total: FLOW.length })}</p>
-        <div className="flow-copy">
-          <div className="dots" aria-hidden="true">
-            {FLOW.map((id: StepId, index) => (
-              <span key={id} className={index < step ? "dot is-done" : index === step ? "dot is-now" : "dot"} />
-            ))}
-          </div>
-          <p className="flow-hint" aria-live="polite">
-            {t(hint)}
-          </p>
-        </div>
-        {stickyAction && (
-          <StickyNext
-            motionKey={`${stepId}-${stickyAction.label}`}
-            label={stickyAction.label}
-            disabled={stickyAction.disabled}
-            reduced={reduced}
-            onClick={stickyAction.onClick}
-          />
+      <footer className={released ? "flow" : "flow lock-off"} ref={footerRef}>
+        {released && (
+          <>
+            <p className="sr-only">{fillTemplate(t(content.flow.progress), { n: step + 1, total: FLOW.length })}</p>
+            <div className="flow-copy">
+              <div className="dots" aria-hidden="true">
+                {FLOW.map((id: StepId, index) => (
+                  <span key={id} className={index < step ? "dot is-done" : index === step ? "dot is-now" : "dot"} />
+                ))}
+              </div>
+              <p className="flow-hint" aria-live="polite">
+                {t(hint)}
+              </p>
+            </div>
+            {stickyAction && (
+              <StickyNext
+                motionKey={`${stepId}-${stickyAction.label}`}
+                label={stickyAction.label}
+                disabled={stickyAction.disabled}
+                reduced={reduced}
+                onClick={stickyAction.onClick}
+              />
+            )}
+          </>
         )}
       </footer>
       {askReset && (

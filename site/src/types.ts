@@ -84,6 +84,12 @@ export type Letter = {
   body: Copy;
 };
 
+export type MusicTrack = {
+  title: string;
+  artist?: string;
+  src: string;
+};
+
 export type Content = {
   meta: {
     title: Copy;
@@ -101,7 +107,10 @@ export type Content = {
     hints: Copy[];
   };
   startDate: string;
-  music: string;
+  music: {
+    tracks: MusicTrack[];
+    birthday?: MusicTrack;
+  };
   envelope: {
     greeting: Copy;
     sealCaption: Copy;
@@ -116,6 +125,11 @@ export type Content = {
     count: Copy;
     progress: Copy;
     back: Copy;
+    backToGalaxy: Copy;
+    eraProgress: Copy;
+    nextEra: Copy;
+    seen: Copy;
+    pending: Copy;
     empty: Copy;
     close: Copy;
     orbit: Copy;
@@ -130,6 +144,7 @@ export type Content = {
     win: Copy;
     again: Copy;
     back: Copy;
+    lines: Copy[];
   };
   dreams: Dream[];
   friendNotes: FriendNote[];
@@ -169,6 +184,9 @@ export type Content = {
     south: Copy;
     west: Copy;
     caption: Copy;
+    progress: Copy;
+    sign: Copy;
+    notes: { id: string; title: Copy; body: Copy }[];
   };
   constellations: Record<string, Copy>;
   wish: {
@@ -254,6 +272,15 @@ export type Content = {
     langVi: Copy;
     langEn: Copy;
     dottedDate: Copy;
+  };
+  lock: {
+    unlockAt: string;
+    title: Copy;
+    subtitle: Copy;
+    days: Copy;
+    hours: Copy;
+    minutes: Copy;
+    seconds: Copy;
   };
 };
 

@@ -67,7 +67,7 @@ Cả hai ngôn ngữ đều bắt buộc, không để trống. `npm run build` 
 | `gate.question` | Câu trên cổng. Bản mẫu: "Ai đang tới đây vậy?" |
 | `gate.placeholder` / `gate.submit` / `gate.empty` | Ô nhập, nút, câu khi bỏ trống. |
 | `gate.hints` | Mảng gợi ý khi nhập sai. Xoay vòng. |
-| `startDate` | ISO 8601 có múi giờ, ví dụ `2024-02-14T19:30:00+07:00`. Đồng hồ đếm từ mốc này. |
+| `startDate` | ISO 8601 có múi giờ, ví dụ `2026-07-01T00:00:00+07:00`. Đồng hồ đếm từ mốc này. |
 | `music` | Đường dẫn file trong `public`, ví dụ `/music/nen.wav`. Đổi sang `.mp3` cũng được, miễn là trình duyệt phát được. Nhạc bắt đầu khi em qua cổng, và nhỏ dần ở lá thư cuối. |
 | `birth` | Bản đồ sao đêm em sinh ra. `when` là ISO 8601 có múi giờ. `lat`, `lon` là số (Bắc và Đông dương). `place` là cặp `{vi, en}`. Các nhãn `north` `east` `south` `west`, `kicker`, `title`, `lede`, `caption` (chỗ trống `{when}` và `{place}`). |
 | `wish` | Ước gửi lên trời: `kicker`, `title`, `lede`, `placeholder`, `send`, `empty`, `sent`, `more`, `saved`. |

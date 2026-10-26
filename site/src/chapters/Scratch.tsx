@@ -65,6 +65,9 @@ function ScratchCard({
     const gctx = glitter?.getContext("2d") ?? null;
     let drawing = false;
     let pointer = -1;
+    let mode: "pending" | "scroll" | "scratch" = "pending";
+    let startX = 0;
+    let startY = 0;
     let lastX = 0;
     let lastY = 0;
     let lastCssX = 0;
@@ -93,7 +96,11 @@ function ScratchCard({
       }
       ctx.globalAlpha = 1;
       ctx.fillStyle = "#6a3454";
-      ctx.font = `600 ${Math.max(14, Math.round(height / 10))}px Inter, ui-sans-serif, sans-serif`;
+      const rootStyle = getComputedStyle(document.documentElement);
+      const bodyPx = Number.parseFloat(rootStyle.getPropertyValue("--text-body")) || 14;
+      const letterPx = Number.parseFloat(rootStyle.getPropertyValue("--text-letter")) || 16;
+      const label = Math.round(Math.max(bodyPx, Math.min(letterPx, height / 12)));
+      ctx.font = `600 ${label}px Inter, ui-sans-serif, sans-serif`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.fillText(cover, width / 2, height / 2);
@@ -211,19 +218,37 @@ function ScratchCard({
 
     const down = (event: PointerEvent) => {
       if (event.button !== 0) return;
-      event.preventDefault();
-      card.setPointerCapture(event.pointerId);
       drawing = true;
       pointer = event.pointerId;
+      mode = "pending";
+      startX = event.clientX;
+      startY = event.clientY;
       const here = locate(event);
       lastX = here.x;
       lastY = here.y;
       lastCssX = here.cssX;
       lastCssY = here.cssY;
-      scratchTo(here.x + 0.5, here.y + 0.5, here.cssX, here.cssY);
+      if (event.pointerType === "mouse") {
+        event.preventDefault();
+        card.setPointerCapture(event.pointerId);
+        mode = "scratch";
+        scratchTo(here.x + 0.5, here.y + 0.5, here.cssX, here.cssY);
+      }
     };
     const move = (event: PointerEvent) => {
-      if (!drawing || event.pointerId !== pointer) return;
+      if (!drawing || event.pointerId !== pointer || mode === "scroll") return;
+      if (mode === "pending") {
+        const dx = event.clientX - startX;
+        const dy = event.clientY - startY;
+        if (Math.hypot(dx, dy) < 8) return;
+        if (Math.abs(dy) > Math.abs(dx) * 1.25) {
+          mode = "scroll";
+          drawing = false;
+          return;
+        }
+        mode = "scratch";
+        card.setPointerCapture(event.pointerId);
+      }
       event.preventDefault();
       stroke(event);
       moves += 1;
@@ -304,7 +329,7 @@ function ScratchCard({
   }, [cover, id, onReveal, reduced, revealed]);
 
   return (
-    <article className="scratch">
+    <article className={revealed ? "scratch is-open" : "scratch"}>
       <p className="scratch-reveal">{reveal}</p>
       {!revealed && (
         <>

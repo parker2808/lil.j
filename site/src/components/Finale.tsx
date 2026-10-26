@@ -69,7 +69,7 @@ export function Finale({ saidYes, onYes }: FinaleProps) {
         </div>
       ) : (
         <>
-          <Reveal text={t(content.finale.question)} />
+          <Reveal as="h2" className="finale-question" text={t(content.finale.question)} />
           <button type="button" className="btn btn-gold yes-btn" onClick={onYes}>
             {t(content.finale.yes)}
           </button>

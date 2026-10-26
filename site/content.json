@@ -3,7 +3,7 @@
     "title": { "vi": "Vũ trụ của em", "en": "Your universe" },
     "description": { "vi": "Vũ trụ của em — một món quà sinh nhật.", "en": "Your universe — a birthday gift." },
     "herName": "J",
-    "constellationName": "J",
+    "constellationName": "JOLIE",
     "monogram": "J"
   },
   "gate": {
@@ -21,24 +21,73 @@
       { "vi": "Có chữ yêu ở trong đó.", "en": "The word yêu is in it." }
     ]
   },
-  "startDate": "2024-02-14T19:30:00+07:00",
-  "music": "/music/nen.wav",
+  "startDate": "2026-07-01T00:00:00+07:00",
+  "music": {
+    "tracks": [
+      { "title": "From The Start", "artist": "Laufey", "src": "/music/from-the-start.mp3" },
+      { "title": "Bewitched", "artist": "Laufey", "src": "/music/bewitched.mp3" },
+      { "title": "Valentine", "artist": "Laufey", "src": "/music/valentine.mp3" },
+      { "title": "Glue Song", "artist": "beabadoobee", "src": "/music/glue-song.mp3" },
+      { "title": "Echoes of the Stars", "artist": "sleepvolume", "src": "/music/echoes-of-the-stars.mp3" },
+      { "title": "Twinkle Twinkle Little Star (Grand Piano)", "src": "/music/twinkle-twinkle-little-star.mp3" }
+    ],
+    "birthday": {
+      "title": "Happy Birthday Music Box Loop",
+      "src": "/music/happy-birthday-music-box.mp3"
+    }
+  },
   "birth": {
-    "when": "2002-08-18T21:30:00+07:00",
-    "lat": 21.0278,
-    "lon": 105.8342,
-    "place": { "vi": "Hà Nội", "en": "Hanoi" },
-    "kicker": { "vi": "Đêm em sinh ra", "en": "The night you were born" },
-    "title": { "vi": "Bản đồ sao đêm em sinh ra", "en": "The sky the night you were born" },
+    "when": "2002-11-18T16:45:00+07:00",
+    "lat": 20.97,
+    "lon": 105.78,
+    "place": { "vi": "Hà Đông, Hà Nội", "en": "Hà Đông, Hà Nội, Vietnam" },
+    "kicker": { "vi": "Chiều em sinh ra", "en": "The afternoon you were born" },
+    "title": { "vi": "Bản đồ sao chiều em sinh ra", "en": "The sky the afternoon you were born" },
     "lede": {
-      "vi": "Đúng giờ, đúng chỗ. Chạm một chòm sao để nghe tên.",
-      "en": "The right hour, the right place. Tap a constellation to hear its name."
+      "vi": "Chạm những ngôi sao đang nhấp nháy để đọc lời nhắn.",
+      "en": "Tap the pulsing stars to read each note."
     },
     "north": { "vi": "B", "en": "N" },
     "east": { "vi": "Đ", "en": "E" },
     "south": { "vi": "N", "en": "S" },
     "west": { "vi": "T", "en": "W" },
-    "caption": { "vi": "{when} · {place}", "en": "{when} · {place}" }
+    "caption": { "vi": "{when} · {place}", "en": "{when} · {place}" },
+    "progress": { "vi": "{n}/{total} lời nhắn", "en": "{n}/{total} notes" },
+    "sign": { "vi": "Cung của em", "en": "Your sign" },
+    "notes": [
+      {
+        "id": "cas",
+        "title": { "vi": "Sự quan tâm của em", "en": "Your kindness" },
+        "body": {
+          "vi": "Em khiến việc quan tâm đến người khác trở thành một điều rất tự nhiên.",
+          "en": "You make caring feel like the most natural thing in the world."
+        }
+      },
+      {
+        "id": "lyr",
+        "title": { "vi": "Chiếc mặt phụng phịu", "en": "Your little pout" },
+        "body": {
+          "vi": "Nhất là mỗi lần anh trêu em. Ừ, anh để ý hết đấy. :)))",
+          "en": "Especially when I tease you. Yes, I notice it every time. :)))"
+        }
+      },
+      {
+        "id": "cyg",
+        "title": { "vi": "Nụ cười của em", "en": "Your smile" },
+        "body": {
+          "vi": "Một trong những điều anh thích nhìn thấy nhất, nhất là khi biết mình là người khiến em cười.",
+          "en": "One of my favorite things to see, especially when I know I caused it."
+        }
+      },
+      {
+        "id": "aql",
+        "title": { "vi": "Tương lai của em", "en": "Your future" },
+        "body": {
+          "vi": "Anh mong thế giới sẽ cho em thật nhiều lý do để mỉm cười.",
+          "en": "I hope the world gives you a thousand reasons to smile."
+        }
+      }
+    ]
   },
   "constellations": {
     "umi": { "vi": "Tiểu Hùng", "en": "Ursa Minor" },
@@ -82,8 +131,8 @@
       "en": "I wrote it slowly. You can read it that way too."
     },
     "body": {
-      "vi": "J,\n\nĐêm em sinh ra, trời Hà Nội đã có những vì sao anh vừa vẽ cho em.\n\nAnh đã ngồi với những tấm ảnh, với từng câu đố, và với những ngọn nến tắt.\n\nĐiều em vừa gửi lên trời, anh không hỏi lại. Nó ở trên đó, nhỏ thôi, nhưng là của em.\n\nCảm ơn em đã đi hết con đường này.\n\nSinh nhật vui.\nAnh vẫn ở đây.",
-      "en": "J,\n\nThe night you were born, the Hanoi sky already held the stars I just drew for you.\n\nI sat with the pictures, with every question, and with the candles after they went out.\n\nThe wish you just sent, I won't ask it back. It's up there, small, and it's yours.\n\nThank you for walking the whole way.\n\nHappy birthday.\nI'm still here."
+      "vi": "J,\n\nChiều em sinh ra, trời Hà Nội đã có những vì sao anh vừa vẽ cho em.\n\nAnh đã ngồi với những tấm ảnh, với từng câu đố, và với những ngọn nến tắt.\n\nĐiều em vừa gửi lên trời, anh không hỏi lại. Nó ở trên đó, nhỏ thôi, nhưng là của em.\n\nCảm ơn em đã đi hết con đường này.\n\nSinh nhật vui.\nAnh vẫn ở đây.",
+      "en": "J,\n\nThe afternoon you were born, the Hanoi sky already held the stars I just drew for you.\n\nI sat with the pictures, with every question, and with the candles after they went out.\n\nThe wish you just sent, I won't ask it back. It's up there, small, and it's yours.\n\nThank you for walking the whole way.\n\nHappy birthday.\nI'm still here."
     },
     "skip": { "vi": "Đọc hết", "en": "Read it all" },
     "replay": { "vi": "Đọc lại", "en": "Read it again" },
@@ -102,7 +151,7 @@
     "hints": {
       "gate": { "vi": "Nhập biệt danh anh hay gọi.", "en": "Type the nickname I use for you." },
       "sky": { "vi": "Xem các vì sao gọi tên em.", "en": "Watch the stars say your name." },
-      "birth": { "vi": "Chạm một chòm sao để nghe tên.", "en": "Tap a constellation to hear its name." },
+      "birth": { "vi": "Chạm những sao nhấp nháy để đọc hết lời nhắn.", "en": "Tap the pulsing stars until every note is open." },
       "gallery": { "vi": "Xem hết một thời.", "en": "See one era through." },
       "quiz": { "vi": "Trả lời hết các câu.", "en": "Answer every question." },
       "counter": { "vi": "Ở lại một lát với đồng hồ.", "en": "Stay with the clock for a moment." },
@@ -192,6 +241,11 @@
     "count": { "vi": "{n} ảnh", "en": "{n} photos" },
     "progress": { "vi": "{n} / {total}", "en": "{n} / {total}" },
     "back": { "vi": "Ngân hà", "en": "The galaxy" },
+    "backToGalaxy": { "vi": "← Về ngân hà", "en": "← Back to the galaxy" },
+    "eraProgress": { "vi": "Thời {n}/{total} · ảnh {photo}/{photos}", "en": "Era {n} of {total} · photo {photo}/{photos}" },
+    "nextEra": { "vi": "Thời tiếp theo", "en": "Next era" },
+    "seen": { "vi": "Đã xem", "en": "Seen" },
+    "pending": { "vi": "Chưa xem", "en": "Not yet" },
     "empty": { "vi": "Hết thời này rồi.", "en": "That's the end of this era." },
     "close": { "vi": "Đóng ảnh", "en": "Close the photo" },
     "orbit": { "vi": "Chạm một cụm sao để mở thời đó.", "en": "Tap a cluster to open that era." }
@@ -200,43 +254,43 @@
     {
       "id": "first",
       "title": { "vi": "Những ngày đầu", "en": "The first days" },
-      "date": "2023-04-02",
+      "date": "2026-07-01",
       "color": "#f4b4cf",
       "photos": [
-        { "id": "p1", "src": "/photos/01.svg", "date": "2023-04-02", "caption": { "vi": "Chiều cửa sổ", "en": "Window light" }, "compliment": { "vi": "Ánh sáng chiều hợp với em hơn là với bất cứ thứ gì anh từng thấy.", "en": "Afternoon light suits you more than anything else I've seen." } },
-        { "id": "p2", "src": "/photos/02.svg", "date": "2023-05-18", "caption": { "vi": "Biển gần tối", "en": "Dusk sea" }, "compliment": { "vi": "Em đứng im, gió làm hộ phần nói.", "en": "You stood still, and the wind did the talking." } },
-        { "id": "p3", "src": "/photos/03.svg", "date": "2023-06-09", "caption": { "vi": "Đèn lồng", "en": "Lanterns" }, "compliment": { "vi": "Em thích những thứ sáng vừa đủ, không cần cả thành phố phải biết.", "en": "You like a light that's just enough. The whole city doesn't need to know." } },
-        { "id": "p4", "src": "/photos/04.svg", "date": "2023-07-21", "caption": { "vi": "Mưa", "en": "Rain" }, "compliment": { "vi": "Trời mưa mà em vẫn gửi anh một câu rất khô.", "en": "It was raining, and you still sent me something perfectly dry." } },
-        { "id": "p5", "src": "/photos/05.svg", "date": "2023-09-03", "caption": { "vi": "Cà phê", "en": "Coffee" }, "compliment": { "vi": "Ly của em luôn nguội trước, vì em kể chuyện.", "en": "Your cup always goes cold first, because you're telling a story." } },
-        { "id": "p6", "src": "/photos/06.svg", "date": "2023-11-14", "caption": { "vi": "Hoa", "en": "Flowers" }, "compliment": { "vi": "Em không cần hoa. Nhưng anh vẫn muốn mang.", "en": "You don't need flowers. I still want to bring them." } }
+        { "id": "p1", "src": "/photos/01.svg", "date": "2026-07-01", "caption": { "vi": "Chiều cửa sổ", "en": "Window light" }, "compliment": { "vi": "Ánh sáng chiều hợp với em hơn là với bất cứ thứ gì anh từng thấy.", "en": "Afternoon light suits you more than anything else I've seen." } },
+        { "id": "p2", "src": "/photos/02.svg", "date": "2026-07-06", "caption": { "vi": "Biển gần tối", "en": "Dusk sea" }, "compliment": { "vi": "Em đứng im, gió làm hộ phần nói.", "en": "You stood still, and the wind did the talking." } },
+        { "id": "p3", "src": "/photos/03.svg", "date": "2026-07-12", "caption": { "vi": "Đèn lồng", "en": "Lanterns" }, "compliment": { "vi": "Em thích những thứ sáng vừa đủ, không cần cả thành phố phải biết.", "en": "You like a light that's just enough. The whole city doesn't need to know." } },
+        { "id": "p4", "src": "/photos/04.svg", "date": "2026-07-21", "caption": { "vi": "Mưa", "en": "Rain" }, "compliment": { "vi": "Trời mưa mà em vẫn gửi anh một câu rất khô.", "en": "It was raining, and you still sent me something perfectly dry." } },
+        { "id": "p5", "src": "/photos/05.svg", "date": "2026-08-02", "caption": { "vi": "Cà phê", "en": "Coffee" }, "compliment": { "vi": "Ly của em luôn nguội trước, vì em kể chuyện.", "en": "Your cup always goes cold first, because you're telling a story." } },
+        { "id": "p6", "src": "/photos/06.svg", "date": "2026-08-09", "caption": { "vi": "Hoa", "en": "Flowers" }, "compliment": { "vi": "Em không cần hoa. Nhưng anh vẫn muốn mang.", "en": "You don't need flowers. I still want to bring them." } }
       ]
     },
     {
       "id": "along",
       "title": { "vi": "Giữa chừng", "en": "Along the way" },
-      "date": "2024-02-14",
+      "date": "2026-08-16",
       "color": "#c5dff5",
       "photos": [
-        { "id": "p7", "src": "/photos/07.svg", "date": "2024-02-14", "caption": { "vi": "Tàu đêm", "en": "Night train" }, "compliment": { "vi": "Em ngủ dựa cửa kính, và anh không dám thở mạnh.", "en": "You slept against the glass, and I was afraid to breathe too loud." } },
-        { "id": "p8", "src": "/photos/08.svg", "date": "2024-04-07", "caption": { "vi": "Trăng", "en": "Moon" }, "compliment": { "vi": "Có những đêm anh nhìn lên và nhớ ra em cũng đang ở dưới cùng một trời.", "en": "Some nights I look up and remember you're under the same sky." } },
-        { "id": "p9", "src": "/photos/01.svg", "date": "2024-06-20", "caption": { "vi": "Sáng chủ nhật", "en": "Sunday morning" }, "compliment": { "vi": "Em dậy muộn, và căn phòng vẫn chờ.", "en": "You slept in, and the room waited." } },
-        { "id": "p10", "src": "/photos/02.svg", "date": "2024-08-18", "caption": { "vi": "Sinh nhật", "en": "Birthday" }, "compliment": { "vi": "Em thổi nến như thể điều ước là một chuyện rất nhỏ.", "en": "You blew the candles out as if a wish were a small thing." } },
-        { "id": "p11", "src": "/photos/03.svg", "date": "2024-10-02", "caption": { "vi": "Phố đêm", "en": "Night street" }, "compliment": { "vi": "Em nắm tay anh đúng lúc đèn đổi màu.", "en": "You took my hand just as the light changed." } },
-        { "id": "p12", "src": "/photos/04.svg", "date": "2024-12-24", "caption": { "vi": "Cuối năm", "en": "Year's end" }, "compliment": { "vi": "Em nói năm sau vẫn là năm này, chỉ dịu hơn.", "en": "You said next year would be this year, only softer." } }
+        { "id": "p7", "src": "/photos/07.svg", "date": "2026-08-16", "caption": { "vi": "Tàu đêm", "en": "Night train" }, "compliment": { "vi": "Em ngủ dựa cửa kính, và anh không dám thở mạnh.", "en": "You slept against the glass, and I was afraid to breathe too loud." } },
+        { "id": "p8", "src": "/photos/08.svg", "date": "2026-08-28", "caption": { "vi": "Trăng", "en": "Moon" }, "compliment": { "vi": "Có những đêm anh nhìn lên và nhớ ra em cũng đang ở dưới cùng một trời.", "en": "Some nights I look up and remember you're under the same sky." } },
+        { "id": "p9", "src": "/photos/01.svg", "date": "2026-09-06", "caption": { "vi": "Sáng chủ nhật", "en": "Sunday morning" }, "compliment": { "vi": "Em dậy muộn, và căn phòng vẫn chờ.", "en": "You slept in, and the room waited." } },
+        { "id": "p10", "src": "/photos/02.svg", "date": "2026-09-18", "caption": { "vi": "Nến", "en": "Candles" }, "compliment": { "vi": "Em thổi nến như thể điều ước là một chuyện rất nhỏ.", "en": "You blew the candles out as if a wish were a small thing." } },
+        { "id": "p11", "src": "/photos/03.svg", "date": "2026-09-27", "caption": { "vi": "Phố đêm", "en": "Night street" }, "compliment": { "vi": "Em nắm tay anh đúng lúc đèn đổi màu.", "en": "You took my hand just as the light changed." } },
+        { "id": "p12", "src": "/photos/04.svg", "date": "2026-10-04", "caption": { "vi": "Đêm mát", "en": "A cool night" }, "compliment": { "vi": "Em nói năm sau vẫn là năm này, chỉ dịu hơn.", "en": "You said next year would be this year, only softer." } }
       ]
     },
     {
       "id": "season",
       "title": { "vi": "Mùa này", "en": "This season" },
-      "date": "2025-03-01",
+      "date": "2026-10-11",
       "color": "#e7d4ff",
       "photos": [
-        { "id": "p13", "src": "/photos/05.svg", "date": "2025-03-01", "caption": { "vi": "Bàn gần cửa", "en": "The table by the door" }, "compliment": { "vi": "Em để lại một tách, và anh biết em sẽ quay lại.", "en": "You left a cup, and I knew you'd come back." } },
-        { "id": "p14", "src": "/photos/06.svg", "date": "2025-05-16", "caption": { "vi": "Chợ hoa", "en": "Flower market" }, "compliment": { "vi": "Em chọn bó nhỏ nhất, vì nó vừa tay.", "en": "You chose the smallest bunch, because it fit your hand." } },
-        { "id": "p15", "src": "/photos/07.svg", "date": "2025-07-09", "caption": { "vi": "Trên tàu", "en": "On the train" }, "compliment": { "vi": "Em nhìn ra cửa sổ và kể một chuyện không có kết.", "en": "You watched the window and told a story with no ending." } },
-        { "id": "p16", "src": "/photos/08.svg", "date": "2025-08-18", "caption": { "vi": "Thêm một tuổi", "en": "Another year" }, "compliment": { "vi": "Em cười trước khi nến tắt hẳn.", "en": "You smiled before the candles had quite gone out." } },
-        { "id": "p17", "src": "/photos/02.svg", "date": "2025-10-04", "caption": { "vi": "Chiều muộn", "en": "Late afternoon" }, "compliment": { "vi": "Em đi chậm lại để anh kịp bước cùng.", "en": "You slowed down so I could match your step." } },
-        { "id": "p18", "src": "/photos/03.svg", "date": "2026-01-11", "caption": { "vi": "Đêm yên", "en": "A quiet night" }, "compliment": { "vi": "Em ở đây. Thế là đủ một bầu trời.", "en": "You're here. That's a whole sky." } }
+        { "id": "p13", "src": "/photos/05.svg", "date": "2026-10-11", "caption": { "vi": "Bàn gần cửa", "en": "The table by the door" }, "compliment": { "vi": "Em để lại một tách, và anh biết em sẽ quay lại.", "en": "You left a cup, and I knew you'd come back." } },
+        { "id": "p14", "src": "/photos/06.svg", "date": "2026-10-18", "caption": { "vi": "Chợ hoa", "en": "Flower market" }, "compliment": { "vi": "Em chọn bó nhỏ nhất, vì nó vừa tay.", "en": "You chose the smallest bunch, because it fit your hand." } },
+        { "id": "p15", "src": "/photos/07.svg", "date": "2026-10-25", "caption": { "vi": "Trên tàu", "en": "On the train" }, "compliment": { "vi": "Em nhìn ra cửa sổ và kể một chuyện không có kết.", "en": "You watched the window and told a story with no ending." } },
+        { "id": "p16", "src": "/photos/08.svg", "date": "2026-11-01", "caption": { "vi": "Một chiếc bánh nhỏ", "en": "A little cake" }, "compliment": { "vi": "Em cười trước khi nến tắt hẳn.", "en": "You smiled before the candles had quite gone out." } },
+        { "id": "p17", "src": "/photos/02.svg", "date": "2026-11-08", "caption": { "vi": "Chiều muộn", "en": "Late afternoon" }, "compliment": { "vi": "Em đi chậm lại để anh kịp bước cùng.", "en": "You slowed down so I could match your step." } },
+        { "id": "p18", "src": "/photos/03.svg", "date": "2026-11-15", "caption": { "vi": "Đêm yên", "en": "A quiet night" }, "compliment": { "vi": "Em ở đây. Thế là đủ một bầu trời.", "en": "You're here. That's a whole sky." } }
       ]
     }
   ],
@@ -356,7 +410,14 @@
       "en": "You found them all. I'm trying to remember enough, too."
     },
     "again": { "vi": "Chơi lại", "en": "Play again" },
-    "back": { "vi": "Mặt sau", "en": "Face down" }
+    "back": { "vi": "Mặt sau", "en": "Face down" },
+    "lines": [
+      { "vi": "Một khoảnh khắc nhỏ, một kỷ niệm dễ thương.", "en": "A little moment, a lovely memory." },
+      { "vi": "Anh vẫn nhớ tấm này. Còn em?", "en": "I remember this one. Do you?" },
+      { "vi": "Bằng chứng rằng chẳng cần dịp đặc biệt để vui vẻ cùng nhau.", "en": "Proof that we don’t need a special occasion to have fun." },
+      { "vi": "Vẫn còn rất nhiều kỷ niệm đang chờ phía trước.", "en": "More memories waiting to be made." },
+      { "vi": "Điều anh thích nhất trong tấm ảnh này à? Là em.", "en": "My favorite part of this photo? You." }
+    ]
   },
   "dreams": [
     {
@@ -603,5 +664,14 @@
     "langVi": { "vi": "VI", "en": "VI" },
     "langEn": { "vi": "EN", "en": "EN" },
     "dottedDate": { "vi": "{d}.{m}.{y}", "en": "{d}.{m}.{y}" }
+  },
+  "lock": {
+    "unlockAt": "2026-11-18T00:00:00+07:00",
+    "title": { "vi": "Đến sinh nhật của em", "en": "Until your birthday" },
+    "subtitle": { "vi": "Nửa đêm ngày 18 tháng 11, giờ Việt Nam.", "en": "Midnight on 18 November, Vietnam time." },
+    "days": { "vi": "ngày", "en": "days" },
+    "hours": { "vi": "giờ", "en": "hours" },
+    "minutes": { "vi": "phút", "en": "minutes" },
+    "seconds": { "vi": "giây", "en": "seconds" }
   }
 }

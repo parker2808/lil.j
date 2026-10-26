@@ -37,6 +37,10 @@ export function bindViewport(): () => void {
     }
   };
 
+  let scratchGesture: "idle" | "pending" | "scroll" | "scratch" = "idle";
+  let originX = 0;
+  let originY = 0;
+
   const sync = () => {
     const vv = window.visualViewport;
     const height = vv?.height ?? window.innerHeight;
@@ -63,6 +67,10 @@ export function bindViewport(): () => void {
     const touch = event.touches[0];
     lastX = touch?.clientX ?? 0;
     lastY = touch?.clientY ?? 0;
+    originX = lastX;
+    originY = lastY;
+    const covered = event.target instanceof Element && event.target.closest(".scratch:not(.is-open)");
+    scratchGesture = covered ? "pending" : "idle";
   };
 
   const onTouchMove = (event: TouchEvent) => {
@@ -74,7 +82,20 @@ export function bindViewport(): () => void {
     lastX = x;
     lastY = y;
     pinWindow();
-    if (event.target instanceof Element && event.target.closest(".scratch")) {
+    if (scratchGesture === "pending") {
+      const totalX = x - originX;
+      const totalY = y - originY;
+      const dist = Math.hypot(totalX, totalY);
+      if (dist < 4) return;
+      const mostlyVertical = Math.abs(totalY) > Math.abs(totalX) * 1.25;
+      if (mostlyVertical) {
+        if (dist < 8) return;
+        scratchGesture = "scroll";
+      } else {
+        scratchGesture = "scratch";
+      }
+    }
+    if (scratchGesture === "scratch") {
       event.preventDefault();
       return;
     }

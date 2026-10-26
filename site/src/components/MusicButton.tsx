@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import { content } from "../content.ts";
 import { useI18n } from "../lib/locale-context.ts";
-import { musicIsPlaying, startMusic, subscribeMusic } from "../lib/music.ts";
+import { currentTrack, musicIsPlaying, startMusic, subscribeMusic } from "../lib/music.ts";
 
 const HEARD_KEY = "lilj.musicHeard.v1";
 
@@ -19,6 +19,23 @@ function rememberMusic(): void {
   } catch {
     // Private mode can refuse storage. This session still remembers.
   }
+}
+
+export function MusicCredit() {
+  const [track, setTrack] = useState(currentTrack);
+  const [playing, setPlaying] = useState(musicIsPlaying);
+
+  useEffect(() => {
+    return subscribeMusic(() => {
+      setTrack(currentTrack());
+      setPlaying(musicIsPlaying());
+    });
+  }, []);
+
+  if (!playing || !track) return null;
+  const now = track.artist ? `${track.title} · ${track.artist}` : track.title;
+
+  return <p className="music-credit">{now}</p>;
 }
 
 type MusicButtonProps = {
@@ -58,7 +75,7 @@ export function MusicButton({ onMuted, onBlocked, onInvite }: MusicButtonProps) 
     const turningOff = musicIsPlaying();
     onMuted(turningOff);
     try {
-      await startMusic(content.music, turningOff);
+      await startMusic(turningOff);
     } catch {
       onMuted(!turningOff);
       onBlocked();

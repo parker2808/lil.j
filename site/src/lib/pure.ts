@@ -89,12 +89,13 @@ export const CHAPTER_IDS = [
   "counter",
 ] as const;
 
+/** A closed ring, kept inside the view so the line stays on the map around the name. */
 export const STAR_LAYOUT: { id: string; x: number; y: number }[] = [
-  { id: "memory", x: 8, y: 48 },
-  { id: "friends", x: 26, y: 16 },
-  { id: "quiz", x: 50, y: 30 },
-  { id: "counter", x: 74, y: 16 },
-  { id: "dreams", x: 92, y: 48 },
-  { id: "scratch", x: 50, y: 90 },
-  { id: "gallery", x: 30, y: 70 },
+  { id: "memory", x: 50, y: 20 },
+  { id: "friends", x: 71, y: 32 },
+  { id: "quiz", x: 78, y: 54 },
+  { id: "counter", x: 64, y: 74 },
+  { id: "dreams", x: 36, y: 74 },
+  { id: "scratch", x: 22, y: 54 },
+  { id: "gallery", x: 29, y: 32 },
 ];

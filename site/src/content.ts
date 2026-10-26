@@ -1,8 +1,9 @@
 import rawJson from "../content.json";
 import { FLOW } from "./lib/flow.ts";
 import { collectCopyProblems } from "./lib/i18n.ts";
-import { CONSTELLATION_IDS } from "./lib/stars.ts";
-import type { Content, Copy, Era, Photo } from "./types.ts";
+import { CONSTELLATION_IDS, projectSky } from "./lib/stars.ts";
+import type { Content, Copy, Era, MusicTrack, Photo } from "./types.ts";
+import { lockProblem } from "./lib/lock.ts";
 
 type RawContent = Omit<Content, "photos">;
 
@@ -27,6 +28,13 @@ export const content: Content = {
   photos: flattenPhotos(raw.eras ?? []),
 };
 
+function musicTrackProblem(track: MusicTrack | undefined, label: string): string | null {
+  if (!track?.title?.trim()) return `${label} thiếu title.`;
+  if (track.artist != null && !track.artist.trim()) return `${label} có artist trống.`;
+  if (!track.src?.startsWith("/music/")) return `${label} cần src bắt đầu bằng /music/.`;
+  return null;
+}
+
 const REQUIRED_CHAPTERS = [
   "gallery",
   "scratch",
@@ -38,6 +46,8 @@ const REQUIRED_CHAPTERS = [
 ];
 
 export function validateContent(value: Content): string | null {
+  const lockIssue = lockProblem(value);
+  if (lockIssue) return lockIssue;
   if (!value?.gate?.password?.trim()) return "content.json thiếu gate.password.";
   if (!value.meta?.constellationName?.trim()) return "content.json thiếu meta.constellationName.";
   if (!value.meta?.herName?.trim()) return "content.json thiếu meta.herName.";
@@ -73,7 +83,28 @@ export function validateContent(value: Content): string | null {
   if (!value.startDate || Number.isNaN(Date.parse(value.startDate))) {
     return "startDate không phải ngày hợp lệ.";
   }
-  if (!value.music) return "content.json thiếu đường dẫn nhạc.";
+  const startDay = value.startDate.slice(0, 10);
+  for (const era of value.eras) {
+    if (era.date < startDay) return `Thời "${era.id}" bắt đầu trước ngày bên nhau.`;
+    for (const photo of era.photos) {
+      if (!photo.date || photo.date < startDay) return `Ảnh "${photo.id}" trước ngày bên nhau.`;
+    }
+  }
+  if (!Array.isArray(value.music.tracks) || value.music.tracks.length < 2) {
+    return "content.json cần ít nhất 2 bài trong music.tracks.";
+  }
+  const seenSrc = new Set<string>();
+  for (const [index, track] of value.music.tracks.entries()) {
+    const problem = musicTrackProblem(track, `music.tracks[${index}]`);
+    if (problem) return problem;
+    if (seenSrc.has(track.src)) return `music.tracks có src trùng (${track.src}).`;
+    seenSrc.add(track.src);
+  }
+  if (value.music.birthday) {
+    const problem = musicTrackProblem(value.music.birthday, "music.birthday");
+    if (problem) return problem;
+    if (seenSrc.has(value.music.birthday.src)) return "music.birthday không nằm trong playlist ngẫu nhiên.";
+  }
   if (!Array.isArray(value.scratches) || value.scratches.length < 1) {
     return "content.json thiếu thẻ cào.";
   }
@@ -92,6 +123,40 @@ export function validateContent(value: Content): string | null {
   if (!value.finale?.question?.vi?.trim() || !value.finale?.question?.en?.trim()) {
     return "content.json thiếu câu hỏi cuối (cả vi và en).";
   }
+  if (!Array.isArray(value.birth?.notes) || value.birth.notes.length !== 4) {
+    return "content.json cần đúng 4 lời nhắn trên bầu trời sinh (birth.notes).";
+  }
+  const seenNotes = new Set<string>();
+  for (const note of value.birth.notes) {
+    if (!note?.id || !CONSTELLATION_IDS.includes(note.id)) {
+      return `birth.notes có chòm sao không hợp lệ (${note?.id ?? "?"}).`;
+    }
+    if (seenNotes.has(note.id)) return `birth.notes trùng chòm sao ${note.id}.`;
+    seenNotes.add(note.id);
+    if (!note.title?.vi?.trim() || !note.title?.en?.trim() || !note.body?.vi?.trim() || !note.body?.en?.trim()) {
+      return `birth.notes.${note.id} thiếu title hoặc body.`;
+    }
+  }
+  if (!value.birth.progress?.vi?.includes("{n}") || !value.birth.progress?.en?.includes("{total}")) {
+    return "birth.progress cần {n} và {total}.";
+  }
+  if (!value.birth.sign?.vi?.trim() || !value.birth.sign?.en?.trim()) {
+    return "content.json thiếu birth.sign.";
+  }
+  if (!Array.isArray(value.memoryCopy?.lines) || value.memoryCopy.lines.length !== 5) {
+    return "content.json cần đúng 5 lời nhắn khi ghép cặp (memoryCopy.lines).";
+  }
+  const galleryKeys = ["backToGalaxy", "eraProgress", "nextEra", "seen", "pending"] as const;
+  for (const key of galleryKeys) {
+    const copy = value.galleryCopy?.[key];
+    if (!copy?.vi?.trim() || !copy?.en?.trim()) return `content.json thiếu galleryCopy.${key}.`;
+  }
+  for (const locale of ["vi", "en"] as const) {
+    const pattern = value.galleryCopy.eraProgress[locale];
+    if (!pattern.includes("{n}") || !pattern.includes("{total}") || !pattern.includes("{photo}") || !pattern.includes("{photos}")) {
+      return "galleryCopy.eraProgress cần {n}, {total}, {photo} và {photos}.";
+    }
+  }
   if (!value.birth?.when || Number.isNaN(Date.parse(value.birth.when))) {
     return "birth.when không phải ngày hợp lệ.";
   }
@@ -100,6 +165,11 @@ export function validateContent(value: Content): string | null {
   }
   if (typeof value.birth.lon !== "number" || value.birth.lon < -180 || value.birth.lon > 180) {
     return "birth.lon phải từ -180 đến 180.";
+  }
+  const birthSky = projectSky(value.birth.lat, value.birth.lon, new Date(value.birth.when), value.constellations);
+  const visibleNotes = new Set(birthSky.labels.map((label) => label.id));
+  for (const id of seenNotes) {
+    if (!visibleNotes.has(id)) return `birth.notes.${id} không hiện trên bầu trời đêm sinh, nên không bấm được.`;
   }
   if (!value.finalLetter?.body?.vi?.trim() || !value.finalLetter?.body?.en?.trim()) {
     return "content.json thiếu lá thư cuối (cả vi và en).";

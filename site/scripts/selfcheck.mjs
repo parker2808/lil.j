@@ -3,6 +3,8 @@ import { readFileSync } from "node:fs";
 import { FLOW, FLOW_VERSION, FLOW_WITH_FRIENDS, INCLUDE_FRIENDS, PREVIOUS_FLOW, migrateIndex, stepDone } from "../src/lib/flow.ts";
 import { readLocale } from "../src/lib/i18n.ts";
 import { cloudinarySrcSet, cloudinaryUrl } from "../src/lib/images.ts";
+import { countdownParts, isBeforeUnlock, unlockTime } from "../src/lib/lock.ts";
+import { nextTrackIndex } from "../src/lib/music.ts";
 import { elapsedParts, fillTemplate, formatDotted, formatZoned, nicknamesMatch, todayKey } from "../src/lib/pure.ts";
 import { altAz, projectSky } from "../src/lib/stars.ts";
 
@@ -28,14 +30,74 @@ assert.equal(todayKey(new Date(2026, 9, 5, 23, 30)), "2026-10-05");
 assert.match(formatZoned("2002-08-18T21:30:00+07:00", "vi"), /21:30/);
 assert.match(formatZoned("2002-08-18T21:30:00+07:00", "en"), /21:30/);
 assert.equal(formatDotted("2023-04-02", "{d}.{m}.{y}"), "02.04.2023");
+assert.equal(unlockTime("2026-11-18T00:00:00+07:00"), Date.UTC(2026, 10, 17, 17, 0, 0));
+assert.equal(isBeforeUnlock("2026-11-18T00:00:00+07:00", Date.UTC(2026, 10, 17, 16, 59, 59)), true);
+assert.equal(isBeforeUnlock("2026-11-18T00:00:00+07:00", Date.UTC(2026, 10, 17, 17, 0, 0)), false);
+assert.deepEqual(countdownParts("2026-11-18T00:00:00+07:00", Date.UTC(2026, 10, 17, 16, 0, 0)), {
+  days: 0,
+  hours: 1,
+  minutes: 0,
+  seconds: 0,
+});
+assert.equal(content.lock.unlockAt, "2026-11-18T00:00:00+07:00");
+assert.equal(content.startDate, "2026-07-01T00:00:00+07:00");
+const togetherAtUnlock = elapsedParts(content.startDate, new Date("2026-11-18T00:00:00+07:00"));
+assert.equal(togetherAtUnlock.future, false);
+assert.equal(togetherAtUnlock.days, 140);
+assert.equal(togetherAtUnlock.hours, 0);
+assert.equal(togetherAtUnlock.minutes, 0);
+assert.equal(new Date("2026-09-06T12:00:00+07:00").getUTCDay(), 0);
 assert.equal(content.constellations.lyr.en, "Lyra");
 assert.equal(content.ui.musicHint.en, "Tap for music");
+assert.equal(content.music.credit, undefined);
+assert.deepEqual(
+  content.music.tracks.map((track) => (track.artist ? `${track.title} · ${track.artist}` : track.title)),
+  [
+    "From The Start · Laufey",
+    "Bewitched · Laufey",
+    "Valentine · Laufey",
+    "Glue Song · beabadoobee",
+    "Echoes of the Stars · sleepvolume",
+    "Twinkle Twinkle Little Star (Grand Piano)",
+  ],
+);
+assert.equal(content.music.birthday.title, "Happy Birthday Music Box Loop");
+assert.equal(content.music.birthday.src, "/music/happy-birthday-music-box.mp3");
+assert.equal(
+  content.music.tracks.some((track) => track.src === content.music.birthday.src),
+  false,
+);
+for (const track of [...content.music.tracks, content.music.birthday]) {
+  assert.match(track.src, /^\/music\/.+\.mp3$/);
+}
+assert.equal(content.birth.when, "2002-11-18T16:45:00+07:00");
+assert.match(formatZoned(content.birth.when, "en"), /16:45/);
+assert.match(formatZoned(content.birth.when, "vi"), /16:45/);
+for (let current = 0; current < 3; current += 1) {
+  for (let n = 0; n < 20; n += 1) {
+    const next = nextTrackIndex(3, current);
+    assert.notEqual(next, current);
+    assert.ok(next >= 0 && next < 3);
+  }
+}
+assert.equal(nextTrackIndex(1, 0, () => 0.9), 0);
+assert.equal(nextTrackIndex(3, 0, () => 0), 1);
+assert.equal(nextTrackIndex(3, 0, () => 0.999), 2);
+assert.equal(nextTrackIndex(3, 2, () => 0), 0);
 
 const born = new Date("2002-08-18T21:30:00+07:00");
 const polaris = altAz(2.5303, 89.2642, 21.0278, 105.8342, born);
 assert.ok(polaris.alt > 18 && polaris.alt < 24, `polaris alt ${polaris.alt}`);
 assert.ok(polaris.az < 20 || polaris.az > 340, `polaris az ${polaris.az}`);
 const sky = projectSky(21.0278, 105.8342, born, content.constellations);
+const birthSky = projectSky(content.birth.lat, content.birth.lon, new Date(content.birth.when), content.constellations);
+const birthUp = new Set(birthSky.labels.map((label) => label.id));
+for (const id of ["cas", "lyr", "cyg", "aql", "sco"]) assert.equal(birthUp.has(id), true, `${id} should be up`);
+for (const id of ["ori", "tau", "aur"]) assert.equal(birthUp.has(id), false, `${id} should have set`);
+assert.deepEqual(
+  content.birth.notes.map((note) => note.id),
+  ["cas", "lyr", "cyg", "aql"],
+);
 assert.equal(sky.labels.find((item) => item.id === "lyr")?.name.en, "Lyra");
 const visible = sky.stars.filter((star) => star.visible);
 assert.ok(visible.length >= 12, `visible stars ${visible.length}`);

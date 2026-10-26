@@ -49,9 +49,9 @@ export function readLocale(): Locale {
     const saved = localStorage.getItem(LOCALE_KEY);
     if (saved === "en" || saved === "vi") return saved;
   } catch {
-    // Storage can be blocked. Vietnamese stays the default.
+    // Storage can be blocked. English stays the default.
   }
-  return "vi";
+  return "en";
 }
 
 export function collectCopyProblems(value: unknown, path = "content"): string[] {

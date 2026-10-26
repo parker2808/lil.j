@@ -136,3 +136,8 @@ export function clearProgress(): void {
     // Ignore.
   }
 }
+
+/** Journey state goes back to the gate. The music choice stays in the same record. */
+export function restartedProgress(muted: boolean): Progress {
+  return { ...emptyProgress(), muted };
+}

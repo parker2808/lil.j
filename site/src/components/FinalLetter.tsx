@@ -9,9 +9,10 @@ import { Reveal } from "./Reveal.tsx";
 type FinalLetterProps = {
   already: boolean;
   onDone: () => void;
+  onRestart: () => void;
 };
 
-export function FinalLetter({ already, onDone }: FinalLetterProps) {
+export function FinalLetter({ already, onDone, onRestart }: FinalLetterProps) {
   const { t } = useI18n();
   const reduced = useReducedMotion();
   const text = t(content.finalLetter.body);
@@ -59,6 +60,9 @@ export function FinalLetter({ already, onDone }: FinalLetterProps) {
           <p className="letter-close">{t(content.finalLetter.closing)}</p>
           <button type="button" className="btn" onClick={() => setShown(0)}>
             {t(content.finalLetter.replay)}
+          </button>
+          <button type="button" className="btn btn-quiet start-over" onClick={onRestart}>
+            {t(content.ui.startOver)}
           </button>
         </>
       )}

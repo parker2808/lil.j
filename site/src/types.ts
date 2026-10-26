@@ -202,6 +202,9 @@ export type Content = {
     musicBlocked: Copy;
     reset: Copy;
     resetConfirm: Copy;
+    resetYes: Copy;
+    resetNo: Copy;
+    startOver: Copy;
     starOpened: Copy;
     starClosed: Copy;
     nextQuestion: Copy;

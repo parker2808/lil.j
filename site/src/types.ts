@@ -110,6 +110,7 @@ export type Content = {
   together: {
     past: Copy;
     future: Copy;
+    until: Copy;
   };
   cake: {
     title: Copy;

@@ -311,6 +311,60 @@ async function audit(page, label) {
       }
     }
 
+    const hero = document.querySelector(".odo-hero");
+    const live = document.querySelector(".odo-live");
+    if (hero && stage) {
+      const style = getComputedStyle(hero);
+      const numeric = `${style.fontVariantNumeric} ${style.fontFeatureSettings}`;
+      if (!numeric.includes("tabular-nums") && !numeric.includes("tnum")) {
+        push("counter-digits", "hero is not tabular");
+      }
+      if (style.whiteSpace !== "nowrap" || style.flexWrap === "wrap") {
+        push("counter-digits", "hero can wrap");
+      }
+      const heroBox = boxOf(hero);
+      const stageBox = boxOf(stage);
+      if (heroBox.left < stageBox.left - 1 || heroBox.right > stageBox.right + 1) {
+        push("counter-digits", `hero outside stage ${Math.round(heroBox.left)}–${Math.round(heroBox.right)}`);
+      }
+      if (hero.scrollHeight > hero.clientHeight + 4) {
+        push("counter-digits", `hero wrapped ${hero.scrollHeight - hero.clientHeight}px`);
+      }
+      for (const num of hero.querySelectorAll(".odo-num")) {
+        const numeral = getComputedStyle(num);
+        if (numeral.whiteSpace !== "nowrap") push("counter-digits", "numeral can wrap");
+        const windowEl = num.closest(".odo-window");
+        if (windowEl && num.scrollWidth > windowEl.clientWidth + 1) {
+          push("counter-digits", `numeral wider than window ${num.scrollWidth}>${windowEl.clientWidth}`);
+          break;
+        }
+      }
+    }
+    if (live && stage) {
+      const liveStyle = getComputedStyle(live);
+      if (liveStyle.flexWrap === "wrap" || liveStyle.whiteSpace !== "nowrap") {
+        push("counter-digits", "live row can wrap");
+      }
+      const liveBox = boxOf(live);
+      const stageBox = boxOf(stage);
+      if (liveBox.width >= 2 && (liveBox.left < stageBox.left - 1 || liveBox.right > stageBox.right + 1)) {
+        push("counter-digits", `live outside stage ${Math.round(liveBox.left)}–${Math.round(liveBox.right)}`);
+      }
+      if (live.scrollWidth - live.clientWidth > 2) {
+        push("counter-digits", `live overflow ${live.scrollWidth - live.clientWidth}px`);
+      }
+      for (const label of live.querySelectorAll(".odo-live-label")) {
+        const labelStyle = getComputedStyle(label);
+        if (labelStyle.whiteSpace !== "nowrap") push("counter-digits", "label can wrap");
+        if (label.clientHeight > 0 && label.scrollHeight > label.clientHeight + 4) {
+          push("counter-digits", `label wrapped ${(label.textContent || "").trim()}`);
+        }
+      }
+    }
+    if (document.querySelector(".clock, .together .sentence")) {
+      push("counter-digits", "old clock or duplicate sentence is still in the counter");
+    }
+
     if (keyboard) {
       const flow = document.querySelector(".flow");
       if (flow && getComputedStyle(flow).display !== "none") push("keyboard-footer", "bottom bar still visible");

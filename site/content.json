@@ -482,7 +482,8 @@
     "future": {
       "vi": "Còn {days} ngày {hours} giờ {minutes} phút {seconds} giây nữa là tới ngày mình bắt đầu",
       "en": "{days} days, {hours} hours, {minutes} minutes, {seconds} seconds until we begin"
-    }
+    },
+    "until": { "vi": "Còn", "en": "Until" }
   },
   "cake": {
     "title": { "vi": "Một chiếc bánh cho em", "en": "A cake for you" },

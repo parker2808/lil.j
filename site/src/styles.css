@@ -1400,6 +1400,7 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   z-index: 1;
   display: flex;
   flex-wrap: nowrap;
+  white-space: nowrap;
   justify-content: center;
   align-items: flex-end;
   gap: clamp(10px, 3vw, 22px);
@@ -3257,4 +3258,47 @@ input:focus-visible,
   }
 
   .music.is-first { animation: none; }
+}
+
+.flow.lock-off { display: none; }
+
+.lock-scene {
+  justify-content: safe center;
+  align-items: center;
+  text-align: center;
+}
+
+.lock-scene h1 {
+  max-width: min(16ch, 100%);
+  margin-inline: auto;
+}
+
+.lock-scene .lede { margin-inline: auto; }
+
+.lock-scene .gate-mark {
+  width: 108px;
+  height: 96px;
+  margin: 0 auto 2px;
+}
+
+.lock-scene .gate-orbit {
+  width: 96px;
+  height: 96px;
+}
+
+.lock-scene .gate-moon {
+  width: 64px;
+  height: 64px;
+}
+
+.lock-scene .gate-moon svg {
+  width: 48px;
+  height: 48px;
+}
+
+.lock-clock { margin-top: 14px; }
+
+@media (max-height: 520px) {
+  .lock-scene .gate-mark { display: none; }
+  .lock-clock { margin-top: 8px; }
 }

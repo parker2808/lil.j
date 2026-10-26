@@ -301,10 +301,11 @@ async function audit(page, label) {
 
     const nextBtn = document.querySelector(".sticky-next");
     const stepName = document.querySelector("[data-step]")?.getAttribute("data-step") || "";
+    const locked = Boolean(document.querySelector(".lock-scene"));
     const pending = /\bpending\b/.test(where);
     const passive = stepName === "sky" || stepName === "counter" || stepName === "friends";
     const noNext = stepName === "gate" || stepName === "letter";
-    const expectNext = !noNext && (!pending || passive);
+    const expectNext = !locked && !noNext && (!pending || passive);
     if (document.querySelector(".stage-dock")) push("footer-compact", "dock is still in the layout");
     if (keyboard && nextBtn) {
       const nextStyle = getComputedStyle(nextBtn);
@@ -605,6 +606,7 @@ async function extras(page, id, label) {
   }
   if (id === "gate" || id === "wish") {
     const field = page.locator(id === "gate" ? ".gate input" : ".wish-field input");
+    if ((await field.count()) === 0) return found;
     await field.focus();
     await page.waitForFunction(() => document.documentElement.classList.contains("keyboard-open"));
     await page.waitForFunction(() => getComputedStyle(document.querySelector(".flow")).display === "none");

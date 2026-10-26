@@ -603,5 +603,14 @@
     "langVi": { "vi": "VI", "en": "VI" },
     "langEn": { "vi": "EN", "en": "EN" },
     "dottedDate": { "vi": "{d}.{m}.{y}", "en": "{d}.{m}.{y}" }
+  },
+  "lock": {
+    "unlockAt": "2026-11-18T00:00:00+07:00",
+    "title": { "vi": "Đến sinh nhật của em", "en": "Until your birthday" },
+    "subtitle": { "vi": "Nửa đêm ngày 18 tháng 11, giờ Việt Nam.", "en": "Midnight on 18 November, Vietnam time." },
+    "days": { "vi": "ngày", "en": "days" },
+    "hours": { "vi": "giờ", "en": "hours" },
+    "minutes": { "vi": "phút", "en": "minutes" },
+    "seconds": { "vi": "giây", "en": "seconds" }
   }
 }

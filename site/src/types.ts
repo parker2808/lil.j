@@ -255,6 +255,15 @@ export type Content = {
     langEn: Copy;
     dottedDate: Copy;
   };
+  lock: {
+    unlockAt: string;
+    title: Copy;
+    subtitle: Copy;
+    days: Copy;
+    hours: Copy;
+    minutes: Copy;
+    seconds: Copy;
+  };
 };
 
 export type Progress = {

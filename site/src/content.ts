@@ -3,6 +3,7 @@ import { FLOW } from "./lib/flow.ts";
 import { collectCopyProblems } from "./lib/i18n.ts";
 import { CONSTELLATION_IDS } from "./lib/stars.ts";
 import type { Content, Copy, Era, Photo } from "./types.ts";
+import { lockProblem } from "./lib/lock.ts";
 
 type RawContent = Omit<Content, "photos">;
 
@@ -38,6 +39,8 @@ const REQUIRED_CHAPTERS = [
 ];
 
 export function validateContent(value: Content): string | null {
+  const lockIssue = lockProblem(value);
+  if (lockIssue) return lockIssue;
   if (!value?.gate?.password?.trim()) return "content.json thiếu gate.password.";
   if (!value.meta?.constellationName?.trim()) return "content.json thiếu meta.constellationName.";
   if (!value.meta?.herName?.trim()) return "content.json thiếu meta.herName.";

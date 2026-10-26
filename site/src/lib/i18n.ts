@@ -21,6 +21,7 @@ const PLAIN = new Set([
   "when",
   "date",
   "color",
+  "unlockAt",
 ]);
 
 export function isCopy(value: unknown): value is Copy {

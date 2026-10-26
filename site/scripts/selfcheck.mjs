@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { FLOW, FLOW_VERSION, FLOW_WITH_FRIENDS, INCLUDE_FRIENDS, PREVIOUS_FLOW, migrateIndex, stepDone } from "../src/lib/flow.ts";
 import { readLocale } from "../src/lib/i18n.ts";
 import { cloudinarySrcSet, cloudinaryUrl } from "../src/lib/images.ts";
+import { countdownParts, isBeforeUnlock, unlockTime } from "../src/lib/lock.ts";
 import { elapsedParts, fillTemplate, formatDotted, formatZoned, nicknamesMatch, todayKey } from "../src/lib/pure.ts";
 import { altAz, projectSky } from "../src/lib/stars.ts";
 
@@ -28,6 +29,16 @@ assert.equal(todayKey(new Date(2026, 9, 5, 23, 30)), "2026-10-05");
 assert.match(formatZoned("2002-08-18T21:30:00+07:00", "vi"), /21:30/);
 assert.match(formatZoned("2002-08-18T21:30:00+07:00", "en"), /21:30/);
 assert.equal(formatDotted("2023-04-02", "{d}.{m}.{y}"), "02.04.2023");
+assert.equal(unlockTime("2026-11-18T00:00:00+07:00"), Date.UTC(2026, 10, 17, 17, 0, 0));
+assert.equal(isBeforeUnlock("2026-11-18T00:00:00+07:00", Date.UTC(2026, 10, 17, 16, 59, 59)), true);
+assert.equal(isBeforeUnlock("2026-11-18T00:00:00+07:00", Date.UTC(2026, 10, 17, 17, 0, 0)), false);
+assert.deepEqual(countdownParts("2026-11-18T00:00:00+07:00", Date.UTC(2026, 10, 17, 16, 0, 0)), {
+  days: 0,
+  hours: 1,
+  minutes: 0,
+  seconds: 0,
+});
+assert.equal(content.lock.unlockAt, "2026-11-18T00:00:00+07:00");
 assert.equal(content.constellations.lyr.en, "Lyra");
 assert.equal(content.ui.musicHint.en, "Tap for music");
 

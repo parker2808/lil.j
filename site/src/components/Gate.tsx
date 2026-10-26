@@ -66,7 +66,6 @@ export function Gate({ onUnlock }: GateProps) {
       <p className="hint" role="status">
         {empty ? t(content.gate.empty) : t(hint)}
       </p>
-      <p className="seal-caption">{t(content.envelope.sealCaption)}</p>
     </section>
   );
 }

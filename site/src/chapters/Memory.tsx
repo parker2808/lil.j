@@ -23,7 +23,7 @@ function buildDeck(): Card[] {
   );
 }
 
-export function Memory({ progress, update, onBack }: ChapterProps) {
+export function Memory({ progress, update }: ChapterProps) {
   const { t } = useI18n();
   const chapter = content.chapters.find((item) => item.id === "memory");
   const [deck, setDeck] = useState(buildDeck);
@@ -83,7 +83,6 @@ export function Memory({ progress, update, onBack }: ChapterProps) {
       kicker={t(chapter?.kicker)}
       title={t(chapter?.title)}
       lede={t(chapter?.lede)}
-      onBack={onBack}
     >
       <p className="count">
         {fillTemplate(t(content.memoryCopy.moves), { n: moves })}

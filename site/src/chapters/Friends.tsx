@@ -2,11 +2,10 @@ import { content } from "../content.ts";
 import { ChapterFrame } from "../components/ChapterFrame.tsx";
 import { useI18n } from "../lib/locale-context.ts";
 import { tiltFromId } from "../lib/pure.ts";
-import type { ChapterProps } from "../types.ts";
 
 const TONES = new Set(["gold", "blush", "sage", "sky", "cream"]);
 
-export function Friends({ onBack }: ChapterProps) {
+export function Friends() {
   const { t } = useI18n();
   const chapter = content.chapters.find((item) => item.id === "friends");
 
@@ -15,7 +14,6 @@ export function Friends({ onBack }: ChapterProps) {
       kicker={t(chapter?.kicker)}
       title={t(chapter?.title)}
       lede={t(chapter?.lede)}
-      onBack={onBack}
     >
       <ul className="wall">
         {content.friendNotes.map((note) => (

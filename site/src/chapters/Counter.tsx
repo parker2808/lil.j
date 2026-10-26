@@ -3,9 +3,7 @@ import { content } from "../content.ts";
 import { ChapterFrame } from "../components/ChapterFrame.tsx";
 import { useI18n } from "../lib/locale-context.ts";
 import { elapsedParts, fillTemplate } from "../lib/pure.ts";
-import type { ChapterProps } from "../types.ts";
-
-export function Counter({ onBack }: ChapterProps) {
+export function Counter() {
   const { t } = useI18n();
   const chapter = content.chapters.find((item) => item.id === "counter");
   const [now, setNow] = useState(() => new Date());
@@ -34,7 +32,6 @@ export function Counter({ onBack }: ChapterProps) {
       kicker={t(chapter?.kicker)}
       title={t(chapter?.title)}
       lede={t(chapter?.lede)}
-      onBack={onBack}
     >
       <div className="clock" aria-hidden="true">
         {cells.map(([key, value, label]) => (

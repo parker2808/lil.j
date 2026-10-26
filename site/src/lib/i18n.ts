@@ -18,6 +18,7 @@ const PLAIN = new Set([
   "constellationName",
   "monogram",
   "author",
+  "when",
 ]);
 
 export function isCopy(value: unknown): value is Copy {

@@ -1,4 +1,5 @@
 import raw from "../content.json";
+import { FLOW } from "./lib/flow.ts";
 import { collectCopyProblems } from "./lib/i18n.ts";
 import type { Content } from "./types.ts";
 
@@ -62,6 +63,22 @@ export function validateContent(value: Content): string | null {
   }
   if (!value.finale?.question?.vi?.trim() || !value.finale?.question?.en?.trim()) {
     return "content.json thiếu câu hỏi cuối (cả vi và en).";
+  }
+  if (!value.birth?.when || Number.isNaN(Date.parse(value.birth.when))) {
+    return "birth.when không phải ngày hợp lệ.";
+  }
+  if (typeof value.birth.lat !== "number" || value.birth.lat < -90 || value.birth.lat > 90) {
+    return "birth.lat phải từ -90 đến 90.";
+  }
+  if (typeof value.birth.lon !== "number" || value.birth.lon < -180 || value.birth.lon > 180) {
+    return "birth.lon phải từ -180 đến 180.";
+  }
+  if (!value.finalLetter?.body?.vi?.trim() || !value.finalLetter?.body?.en?.trim()) {
+    return "content.json thiếu lá thư cuối (cả vi và en).";
+  }
+  for (const id of FLOW) {
+    const hint = value.flow?.hints?.[id];
+    if (!hint?.vi?.trim() || !hint?.en?.trim()) return `content.json thiếu flow.hints.${id}.`;
   }
   const copyProblem = collectCopyProblems(value)[0];
   return copyProblem ?? null;

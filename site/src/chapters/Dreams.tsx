@@ -3,7 +3,7 @@ import { ChapterFrame } from "../components/ChapterFrame.tsx";
 import { useI18n } from "../lib/locale-context.ts";
 import type { ChapterProps } from "../types.ts";
 
-export function Dreams({ progress, update, onBack }: ChapterProps) {
+export function Dreams({ progress, update }: ChapterProps) {
   const { t } = useI18n();
   const chapter = content.chapters.find((item) => item.id === "dreams");
 
@@ -22,7 +22,6 @@ export function Dreams({ progress, update, onBack }: ChapterProps) {
       kicker={t(chapter?.kicker)}
       title={t(chapter?.title)}
       lede={t(chapter?.lede)}
-      onBack={onBack}
     >
       <ol className="dreams">
         {content.dreams.map((dream, index) => {

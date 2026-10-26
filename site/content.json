@@ -23,6 +23,74 @@
   },
   "startDate": "2024-02-14T19:30:00+07:00",
   "music": "/music/nen.wav",
+  "birth": {
+    "when": "2002-08-18T21:30:00+07:00",
+    "lat": 21.0278,
+    "lon": 105.8342,
+    "place": { "vi": "Hà Nội", "en": "Hanoi" },
+    "kicker": { "vi": "Đêm em sinh ra", "en": "The night you were born" },
+    "title": { "vi": "Bản đồ sao đêm em sinh ra", "en": "The sky the night you were born" },
+    "lede": {
+      "vi": "Đúng giờ, đúng chỗ. Chạm một chòm sao để nghe tên.",
+      "en": "The right hour, the right place. Tap a constellation to hear its name."
+    },
+    "north": { "vi": "B", "en": "N" },
+    "east": { "vi": "Đ", "en": "E" },
+    "south": { "vi": "N", "en": "S" },
+    "west": { "vi": "T", "en": "W" },
+    "caption": { "vi": "{when} · {place}", "en": "{when} · {place}" }
+  },
+  "wish": {
+    "kicker": { "vi": "Gửi lên trời", "en": "Up to the sky" },
+    "title": { "vi": "Ước nguyện gửi sao", "en": "Wish upon a star" },
+    "lede": {
+      "vi": "Viết một điều. Gửi đi, nó bay thành một vệt sao.",
+      "en": "Write one thing. Send it, and it becomes a streak of light."
+    },
+    "placeholder": { "vi": "Điều em ước", "en": "What you wish" },
+    "send": { "vi": "Gửi lên trời", "en": "Send it up" },
+    "empty": { "vi": "Em viết một câu đã.", "en": "Write a line first." },
+    "sent": { "vi": "Ước của em đang ở trên kia.", "en": "Your wish is up there now." },
+    "more": { "vi": "Gửi thêm một ước", "en": "Send another wish" },
+    "saved": { "vi": "Những ước em đã gửi", "en": "Wishes you've sent" }
+  },
+  "finalLetter": {
+    "kicker": { "vi": "Để khép lại", "en": "To close" },
+    "title": { "vi": "Lá thư cuối", "en": "The final letter" },
+    "lede": {
+      "vi": "Anh viết chậm. Em đọc chậm cũng được.",
+      "en": "I wrote it slowly. You can read it that way too."
+    },
+    "body": {
+      "vi": "J,\n\nĐêm em sinh ra, trời Hà Nội đã có những vì sao anh vừa vẽ cho em.\n\nAnh đã ngồi với những tấm ảnh, với từng câu đố, và với những ngọn nến tắt.\n\nĐiều em vừa gửi lên trời, anh không hỏi lại. Nó ở trên đó, nhỏ thôi, nhưng là của em.\n\nCảm ơn em đã đi hết con đường này.\n\nSinh nhật vui.\nAnh vẫn ở đây.",
+      "en": "J,\n\nThe night you were born, the Hanoi sky already held the stars I just drew for you.\n\nI sat with the pictures, with every question, and with the candles after they went out.\n\nThe wish you just sent, I won't ask it back. It's up there, small, and it's yours.\n\nThank you for walking the whole way.\n\nHappy birthday.\nI'm still here."
+    },
+    "skip": { "vi": "Đọc hết", "en": "Read it all" },
+    "replay": { "vi": "Đọc lại", "en": "Read it again" },
+    "closing": {
+      "vi": "Hết một vòng trời. Em có thể đọc lại, hoặc quay lại bước trước.",
+      "en": "That's one turn of the sky. You can read it again, or step back."
+    }
+  },
+  "flow": {
+    "next": { "vi": "Tiếp", "en": "Next" },
+    "back": { "vi": "Bước trước", "en": "Previous step" },
+    "progress": { "vi": "Bước {n} trên {total}", "en": "Step {n} of {total}" },
+    "done": { "vi": "Xong rồi. Em đi tiếp.", "en": "That's done. Go on." },
+    "doneLast": { "vi": "Hết một vòng trời.", "en": "That's one turn of the sky." },
+    "devJump": { "vi": "Nhảy tới bước {n}", "en": "Jump to step {n}" },
+    "hints": {
+      "gate": { "vi": "Nhập biệt danh anh hay gọi.", "en": "Type the nickname I use for you." },
+      "sky": { "vi": "Xem các vì sao gọi tên em.", "en": "Watch the stars say your name." },
+      "birth": { "vi": "Chạm một chòm sao để nghe tên.", "en": "Tap a constellation to hear its name." },
+      "gallery": { "vi": "Lật một tấm ảnh.", "en": "Flip one picture." },
+      "quiz": { "vi": "Trả lời hết các câu.", "en": "Answer every question." },
+      "counter": { "vi": "Ở lại một lát với đồng hồ.", "en": "Stay with the clock for a moment." },
+      "cake": { "vi": "Thổi hoặc chạm cho nến tắt hết.", "en": "Blow, or tap, until every candle is out." },
+      "wish": { "vi": "Viết một ước và gửi lên trời.", "en": "Write a wish and send it up." },
+      "letter": { "vi": "Đọc lá thư đến dòng cuối.", "en": "Read the letter through to the last line." }
+    }
+  },
   "envelope": {
     "greeting": { "vi": "Gửi J,", "en": "Dear J," },
     "sealCaption": { "vi": "Một phong thư niêm bằng sáp.", "en": "A letter closed with wax." },

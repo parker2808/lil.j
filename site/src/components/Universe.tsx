@@ -1,47 +1,52 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { content } from "../content.ts";
 import { useI18n } from "../lib/locale-context.ts";
-import { clearProgress } from "../lib/progress.ts";
-import { fillTemplate, STAR_LAYOUT } from "../lib/pure.ts";
-import type { Progress } from "../types.ts";
+import { STAR_LAYOUT } from "../lib/pure.ts";
+import { useReducedMotion } from "../lib/useReducedMotion.ts";
 
 type UniverseProps = {
-  progress: Progress;
-  onOpenStar: (id: string) => void;
-  onCake: () => void;
-  onLetters: () => void;
-  onFinale: () => void;
+  already: boolean;
+  onDone: () => void;
 };
 
-export function Universe({ progress, onOpenStar, onCake, onLetters, onFinale }: UniverseProps) {
+export function Universe({ already, onDone }: UniverseProps) {
   const { t } = useI18n();
+  const reduced = useReducedMotion();
+  const instant = already || reduced;
+  const [lit, setLit] = useState(instant ? STAR_LAYOUT.length : 0);
+  const [draw, setDraw] = useState(instant);
+  const [named, setNamed] = useState(instant);
   const lineRef = useRef<SVGPolylineElement>(null);
-  const played = useRef(false);
-  const chapters = STAR_LAYOUT.map((star) => {
-    const chapter = content.chapters.find((item) => item.id === star.id);
-    return { ...star, chapter };
-  }).filter((star) => star.chapter);
-  const opened = progress.openedChapters;
-  const count = STAR_LAYOUT.filter((star) => opened.includes(star.id)).length;
-  const complete = count === STAR_LAYOUT.length;
-  const points = [...STAR_LAYOUT, STAR_LAYOUT[0]]
-    .map((star) => `${star?.x ?? 0},${star?.y ?? 0}`)
-    .join(" ");
+
+  useEffect(() => {
+    if (instant) {
+      onDone();
+      return;
+    }
+    const timers: number[] = [];
+    STAR_LAYOUT.forEach((_, index) => {
+      timers.push(window.setTimeout(() => setLit(index + 1), 320 * (index + 1)));
+    });
+    const after = 320 * STAR_LAYOUT.length + 360;
+    timers.push(window.setTimeout(() => setDraw(true), after));
+    timers.push(window.setTimeout(() => setNamed(true), after + 2800));
+    timers.push(window.setTimeout(() => onDone(), after + 4000));
+    return () => {
+      timers.forEach((timer) => window.clearTimeout(timer));
+    };
+  }, [instant, onDone]);
 
   useEffect(() => {
     const line = lineRef.current;
-    if (!line || !complete) return;
+    if (!line || !draw) return;
     const length = line.getTotalLength();
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     line.style.strokeDasharray = `${length}`;
-    if (played.current || reduce) {
+    if (instant) {
       line.style.transition = "none";
       line.style.strokeDashoffset = "0";
       line.style.opacity = "1";
-      played.current = true;
       return;
     }
-    played.current = true;
     line.style.transition = "none";
     line.style.strokeDashoffset = `${length}`;
     line.style.opacity = "1";
@@ -50,64 +55,30 @@ export function Universe({ progress, onOpenStar, onCake, onLetters, onFinale }: 
       line.style.strokeDashoffset = "0";
     });
     return () => window.cancelAnimationFrame(frame);
-  }, [complete]);
+  }, [draw, instant]);
 
-  function reset() {
-    if (window.confirm(t(content.ui.resetConfirm))) {
-      clearProgress();
-      window.location.reload();
-    }
-  }
+  const points = [...STAR_LAYOUT, STAR_LAYOUT[0]].map((star) => `${star.x},${star.y}`).join(" ");
 
   return (
     <section className="scene universe">
       <p className="kicker">{content.meta.herName}</p>
       <h1>{t(content.meta.title)}</h1>
-      <p className="lede">{complete ? t(content.ui.formed) : t(content.ui.waiting)}</p>
-      <p className="count">{fillTemplate(t(content.ui.lit), { n: count })}</p>
-      <div className="sky-map">
-        <svg className="links" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-          {complete && <polyline ref={lineRef} points={points} />}
+      <p className="lede">{named ? t(content.ui.formed) : t(content.ui.waiting)}</p>
+      <div className="sky-map" aria-hidden="true">
+        <svg className="links" viewBox="0 0 100 100" preserveAspectRatio="none">
+          {draw && <polyline ref={lineRef} points={points} />}
         </svg>
-        {complete && <p className="constellation-name">{content.meta.constellationName}</p>}
-        {chapters.map((star, index) => {
-          const isOn = opened.includes(star.id);
-          const title = t(star.chapter?.title);
-          return (
-            <button
-              key={star.id}
-              type="button"
-              className={isOn ? "star is-on" : "star"}
-              style={{
-                left: `${star.x}%`,
-                top: `${star.y}%`,
-                ["--delay" as string]: `${index * 0.28}s`,
-              }}
-              onClick={() => onOpenStar(star.id)}
-              aria-label={`${title}, ${isOn ? t(content.ui.starOpened) : t(content.ui.starClosed)}`}
-            >
-              <span className="star-core" />
-              <span className="star-label">{t(star.chapter?.star)}</span>
-            </button>
-          );
-        })}
+        {named && <p className="constellation-name">{content.meta.constellationName}</p>}
+        {STAR_LAYOUT.map((star, index) => (
+          <span
+            key={star.id}
+            className={index < lit ? "star is-on" : "star"}
+            style={{ left: `${star.x}%`, top: `${star.y}%`, ["--delay" as string]: `${index * 0.28}s` }}
+          >
+            <span className="star-core" />
+          </span>
+        ))}
       </div>
-      {complete && (
-        <div className="doors">
-          <button type="button" className="btn" onClick={onCake}>
-            {t(content.ui.doorCake)}
-          </button>
-          <button type="button" className="btn" onClick={onLetters}>
-            {t(content.ui.doorLetters)}
-          </button>
-          <button type="button" className="btn btn-gold" onClick={onFinale}>
-            {t(content.ui.doorFinale)}
-          </button>
-        </div>
-      )}
-      <button type="button" className="reset" onClick={reset}>
-        {t(content.ui.reset)}
-      </button>
     </section>
   );
 }

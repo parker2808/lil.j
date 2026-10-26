@@ -3,7 +3,7 @@ import { ChapterFrame } from "../components/ChapterFrame.tsx";
 import { useI18n } from "../lib/locale-context.ts";
 import type { ChapterProps } from "../types.ts";
 
-export function Gallery({ progress, update, onBack }: ChapterProps) {
+export function Gallery({ progress, update }: ChapterProps) {
   const { t } = useI18n();
   const chapter = content.chapters.find((item) => item.id === "gallery");
 
@@ -24,7 +24,6 @@ export function Gallery({ progress, update, onBack }: ChapterProps) {
       kicker={t(chapter?.kicker)}
       title={t(chapter?.title)}
       lede={t(chapter?.lede)}
-      onBack={onBack}
     >
       <div className="polaroids">
         {content.photos.map((photo, index) => {

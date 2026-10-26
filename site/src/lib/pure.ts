@@ -13,6 +13,19 @@ export function fillTemplate(
   return template.replace(/\{(\w+)\}/g, (_, key: string) => String(values[key] ?? ""));
 }
 
+export function formatZoned(iso: string, locale: "vi" | "en"): string {
+  const date = new Date(iso);
+  const tag = locale === "vi" ? "vi-VN" : "en-GB";
+  const match = /([+-])(\d{2}):(\d{2})$/.exec(iso);
+  if (!match || Number.isNaN(date.getTime())) {
+    return new Intl.DateTimeFormat(tag, { dateStyle: "long", timeStyle: "short" }).format(date);
+  }
+  const sign = match[1] === "-" ? -1 : 1;
+  const offsetMin = sign * (Number(match[2]) * 60 + Number(match[3]));
+  const shifted = new Date(date.getTime() + offsetMin * 60_000);
+  return new Intl.DateTimeFormat(tag, { dateStyle: "long", timeStyle: "short", timeZone: "UTC" }).format(shifted);
+}
+
 export function todayKey(date = new Date()): string {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");

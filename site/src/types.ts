@@ -11,7 +11,11 @@ export type ChapterId =
   | "friends"
   | "counter";
 
-export type Scene = "gate" | "envelope" | "universe" | "cake" | "letters" | "finale";
+export type Wish = {
+  id: string;
+  text: string;
+  at: number;
+};
 
 export type Chapter = {
   id: string;
@@ -122,6 +126,49 @@ export type Content = {
     skip: Copy;
     next: Copy;
   };
+  birth: {
+    when: string;
+    lat: number;
+    lon: number;
+    place: Copy;
+    kicker: Copy;
+    title: Copy;
+    lede: Copy;
+    north: Copy;
+    east: Copy;
+    south: Copy;
+    west: Copy;
+    caption: Copy;
+  };
+  wish: {
+    kicker: Copy;
+    title: Copy;
+    lede: Copy;
+    placeholder: Copy;
+    send: Copy;
+    empty: Copy;
+    sent: Copy;
+    more: Copy;
+    saved: Copy;
+  };
+  finalLetter: {
+    kicker: Copy;
+    title: Copy;
+    lede: Copy;
+    body: Copy;
+    skip: Copy;
+    replay: Copy;
+    closing: Copy;
+  };
+  flow: {
+    next: Copy;
+    back: Copy;
+    progress: Copy;
+    done: Copy;
+    doneLast: Copy;
+    devJump: Copy;
+    hints: Record<string, Copy>;
+  };
   openWhen: Letter[];
   lettersCopy: {
     title: Copy;
@@ -184,10 +231,16 @@ export type Progress = {
   saidYes: boolean;
   openWhen: Record<string, string>;
   muted: boolean;
+  step: number;
+  unlocked: number;
+  skyDone: boolean;
+  birthSeen: boolean;
+  counterSeen: boolean;
+  letterDone: boolean;
+  wishes: Wish[];
 };
 
 export type ChapterProps = {
   progress: Progress;
   update: (recipe: (progress: Progress) => Progress) => void;
-  onBack: () => void;
 };

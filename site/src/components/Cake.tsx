@@ -9,8 +9,6 @@ import { Typewriter } from "./Typewriter.tsx";
 type CakeProps = {
   progress: Progress;
   update: (recipe: (progress: Progress) => Progress) => void;
-  onBack: () => void;
-  onNext: () => void;
 };
 
 const COLORS = ["#f6b7d0", "#d4c4f6", "#c5dff5", "#f8d0c2", "#fff4f8", "#e7b7c4"];
@@ -26,7 +24,7 @@ const SPRINKLES: { x: number; y: number; rot: number; fill: string }[] = [
   { x: 168, y: 64, rot: 8, fill: "#f3c6dc" },
 ];
 
-export function Cake({ progress, update, onBack, onNext }: CakeProps) {
+export function Cake({ progress, update }: CakeProps) {
   const { t } = useI18n();
   const reduced = useReducedMotion();
   const count = Math.max(1, Math.min(8, content.cake.candles || 5));
@@ -139,9 +137,6 @@ export function Cake({ progress, update, onBack, onNext }: CakeProps) {
 
   return (
     <section className="scene cake-scene">
-      <button type="button" className="back" onClick={onBack}>
-        ← {t(content.ui.back)}
-      </button>
       <p className="kicker">{t(content.cake.kicker)}</p>
       <h1>{t(content.cake.title)}</h1>
       <p className="lede">{t(content.cake.lede)}</p>
@@ -199,9 +194,6 @@ export function Cake({ progress, update, onBack, onNext }: CakeProps) {
         <div className="letter-block">
           <h2>{t(content.cake.letterTitle)}</h2>
           <Typewriter text={t(content.cake.letter)} skip={reduced || arrivedDone} skipLabel={t(content.cake.skip)} />
-          <button type="button" className="btn" onClick={onNext}>
-            {t(content.cake.next)}
-          </button>
         </div>
       )}
       {allOut && !arrivedDone && !reduced && <Confetti />}

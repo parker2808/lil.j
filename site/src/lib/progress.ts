@@ -1,4 +1,5 @@
-import type { Progress } from "../types.ts";
+import { clampStep } from "./flow.ts";
+import type { Progress, Wish } from "../types.ts";
 
 export const PROGRESS_KEY = "lilj.progress.v1";
 
@@ -16,6 +17,13 @@ export function emptyProgress(): Progress {
     saidYes: false,
     openWhen: {},
     muted: false,
+    step: 0,
+    unlocked: 0,
+    skyDone: false,
+    birthSeen: false,
+    counterSeen: false,
+    letterDone: false,
+    wishes: [],
   };
 }
 
@@ -47,6 +55,21 @@ function quizMap(value: unknown): Record<string, number> {
   return out;
 }
 
+function wishList(value: unknown): Wish[] {
+  if (!Array.isArray(value)) return [];
+  const wishes: Wish[] = [];
+  for (const item of value) {
+    if (!item || typeof item !== "object") continue;
+    const record = item as Record<string, unknown>;
+    if (typeof record.id !== "string" || typeof record.text !== "string") continue;
+    const text = record.text.trim();
+    if (!text) continue;
+    const at = typeof record.at === "number" && Number.isFinite(record.at) ? record.at : 0;
+    wishes.push({ id: record.id, text: text.slice(0, 180), at });
+  }
+  return wishes.slice(-24);
+}
+
 export function loadProgress(): Progress {
   const base = emptyProgress();
   try {
@@ -55,8 +78,13 @@ export function loadProgress(): Progress {
     const data: unknown = JSON.parse(raw);
     if (!data || typeof data !== "object") return base;
     const record = data as Record<string, unknown>;
+    const gateUnlocked = record.gateUnlocked === true;
+    const legacy = typeof record.step !== "number";
+    const step = legacy ? (gateUnlocked ? 1 : 0) : clampStep(record.step);
+    let unlocked = legacy ? step : clampStep(record.unlocked);
+    if (unlocked < step) unlocked = step;
     return {
-      gateUnlocked: record.gateUnlocked === true,
+      gateUnlocked,
       envelopeOpened: record.envelopeOpened === true,
       openedChapters: stringList(record.openedChapters),
       flippedPhotos: stringList(record.flippedPhotos),
@@ -68,6 +96,13 @@ export function loadProgress(): Progress {
       saidYes: record.saidYes === true,
       openWhen: stringMap(record.openWhen),
       muted: record.muted === true,
+      step,
+      unlocked,
+      skyDone: record.skyDone === true,
+      birthSeen: record.birthSeen === true,
+      counterSeen: record.counterSeen === true,
+      letterDone: record.letterDone === true,
+      wishes: wishList(record.wishes),
     };
   } catch {
     return base;

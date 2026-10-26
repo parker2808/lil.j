@@ -5,7 +5,7 @@ import { useI18n } from "../lib/locale-context.ts";
 import { fillTemplate } from "../lib/pure.ts";
 import type { ChapterProps } from "../types.ts";
 
-export function Quiz({ progress, update, onBack }: ChapterProps) {
+export function Quiz({ progress, update }: ChapterProps) {
   const { t } = useI18n();
   const chapter = content.chapters.find((item) => item.id === "quiz");
   const total = content.quiz.length;
@@ -27,7 +27,6 @@ export function Quiz({ progress, update, onBack }: ChapterProps) {
       kicker={t(chapter?.kicker)}
       title={t(chapter?.title)}
       lede={t(chapter?.lede)}
-      onBack={onBack}
     >
       {question ? (
         <div className="quiz">

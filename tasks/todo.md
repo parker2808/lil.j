@@ -14,6 +14,19 @@
 - [x] Offline selftest + compress smoke test
 - [x] Commit, push, mở PR (#1)
 
+## Vũ trụ của em
+
+- [x] Site React + Vite + TS trong `site/`, không đụng `tools/fb-photo-downloader`
+- [x] `content.json` một nguồn: cổng, thư, 7 chương, bánh, mở khi, câu hỏi cuối
+- [x] Ảnh/nhạc placeholder local, README schema tiếng Việt, Vercel
+- [x] Build sạch, xem trên viewport điện thoại, mở PR
+
+## Review — Vũ trụ của em
+
+- `npm run build` sạch. `oxlint` sạch. `node scripts/selfcheck.mjs` pass.
+- Playwright 390×844: cổng sai/đúng, phong thư, nhạc được gọi sau cú chạm, 7 sao thành chòm, lật ảnh, cào, đố, nhớ, ước, note, đồng hồ, thổi nến bằng chạm, thư một lần/ngày, nút Không chạy, Có được lưu. Tải lại không hỏi lại biệt danh. Không tràn ngang ở 390 và 360.
+- Ảnh/nhạc là placeholder. Mật khẩu giả: `bé yêu`. Tool Facebook không đụng.
+
 ## Review
 
 - Userscript + console snippet + compress + README VI đã có.

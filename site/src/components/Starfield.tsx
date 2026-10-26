@@ -4,6 +4,7 @@ import { useReducedMotion } from "../lib/useReducedMotion.ts";
 type Star = {
   x: number;
   y: number;
+  z: number;
   r: number;
   a: number;
   tw: number;
@@ -39,6 +40,13 @@ export function Starfield() {
     let wait = 1.4;
     let width = 0;
     let height = 0;
+    const tilt = { x: 0, y: 0 };
+    const gyro = { x: 0, y: 0 };
+    const nebula = [
+      { x: 0.2, y: 0.3, r: 0.42, hue: "rgba(186, 164, 236, 0.22)", drift: 0.4 },
+      { x: 0.78, y: 0.62, r: 0.36, hue: "rgba(247, 183, 208, 0.18)", drift: 0.25 },
+      { x: 0.5, y: 0.9, r: 0.5, hue: "rgba(197, 223, 245, 0.12)", drift: 0.15 },
+    ];
 
     const resize = () => {
       width = window.innerWidth;
@@ -53,7 +61,8 @@ export function Starfield() {
         stars.push({
           x: Math.random() * width,
           y: Math.random() * height,
-          r: Math.random() < 0.07 ? 1.7 : 0.35 + Math.random() * 1.05,
+          z: 0.25 + Math.random() * 1,
+          r: Math.random() < 0.07 ? 1.8 : 0.35 + Math.random() * 1.05,
           a: 0.2 + Math.random() * 0.75,
           tw: 0.5 + Math.random() * 2.4,
           phase: Math.random() * Math.PI * 2,
@@ -65,17 +74,42 @@ export function Starfield() {
     const draw = (time: number) => {
       if (!alive) return;
       ctx.clearRect(0, 0, width, height);
+      if (!reduced) {
+        nebula.forEach((cloud, index) => {
+          const ox = Math.sin(time / 9000 + index) * 24 * cloud.drift;
+          const oy = Math.cos(time / 11000 + index) * 16 * cloud.drift;
+          const gradient = ctx.createRadialGradient(
+            cloud.x * width + ox + (tilt.x * 0.35 + gyro.x) * 28,
+            cloud.y * height + oy + (tilt.y * 0.35 + gyro.y) * 18,
+            10,
+            cloud.x * width + ox,
+            cloud.y * height + oy,
+            cloud.r * Math.min(width, height),
+          );
+          gradient.addColorStop(0, cloud.hue);
+          gradient.addColorStop(1, "rgba(0,0,0,0)");
+          ctx.globalAlpha = 1;
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, width, height);
+        });
+      }
       for (const star of stars) {
         const pulse = reduced ? 1 : 0.45 + 0.55 * Math.sin(time / 900 * star.tw + star.phase);
+        const sway = reduced ? 0 : Math.sin(time / 14000 + star.phase);
+        const bob = reduced ? 0 : Math.cos(time / 17000 + star.phase);
+        const px = tilt.x * 0.35 + gyro.x;
+        const py = tilt.y * 0.35 + gyro.y;
+        const x = star.x + px * 28 * star.z + sway * 10 * star.z;
+        const y = star.y + py * 18 * star.z + bob * 6 * star.z;
         ctx.globalAlpha = Math.max(0.08, star.a * pulse);
         ctx.fillStyle = star.hue;
         ctx.beginPath();
-        ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+        ctx.arc(x, y, star.r, 0, Math.PI * 2);
         ctx.fill();
         if (star.r > 1.4) {
           ctx.globalAlpha = 0.18 * pulse;
           ctx.beginPath();
-          ctx.arc(star.x, star.y, star.r * 4, 0, Math.PI * 2);
+          ctx.arc(x, y, star.r * 4, 0, Math.PI * 2);
           ctx.fill();
         }
       }
@@ -124,8 +158,30 @@ export function Starfield() {
       raf = window.requestAnimationFrame(draw);
     };
 
+    const onPoint = (event: PointerEvent) => {
+      tilt.x = event.clientX / Math.max(1, width) - 0.5;
+      tilt.y = event.clientY / Math.max(1, height) - 0.5;
+    };
+    const onOrient = (event: Event) => {
+      const orient = event as DeviceOrientationEvent;
+      const gamma = orient.gamma ?? 0;
+      const beta = orient.beta ?? 0;
+      gyro.x = Math.max(-1, Math.min(1, gamma / 32));
+      gyro.y = Math.max(-1, Math.min(1, (beta - 35) / 40));
+    };
+    const askGyro = () => {
+      if (typeof DeviceOrientationEvent === "undefined") return;
+      const ctor = DeviceOrientationEvent as unknown as { requestPermission?: () => Promise<string> };
+      if (typeof ctor.requestPermission !== "function") return;
+      void ctor.requestPermission().then((state) => {
+        if (state === "granted") window.addEventListener("deviceorientation", onOrient);
+      }).catch(() => undefined);
+    };
     resize();
     window.addEventListener("resize", resize);
+    window.addEventListener("pointermove", onPoint, { passive: true });
+    window.addEventListener("deviceorientation", onOrient);
+    window.addEventListener("pointerdown", askGyro, { once: true });
     document.addEventListener("visibilitychange", onVisible);
     if (reduced) draw(0);
     else raf = window.requestAnimationFrame(draw);
@@ -134,6 +190,9 @@ export function Starfield() {
       alive = false;
       window.cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
+      window.removeEventListener("pointermove", onPoint);
+      window.removeEventListener("deviceorientation", onOrient);
+      window.removeEventListener("pointerdown", askGyro);
       document.removeEventListener("visibilitychange", onVisible);
     };
   }, [reduced]);

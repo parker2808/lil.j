@@ -1,4 +1,4 @@
-import { FLOW, FLOW_VERSION, PREVIOUS_FLOW, clampStep } from "./flow.ts";
+import { FLOW_VERSION, migrateIndex } from "./flow.ts";
 import type { Progress, Wish } from "../types.ts";
 
 export const PROGRESS_KEY = "lilj.progress.v1";
@@ -9,6 +9,7 @@ export function emptyProgress(): Progress {
     envelopeOpened: false,
     openedChapters: [],
     flippedPhotos: [],
+    erasViewed: [],
     scratched: [],
     quiz: {},
     memoryBest: null,
@@ -89,6 +90,7 @@ export function loadProgress(): Progress {
       envelopeOpened: record.envelopeOpened === true,
       openedChapters: stringList(record.openedChapters),
       flippedPhotos: stringList(record.flippedPhotos),
+      erasViewed: stringList(record.erasViewed),
       scratched: stringList(record.scratched),
       quiz: quizMap(record.quiz),
       memoryBest: typeof record.memoryBest === "number" ? record.memoryBest : null,
@@ -118,12 +120,7 @@ function resumeIndex(record: Record<string, unknown>, key: "step" | "unlocked", 
     if (key === "unlocked") return resumeIndex(record, "step", gateUnlocked);
     return gateUnlocked ? 1 : 0;
   }
-  const index = Math.floor(raw);
-  if (record.flowVersion === FLOW_VERSION) return clampStep(index);
-  const id = PREVIOUS_FLOW[index];
-  if (!id) return clampStep(index);
-  const placed = FLOW.indexOf(id);
-  return placed < 0 ? clampStep(index) : placed;
+  return migrateIndex(record.flowVersion, raw);
 }
 
 export function saveProgress(progress: Progress): void {
@@ -140,4 +137,9 @@ export function clearProgress(): void {
   } catch {
     // Ignore.
   }
+}
+
+/** Journey state goes back to the gate. The music choice stays in the same record. */
+export function restartedProgress(muted: boolean): Progress {
+  return { ...emptyProgress(), muted };
 }

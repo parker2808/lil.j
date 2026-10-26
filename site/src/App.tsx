@@ -1,16 +1,20 @@
-import { lazy, Suspense, useCallback, useEffect, useState, type ReactNode } from "react";
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { content, validateContent } from "./content.ts";
 import { Envelope } from "./components/Envelope.tsx";
+import { GateBurst } from "./components/Fireworks.tsx";
 import { Gate } from "./components/Gate.tsx";
 import { LanguageToggle } from "./components/LanguageToggle.tsx";
 import { MusicButton } from "./components/MusicButton.tsx";
 import { Starfield } from "./components/Starfield.tsx";
+import { StickyNext } from "./components/StickyNext.tsx";
+import { StickyNextContext, type StickyAction } from "./components/sticky-next-context.ts";
 import { Universe } from "./components/Universe.tsx";
 import { FLOW, clampStep, stepDone, type StepId } from "./lib/flow.ts";
 import { useI18n } from "./lib/locale-context.ts";
-import { restoreMusicVolume, startMusic } from "./lib/music.ts";
-import { clearProgress } from "./lib/progress.ts";
+import { bindMusicVisibility, restoreMusicVolume, startMusic } from "./lib/music.ts";
+import { bindViewport } from "./lib/viewport.ts";
+import { clearProgress, restartedProgress } from "./lib/progress.ts";
 import { fillTemplate } from "./lib/pure.ts";
 import { useReducedMotion } from "./lib/useReducedMotion.ts";
 import { useProgress } from "./lib/useProgress.ts";
@@ -40,9 +44,22 @@ export function App() {
   const problem = validateContent(content);
   const { progress, update } = useProgress();
   const [musicNote, setMusicNote] = useState("");
+  const [opening, setOpening] = useState(false);
+  const [askReset, setAskReset] = useState(false);
   const [dev] = useState(() => new URLSearchParams(window.location.search).get("dev") === "1");
+  const headerRef = useRef<HTMLElement>(null);
+  const footerRef = useRef<HTMLElement>(null);
+  const [quizAction, setQuizAction] = useState<StickyAction | null>(null);
+  const setStickyAction = useCallback((action: StickyAction | null) => {
+    setQuizAction((current) => {
+      if (!action && !current) return current;
+      if (action && current && action.label === current.label && action.disabled === current.disabled) return current;
+      return action;
+    });
+  }, []);
+  const stickyValue = useMemo(() => setStickyAction, [setStickyAction]);
   const step = clampStep(progress.step);
-  const stepId = FLOW[step] ?? "gate";
+  const stepId = (FLOW[step] ?? "gate") as StepId;
 
   const mark = useCallback(
     (key: "skyDone" | "birthSeen" | "letterDone") => {
@@ -100,14 +117,60 @@ export function App() {
     return () => window.clearTimeout(timer);
   }, [progress.friendsSeen, stepId, update]);
 
+  useEffect(() => bindViewport(), []);
+  useEffect(() => bindMusicVisibility(content.music), []);
+
+  useEffect(() => {
+    const watch = (element: HTMLElement | null, name: "--header-h" | "--footer-h") => {
+      if (!element) return () => {};
+      const apply = () => {
+        if (name === "--footer-h" && document.documentElement.classList.contains("keyboard-open")) {
+          document.documentElement.style.setProperty(name, "0px");
+          return;
+        }
+        const hidden = getComputedStyle(element).display === "none";
+        document.documentElement.style.setProperty(name, hidden ? "0px" : `${element.offsetHeight}px`);
+      };
+      apply();
+      const observer = new ResizeObserver(apply);
+      observer.observe(element);
+      return () => observer.disconnect();
+    };
+    const stopHeader = watch(headerRef.current, "--header-h");
+    const stopFooter = watch(footerRef.current, "--footer-h");
+    return () => {
+      stopHeader();
+      stopFooter();
+    };
+  }, [dev, stepId]);
+
   useEffect(() => {
     if (!dev) return;
-    document.querySelector(".dev-jump [aria-current='step']")?.scrollIntoView({ inline: "center", block: "nearest" });
+    const bar = document.querySelector(".dev-jump");
+    const current = bar?.querySelector("[aria-current='step']");
+    if (!(bar instanceof HTMLElement) || !(current instanceof HTMLElement)) return;
+    const left = current.offsetLeft - bar.clientWidth / 2 + current.clientWidth / 2;
+    bar.scrollTo({ left: Math.max(0, left) });
   }, [dev, step]);
 
   useEffect(() => {
     if (stepId !== "letter") restoreMusicVolume();
   }, [stepId]);
+
+  useEffect(() => {
+    if (!askReset) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setAskReset(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [askReset]);
+
+  const restartJourney = useCallback(() => {
+    setAskReset(false);
+    setOpening(false);
+    update((current) => restartedProgress(current.muted));
+  }, [update]);
 
   if (problem) {
     return (
@@ -121,17 +184,30 @@ export function App() {
   }
 
   function unlock() {
-    update((current) => ({
-      ...current,
-      gateUnlocked: true,
-      step: Math.max(current.step, 1),
-      unlocked: Math.max(current.unlocked, 1),
-    }));
+    if (opening) return;
+    setOpening(true);
     void startMusic(content.music, progress.muted).catch(() => setMusicNote(t(content.ui.musicBlocked)));
+    window.setTimeout(() => {
+      update((current) => ({
+        ...current,
+        gateUnlocked: true,
+        step: Math.max(current.step, 1),
+        unlocked: Math.max(current.unlocked, 1),
+      }));
+      setOpening(false);
+    }, reduced ? 0 : 1200);
   }
 
   const done = stepDone(stepId, progress, CANDLES, QUIZ_IDS, SCRATCH_IDS, LETTER_IDS);
-  const showNext = done && stepId !== "letter" && step < FLOW.length - 1;
+  const flowAction: StickyAction | null =
+    stepId === "letter" || stepId === "gate" || quizAction || !done
+      ? null
+      : {
+          label: t(content.flow.next),
+          disabled: false,
+          onClick: () => go(step + 1),
+        };
+  const stickyAction = quizAction ?? flowAction;
   const hint = done
     ? stepId === "letter"
       ? content.flow.doneLast
@@ -226,95 +302,141 @@ export function App() {
   } else {
     node = (
       <Suspense fallback={<p className="scene loading">{t(content.ui.loading)}</p>}>
-        <FinalLetter already={progress.letterDone} onDone={finishLetter} />
+        <FinalLetter already={progress.letterDone} onDone={finishLetter} onRestart={() => setAskReset(true)} />
       </Suspense>
     );
   }
 
   return (
-    <>
+    <StickyNextContext.Provider value={stickyValue}>
       <Starfield />
-      <LanguageToggle />
-      {step > 0 && (
-        <button type="button" className="step-back" onClick={() => go(step - 1)} aria-label={t(content.flow.back)}>
-          ←
-        </button>
-      )}
-      {dev && (
-        <div className="dev-jump">
-          {FLOW.map((id, index) => (
-            <button
-              key={id}
-              type="button"
-              aria-current={index === step ? "step" : undefined}
-              aria-label={fillTemplate(t(content.flow.devJump), { n: index + 1 })}
-              onClick={() => go(index, true)}
-            >
-              {index + 1}
+      <div id="fx-mount" className="fx-mount" />
+      <header className="chrome" ref={headerRef}>
+        <div className="chrome-row">
+          <LanguageToggle />
+          {step > 0 && (
+            <button type="button" className="step-back" onClick={() => go(step - 1)} aria-label={t(content.flow.back)}>
+              ←
             </button>
-          ))}
-          <button
-            type="button"
-            aria-label={t(content.ui.reset)}
-            onClick={() => {
-              clearProgress();
-              window.location.reload();
-            }}
-          >
-            ×
-          </button>
-        </div>
-      )}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={stepId}
-          initial={reduced ? false : { opacity: 0, y: 28, scale: 0.985 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={reduced ? { opacity: 1 } : { opacity: 0, y: -22, scale: 1.01 }}
-          transition={{ duration: reduced ? 0 : 0.72, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {node}
-        </motion.div>
-      </AnimatePresence>
-      <footer className="flow">
-        <p className="sr-only">{fillTemplate(t(content.flow.progress), { n: step + 1, total: FLOW.length })}</p>
-        <div className="dots" aria-hidden="true">
-          {FLOW.map((id: StepId, index) => (
-            <span key={id} className={index < step ? "dot is-done" : index === step ? "dot is-now" : "dot"} />
-          ))}
-        </div>
-        <p className="flow-hint" aria-live="polite">
-          {t(hint)}
-        </p>
-        <AnimatePresence>
-          {showNext && (
-            <motion.button
-              key="next"
-              type="button"
-              className="btn btn-gold flow-next"
-              initial={reduced ? false : { opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={reduced ? { opacity: 1 } : { opacity: 0, y: 8 }}
-              transition={{ duration: reduced ? 0 : 0.35, ease: [0.22, 1, 0.36, 1] }}
-              onClick={() => go(step + 1)}
-            >
-              {t(content.flow.next)}
-            </motion.button>
           )}
-        </AnimatePresence>
+          <span className="chrome-spacer" />
+          {progress.gateUnlocked && (
+            <div className="chrome-tools">
+              <button type="button" className="journey-reset" aria-label={t(content.ui.reset)} onClick={() => setAskReset(true)}>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M7.2 7.2V4.4H4.4M7.4 16.6a7 7 0 1 0-.8-8.4"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.7"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+              <MusicButton
+                muted={progress.muted}
+                onMuted={(muted) => update((current) => ({ ...current, muted }))}
+                onBlocked={() => setMusicNote(t(content.ui.musicBlocked))}
+              />
+            </div>
+          )}
+        </div>
+        {dev && (
+          <div className="dev-jump">
+            {FLOW.map((id, index) => (
+              <button
+                key={id}
+                type="button"
+                aria-current={index === step ? "step" : undefined}
+                aria-label={fillTemplate(t(content.flow.devJump), { n: index + 1 })}
+                onClick={() => go(index, true)}
+              >
+                {index + 1}
+              </button>
+            ))}
+            <button
+              type="button"
+              aria-label={t(content.ui.reset)}
+              onClick={() => {
+                clearProgress();
+                window.location.reload();
+              }}
+            >
+              ×
+            </button>
+          </div>
+        )}
+      </header>
+      <div className="stage-shell">
+        <div className="stage">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={stepId}
+              className="stage-pane"
+              data-step={stepId}
+              initial={reduced ? false : { opacity: 0, y: 48, scale: 1.12, rotateX: 10, filter: "blur(16px)" }}
+              animate={
+                reduced
+                  ? { opacity: 1 }
+                  : { opacity: 1, y: 0, scale: 1, rotateX: 0, filter: "blur(0px)" }
+              }
+              exit={reduced ? undefined : { opacity: 0, y: -36, scale: 0.92, rotateX: -8, filter: "blur(14px)" }}
+              transition={{ duration: reduced ? 0 : 0.78, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {node}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+      <footer className="flow" ref={footerRef}>
+        <p className="sr-only">{fillTemplate(t(content.flow.progress), { n: step + 1, total: FLOW.length })}</p>
+        <div className="flow-copy">
+          <div className="dots" aria-hidden="true">
+            {FLOW.map((id: StepId, index) => (
+              <span key={id} className={index < step ? "dot is-done" : index === step ? "dot is-now" : "dot"} />
+            ))}
+          </div>
+          <p className="flow-hint" aria-live="polite">
+            {t(hint)}
+          </p>
+        </div>
+        {stickyAction && (
+          <StickyNext
+            motionKey={`${stepId}-${stickyAction.label}`}
+            label={stickyAction.label}
+            disabled={stickyAction.disabled}
+            reduced={reduced}
+            onClick={stickyAction.onClick}
+          />
+        )}
       </footer>
-      {progress.gateUnlocked && (
-        <MusicButton
-          muted={progress.muted}
-          onMuted={(muted) => update((current) => ({ ...current, muted }))}
-          onBlocked={() => setMusicNote(t(content.ui.musicBlocked))}
-        />
+      {askReset && (
+        <div className="sheet-backdrop is-confirm" onClick={() => setAskReset(false)}>
+          <div
+            className="sheet is-confirm"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="reset-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <h2 id="reset-title">{t(content.ui.reset)}</h2>
+            <p className="sheet-note">{t(content.ui.resetConfirm)}</p>
+            <button type="button" className="btn btn-gold" onClick={restartJourney}>
+              {t(content.ui.resetYes)}
+            </button>
+            <button type="button" className="btn" onClick={() => setAskReset(false)}>
+              {t(content.ui.resetNo)}
+            </button>
+          </div>
+        </div>
       )}
+      {opening && <GateBurst />}
       {musicNote && (
         <p className="toast" role="status">
           {musicNote}
         </p>
       )}
-    </>
+    </StickyNextContext.Provider>
   );
 }

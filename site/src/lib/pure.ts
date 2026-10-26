@@ -84,11 +84,11 @@ export const CHAPTER_IDS = [
 ] as const;
 
 export const STAR_LAYOUT: { id: string; x: number; y: number }[] = [
-  { id: "memory", x: 22, y: 46 },
-  { id: "friends", x: 34, y: 24 },
-  { id: "quiz", x: 50, y: 34 },
-  { id: "counter", x: 66, y: 24 },
-  { id: "dreams", x: 78, y: 46 },
-  { id: "scratch", x: 50, y: 80 },
-  { id: "gallery", x: 36, y: 64 },
+  { id: "memory", x: 8, y: 48 },
+  { id: "friends", x: 26, y: 16 },
+  { id: "quiz", x: 50, y: 30 },
+  { id: "counter", x: 74, y: 16 },
+  { id: "dreams", x: 92, y: 48 },
+  { id: "scratch", x: 50, y: 90 },
+  { id: "gallery", x: 30, y: 70 },
 ];

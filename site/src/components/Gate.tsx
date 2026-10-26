@@ -2,6 +2,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { content } from "../content.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import { nicknamesMatch } from "../lib/pure.ts";
+import { Reveal } from "./Reveal.tsx";
 
 type GateProps = {
   onUnlock: () => void;
@@ -40,28 +41,58 @@ export function Gate({ onUnlock }: GateProps) {
   return (
     <section className="gate">
       <p className="kicker">{t(content.meta.title)}</p>
-      <div className="monogram-orb" aria-hidden="true">
-        {content.meta.monogram}
+      <div className="gate-mark" aria-hidden="true">
+        <span className="gate-orbit">
+          <span className="gate-ring" />
+          <span className="gate-spin">
+            <span className="gate-star" />
+          </span>
+        </span>
+        <span className="gate-moon">
+          <svg viewBox="0 0 72 72">
+            <path d="M28 16 V42 Q28 54 46 54" />
+            <circle cx="28" cy="16" r="2.4" />
+            <circle cx="28" cy="32" r="1.6" />
+            <circle cx="34" cy="48" r="1.6" />
+            <circle cx="46" cy="54" r="2.4" />
+          </svg>
+        </span>
       </div>
-      <h1>{t(content.gate.question)}</h1>
-      <form onSubmit={onSubmit} className={shaking ? "gate-card shake" : "gate-card"}>
-        <label className="field">
-          <input
-            id="nickname"
-            value={value}
-            placeholder=" "
-            autoComplete="off"
-            autoCapitalize="none"
-            autoCorrect="off"
-            spellCheck={false}
-            enterKeyHint="go"
-            onChange={(event) => setValue(event.target.value)}
-          />
-          <span>{t(content.gate.placeholder)}</span>
-        </label>
-        <button type="submit" className="btn btn-gold">
-          {t(content.gate.submit)}
-        </button>
+      <Reveal text={t(content.gate.question)} />
+      <form onSubmit={onSubmit} className={shaking ? "gate-form shake" : "gate-form"}>
+        <div className="gate-field">
+          <label>
+            <input
+              id="nickname"
+              value={value}
+              placeholder=" "
+              autoComplete="off"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
+              enterKeyHint="go"
+              onChange={(event) => setValue(event.target.value)}
+            />
+            <span>{t(content.gate.placeholder)}</span>
+          </label>
+          <button
+            type="submit"
+            className="gate-go"
+            aria-label={t(content.gate.submit)}
+            onPointerDown={(event) => event.preventDefault()}
+          >
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path
+                d="M4 10h11M11 5l5 5-5 5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
       </form>
       <p className="hint" role="status">
         {empty ? t(content.gate.empty) : t(hint)}

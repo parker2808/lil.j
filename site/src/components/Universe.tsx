@@ -3,6 +3,7 @@ import { content } from "../content.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import { STAR_LAYOUT } from "../lib/pure.ts";
 import { useReducedMotion } from "../lib/useReducedMotion.ts";
+import { Reveal } from "./Reveal.tsx";
 
 type UniverseProps = {
   already: boolean;
@@ -62,10 +63,10 @@ export function Universe({ already, onDone }: UniverseProps) {
   return (
     <section className="scene universe">
       <p className="kicker">{content.meta.herName}</p>
-      <h1>{t(content.meta.title)}</h1>
+      <Reveal text={t(content.meta.title)} />
       <p className="lede">{named ? t(content.ui.formed) : t(content.ui.waiting)}</p>
       <div className="sky-map" aria-hidden="true">
-        <svg className="links" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <svg className={draw ? "links is-drawn" : "links"} viewBox="0 0 100 100" preserveAspectRatio="none">
           {draw && <polyline ref={lineRef} points={points} />}
         </svg>
         {named && <p className="constellation-name">{content.meta.constellationName}</p>}

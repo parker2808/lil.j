@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { content } from "../content.ts";
 import { useI18n } from "../lib/locale-context.ts";
+import { Fireworks } from "./Fireworks.tsx";
 import { Hearts } from "./Hearts.tsx";
+import { Reveal } from "./Reveal.tsx";
 
 type FinaleProps = {
   saidYes: boolean;
@@ -59,14 +61,15 @@ export function Finale({ saidYes, onYes }: FinaleProps) {
   return (
     <section className="scene finale">
       <Hearts active={saidYes} />
+      {saidYes && <Fireworks />}
       {saidYes ? (
-        <>
-          <h1>{t(content.finale.yesTitle)}</h1>
+        <div className="finale-copy">
+          <Reveal text={t(content.finale.yesTitle)} />
           <p className="lede">{t(content.finale.yesBody)}</p>
-        </>
+        </div>
       ) : (
         <>
-          <h1>{t(content.finale.question)}</h1>
+          <Reveal text={t(content.finale.question)} />
           <button type="button" className="btn btn-gold yes-btn" onClick={onYes}>
             {t(content.finale.yes)}
           </button>

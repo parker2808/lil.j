@@ -1,4 +1,7 @@
-export const FLOW = [
+/** Friend notes stay in the repo. Flip this to put them back on the path, between the open-when letters and the dreams. */
+export const INCLUDE_FRIENDS = false;
+
+const BEFORE_FRIENDS = [
   "gate",
   "sky",
   "birth",
@@ -10,14 +13,16 @@ export const FLOW = [
   "memory",
   "scratch",
   "letters",
-  "friends",
-  "dreams",
-  "finale",
-  "wish",
-  "letter",
 ] as const;
 
-/** The path before the chapters between cake and wish were restored. Used only to resume old saves. */
+const AFTER_FRIENDS = ["dreams", "finale", "wish", "letter"] as const;
+
+export const FLOW_WITH_FRIENDS = [...BEFORE_FRIENDS, "friends", ...AFTER_FRIENDS] as const;
+export const FLOW_WITHOUT_FRIENDS = [...BEFORE_FRIENDS, ...AFTER_FRIENDS] as const;
+
+export const FLOW = INCLUDE_FRIENDS ? FLOW_WITH_FRIENDS : FLOW_WITHOUT_FRIENDS;
+
+/** The 9-step path from before the middle chapters were restored. */
 export const PREVIOUS_FLOW = [
   "gate",
   "sky",
@@ -30,14 +35,36 @@ export const PREVIOUS_FLOW = [
   "letter",
 ] as const;
 
-export const FLOW_VERSION = 2;
+/** 2 = the 16-step path that included friend notes. 3 = that step removed. */
+export const FLOW_VERSION = INCLUDE_FRIENDS ? 2 : 3;
 
-export type StepId = (typeof FLOW)[number];
+export type StepId = (typeof FLOW_WITH_FRIENDS)[number];
 
 export function clampStep(value: unknown): number {
   const number = typeof value === "number" ? value : Number.NaN;
   if (!Number.isFinite(number)) return 0;
   return Math.max(0, Math.min(FLOW.length - 1, Math.floor(number)));
+}
+
+function pathForVersion(version: unknown): readonly string[] {
+  if (version === 2) return FLOW_WITH_FRIENDS;
+  if (version === 3) return FLOW_WITHOUT_FRIENDS;
+  return PREVIOUS_FLOW;
+}
+
+export function migrateIndex(version: unknown, index: number): number {
+  const current = Math.max(0, Math.floor(index));
+  if (version === FLOW_VERSION) return clampStep(current);
+  const saved = pathForVersion(version);
+  const id = saved[current];
+  if (!id) return clampStep(current);
+  const placed = (FLOW as readonly string[]).indexOf(id);
+  if (placed >= 0) return placed;
+  if (id === "friends") {
+    const dreams = (FLOW as readonly string[]).indexOf("dreams");
+    return dreams >= 0 ? dreams : clampStep(current);
+  }
+  return clampStep(current);
 }
 
 export function stepDone(
@@ -47,6 +74,7 @@ export function stepDone(
     skyDone: boolean;
     birthSeen: boolean;
     flippedPhotos: string[];
+    erasViewed?: string[];
     quiz: Record<string, number>;
     counterSeen: boolean;
     candlesOut: number[];
@@ -69,15 +97,15 @@ export function stepDone(
     case "gate":
       return progress.gateUnlocked;
     case "sky":
-      return progress.skyDone;
+    case "counter":
+    case "friends":
+      return true;
     case "birth":
       return progress.birthSeen;
     case "gallery":
-      return progress.flippedPhotos.length > 0;
+      return (progress.erasViewed?.length ?? 0) > 0;
     case "quiz":
       return quizIds.every((qid) => typeof progress.quiz[qid] === "number");
-    case "counter":
-      return progress.counterSeen;
     case "cake": {
       const out = new Set(progress.candlesOut.filter((index) => index >= 0 && index < candleCount));
       return out.size >= candleCount;
@@ -87,11 +115,9 @@ export function stepDone(
     case "memory":
       return progress.memoryBest != null;
     case "scratch":
-      return scratchIds.length > 0 && scratchIds.every((id) => progress.scratched.includes(id));
+      return scratchIds.length > 0 && scratchIds.every((sid) => progress.scratched.includes(sid));
     case "letters":
-      return letterIds.length > 0 && letterIds.every((id) => Boolean(progress.openWhen[id]));
-    case "friends":
-      return progress.friendsSeen;
+      return letterIds.length > 0 && letterIds.every((lid) => Boolean(progress.openWhen[lid]));
     case "dreams":
       return progress.dreamsDone.length > 0;
     case "finale":

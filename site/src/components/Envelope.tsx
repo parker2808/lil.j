@@ -1,5 +1,7 @@
+import { useEffect, useRef, useState } from "react";
 import { content } from "../content.ts";
 import { useI18n } from "../lib/locale-context.ts";
+import { useReducedMotion } from "../lib/useReducedMotion.ts";
 import { Hearts } from "./Hearts.tsx";
 
 type EnvelopeProps = {
@@ -9,6 +11,21 @@ type EnvelopeProps = {
 
 export function Envelope({ open, onOpen }: EnvelopeProps) {
   const { t } = useI18n();
+  const reduced = useReducedMotion();
+  const [cracking, setCracking] = useState(false);
+  const timer = useRef(0);
+
+  useEffect(() => () => window.clearTimeout(timer.current), []);
+
+  function crack() {
+    if (open || cracking) return;
+    if (reduced) {
+      onOpen();
+      return;
+    }
+    setCracking(true);
+    timer.current = window.setTimeout(onOpen, 480);
+  }
 
   return (
     <section className="scene envelope-scene">
@@ -24,7 +41,7 @@ export function Envelope({ open, onOpen }: EnvelopeProps) {
           <div className="env-front" />
           <div className="env-flap" />
           {!open && (
-            <button type="button" className="wax" onClick={onOpen}>
+            <button type="button" className={cracking ? "wax is-crack" : "wax"} onClick={crack} disabled={cracking}>
               <span aria-hidden="true">{content.meta.monogram}</span>
               <span className="sr-only">{t(content.envelope.openHint)}</span>
             </button>

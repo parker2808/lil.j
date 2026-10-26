@@ -72,9 +72,9 @@ Cả hai ngôn ngữ đều bắt buộc, không để trống. `npm run build` 
 | `birth` | Bản đồ sao đêm em sinh ra. `when` là ISO 8601 có múi giờ. `lat`, `lon` là số (Bắc và Đông dương). `place` là cặp `{vi, en}`. Các nhãn `north` `east` `south` `west`, `kicker`, `title`, `lede`, `caption` (chỗ trống `{when}` và `{place}`). |
 | `wish` | Ước gửi lên trời: `kicker`, `title`, `lede`, `placeholder`, `send`, `empty`, `sent`, `more`, `saved`. |
 | `finalLetter` | Lá thư cuối. `body` xuống dòng bằng `\n`, hiện từng dòng. `skip`, `replay`, `closing`. |
-| `flow` | Lời dẫn đường đi thẳng: `next`, `back`, `progress` (`{n}`, `{total}`), `done`, `doneLast`, `devJump` (`{n}`), và `hints` đúng 16 khóa theo thứ tự đường đi: `gate`, `sky`, `birth`, `gallery`, `quiz`, `counter`, `cake`, `envelope`, `memory`, `scratch`, `letters`, `friends`, `dreams`, `finale`, `wish`, `letter`. |
+| `flow` | Lời dẫn đường đi thẳng: `next`, `back`, `progress` (`{n}`, `{total}`), `done`, `doneLast`, `devJump` (`{n}`), và `hints` cho từng bước. Đường đang mở có 15 khóa: `gate`, `sky`, `birth`, `gallery`, `quiz`, `counter`, `cake`, `envelope`, `memory`, `scratch`, `letters`, `dreams`, `finale`, `wish`, `letter`. Khóa `friends` vẫn để trong file để bật lại bước lời bạn. |
 | `envelope` | Phong thư sáp, bước ngay sau bánh. `greeting`, `sealCaption`, `openHint`, `body`. |
-| `chapters` | Bảy mục nội dung, `id` cố định: `gallery`, `scratch`, `quiz`, `memory`, `dreams`, `friends`, `counter`. Đường đi mở cả bảy. Đổi được `star`, `kicker`, `title`, `lede`. Không đổi `id`. |
+| `chapters` | Bảy mục nội dung, `id` cố định: `gallery`, `scratch`, `quiz`, `memory`, `dreams`, `friends`, `counter`. Đường đi đang mở sáu mục; `friends` tạm rút khỏi đường (dữ liệu và màn hình vẫn giữ). Đổi được `star`, `kicker`, `title`, `lede`. Không đổi `id`. |
 | `photos` | Ảnh polaroid. `src` trỏ file trong `public` (`/photos/01.webp`). `alt`, `caption`, `compliment` (câu giấu mặt sau). `pair: true` thì ảnh được đưa vào trò nhớ — lấy tối đa 6 ảnh đầu tiên có `pair: true` (12 thẻ). Cần ít nhất 2 ảnh `pair`. |
 | `scratches` | Thẻ cào. `cover` là chữ trên lớp phủ hồng, `reveal` là điều anh thương. |
 | `quiz` | Câu hỏi. `options` là mảng, `answer` là **chỉ số bắt đầu từ 0**. `rightNote` / `wrongNote` hiện sau khi chọn. |
@@ -128,14 +128,16 @@ Mặc định: rộng tối đa ~1200px, WebP. Chỉnh `MAX_WIDTH` và `WEBP_QUA
 Khóa `lilj.progress.v1` trong `localStorage`:
 
 - `step` và `unlocked`: đang đứng ở bước nào, và bước xa nhất đã mở
-- đã qua cổng, đã mở phong thư, bầu trời đã vẽ xong, đã chạm một chòm sao, đã xem đồng hồ, đã đọc lời bạn bè
+- đã qua cổng, đã mở phong thư, bầu trời đã vẽ xong, đã chạm một chòm sao, đã xem đồng hồ, đã đọc lời bạn bè (khi bước đó có trên đường)
 - ảnh đã lật, thẻ đã cào, đáp án đố, kỷ lục trò nhớ, ước đã tích, nến đã tắt, đã bấm Có
 - ngày mở từng lá "Mở khi…"
 - các ước đã gửi (`wishes`: `id`, `text`, `at`)
 - đã đọc hết lá thư cuối
 - đang tắt tiếng hay không
 
-Bản lưu cũ, nếu đã qua cổng mà chưa có `step`, sẽ mở lại ở bầu trời. Bản lưu của đường đi 9 bước được đặt lại đúng cảnh (ước vẫn là ước, thư cuối vẫn là thư cuối). Xóa khóa này trong DevTools để đi từ đầu. Thêm `?dev=1` vào địa chỉ thì có dãy số để nhảy bước và nút đặt lại — chỉ để thử. Dãy số trượt ngang nếu không đủ chỗ.
+Bản lưu cũ, nếu đã qua cổng mà chưa có `step`, sẽ mở lại ở bầu trời. Bản lưu của đường đi 9 bước được đặt lại đúng cảnh (ước vẫn là ước, thư cuối vẫn là thư cuối). Bản lưu `flowVersion` 2 (đường 16 bước, có lời bạn) được đặt lại theo tên bước; nếu đang đứng ở lời bạn thì mở lại ở ước mơ. Xóa khóa này trong DevTools để đi từ đầu. Thêm `?dev=1` vào địa chỉ thì có dãy số để nhảy bước và nút đặt lại — chỉ khi có tham số đó, không ghi nhớ. Dãy số nằm trong phần đầu trang và trượt ngang nếu không đủ chỗ.
+
+Lời bạn tạm không nằm trên đường đi. Trong `src/lib/flow.ts`, đổi `INCLUDE_FRIENDS` thành `true` thì bước đó trở lại giữa thư "Mở khi…" và ước mơ, và `flowVersion` về 2.
 
 Ngôn ngữ nằm ở khóa riêng `lilj.locale.v1` (`vi` hoặc `en`). Xóa tiến độ không đổi ngôn ngữ.
 
@@ -153,12 +155,17 @@ Ngôn ngữ nằm ở khóa riêng `lilj.locale.v1` (`vi` hoặc `en`). Xóa ti�
 8. Phong thư sáp. Chạm con dấu để đọc.
 9. Trò nhớ. Tìm hết các cặp ảnh.
 10. Thẻ cào. Cào hết các thẻ.
-11. Hộp "Mở khi…". Mở từng lá một lần.
-12. Lời bạn bè. Ở lại đọc một lát.
-13. Ước mơ. Tích ít nhất một điều.
-14. Câu hỏi cuối. Nút **Không** chạy trốn. Bấm **Có** thì mới đi tiếp.
-15. Ước. Gửi ít nhất một câu. Câu đó bay thành sao băng, và còn đó khi quay lại.
-16. Lá thư cuối, hiện từng dòng. Nhạc nhỏ dần. Đọc lại được. Không có bước sau.
+11. Hộp "Mở khi…". Mở từng lá một lần. Mỗi lá là một phong bì; chạm thì thư mở trong một tờ, gấp lại được.
+12. Ước mơ. Tích ít nhất một điều.
+13. Câu hỏi cuối. Nút **Không** chạy trốn. Bấm **Có** thì mới đi tiếp.
+14. Ước. Gửi ít nhất một câu. Câu đó bay thành sao, và còn đó khi quay lại.
+15. Lá thư cuối, hiện từng dòng. Nhạc nhỏ dần. Đọc lại được. Không có bước sau.
+
+Lời bạn bè không có số trên đường này. Dữ liệu `friendNotes` và màn hình vẫn trong repo.
+
+## Kiểm tra chồng lấn
+
+`npm run overlap` dựng trang rồi chạy Playwright (Chrome có sẵn trên máy) qua từng bước, hai ngôn ngữ, và các khung 320×568, 375×667, 390×844, 430×932, cùng ngang 844×390. Có vùng an toàn kiểu iPhone. Lệnh báo lỗi nếu chữ hoặc nút cắt nhau với thanh trên / thanh dưới, chữ bị cắt, hoặc tràn ngang.
 
 ## Góc còn thô
 

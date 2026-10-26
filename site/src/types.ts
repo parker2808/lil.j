@@ -34,6 +34,22 @@ export type Photo = {
   pair: boolean;
 };
 
+export type EraPhoto = {
+  id: string;
+  src: string;
+  caption: Copy;
+  compliment: Copy;
+  date: string;
+};
+
+export type Era = {
+  id: string;
+  title: Copy;
+  date: string;
+  color: string;
+  photos: EraPhoto[];
+};
+
 export type Scratch = {
   id: string;
   cover: Copy;
@@ -94,7 +110,16 @@ export type Content = {
     enter: Copy;
   };
   chapters: Chapter[];
+  eras: Era[];
   photos: Photo[];
+  galleryCopy: {
+    count: Copy;
+    progress: Copy;
+    back: Copy;
+    empty: Copy;
+    close: Copy;
+    orbit: Copy;
+  };
   scratches: Scratch[];
   quiz: QuizQuestion[];
   quizSummary: Copy;
@@ -110,6 +135,7 @@ export type Content = {
   together: {
     past: Copy;
     future: Copy;
+    until: Copy;
   };
   cake: {
     title: Copy;
@@ -176,6 +202,7 @@ export type Content = {
     lede: Copy;
     sealed: Copy;
     openedNote: Copy;
+    close: Copy;
     next: Copy;
   };
   finale: {
@@ -200,6 +227,9 @@ export type Content = {
     musicBlocked: Copy;
     reset: Copy;
     resetConfirm: Copy;
+    resetYes: Copy;
+    resetNo: Copy;
+    startOver: Copy;
     starOpened: Copy;
     starClosed: Copy;
     nextQuestion: Copy;
@@ -223,6 +253,7 @@ export type Progress = {
   envelopeOpened: boolean;
   openedChapters: string[];
   flippedPhotos: string[];
+  erasViewed: string[];
   scratched: string[];
   quiz: Record<string, number>;
   memoryBest: number | null;

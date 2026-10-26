@@ -3,6 +3,7 @@ import { content } from "../content.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import { fillTemplate, formatZoned } from "../lib/pure.ts";
 import { projectSky, starRadius, type SkyLabel } from "../lib/stars.ts";
+import { Reveal } from "./Reveal.tsx";
 
 type BirthSkyProps = {
   onSeen: () => void;
@@ -28,16 +29,16 @@ export function BirthSky({ onSeen }: BirthSkyProps) {
   }
 
   const compass = [
-    { key: "n", text: t(content.birth.north), x: 50, y: 7 },
-    { key: "e", text: t(content.birth.east), x: 93, y: 51 },
-    { key: "s", text: t(content.birth.south), x: 50, y: 96 },
-    { key: "w", text: t(content.birth.west), x: 7, y: 51 },
+    { key: "n", text: t(content.birth.north), x: 50, y: 11 },
+    { key: "e", text: t(content.birth.east), x: 90, y: 52 },
+    { key: "s", text: t(content.birth.south), x: 50, y: 92 },
+    { key: "w", text: t(content.birth.west), x: 10, y: 52 },
   ];
 
   return (
     <section className="scene birth-scene">
       <p className="kicker">{t(content.birth.kicker)}</p>
-      <h1>{t(content.birth.title)}</h1>
+      <Reveal text={t(content.birth.title)} />
       <p className="lede">{t(content.birth.lede)}</p>
       <p className="birth-caption">{caption}</p>
       <div className="chart">
@@ -93,7 +94,10 @@ export function BirthSky({ onSeen }: BirthSkyProps) {
           />
         ))}
         {label && (
-          <p className="chart-float" style={{ left: `${label.x}%`, top: `${Math.max(8, label.y - 6)}%` }}>
+          <p
+            className="chart-float"
+            style={{ left: `${Math.min(78, Math.max(22, label.x))}%`, top: `${Math.max(14, Math.min(86, label.y - 6))}%` }}
+          >
             {t(label.name)}
           </p>
         )}

@@ -351,7 +351,8 @@ function Stack({
             const caption = t(photo.caption);
             const compliment = t(photo.compliment);
             const isFlipped = flipped.includes(photo.id);
-            const date = formatDotted(photo.date, t(content.ui.dottedDate));
+            const date = photo.date ? formatDotted(photo.date, t(content.ui.dottedDate)) : "";
+            const label = caption || t(era.title);
             return (
               <div
                 key={photo.id}
@@ -373,7 +374,7 @@ function Stack({
                     tabIndex={top ? 0 : -1}
                     role={top ? "button" : undefined}
                     aria-pressed={top ? isFlipped : undefined}
-                    aria-label={top ? (isFlipped ? `${caption}. ${compliment}` : caption) : undefined}
+                    aria-label={top ? (isFlipped ? `${label}. ${compliment}` : label) : undefined}
                   >
                     <span className="stack-trail" aria-hidden="true" />
                     <div className={isFlipped ? "stack-flip is-flipped" : "stack-flip"}>
@@ -381,9 +382,10 @@ function Stack({
                         <div className="stack-photo">
                           <img
                             {...delivered(photo.src, 720, [360, 720, 1080], "(min-width: 900px) 360px, 80vw")}
-                            alt={caption}
+                            alt={label}
                             width={800}
                             height={1000}
+                            loading={top ? "eager" : "lazy"}
                             decoding="async"
                             draggable={false}
                           />
@@ -395,10 +397,16 @@ function Stack({
                         </div>
                       </div>
                     </div>
-                    <p className="stack-meta">
-                      <span className="stack-date">{top ? <Words text={date} /> : date}</span>
-                      <span className="stack-caption">{top ? <Words text={caption} delay={80} /> : caption}</span>
-                    </p>
+                    {date || caption ? (
+                      <p className="stack-meta">
+                        {date ? (
+                          <span className="stack-date">{top ? <Words text={date} /> : date}</span>
+                        ) : null}
+                        {caption ? (
+                          <span className="stack-caption">{top ? <Words text={caption} delay={80} /> : caption}</span>
+                        ) : null}
+                      </p>
+                    ) : null}
                   </div>
                 </div>
               </div>
@@ -666,7 +674,8 @@ export function Gallery({ progress, update }: ChapterProps) {
     });
   }
 
-  const fullCaption = fullPhoto ? t(fullPhoto.caption) : "";
+  const fullEra = fullPhoto ? content.eras.find((item) => item.photos.some((photo) => photo.id === fullPhoto.id)) : undefined;
+  const fullCaption = fullPhoto ? t(fullPhoto.caption) || (fullEra ? t(fullEra.title) : "") : "";
 
   return (
     <ChapterFrame

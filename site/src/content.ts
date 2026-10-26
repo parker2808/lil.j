@@ -9,14 +9,18 @@ type RawContent = Omit<Content, "photos">;
 
 const raw = rawJson as RawContent;
 
+function captionBlank(copy: Copy | undefined): boolean {
+  return !copy?.vi.trim() && !copy?.en.trim();
+}
+
 function flattenPhotos(eras: Era[]): Photo[] {
   const pairIds = new Set(eras.flatMap((era) => era.photos.slice(0, 2).map((photo) => photo.id)));
   return eras.flatMap((era) =>
     era.photos.map((photo) => ({
       id: photo.id,
       src: photo.src,
-      alt: photo.caption,
-      caption: photo.caption,
+      alt: captionBlank(photo.caption) ? era.title : (photo.caption ?? era.title),
+      caption: photo.caption ?? { vi: "", en: "" },
       compliment: photo.compliment,
       pair: pairIds.has(photo.id),
     })),
@@ -87,7 +91,12 @@ export function validateContent(value: Content): string | null {
   for (const era of value.eras) {
     if (era.date < startDay) return `Thời "${era.id}" bắt đầu trước ngày bên nhau.`;
     for (const photo of era.photos) {
-      if (!photo.date || photo.date < startDay) return `Ảnh "${photo.id}" trước ngày bên nhau.`;
+      if (photo.date && !/^\d{4}-\d{2}-\d{2}$/.test(photo.date)) {
+        return `Ảnh "${photo.id}" có ngày không hợp lệ.`;
+      }
+      if (!photo.src?.startsWith("lilj/")) {
+        return `Ảnh "${photo.id}" cần public id Cloudinary (lilj/...).`;
+      }
     }
   }
   if (!Array.isArray(value.music.tracks) || value.music.tracks.length < 2) {

@@ -37,9 +37,9 @@ export type Photo = {
 export type EraPhoto = {
   id: string;
   src: string;
-  caption: Copy;
+  caption?: Copy;
   compliment: Copy;
-  date: string;
+  date?: string;
 };
 
 export type Era = {

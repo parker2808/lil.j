@@ -650,12 +650,11 @@
       "color": "#f4b4cf",
       "photos": [
         {
-          "id": "p1",
-          "src": "/photos/01.svg",
-          "date": "2026-07-01",
+          "id": "care-01",
+          "src": "lilj/care/01_IMG_4956",
           "caption": {
-            "vi": "Em luôn khiến anh cảm thấy được quan tâm, nhất là những lúc anh không khỏe.",
-            "en": "You make me feel cared for, especially when I’m not feeling well."
+            "vi": "",
+            "en": ""
           },
           "compliment": {
             "vi": "Sự chu đáo của em là một trong những điều anh thương nhất.",
@@ -663,12 +662,59 @@
           }
         },
         {
-          "id": "p2",
-          "src": "/photos/02.svg",
-          "date": "2026-07-01",
+          "id": "care-02",
+          "src": "lilj/care/02_IMG_5642",
           "caption": {
-            "vi": "Em luôn khiến anh cảm thấy được quan tâm, nhất là những lúc anh không khỏe.",
-            "en": "You make me feel cared for, especially when I’m not feeling well."
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Sự chu đáo của em là một trong những điều anh thương nhất.",
+            "en": "Your caring heart is one of the things I love most about you."
+          }
+        },
+        {
+          "id": "care-03",
+          "src": "lilj/care/03_IMG_5653",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Sự chu đáo của em là một trong những điều anh thương nhất.",
+            "en": "Your caring heart is one of the things I love most about you."
+          }
+        },
+        {
+          "id": "care-04",
+          "src": "lilj/care/04_IMG_6987",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Sự chu đáo của em là một trong những điều anh thương nhất.",
+            "en": "Your caring heart is one of the things I love most about you."
+          }
+        },
+        {
+          "id": "care-05",
+          "src": "lilj/care/05_77_2999967433508047",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Sự chu đáo của em là một trong những điều anh thương nhất.",
+            "en": "Your caring heart is one of the things I love most about you."
+          }
+        },
+        {
+          "id": "care-06",
+          "src": "lilj/care/06_80_2998892496948874",
+          "caption": {
+            "vi": "",
+            "en": ""
           },
           "compliment": {
             "vi": "Sự chu đáo của em là một trong những điều anh thương nhất.",
@@ -687,12 +733,11 @@
       "color": "#c5dff5",
       "photos": [
         {
-          "id": "p3",
-          "src": "/photos/03.svg",
-          "date": "2026-07-01",
+          "id": "pout-01",
+          "src": "lilj/pout/01_168_2960321930805931",
           "caption": {
-            "vi": "Cái mặt em làm mỗi khi bị anh trêu. Chắc anh nên xin lỗi… nhưng mà đáng yêu quá. :)))",
-            "en": "The face you make when I tease you. I should probably apologize… but it’s too cute. :)))"
+            "vi": "",
+            "en": ""
           },
           "compliment": {
             "vi": "Em chẳng biết mình đáng yêu thế nào mỗi lần giả vờ giận đâu.",
@@ -700,12 +745,71 @@
           }
         },
         {
-          "id": "p4",
-          "src": "/photos/04.svg",
-          "date": "2026-07-01",
+          "id": "pout-02",
+          "src": "lilj/pout/02_IMG_5282",
           "caption": {
-            "vi": "Cái mặt em làm mỗi khi bị anh trêu. Chắc anh nên xin lỗi… nhưng mà đáng yêu quá. :)))",
-            "en": "The face you make when I tease you. I should probably apologize… but it’s too cute. :)))"
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Em chẳng biết mình đáng yêu thế nào mỗi lần giả vờ giận đâu.",
+            "en": "You have no idea how adorable you are when you’re pretending to be annoyed."
+          }
+        },
+        {
+          "id": "pout-03",
+          "src": "lilj/pout/03_59_3018369325001191",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Em chẳng biết mình đáng yêu thế nào mỗi lần giả vờ giận đâu.",
+            "en": "You have no idea how adorable you are when you’re pretending to be annoyed."
+          }
+        },
+        {
+          "id": "pout-04",
+          "src": "lilj/pout/04_41_3026254517546005",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Em chẳng biết mình đáng yêu thế nào mỗi lần giả vờ giận đâu.",
+            "en": "You have no idea how adorable you are when you’re pretending to be annoyed."
+          }
+        },
+        {
+          "id": "pout-05",
+          "src": "lilj/pout/05_15_3119264744911648",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Em chẳng biết mình đáng yêu thế nào mỗi lần giả vờ giận đâu.",
+            "en": "You have no idea how adorable you are when you’re pretending to be annoyed."
+          }
+        },
+        {
+          "id": "pout-06",
+          "src": "lilj/pout/06_8_3188021311369324",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Em chẳng biết mình đáng yêu thế nào mỗi lần giả vờ giận đâu.",
+            "en": "You have no idea how adorable you are when you’re pretending to be annoyed."
+          }
+        },
+        {
+          "id": "pout-07",
+          "src": "lilj/pout/07_31_3044421229062667",
+          "caption": {
+            "vi": "",
+            "en": ""
           },
           "compliment": {
             "vi": "Em chẳng biết mình đáng yêu thế nào mỗi lần giả vờ giận đâu.",
@@ -724,12 +828,11 @@
       "color": "#e7d4ff",
       "photos": [
         {
-          "id": "p5",
-          "src": "/photos/05.svg",
-          "date": "2026-07-01",
+          "id": "surprise-01",
+          "src": "lilj/surprise/01_IMG_4914",
           "caption": {
-            "vi": "Mỗi lần tặng quà cho em, phản ứng của em lại trở thành một phần đáng nhớ.",
-            "en": "Every time I give you a gift, your reaction becomes part of the memory."
+            "vi": "",
+            "en": ""
           },
           "compliment": {
             "vi": "Nhìn em vui thật lòng khiến mọi công sức của anh đều xứng đáng.",
@@ -737,12 +840,71 @@
           }
         },
         {
-          "id": "p6",
-          "src": "/photos/06.svg",
-          "date": "2026-07-01",
+          "id": "surprise-02",
+          "src": "lilj/surprise/02_IMG_5087",
           "caption": {
-            "vi": "Mỗi lần tặng quà cho em, phản ứng của em lại trở thành một phần đáng nhớ.",
-            "en": "Every time I give you a gift, your reaction becomes part of the memory."
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Nhìn em vui thật lòng khiến mọi công sức của anh đều xứng đáng.",
+            "en": "Seeing you genuinely happy makes every little effort worth it."
+          }
+        },
+        {
+          "id": "surprise-03",
+          "src": "lilj/surprise/03_IMG_6126",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Nhìn em vui thật lòng khiến mọi công sức của anh đều xứng đáng.",
+            "en": "Seeing you genuinely happy makes every little effort worth it."
+          }
+        },
+        {
+          "id": "surprise-04",
+          "src": "lilj/surprise/04_IMG_6302",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Nhìn em vui thật lòng khiến mọi công sức của anh đều xứng đáng.",
+            "en": "Seeing you genuinely happy makes every little effort worth it."
+          }
+        },
+        {
+          "id": "surprise-05",
+          "src": "lilj/surprise/05_IMG_4889",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Nhìn em vui thật lòng khiến mọi công sức của anh đều xứng đáng.",
+            "en": "Seeing you genuinely happy makes every little effort worth it."
+          }
+        },
+        {
+          "id": "surprise-06",
+          "src": "lilj/surprise/06_94_2991176137720510",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Nhìn em vui thật lòng khiến mọi công sức của anh đều xứng đáng.",
+            "en": "Seeing you genuinely happy makes every little effort worth it."
+          }
+        },
+        {
+          "id": "surprise-07",
+          "src": "lilj/surprise/07_79_2999967366841387",
+          "caption": {
+            "vi": "",
+            "en": ""
           },
           "compliment": {
             "vi": "Nhìn em vui thật lòng khiến mọi công sức của anh đều xứng đáng.",
@@ -761,12 +923,11 @@
       "color": "#f8d4c6",
       "photos": [
         {
-          "id": "p7",
-          "src": "/photos/07.svg",
-          "date": "2026-07-01",
+          "id": "ordinary-01",
+          "src": "lilj/ordinary/01_171_2957510864420371",
           "caption": {
-            "vi": "Chẳng có gì đặc biệt xảy ra cả. Chỉ là hôm ấy có em nên anh vui.",
-            "en": "Nothing extraordinary happened. I was just happy to have you around."
+            "vi": "",
+            "en": ""
           },
           "compliment": {
             "vi": "Em khiến những ngày bình thường trở nên khác một chút.",
@@ -774,12 +935,107 @@
           }
         },
         {
-          "id": "p8",
-          "src": "/photos/08.svg",
-          "date": "2026-07-01",
+          "id": "ordinary-02",
+          "src": "lilj/ordinary/02_155_2967508246753966",
           "caption": {
-            "vi": "Chẳng có gì đặc biệt xảy ra cả. Chỉ là hôm ấy có em nên anh vui.",
-            "en": "Nothing extraordinary happened. I was just happy to have you around."
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Em khiến những ngày bình thường trở nên khác một chút.",
+            "en": "You make ordinary days feel a little less ordinary."
+          }
+        },
+        {
+          "id": "ordinary-03",
+          "src": "lilj/ordinary/03_43_3023470711157719",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Em khiến những ngày bình thường trở nên khác một chút.",
+            "en": "You make ordinary days feel a little less ordinary."
+          }
+        },
+        {
+          "id": "ordinary-04",
+          "src": "lilj/ordinary/04_26_3078222412349215",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Em khiến những ngày bình thường trở nên khác một chút.",
+            "en": "You make ordinary days feel a little less ordinary."
+          }
+        },
+        {
+          "id": "ordinary-05",
+          "src": "lilj/ordinary/05_24_3078641785640611",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Em khiến những ngày bình thường trở nên khác một chút.",
+            "en": "You make ordinary days feel a little less ordinary."
+          }
+        },
+        {
+          "id": "ordinary-06",
+          "src": "lilj/ordinary/06_22_3091347324370057",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Em khiến những ngày bình thường trở nên khác một chút.",
+            "en": "You make ordinary days feel a little less ordinary."
+          }
+        },
+        {
+          "id": "ordinary-07",
+          "src": "lilj/ordinary/07_36_3041001952737928",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Em khiến những ngày bình thường trở nên khác một chút.",
+            "en": "You make ordinary days feel a little less ordinary."
+          }
+        },
+        {
+          "id": "ordinary-08",
+          "src": "lilj/ordinary/08_6_3275170935987694",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Em khiến những ngày bình thường trở nên khác một chút.",
+            "en": "You make ordinary days feel a little less ordinary."
+          }
+        },
+        {
+          "id": "ordinary-09",
+          "src": "lilj/ordinary/09_125_2982091925295598",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Em khiến những ngày bình thường trở nên khác một chút.",
+            "en": "You make ordinary days feel a little less ordinary."
+          }
+        },
+        {
+          "id": "ordinary-10",
+          "src": "lilj/ordinary/10_52_3021328431371947",
+          "caption": {
+            "vi": "",
+            "en": ""
           },
           "compliment": {
             "vi": "Em khiến những ngày bình thường trở nên khác một chút.",
@@ -798,12 +1054,11 @@
       "color": "#d7e8c9",
       "photos": [
         {
-          "id": "p9",
-          "src": "/photos/01.svg",
-          "date": "2026-07-01",
+          "id": "more-01",
+          "src": "lilj/more/01_4_3340374802800640",
           "caption": {
-            "vi": "Bộ sưu tập này chưa kết thúc. Mình vẫn đang cùng nhau tạo thêm kỷ niệm.",
-            "en": "This gallery isn’t finished. We’re still collecting moments."
+            "vi": "",
+            "en": ""
           },
           "compliment": {
             "vi": "Anh mong sau này, khi nhìn lại những tấm ảnh này, hai đứa sẽ cười vì đã cùng nhau trưởng thành nhiều đến thế.",
@@ -811,12 +1066,95 @@
           }
         },
         {
-          "id": "p10",
-          "src": "/photos/02.svg",
-          "date": "2026-07-01",
+          "id": "more-02",
+          "src": "lilj/more/02_2_3340374909467296",
           "caption": {
-            "vi": "Bộ sưu tập này chưa kết thúc. Mình vẫn đang cùng nhau tạo thêm kỷ niệm.",
-            "en": "This gallery isn’t finished. We’re still collecting moments."
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh mong sau này, khi nhìn lại những tấm ảnh này, hai đứa sẽ cười vì đã cùng nhau trưởng thành nhiều đến thế.",
+            "en": "I hope one day we’ll look back at these photos and laugh at how much we’ve grown together."
+          }
+        },
+        {
+          "id": "more-03",
+          "src": "lilj/more/03_20_3113258732178916",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh mong sau này, khi nhìn lại những tấm ảnh này, hai đứa sẽ cười vì đã cùng nhau trưởng thành nhiều đến thế.",
+            "en": "I hope one day we’ll look back at these photos and laugh at how much we’ve grown together."
+          }
+        },
+        {
+          "id": "more-04",
+          "src": "lilj/more/04_17_3113258795512243",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh mong sau này, khi nhìn lại những tấm ảnh này, hai đứa sẽ cười vì đã cùng nhau trưởng thành nhiều đến thế.",
+            "en": "I hope one day we’ll look back at these photos and laugh at how much we’ve grown together."
+          }
+        },
+        {
+          "id": "more-05",
+          "src": "lilj/more/05_13_3137320006439455",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh mong sau này, khi nhìn lại những tấm ảnh này, hai đứa sẽ cười vì đã cùng nhau trưởng thành nhiều đến thế.",
+            "en": "I hope one day we’ll look back at these photos and laugh at how much we’ve grown together."
+          }
+        },
+        {
+          "id": "more-06",
+          "src": "lilj/more/06_38_3029988970505893",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh mong sau này, khi nhìn lại những tấm ảnh này, hai đứa sẽ cười vì đã cùng nhau trưởng thành nhiều đến thế.",
+            "en": "I hope one day we’ll look back at these photos and laugh at how much we’ve grown together."
+          }
+        },
+        {
+          "id": "more-07",
+          "src": "lilj/more/07_32_3044421205729336",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh mong sau này, khi nhìn lại những tấm ảnh này, hai đứa sẽ cười vì đã cùng nhau trưởng thành nhiều đến thế.",
+            "en": "I hope one day we’ll look back at these photos and laugh at how much we’ve grown together."
+          }
+        },
+        {
+          "id": "more-08",
+          "src": "lilj/more/08_30_3047179495453507",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh mong sau này, khi nhìn lại những tấm ảnh này, hai đứa sẽ cười vì đã cùng nhau trưởng thành nhiều đến thế.",
+            "en": "I hope one day we’ll look back at these photos and laugh at how much we’ve grown together."
+          }
+        },
+        {
+          "id": "more-09",
+          "src": "lilj/more/09_121_2982647715240019",
+          "caption": {
+            "vi": "",
+            "en": ""
           },
           "compliment": {
             "vi": "Anh mong sau này, khi nhìn lại những tấm ảnh này, hai đứa sẽ cười vì đã cùng nhau trưởng thành nhiều đến thế.",

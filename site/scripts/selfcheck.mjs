@@ -40,6 +40,13 @@ assert.deepEqual(countdownParts("2026-11-18T00:00:00+07:00", Date.UTC(2026, 10, 
   seconds: 0,
 });
 assert.equal(content.lock.unlockAt, "2026-11-18T00:00:00+07:00");
+assert.equal(content.startDate, "2026-07-01T00:00:00+07:00");
+const togetherAtUnlock = elapsedParts(content.startDate, new Date("2026-11-18T00:00:00+07:00"));
+assert.equal(togetherAtUnlock.future, false);
+assert.equal(togetherAtUnlock.days, 140);
+assert.equal(togetherAtUnlock.hours, 0);
+assert.equal(togetherAtUnlock.minutes, 0);
+assert.equal(new Date("2026-09-06T12:00:00+07:00").getUTCDay(), 0);
 assert.equal(content.constellations.lyr.en, "Lyra");
 assert.equal(content.ui.musicHint.en, "Tap for music");
 assert.equal(content.music.credit, undefined);

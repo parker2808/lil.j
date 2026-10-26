@@ -83,6 +83,13 @@ export function validateContent(value: Content): string | null {
   if (!value.startDate || Number.isNaN(Date.parse(value.startDate))) {
     return "startDate không phải ngày hợp lệ.";
   }
+  const startDay = value.startDate.slice(0, 10);
+  for (const era of value.eras) {
+    if (era.date < startDay) return `Thời "${era.id}" bắt đầu trước ngày bên nhau.`;
+    for (const photo of era.photos) {
+      if (!photo.date || photo.date < startDay) return `Ảnh "${photo.id}" trước ngày bên nhau.`;
+    }
+  }
   if (!Array.isArray(value.music.tracks) || value.music.tracks.length < 2) {
     return "content.json cần ít nhất 2 bài trong music.tracks.";
   }

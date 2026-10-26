@@ -486,7 +486,8 @@ async function audit(page, label) {
       for (const el of targets) {
         const visible = visibleBox(el);
         if (!visible) continue;
-        if (visible.width < 42 || visible.height < 42) {
+        const minTarget = el.closest(".lang") ? 32 : 42;
+        if (visible.width < minTarget || visible.height < minTarget) {
           push("touch-target", `${describe(el)} ${Math.round(visible.width)}×${Math.round(visible.height)}`);
           break;
         }

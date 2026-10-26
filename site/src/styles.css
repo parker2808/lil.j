@@ -31,13 +31,13 @@
   --footer-h: 60px;
   --footer-pad: max(16px, calc(var(--safe-bottom) + 8px));
   --stage-fade: 32px;
-  --text-eyebrow: 12px;
-  --text-secondary: 14px;
-  --text-body: 16px;
-  --text-letter: 18px;
-  --text-h2: 23px;
-  --text-h1: 28px;
-  --text-hero: clamp(56px, 16vw, 72px);
+  --text-eyebrow: 11px;
+  --text-secondary: 13px;
+  --text-body: 14px;
+  --text-letter: 16px;
+  --text-h2: 20px;
+  --text-h1: 24px;
+  --text-hero: clamp(48px, 14vw, 64px);
   --leading-eyebrow: 1.3;
   --leading-body: 1.45;
   --leading-title: 1.15;
@@ -384,8 +384,9 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   position: relative;
   z-index: 1;
   display: flex;
+  align-items: center;
   gap: 2px;
-  padding: 4px;
+  padding: 2px;
   border-radius: var(--radius-pill);
   border: 1px solid rgba(247, 196, 220, 0.38);
   background: rgba(255, 244, 250, 0.16);
@@ -393,16 +394,18 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 }
 
 .lang button {
-  min-width: 44px;
-  min-height: 44px;
+  min-width: 32px;
+  height: 32px;
+  min-height: 32px;
+  padding: 0 8px;
   border: none;
   border-radius: var(--radius-pill);
   background: transparent;
   color: var(--muted);
-  font-size: var(--text-eyebrow);
-  line-height: var(--leading-eyebrow);
+  font-size: 11px;
+  line-height: 1;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.06em;
 }
 
 .lang button[aria-pressed="true"] {
@@ -1024,10 +1027,12 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
     radial-gradient(circle at 20% 0%, rgba(247, 196, 220, 0.16), transparent 45%),
     #6a4a82;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
-  touch-action: none;
+  touch-action: pan-y;
   user-select: none;
   -webkit-user-select: none;
 }
+
+.scratch.is-open { touch-action: auto; }
 
 .scratch-reveal {
   min-height: 168px;
@@ -1039,8 +1044,8 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   text-align: center;
   font-family: var(--serif);
   font-style: normal;
-  font-size: var(--text-h2);
-  line-height: var(--leading-title);
+  font-size: var(--text-letter);
+  line-height: var(--leading-body);
   overflow-wrap: anywhere;
 }
 
@@ -1054,7 +1059,7 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   width: 100%;
   height: 100%;
   max-width: 100%;
-  touch-action: none;
+  touch-action: pan-y;
   user-select: none;
   -webkit-user-select: none;
 }
@@ -1423,7 +1428,7 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 }
 
 .odo-live-nums {
-  font-size: 20px;
+  font-size: 18px;
   background: none;
   filter: drop-shadow(0 0 6px rgba(255, 228, 246, 0.6));
 }
@@ -1740,7 +1745,7 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   text-align: left;
   white-space: pre-wrap;
   font-family: var(--serif);
-  font-size: 17px;
+  font-size: var(--text-letter);
   line-height: 1.5;
 }
 
@@ -2098,7 +2103,7 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   background: linear-gradient(180deg, #ffe4f0, #f4b4cf 58%, #e792b4);
   color: #4a2340;
   font-weight: 600;
-  font-size: 15px;
+  font-size: var(--text-body);
   line-height: 1;
   white-space: nowrap;
   touch-action: manipulation;
@@ -2529,13 +2534,13 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 
 @media (min-width: 660px) and (min-height: 640px) {
   :root {
-    --text-eyebrow: 13px;
-    --text-secondary: 15px;
-    --text-body: 17px;
-    --text-letter: 19px;
-    --text-h2: 26px;
-    --text-h1: 34px;
-    --text-hero: clamp(64px, 7vw, 84px);
+    --text-eyebrow: 12px;
+    --text-secondary: 14px;
+    --text-body: 15px;
+    --text-letter: 17px;
+    --text-h2: 22px;
+    --text-h1: 30px;
+    --text-hero: clamp(56px, 6vw, 72px);
   }
 
   .chrome {
@@ -2589,11 +2594,11 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 
 @media (min-width: 1200px) {
   :root {
-    --text-body: 18px;
-    --text-letter: 20px;
-    --text-h2: 28px;
-    --text-h1: 40px;
-    --text-hero: clamp(72px, 5vw, 92px);
+    --text-body: 16px;
+    --text-letter: 18px;
+    --text-h2: 24px;
+    --text-h1: 34px;
+    --text-hero: clamp(64px, 4.5vw, 80px);
   }
 
   .scene,
@@ -2785,7 +2790,7 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 }
 
 @media (max-height: 520px) {
-  h1 { font-size: 24px; }
+  h1 { font-size: 22px; }
   .lede { margin-top: 6px; }
   .kicker { margin-bottom: 4px; }
   .scene, .gate { padding: 4px 16px 12px; }
@@ -2795,7 +2800,7 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   .finale-stage { height: 120px; }
   .finale h1 { margin: 6px auto 8px; }
   .cake-stage { padding-top: 64px; }
-  .constellation-name, .odo-hero { font-size: clamp(48px, 14vw, 64px); }
+  .constellation-name, .odo-hero { font-size: clamp(40px, 12vw, 56px); }
   .wish-copy { max-height: 42%; }
   .wish-form { margin-bottom: 8px; }
 }

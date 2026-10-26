@@ -196,7 +196,7 @@ export function SpiralGalaxy({
             onClick={() => onOpen(era.id)}
           >
             <span className="cluster-knot" aria-hidden="true" />
-            <span className="cluster-name">{title}</span>
+            <span className="cluster-name sr-only">{title}</span>
             <span className="cluster-count">{count}</span>
           </button>
         );

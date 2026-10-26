@@ -33,11 +33,13 @@ export function Envelope({ open, onOpen }: EnvelopeProps) {
       <p className="kicker">{t(content.meta.title)}</p>
       <p className="seal-caption">{t(content.envelope.sealCaption)}</p>
       <div className={open ? "envelope is-open" : "envelope"}>
-        <div className="env-pocket">
-          <div className="env-paper" aria-hidden={!open}>
+        {open && (
+          <div className="env-paper">
             <p className="greet">{t(content.envelope.greeting)}</p>
             <p>{t(content.envelope.body)}</p>
           </div>
+        )}
+        <div className="env-pocket">
           <div className="env-front" />
           <div className="env-flap" />
           {!open && (

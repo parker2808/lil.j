@@ -1,477 +1,1036 @@
 {
   "meta": {
-    "title": { "vi": "Vũ trụ của em", "en": "Your universe" },
-    "description": { "vi": "Vũ trụ của em — một món quà sinh nhật.", "en": "Your universe — a birthday gift." },
-    "herName": "J",
+    "title": {
+      "vi": "Đến những vì sao cũng biết tên em",
+      "en": "Even the Stars Know Your Name"
+    },
+    "description": {
+      "vi": "Mỗi ngôi sao ở đây đều có một câu chuyện. Và chẳng hiểu sao, tất cả đều dẫn đến em.",
+      "en": "Every star here has a story. And somehow, they all lead to you."
+    },
+    "herName": "MJ",
     "constellationName": "JOLIE",
-    "monogram": "J"
+    "monogram": "MJ"
   },
   "gate": {
-    "password": "bé yêu",
-    "question": { "vi": "Ai đang tới đây vậy?", "en": "Who's coming in?" },
-    "placeholder": { "vi": "Biệt danh của em", "en": "Your nickname" },
-    "submit": { "vi": "Vào", "en": "Enter" },
-    "empty": { "vi": "Em nhập biệt danh đã.", "en": "Type the nickname first." },
-    "hints": [
-      { "vi": "Hình như không phải em.", "en": "That doesn't sound like you." },
-      { "vi": "Là biệt danh anh hay gọi, không phải tên trong giấy tờ.", "en": "It's the nickname I use, not the one on paper." },
-      { "vi": "Viết hoa hay thường cũng được.", "en": "Capitals don't matter." },
-      { "vi": "Hai tiếng thôi.", "en": "Two words." },
-      { "vi": "Nhớ cả dấu.", "en": "Keep the accents." },
-      { "vi": "Có chữ yêu ở trong đó.", "en": "The word yêu is in it." }
-    ]
-  },
-  "startDate": "2026-07-01T00:00:00+07:00",
-  "music": {
-    "tracks": [
-      { "title": "From The Start", "artist": "Laufey", "src": "/music/from-the-start.mp3" },
-      { "title": "Bewitched", "artist": "Laufey", "src": "/music/bewitched.mp3" },
-      { "title": "Valentine", "artist": "Laufey", "src": "/music/valentine.mp3" },
-      { "title": "Glue Song", "artist": "beabadoobee", "src": "/music/glue-song.mp3" },
-      { "title": "Echoes of the Stars", "artist": "sleepvolume", "src": "/music/echoes-of-the-stars.mp3" },
-      { "title": "Twinkle Twinkle Little Star (Grand Piano)", "src": "/music/twinkle-twinkle-little-star.mp3" }
-    ],
-    "birthday": {
-      "title": "Happy Birthday Music Box Loop",
-      "src": "/music/happy-birthday-music-box.mp3"
-    }
-  },
-  "birth": {
-    "when": "2002-11-18T16:45:00+07:00",
-    "lat": 20.97,
-    "lon": 105.78,
-    "place": { "vi": "Hà Đông, Hà Nội", "en": "Hà Đông, Hà Nội, Vietnam" },
-    "kicker": { "vi": "Chiều em sinh ra", "en": "The afternoon you were born" },
-    "title": { "vi": "Bản đồ sao chiều em sinh ra", "en": "The sky the afternoon you were born" },
-    "lede": {
-      "vi": "Chạm những ngôi sao đang nhấp nháy để đọc lời nhắn.",
-      "en": "Tap the pulsing stars to read each note."
+    "password": "mj",
+    "question": {
+      "vi": "Một vũ trụ nhỏ, chỉ dành cho em",
+      "en": "A Little Universe, Just for You"
     },
-    "north": { "vi": "B", "en": "N" },
-    "east": { "vi": "Đ", "en": "E" },
-    "south": { "vi": "N", "en": "S" },
-    "west": { "vi": "T", "en": "W" },
-    "caption": { "vi": "{when} · {place}", "en": "{when} · {place}" },
-    "progress": { "vi": "{n}/{total} lời nhắn", "en": "{n}/{total} notes" },
-    "sign": { "vi": "Cung của em", "en": "Your sign" },
-    "notes": [
+    "placeholder": {
+      "vi": "Nhập cái tên mà chỉ một người đặc biệt mới biết.",
+      "en": "Enter the name only one person would know."
+    },
+    "submit": {
+      "vi": "Vào",
+      "en": "Enter"
+    },
+    "empty": {
+      "vi": "Em nhập tên đã.",
+      "en": "Type the name first."
+    },
+    "hints": [
       {
-        "id": "cas",
-        "title": { "vi": "Sự quan tâm của em", "en": "Your kindness" },
-        "body": {
-          "vi": "Em khiến việc quan tâm đến người khác trở thành một điều rất tự nhiên.",
-          "en": "You make caring feel like the most natural thing in the world."
-        }
+        "vi": "Hai chữ cái nhỏ xíu.",
+        "en": "Two little letters."
       },
       {
-        "id": "lyr",
-        "title": { "vi": "Chiếc mặt phụng phịu", "en": "Your little pout" },
-        "body": {
-          "vi": "Nhất là mỗi lần anh trêu em. Ừ, anh để ý hết đấy. :)))",
-          "en": "Especially when I tease you. Yes, I notice it every time. :)))"
-        }
+        "vi": "Cái tên anh dùng khi muốn làm em cười.",
+        "en": "The name I use when I want to make you smile."
       },
       {
-        "id": "cyg",
-        "title": { "vi": "Nụ cười của em", "en": "Your smile" },
-        "body": {
-          "vi": "Một trong những điều anh thích nhìn thấy nhất, nhất là khi biết mình là người khiến em cười.",
-          "en": "One of my favorite things to see, especially when I know I caused it."
-        }
+        "vi": "Viết thì ngắn, nhớ thì lâu.",
+        "en": "Short to type, impossible to forget."
       },
       {
-        "id": "aql",
-        "title": { "vi": "Tương lai của em", "en": "Your future" },
-        "body": {
-          "vi": "Anh mong thế giới sẽ cho em thật nhiều lý do để mỉm cười.",
-          "en": "I hope the world gives you a thousand reasons to smile."
-        }
+        "vi": "Nó thuộc về cô gái mà vũ trụ này dành tặng.",
+        "en": "It belongs to the girl this universe was made for."
+      },
+      {
+        "vi": "Chắc em biết ngay thôi.",
+        "en": "You probably know it already."
+      },
+      {
+        "vi": "Thử viết tắt tên của cô gái anh thích nhất xem.",
+        "en": "Try the initials of my favorite girl."
       }
     ]
   },
+  "startDate": "2026-07-01T00:00:00+07:00",
+  "music": "/music/nen.wav",
+  "birth": {
+    "when": "2002-11-18T21:30:00+07:00",
+    "lat": 20.97,
+    "lon": 105.78,
+    "place": {
+      "vi": "Hà Đông, Hà Nội",
+      "en": "Hà Đông, Hà Nội, Vietnam"
+    },
+    "kicker": {
+      "vi": "Bầu trời đêm em sinh ra",
+      "en": "The night you were born"
+    },
+    "title": {
+      "vi": "Bầu trời trong ngày đặc biệt của em",
+      "en": "The Sky on Your Special Day"
+    },
+    "lede": {
+      "vi": "Dưới bầu trời ấy, một cô bé bắt đầu câu chuyện của riêng mình. Hai mươi bốn năm sau, cô bé ấy trở thành một người rất đặc biệt với anh.",
+      "en": "Somewhere beneath this sky, a little girl was beginning her own story. Twenty-four years later, she became someone very special to me."
+    },
+    "north": {
+      "vi": "B",
+      "en": "N"
+    },
+    "east": {
+      "vi": "Đ",
+      "en": "E"
+    },
+    "south": {
+      "vi": "N",
+      "en": "S"
+    },
+    "west": {
+      "vi": "T",
+      "en": "W"
+    },
+    "caption": {
+      "vi": "{when} · {place}",
+      "en": "{when} · {place}"
+    }
+  },
   "constellations": {
-    "umi": { "vi": "Tiểu Hùng", "en": "Ursa Minor" },
-    "uma": { "vi": "Gấu Lớn", "en": "Ursa Major" },
-    "cas": { "vi": "Tiên Hậu", "en": "Cassiopeia" },
-    "lyr": { "vi": "Thiên Cầm", "en": "Lyra" },
-    "cyg": { "vi": "Thiên Nga", "en": "Cygnus" },
-    "aql": { "vi": "Thiên Ưng", "en": "Aquila" },
-    "sco": { "vi": "Thiên Yết", "en": "Scorpius" },
-    "boo": { "vi": "Mục Phu", "en": "Boötes" },
-    "vir": { "vi": "Xử Nữ", "en": "Virgo" },
-    "leo": { "vi": "Sư Tử", "en": "Leo" },
-    "ori": { "vi": "Lạp Hộ", "en": "Orion" },
-    "tau": { "vi": "Kim Ngưu", "en": "Taurus" },
-    "cma": { "vi": "Đại Khuyển", "en": "Canis Major" },
-    "cmi": { "vi": "Tiểu Khuyển", "en": "Canis Minor" },
-    "gem": { "vi": "Song Tử", "en": "Gemini" },
-    "aur": { "vi": "Ngự Phu", "en": "Auriga" },
-    "cru": { "vi": "Nam Thập Tự", "en": "Crux" },
-    "sgr": { "vi": "Nhân Mã", "en": "Sagittarius" }
+    "umi": {
+      "vi": "Tiểu Hùng",
+      "en": "Ursa Minor"
+    },
+    "uma": {
+      "vi": "Gấu Lớn",
+      "en": "Ursa Major"
+    },
+    "cas": {
+      "vi": "Tiên Hậu",
+      "en": "Cassiopeia"
+    },
+    "lyr": {
+      "vi": "Thiên Cầm",
+      "en": "Lyra"
+    },
+    "cyg": {
+      "vi": "Thiên Nga",
+      "en": "Cygnus"
+    },
+    "aql": {
+      "vi": "Thiên Ưng",
+      "en": "Aquila"
+    },
+    "sco": {
+      "vi": "Thiên Yết",
+      "en": "Scorpius"
+    },
+    "boo": {
+      "vi": "Mục Phu",
+      "en": "Boötes"
+    },
+    "vir": {
+      "vi": "Xử Nữ",
+      "en": "Virgo"
+    },
+    "leo": {
+      "vi": "Sư Tử",
+      "en": "Leo"
+    },
+    "ori": {
+      "vi": "Lạp Hộ",
+      "en": "Orion"
+    },
+    "tau": {
+      "vi": "Kim Ngưu",
+      "en": "Taurus"
+    },
+    "cma": {
+      "vi": "Đại Khuyển",
+      "en": "Canis Major"
+    },
+    "cmi": {
+      "vi": "Tiểu Khuyển",
+      "en": "Canis Minor"
+    },
+    "gem": {
+      "vi": "Song Tử",
+      "en": "Gemini"
+    },
+    "aur": {
+      "vi": "Ngự Phu",
+      "en": "Auriga"
+    },
+    "cru": {
+      "vi": "Nam Thập Tự",
+      "en": "Crux"
+    },
+    "sgr": {
+      "vi": "Nhân Mã",
+      "en": "Sagittarius"
+    }
   },
   "wish": {
-    "kicker": { "vi": "Gửi lên trời", "en": "Up to the sky" },
-    "title": { "vi": "Ước nguyện gửi sao", "en": "Wish upon a star" },
-    "lede": {
-      "vi": "Viết một điều. Gửi đi, nó bay thành một vệt sao.",
-      "en": "Write one thing. Send it, and it becomes a streak of light."
+    "kicker": {
+      "vi": "Gửi điều ước lên sao",
+      "en": "Send a wish to the stars"
     },
-    "placeholder": { "vi": "Điều em ước", "en": "What you wish" },
-    "send": { "vi": "Gửi đi", "en": "Send" },
-    "empty": { "vi": "Em viết một câu đã.", "en": "Write a line first." },
-    "sent": { "vi": "Ước của em đang ở trên kia.", "en": "Your wish is up there now." },
-    "more": { "vi": "Thêm", "en": "More" },
-    "saved": { "vi": "Những ước em đã gửi", "en": "Wishes you've sent" }
+    "title": {
+      "vi": "Một điều ước chỉ cần những vì sao biết",
+      "en": "A Wish Only the Stars Need to Know"
+    },
+    "lede": {
+      "vi": "Nếu được ước một điều, em sẽ ước điều gì?",
+      "en": "If you could wish for one thing, what would it be?"
+    },
+    "placeholder": {
+      "vi": "Viết điều ước của em ở đây…",
+      "en": "Write your wish here…"
+    },
+    "send": {
+      "vi": "Gửi điều ước ✨",
+      "en": "Send my wish ✨"
+    },
+    "empty": {
+      "vi": "Em viết điều ước đã.",
+      "en": "Write a wish first."
+    },
+    "sent": {
+      "vi": "Điều ước của em đang trên đường đến với những vì sao. Mong rằng từng chút một, nó sẽ tìm được đường đến với em. 🌠",
+      "en": "Your wish is on its way to the stars. May it find its way to you, one little step at a time. 🌠"
+    },
+    "more": {
+      "vi": "Thêm",
+      "en": "More"
+    },
+    "saved": {
+      "vi": "Những ước em đã gửi",
+      "en": "Wishes you've sent"
+    }
   },
   "finalLetter": {
-    "kicker": { "vi": "Để khép lại", "en": "To close" },
-    "title": { "vi": "Lá thư cuối", "en": "The final letter" },
+    "kicker": {
+      "vi": "Lá thư cuối",
+      "en": "The last letter"
+    },
+    "title": {
+      "vi": "Trước khi em rời khỏi vũ trụ nhỏ này",
+      "en": "Before You Leave This Little Universe"
+    },
     "lede": {
-      "vi": "Anh viết chậm. Em đọc chậm cũng được.",
-      "en": "I wrote it slowly. You can read it that way too."
+      "vi": "Nếu em đã đi đến tận đây, nghĩa là em vừa khám phá hết những góc nhỏ trong vũ trụ anh làm dành riêng cho em rồi đấy.",
+      "en": "If you’ve made it all the way here, then you’ve explored every little corner of this universe I made for you."
     },
     "body": {
-      "vi": "J,\n\nChiều em sinh ra, trời Hà Nội đã có những vì sao anh vừa vẽ cho em.\n\nAnh đã ngồi với những tấm ảnh, với từng câu đố, và với những ngọn nến tắt.\n\nĐiều em vừa gửi lên trời, anh không hỏi lại. Nó ở trên đó, nhỏ thôi, nhưng là của em.\n\nCảm ơn em đã đi hết con đường này.\n\nSinh nhật vui.\nAnh vẫn ở đây.",
-      "en": "J,\n\nThe afternoon you were born, the Hanoi sky already held the stars I just drew for you.\n\nI sat with the pictures, with every question, and with the candles after they went out.\n\nThe wish you just sent, I won't ask it back. It's up there, small, and it's yours.\n\nThank you for walking the whole way.\n\nHappy birthday.\nI'm still here."
+      "vi": "MJ à,\n\nEm bước vào bằng hai chữ cái, tìm thấy tên mình giữa những vì sao, đi qua những kỷ niệm của hai đứa và khám phá một vài điều anh thương ở em.\n\nThật ra, những điều anh thích nhất chẳng phải những khoảnh khắc quá lớn lao.\n\nLà cách em quan tâm anh khi anh ốm.\nLà cái mặt phụng phịu mỗi khi anh trêu em.\nLà gương mặt bất ngờ của em mỗi lần nhận quà.\nLà cách em chia sẻ cuộc sống của mình với anh.\nVà là việc anh biết rằng giữa những ngày bận rộn của em, vẫn có một chỗ dành cho hai đứa mình.\n\nTừ ngày 01/07/2026, hai đứa đã bắt đầu viết câu chuyện của riêng mình. Mình vẫn còn nhiều điều cần tìm hiểu về nhau, nhiều nơi muốn đi, nhiều món muốn ăn cùng nhau và rất nhiều ngày bình thường có thể trở thành những kỷ niệm đáng nhớ.\n\nTrong ngày sinh nhật của em, anh không mong em phải trở thành một người khác hay có một cuộc sống hoàn hảo.\n\nAnh mong em được vui vẻ, được trân trọng, đủ can đảm để theo đuổi những điều mình muốn và luôn nhớ rằng em xứng đáng được đối xử tử tế, kể cả từ chính bản thân mình.\n\nCảm ơn em vì đã đồng ý với hai đứa mình.\n\nChúc mừng sinh nhật MJ. Anh thật sự vui vì chúng ta đã gặp được nhau.\n\nMong rằng phía trước sẽ còn nhiều chuyến đi nhỏ, nhiều khoảnh khắc ngốc nghếch và thật nhiều kỷ niệm cùng em.\n\nThương em,\nNgười thích trêu em nhất. ❤️",
+      "en": "Dear MJ,\n\nYou entered with two little letters, found your name among the stars, travelled through our memories, and discovered a few things I love about you.\n\nAnd honestly, the things I love most aren’t the big, dramatic moments.\n\nIt’s how you take care of me when I’m sick.\nIt’s your little pout when I tease you.\nIt’s the surprised look on your face when I give you something.\nIt’s the way you share your life with me.\nAnd it’s knowing that somewhere in your busy days, there’s a place for us, too.\n\nSince July 1, 2026, we’ve been writing our own little story. We still have so many things to learn about each other, so many places to visit, so many meals to share, and so many ordinary days that might become our favorite memories.\n\nFor your birthday, I don’t wish for you to become someone else or to have a perfect life.\n\nI wish for you to be happy, to feel appreciated, to have the courage to chase the things you want, and to remember that you deserve kindness, including from yourself.\n\nThank you for saying yes to us.\n\nHappy birthday, MJ. I’m really glad our paths crossed.\n\nHere’s to more little adventures, more silly moments, and more memories with you.\n\nWith love,\nYour favorite person to tease. ❤️"
     },
-    "skip": { "vi": "Đọc hết", "en": "Read it all" },
-    "replay": { "vi": "Đọc lại", "en": "Read it again" },
+    "skip": {
+      "vi": "Đọc hết",
+      "en": "Read it all"
+    },
+    "replay": {
+      "vi": "Đọc lại",
+      "en": "Read it again"
+    },
     "closing": {
-      "vi": "Hết một vòng trời. Em có thể đọc lại, hoặc quay lại bước trước.",
-      "en": "That's one turn of the sky. You can read it again, or step back."
+      "vi": "Em có thể đọc lại, hoặc quay lại bước trước.",
+      "en": "You can read it again, or step back."
     }
   },
   "flow": {
-    "next": { "vi": "Tiếp", "en": "Next" },
-    "back": { "vi": "Bước trước", "en": "Previous step" },
-    "progress": { "vi": "Bước {n} trên {total}", "en": "Step {n} of {total}" },
-    "done": { "vi": "Xong rồi. Em đi tiếp.", "en": "That's done. Go on." },
-    "doneLast": { "vi": "Hết một vòng trời.", "en": "That's one turn of the sky." },
-    "devJump": { "vi": "Nhảy tới bước {n}", "en": "Jump to step {n}" },
+    "next": {
+      "vi": "Tiếp",
+      "en": "Next"
+    },
+    "back": {
+      "vi": "Bước trước",
+      "en": "Previous step"
+    },
+    "progress": {
+      "vi": "Bước {n} trên {total}",
+      "en": "Step {n} of {total}"
+    },
+    "done": {
+      "vi": "Xong rồi. Em đi tiếp.",
+      "en": "That's done. Go on."
+    },
+    "doneLast": {
+      "vi": "Hết một vòng trời.",
+      "en": "That's one turn of the sky."
+    },
+    "devJump": {
+      "vi": "Nhảy tới bước {n}",
+      "en": "Jump to step {n}"
+    },
     "hints": {
-      "gate": { "vi": "Nhập biệt danh anh hay gọi.", "en": "Type the nickname I use for you." },
-      "sky": { "vi": "Xem các vì sao gọi tên em.", "en": "Watch the stars say your name." },
-      "birth": { "vi": "Chạm những sao nhấp nháy để đọc hết lời nhắn.", "en": "Tap the pulsing stars until every note is open." },
-      "gallery": { "vi": "Xem hết một thời.", "en": "See one era through." },
-      "quiz": { "vi": "Trả lời hết các câu.", "en": "Answer every question." },
-      "counter": { "vi": "Ở lại một lát với đồng hồ.", "en": "Stay with the clock for a moment." },
-      "cake": { "vi": "Thổi hoặc chạm cho nến tắt hết.", "en": "Blow, or tap, until every candle is out." },
-      "envelope": { "vi": "Chạm con dấu để mở thư.", "en": "Touch the seal to open the letter." },
-      "memory": { "vi": "Tìm hết các cặp ảnh.", "en": "Find every matching pair." },
-      "scratch": { "vi": "Cào hết các thẻ.", "en": "Scratch every card." },
-      "letters": { "vi": "Mở từng lá thư một lần.", "en": "Open each letter once." },
-      "friends": { "vi": "Đọc những lời bạn bè để lại.", "en": "Read the notes your friends left." },
-      "dreams": { "vi": "Tích một ước của hai đứa.", "en": "Tick one dream for the two of you." },
-      "finale": { "vi": "Trả lời câu hỏi.", "en": "Answer the question." },
-      "wish": { "vi": "Viết một ước và gửi lên trời.", "en": "Write a wish and send it up." },
-      "letter": { "vi": "Đọc lá thư đến dòng cuối.", "en": "Read the letter through to the last line." }
+      "gate": {
+        "vi": "Nhập cái tên mà chỉ một người đặc biệt mới biết.",
+        "en": "Enter the name only one person would know."
+      },
+      "sky": {
+        "vi": "Bảy ngôi sao lần lượt xuất hiện, tạo thành tên JOLIE.",
+        "en": "Seven stars appear one by one, forming the name JOLIE."
+      },
+      "birth": {
+        "vi": "Chạm vào từng ngôi sao để khám phá lời nhắn.",
+        "en": "Tap a star to discover a little message."
+      },
+      "gallery": {
+        "vi": "Chạm một chương.",
+        "en": "Tap a chapter."
+      },
+      "quiz": {
+        "vi": "Trả lời hết các câu.",
+        "en": "Answer every question."
+      },
+      "counter": {
+        "vi": "Và chúng mình mới chỉ bắt đầu thôi.",
+        "en": "And we’re only getting started."
+      },
+      "cake": {
+        "vi": "Hít một hơi thật sâu rồi thổi tắt nến nhé.",
+        "en": "Take a deep breath and blow out the candles."
+      },
+      "envelope": {
+        "vi": "Mở ra khi em sẵn sàng nhé.",
+        "en": "Open when you’re ready."
+      },
+      "memory": {
+        "vi": "Ghép đúng các tấm thẻ để mở khóa lời nhắn nhỏ.",
+        "en": "Match the cards and unlock a little message."
+      },
+      "scratch": {
+        "vi": "Cào hết các thẻ.",
+        "en": "Scratch every card."
+      },
+      "letters": {
+        "vi": "Mở từng lá thư một lần.",
+        "en": "Open each letter once."
+      },
+      "friends": {
+        "vi": "Đọc những lời bạn bè để lại.",
+        "en": "Read the notes your friends left."
+      },
+      "dreams": {
+        "vi": "Tích một ước.",
+        "en": "Tick one dream."
+      },
+      "finale": {
+        "vi": "Trả lời câu hỏi.",
+        "en": "Answer the question."
+      },
+      "wish": {
+        "vi": "Viết một điều ước rồi gửi đi.",
+        "en": "Write a wish and send it."
+      },
+      "letter": {
+        "vi": "Đọc lá thư đến dòng cuối.",
+        "en": "Read the letter through to the last line."
+      }
     }
   },
   "envelope": {
-    "greeting": { "vi": "Gửi J,", "en": "Dear J," },
-    "sealCaption": { "vi": "Một phong thư niêm bằng sáp.", "en": "A letter closed with wax." },
-    "openHint": { "vi": "Chạm vào con dấu để mở", "en": "Touch the seal to open it" },
-    "body": {
-      "vi": "Anh gom vài vì sao, một chiếc bánh, và những câu chưa kịp nói. Tất cả nằm sau con dấu này.",
-      "en": "I gathered a few stars, a cake, and the sentences I never got to say. All of it is behind this seal."
+    "greeting": {
+      "vi": "MJ à,",
+      "en": "Dear MJ,"
     },
-    "enter": { "vi": "Bước vào vũ trụ", "en": "Step into the universe" }
+    "sealCaption": {
+      "vi": "Một lời mời nho nhỏ",
+      "en": "A Tiny Invitation"
+    },
+    "openHint": {
+      "vi": "Mở ra khi em sẵn sàng nhé.",
+      "en": "Open when you’re ready."
+    },
+    "body": {
+      "vi": "Nhiệm vụ sinh nhật của em vẫn chưa kết thúc đâu.\n\nAnh còn muốn cùng em tạo thêm một kỷ niệm mà sau này cả hai đều muốn giữ lại.\n\nVậy nên, đây là lời mời em đi hẹn hò với anh.\n\nEm cứ mang theo nụ cười xinh xắn của mình. Còn lại để anh lo. 😉",
+      "en": "Your birthday mission isn’t over yet.\n\nThere’s one more thing I’d like to do with you: make another memory that we’ll both want to keep.\n\nSo, here’s your invitation to a date with me.\n\nYou bring your pretty smile. I’ll take care of the rest. 😉"
+    },
+    "enter": {
+      "vi": "Nhận lời hẹn hò",
+      "en": "Accept the invitation"
+    }
   },
   "chapters": [
     {
       "id": "gallery",
-      "star": { "vi": "Ảnh", "en": "Photos" },
-      "kicker": { "vi": "Polaroid", "en": "Polaroid" },
-      "title": { "vi": "Những tấm ảnh", "en": "The pictures" },
+      "star": {
+        "vi": "Ảnh",
+        "en": "Photos"
+      },
+      "kicker": {
+        "vi": "Ngân hà kỷ niệm",
+        "en": "Our little galaxy"
+      },
+      "title": {
+        "vi": "Những khoảnh khắc nhỏ, những cảm xúc lớn",
+        "en": "Little Moments, Big Feelings"
+      },
       "lede": {
-        "vi": "Mỗi thời là một cụm sao trên nhánh ngân hà. Chạm vào, rồi vuốt những tấm ảnh bay đi.",
-        "en": "Each era is a cluster on the spiral. Tap one, then flick the pictures away."
+        "vi": "Mình không cần hàng nghìn khoảnh khắc đặc biệt. Đôi khi, những điều nhỏ bé đã là quá đủ rồi.",
+        "en": "We don’t need a thousand extraordinary moments. Sometimes, the little things are more than enough."
       }
     },
     {
       "id": "scratch",
-      "star": { "vi": "Cào", "en": "Scratch" },
-      "kicker": { "vi": "Thẻ cào", "en": "Scratch cards" },
-      "title": { "vi": "Những điều anh thương", "en": "Things I love" },
-      "lede": { "vi": "Cào lớp hồng bằng ngón tay. Mỗi thẻ là một điều.", "en": "Scratch the pink foil with a finger. Each card is one thing." }
+      "star": {
+        "vi": "Cào",
+        "en": "Scratch"
+      },
+      "kicker": {
+        "vi": "Sáu điều anh thương",
+        "en": "Six little things I love"
+      },
+      "title": {
+        "vi": "Cào nhẹ để khám phá",
+        "en": "Scratch to Reveal"
+      },
+      "lede": {
+        "vi": "Sáu điều nhỏ bé. Một cô gái rất đặc biệt.",
+        "en": "Six little things. One very special girl."
+      }
     },
     {
       "id": "quiz",
-      "star": { "vi": "Đố", "en": "Quiz" },
-      "kicker": { "vi": "Một trò nhỏ", "en": "A small game" },
-      "title": { "vi": "Anh hiểu em bao nhiêu?", "en": "How well do I know you?" },
-      "lede": { "vi": "Không có điểm để khoe. Chỉ là anh muốn nhớ đúng.", "en": "There's no score to show off. I just want to remember right." }
+      "star": {
+        "vi": "Đố",
+        "en": "Quiz"
+      },
+      "kicker": {
+        "vi": "Anh hiểu em bao nhiêu?",
+        "en": "How well do you know me?"
+      },
+      "title": {
+        "vi": "Xem em hiểu anh đến đâu nào",
+        "en": "Let’s See If You Know Me"
+      },
+      "lede": {
+        "vi": "Trả lời hết các câu.",
+        "en": "Answer every question."
+      }
     },
     {
       "id": "memory",
-      "star": { "vi": "Nhớ", "en": "Match" },
-      "kicker": { "vi": "Lật ảnh", "en": "Pairs" },
-      "title": { "vi": "Trò chơi trí nhớ", "en": "Memory" },
-      "lede": { "vi": "Tìm hai tấm giống nhau.", "en": "Find the two that match." }
+      "star": {
+        "vi": "Ghép",
+        "en": "Match"
+      },
+      "kicker": {
+        "vi": "Lật ảnh tìm cặp",
+        "en": "Find our pairs"
+      },
+      "title": {
+        "vi": "Trí nhớ của em tốt đến đâu?",
+        "en": "How Good Is Your Memory?"
+      },
+      "lede": {
+        "vi": "Ghép đúng các tấm thẻ để mở khóa lời nhắn nhỏ.",
+        "en": "Match the cards and unlock a little message."
+      }
     },
     {
       "id": "dreams",
-      "star": { "vi": "Ước", "en": "Dreams" },
-      "kicker": { "vi": "Danh sách", "en": "A list" },
-      "title": { "vi": "Ước mơ của hai đứa", "en": "Dreams for the two of us" },
+      "star": {
+        "vi": "Ước",
+        "en": "Dreams"
+      },
+      "kicker": {
+        "vi": "Ước mơ của hai đứa",
+        "en": "Our little dreams"
+      },
+      "title": {
+        "vi": "Một ngày nào đó, em và anh",
+        "en": "Someday, You and Me"
+      },
       "lede": {
-        "vi": "Những điều mình sẽ làm. Em tích được — trình duyệt này sẽ nhớ.",
-        "en": "Things we'll do. Tick them. This browser will remember."
+        "vi": "Một vài điều anh muốn được trải nghiệm cùng em.",
+        "en": "A few things I’d love to experience with you."
       }
     },
     {
       "id": "friends",
-      "star": { "vi": "Bạn", "en": "Notes" },
-      "kicker": { "vi": "Giấy note", "en": "Paper notes" },
-      "title": { "vi": "Lời từ bạn bè", "en": "Words from friends" },
-      "lede": { "vi": "Họ gửi vài dòng. Anh chỉ là người dán lên tường.", "en": "They sent a few lines. I only taped them to the wall." }
+      "star": {
+        "vi": "Bạn",
+        "en": "Notes"
+      },
+      "kicker": {
+        "vi": "Giấy note",
+        "en": "Paper notes"
+      },
+      "title": {
+        "vi": "Lời từ bạn bè",
+        "en": "Words from friends"
+      },
+      "lede": {
+        "vi": "Họ gửi vài dòng. Anh chỉ là người dán lên tường.",
+        "en": "They sent a few lines. I only taped them to the wall."
+      }
     },
     {
       "id": "counter",
-      "star": { "vi": "Ngày", "en": "Days" },
-      "kicker": { "vi": "Đồng hồ", "en": "A clock" },
-      "title": { "vi": "Đã bên nhau", "en": "Time together" },
+      "star": {
+        "vi": "Ngày",
+        "en": "Days"
+      },
+      "kicker": {
+        "vi": "Đồng hồ của hai đứa",
+        "en": "Our little clock"
+      },
+      "title": {
+        "vi": "Từ ngày em đồng ý",
+        "en": "Since You Said Yes"
+      },
       "lede": {
-        "vi": "Từng giây vẫn đang chạy, kể cả khi em không mở trang này.",
-        "en": "The seconds keep going, even when this page is closed."
+        "vi": "Ngày em đồng ý cũng là ngày câu chuyện nhỏ của hai đứa mình bắt đầu. Và chúng mình mới chỉ bắt đầu thôi.",
+        "en": "The day you said yes became the beginning of our little story. And we’re only getting started."
       }
     }
   ],
   "galleryCopy": {
-    "count": { "vi": "{n} ảnh", "en": "{n} photos" },
-    "progress": { "vi": "{n} / {total}", "en": "{n} / {total}" },
-    "back": { "vi": "Ngân hà", "en": "The galaxy" },
-    "backToGalaxy": { "vi": "← Về ngân hà", "en": "← Back to the galaxy" },
-    "eraProgress": { "vi": "Thời {n}/{total} · ảnh {photo}/{photos}", "en": "Era {n} of {total} · photo {photo}/{photos}" },
-    "nextEra": { "vi": "Thời tiếp theo", "en": "Next era" },
-    "seen": { "vi": "Đã xem", "en": "Seen" },
-    "pending": { "vi": "Chưa xem", "en": "Not yet" },
-    "empty": { "vi": "Hết thời này rồi.", "en": "That's the end of this era." },
-    "close": { "vi": "Đóng ảnh", "en": "Close the photo" },
-    "orbit": { "vi": "Chạm một cụm sao để mở thời đó.", "en": "Tap a cluster to open that era." }
+    "count": {
+      "vi": "{n} ảnh",
+      "en": "{n} photos"
+    },
+    "progress": {
+      "vi": "{n} / {total}",
+      "en": "{n} / {total}"
+    },
+    "back": {
+      "vi": "Ngân hà",
+      "en": "The galaxy"
+    },
+    "empty": {
+      "vi": "Hết thời này rồi.",
+      "en": "That's the end of this era."
+    },
+    "close": {
+      "vi": "Đóng ảnh",
+      "en": "Close the photo"
+    },
+    "orbit": {
+      "vi": "Chạm một chương.",
+      "en": "Tap a chapter."
+    }
   },
   "eras": [
     {
-      "id": "first",
-      "title": { "vi": "Những ngày đầu", "en": "The first days" },
+      "id": "care",
+      "title": {
+        "vi": "Những lúc em chăm anh",
+        "en": "When You Take Care of Me"
+      },
       "date": "2026-07-01",
       "color": "#f4b4cf",
       "photos": [
-        { "id": "p1", "src": "/photos/01.svg", "date": "2026-07-01", "caption": { "vi": "Chiều cửa sổ", "en": "Window light" }, "compliment": { "vi": "Ánh sáng chiều hợp với em hơn là với bất cứ thứ gì anh từng thấy.", "en": "Afternoon light suits you more than anything else I've seen." } },
-        { "id": "p2", "src": "/photos/02.svg", "date": "2026-07-06", "caption": { "vi": "Biển gần tối", "en": "Dusk sea" }, "compliment": { "vi": "Em đứng im, gió làm hộ phần nói.", "en": "You stood still, and the wind did the talking." } },
-        { "id": "p3", "src": "/photos/03.svg", "date": "2026-07-12", "caption": { "vi": "Đèn lồng", "en": "Lanterns" }, "compliment": { "vi": "Em thích những thứ sáng vừa đủ, không cần cả thành phố phải biết.", "en": "You like a light that's just enough. The whole city doesn't need to know." } },
-        { "id": "p4", "src": "/photos/04.svg", "date": "2026-07-21", "caption": { "vi": "Mưa", "en": "Rain" }, "compliment": { "vi": "Trời mưa mà em vẫn gửi anh một câu rất khô.", "en": "It was raining, and you still sent me something perfectly dry." } },
-        { "id": "p5", "src": "/photos/05.svg", "date": "2026-08-02", "caption": { "vi": "Cà phê", "en": "Coffee" }, "compliment": { "vi": "Ly của em luôn nguội trước, vì em kể chuyện.", "en": "Your cup always goes cold first, because you're telling a story." } },
-        { "id": "p6", "src": "/photos/06.svg", "date": "2026-08-09", "caption": { "vi": "Hoa", "en": "Flowers" }, "compliment": { "vi": "Em không cần hoa. Nhưng anh vẫn muốn mang.", "en": "You don't need flowers. I still want to bring them." } }
+        {
+          "id": "p1",
+          "src": "/photos/01.svg",
+          "date": "2026-07-01",
+          "caption": {
+            "vi": "Em luôn khiến anh cảm thấy được quan tâm, nhất là những lúc anh không khỏe.",
+            "en": "You make me feel cared for, especially when I’m not feeling well."
+          },
+          "compliment": {
+            "vi": "Sự chu đáo của em là một trong những điều anh thương nhất.",
+            "en": "Your caring heart is one of the things I love most about you."
+          }
+        },
+        {
+          "id": "p2",
+          "src": "/photos/02.svg",
+          "date": "2026-07-01",
+          "caption": {
+            "vi": "Em luôn khiến anh cảm thấy được quan tâm, nhất là những lúc anh không khỏe.",
+            "en": "You make me feel cared for, especially when I’m not feeling well."
+          },
+          "compliment": {
+            "vi": "Sự chu đáo của em là một trong những điều anh thương nhất.",
+            "en": "Your caring heart is one of the things I love most about you."
+          }
+        }
       ]
     },
     {
-      "id": "along",
-      "title": { "vi": "Giữa chừng", "en": "Along the way" },
-      "date": "2026-08-16",
+      "id": "pout",
+      "title": {
+        "vi": "Chiếc mặt phụng phịu ấy",
+        "en": "That Little Pout"
+      },
+      "date": "2026-07-01",
       "color": "#c5dff5",
       "photos": [
-        { "id": "p7", "src": "/photos/07.svg", "date": "2026-08-16", "caption": { "vi": "Tàu đêm", "en": "Night train" }, "compliment": { "vi": "Em ngủ dựa cửa kính, và anh không dám thở mạnh.", "en": "You slept against the glass, and I was afraid to breathe too loud." } },
-        { "id": "p8", "src": "/photos/08.svg", "date": "2026-08-28", "caption": { "vi": "Trăng", "en": "Moon" }, "compliment": { "vi": "Có những đêm anh nhìn lên và nhớ ra em cũng đang ở dưới cùng một trời.", "en": "Some nights I look up and remember you're under the same sky." } },
-        { "id": "p9", "src": "/photos/01.svg", "date": "2026-09-06", "caption": { "vi": "Sáng chủ nhật", "en": "Sunday morning" }, "compliment": { "vi": "Em dậy muộn, và căn phòng vẫn chờ.", "en": "You slept in, and the room waited." } },
-        { "id": "p10", "src": "/photos/02.svg", "date": "2026-09-18", "caption": { "vi": "Nến", "en": "Candles" }, "compliment": { "vi": "Em thổi nến như thể điều ước là một chuyện rất nhỏ.", "en": "You blew the candles out as if a wish were a small thing." } },
-        { "id": "p11", "src": "/photos/03.svg", "date": "2026-09-27", "caption": { "vi": "Phố đêm", "en": "Night street" }, "compliment": { "vi": "Em nắm tay anh đúng lúc đèn đổi màu.", "en": "You took my hand just as the light changed." } },
-        { "id": "p12", "src": "/photos/04.svg", "date": "2026-10-04", "caption": { "vi": "Đêm mát", "en": "A cool night" }, "compliment": { "vi": "Em nói năm sau vẫn là năm này, chỉ dịu hơn.", "en": "You said next year would be this year, only softer." } }
+        {
+          "id": "p3",
+          "src": "/photos/03.svg",
+          "date": "2026-07-01",
+          "caption": {
+            "vi": "Cái mặt em làm mỗi khi bị anh trêu. Chắc anh nên xin lỗi… nhưng mà đáng yêu quá. :)))",
+            "en": "The face you make when I tease you. I should probably apologize… but it’s too cute. :)))"
+          },
+          "compliment": {
+            "vi": "Em chẳng biết mình đáng yêu thế nào mỗi lần giả vờ giận đâu.",
+            "en": "You have no idea how adorable you are when you’re pretending to be annoyed."
+          }
+        },
+        {
+          "id": "p4",
+          "src": "/photos/04.svg",
+          "date": "2026-07-01",
+          "caption": {
+            "vi": "Cái mặt em làm mỗi khi bị anh trêu. Chắc anh nên xin lỗi… nhưng mà đáng yêu quá. :)))",
+            "en": "The face you make when I tease you. I should probably apologize… but it’s too cute. :)))"
+          },
+          "compliment": {
+            "vi": "Em chẳng biết mình đáng yêu thế nào mỗi lần giả vờ giận đâu.",
+            "en": "You have no idea how adorable you are when you’re pretending to be annoyed."
+          }
+        }
       ]
     },
     {
-      "id": "season",
-      "title": { "vi": "Mùa này", "en": "This season" },
-      "date": "2026-10-11",
+      "id": "surprise",
+      "title": {
+        "vi": "Gương mặt bất ngờ của em",
+        "en": "Your Surprised Face"
+      },
+      "date": "2026-07-01",
       "color": "#e7d4ff",
       "photos": [
-        { "id": "p13", "src": "/photos/05.svg", "date": "2026-10-11", "caption": { "vi": "Bàn gần cửa", "en": "The table by the door" }, "compliment": { "vi": "Em để lại một tách, và anh biết em sẽ quay lại.", "en": "You left a cup, and I knew you'd come back." } },
-        { "id": "p14", "src": "/photos/06.svg", "date": "2026-10-18", "caption": { "vi": "Chợ hoa", "en": "Flower market" }, "compliment": { "vi": "Em chọn bó nhỏ nhất, vì nó vừa tay.", "en": "You chose the smallest bunch, because it fit your hand." } },
-        { "id": "p15", "src": "/photos/07.svg", "date": "2026-10-25", "caption": { "vi": "Trên tàu", "en": "On the train" }, "compliment": { "vi": "Em nhìn ra cửa sổ và kể một chuyện không có kết.", "en": "You watched the window and told a story with no ending." } },
-        { "id": "p16", "src": "/photos/08.svg", "date": "2026-11-01", "caption": { "vi": "Một chiếc bánh nhỏ", "en": "A little cake" }, "compliment": { "vi": "Em cười trước khi nến tắt hẳn.", "en": "You smiled before the candles had quite gone out." } },
-        { "id": "p17", "src": "/photos/02.svg", "date": "2026-11-08", "caption": { "vi": "Chiều muộn", "en": "Late afternoon" }, "compliment": { "vi": "Em đi chậm lại để anh kịp bước cùng.", "en": "You slowed down so I could match your step." } },
-        { "id": "p18", "src": "/photos/03.svg", "date": "2026-11-15", "caption": { "vi": "Đêm yên", "en": "A quiet night" }, "compliment": { "vi": "Em ở đây. Thế là đủ một bầu trời.", "en": "You're here. That's a whole sky." } }
+        {
+          "id": "p5",
+          "src": "/photos/05.svg",
+          "date": "2026-07-01",
+          "caption": {
+            "vi": "Mỗi lần tặng quà cho em, phản ứng của em lại trở thành một phần đáng nhớ.",
+            "en": "Every time I give you a gift, your reaction becomes part of the memory."
+          },
+          "compliment": {
+            "vi": "Nhìn em vui thật lòng khiến mọi công sức của anh đều xứng đáng.",
+            "en": "Seeing you genuinely happy makes every little effort worth it."
+          }
+        },
+        {
+          "id": "p6",
+          "src": "/photos/06.svg",
+          "date": "2026-07-01",
+          "caption": {
+            "vi": "Mỗi lần tặng quà cho em, phản ứng của em lại trở thành một phần đáng nhớ.",
+            "en": "Every time I give you a gift, your reaction becomes part of the memory."
+          },
+          "compliment": {
+            "vi": "Nhìn em vui thật lòng khiến mọi công sức của anh đều xứng đáng.",
+            "en": "Seeing you genuinely happy makes every little effort worth it."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ordinary",
+      "title": {
+        "vi": "Những ngày bình thường, người anh thích nhất",
+        "en": "Ordinary Days, Favorite Person"
+      },
+      "date": "2026-07-01",
+      "color": "#f8d4c6",
+      "photos": [
+        {
+          "id": "p7",
+          "src": "/photos/07.svg",
+          "date": "2026-07-01",
+          "caption": {
+            "vi": "Chẳng có gì đặc biệt xảy ra cả. Chỉ là hôm ấy có em nên anh vui.",
+            "en": "Nothing extraordinary happened. I was just happy to have you around."
+          },
+          "compliment": {
+            "vi": "Em khiến những ngày bình thường trở nên khác một chút.",
+            "en": "You make ordinary days feel a little less ordinary."
+          }
+        },
+        {
+          "id": "p8",
+          "src": "/photos/08.svg",
+          "date": "2026-07-01",
+          "caption": {
+            "vi": "Chẳng có gì đặc biệt xảy ra cả. Chỉ là hôm ấy có em nên anh vui.",
+            "en": "Nothing extraordinary happened. I was just happy to have you around."
+          },
+          "compliment": {
+            "vi": "Em khiến những ngày bình thường trở nên khác một chút.",
+            "en": "You make ordinary days feel a little less ordinary."
+          }
+        }
+      ]
+    },
+    {
+      "id": "more",
+      "title": {
+        "vi": "Những kỷ niệm sắp tới",
+        "en": "More Memories to Come"
+      },
+      "date": "2026-07-01",
+      "color": "#d7e8c9",
+      "photos": [
+        {
+          "id": "p9",
+          "src": "/photos/01.svg",
+          "date": "2026-07-01",
+          "caption": {
+            "vi": "Bộ sưu tập này chưa kết thúc. Mình vẫn đang cùng nhau tạo thêm kỷ niệm.",
+            "en": "This gallery isn’t finished. We’re still collecting moments."
+          },
+          "compliment": {
+            "vi": "Anh mong sau này, khi nhìn lại những tấm ảnh này, hai đứa sẽ cười vì đã cùng nhau trưởng thành nhiều đến thế.",
+            "en": "I hope one day we’ll look back at these photos and laugh at how much we’ve grown together."
+          }
+        },
+        {
+          "id": "p10",
+          "src": "/photos/02.svg",
+          "date": "2026-07-01",
+          "caption": {
+            "vi": "Bộ sưu tập này chưa kết thúc. Mình vẫn đang cùng nhau tạo thêm kỷ niệm.",
+            "en": "This gallery isn’t finished. We’re still collecting moments."
+          },
+          "compliment": {
+            "vi": "Anh mong sau này, khi nhìn lại những tấm ảnh này, hai đứa sẽ cười vì đã cùng nhau trưởng thành nhiều đến thế.",
+            "en": "I hope one day we’ll look back at these photos and laugh at how much we’ve grown together."
+          }
+        }
       ]
     }
   ],
   "scratches": [
     {
       "id": "s1",
-      "cover": { "vi": "Cào nhẹ", "en": "Scratch softly" },
+      "cover": {
+        "vi": "Sự chu đáo của em",
+        "en": "Your Caring Heart"
+      },
       "reveal": {
-        "vi": "Cách em đọc tin nhắn rồi mỉm cười trước khi trả lời.",
-        "en": "The way you read a message and smile before you answer."
+        "vi": "Những lúc anh ốm, em luôn quan tâm đến anh. Chuyện nhỏ thôi, nhưng với anh rất có ý nghĩa.",
+        "en": "You take care of me when I’m sick. It’s a small thing, but it means a lot."
       }
     },
     {
       "id": "s2",
-      "cover": { "vi": "Thêm một lớp", "en": "One more layer" },
-      "reveal": { "vi": "Giọng em khi vừa tỉnh, còn dính ngủ.", "en": "Your voice just after waking, still stuck to sleep." }
+      "cover": {
+        "vi": "Chiếc mặt phụng phịu",
+        "en": "Your Little Pout"
+      },
+      "reveal": {
+        "vi": "Cái mặt em làm mỗi lần bị anh trêu. Xin lỗi nhé, nhưng anh vẫn thấy buồn cười. :)))",
+        "en": "That face you make when I tease you. Sorry, not sorry. :)))"
+      }
     },
     {
       "id": "s3",
-      "cover": { "vi": "Ở dưới này", "en": "Under here" },
+      "cover": {
+        "vi": "Cách em chia sẻ",
+        "en": "How You Share"
+      },
       "reveal": {
-        "vi": "Em nhớ những điều nhỏ anh quên mình từng kể.",
-        "en": "You remember the small things I forget I ever told you."
+        "vi": "Anh thích việc em kể anh nghe về một ngày của mình và cho anh được bước vào thế giới của em.",
+        "en": "I love that you tell me about your day and let me be part of your world."
       }
     },
     {
       "id": "s4",
-      "cover": { "vi": "Cào tiếp đi", "en": "Keep going" },
-      "reveal": { "vi": "Tay em lạnh, và em vẫn đưa cho anh.", "en": "Your hands are cold, and you still give them to me." }
+      "cover": {
+        "vi": "Sự tử tế của em",
+        "en": "Your Kindness"
+      },
+      "reveal": {
+        "vi": "Em có một nét dịu dàng khiến người khác cảm thấy được quan tâm.",
+        "en": "You have a gentle side that makes people feel cared for."
+      }
     },
     {
       "id": "s5",
-      "cover": { "vi": "Lớp vàng này", "en": "This gold" },
-      "reveal": { "vi": "Em giận rất ngắn, nhưng thương rất dai.", "en": "Your anger is short. Your tenderness stays." }
+      "cover": {
+        "vi": "Món ăn em nấu",
+        "en": "Your Cooking"
+      },
+      "reveal": {
+        "vi": "Em đúng là nấu ăn ngon hơn anh thật. Anh sẵn lòng làm phụ bếp để được ăn đồ em nấu.",
+        "en": "You’re definitely the better cook. I’ll happily be your assistant chef."
+      }
     },
     {
       "id": "s6",
-      "cover": { "vi": "Điều cuối", "en": "Last one" },
+      "cover": {
+        "vi": "Đơn giản là em",
+        "en": "Simply You"
+      },
       "reveal": {
-        "vi": "Cái nhìn em dành cho đồ ăn ngon. Anh muốn được nhìn như vậy.",
-        "en": "The look you give good food. I want to be looked at like that."
+        "vi": "Anh không cần em phải hoàn hảo. Anh vui vì được hiểu con người thật của em, từng chút một.",
+        "en": "I don’t need you to be perfect. I’m happy to know the real you, little by little."
       }
     }
   ],
   "quiz": [
     {
       "id": "q1",
-      "question": { "vi": "Buổi sáng em thích mở mắt bằng gì?", "en": "What do you like to wake up to?" },
+      "question": {
+        "vi": "Một trong những điều anh thích làm cùng em là gì?",
+        "en": "What’s one of my favorite things to do with you?"
+      },
       "options": [
-        { "vi": "Cà phê sữa", "en": "Milk coffee" },
-        { "vi": "Trà nóng", "en": "Hot tea" },
-        { "vi": "Nước lạnh", "en": "Cold water" }
+        {
+          "vi": "Đi mua sắm cùng nhau",
+          "en": "Go shopping together"
+        },
+        {
+          "vi": "Chẳng làm gì cả",
+          "en": "Do absolutely nothing"
+        },
+        {
+          "vi": "Ngồi xem em chọn món ăn",
+          "en": "Watch you pick what we should eat"
+        }
       ],
       "answer": 0,
-      "rightNote": { "vi": "Anh nhớ mà. Sữa trước, đắng sau.", "en": "I remember. Milk first, bitter after." },
-      "wrongNote": { "vi": "Anh nhớ là cà phê sữa. Để anh thuộc lại.", "en": "I think it's milk coffee. I'll learn it again." }
+      "rightNote": {
+        "vi": "Em hiểu anh hơi bị rõ đấy. ❤️",
+        "en": "You know me a little too well. ❤️"
+      },
+      "wrongNote": {
+        "vi": "Hình như mình cần thêm một buổi hẹn nữa rồi.",
+        "en": "Hmm… looks like we need another date."
+      }
     },
     {
       "id": "q2",
-      "question": { "vi": "Khi mệt, em muốn anh làm gì?", "en": "When you're tired, what should I do?" },
+      "question": {
+        "vi": "Điều gì anh rất muốn hai đứa làm cùng nhau trong tương lai?",
+        "en": "What’s something I really want us to do someday?"
+      },
       "options": [
-        { "vi": "Nói nhiều cho vui", "en": "Talk, to cheer you up" },
-        { "vi": "Ngồi im cạnh em", "en": "Sit quietly beside you" },
-        { "vi": "Đưa giải pháp ngay", "en": "Offer a fix right away" }
+        {
+          "vi": "Đi du lịch châu Âu",
+          "en": "Visit Europe together"
+        },
+        {
+          "vi": "Mở một nhà hàng",
+          "en": "Open a restaurant"
+        },
+        {
+          "vi": "Chuyển lên sống ở mặt trăng",
+          "en": "Move to the moon"
+        }
       ],
-      "answer": 1,
-      "rightNote": { "vi": "Ngồi im cũng là một cách ở lại.", "en": "Sitting still is a way of staying." },
-      "wrongNote": { "vi": "Lần sau anh sẽ ngồi im trước đã.", "en": "Next time I'll sit quietly first." }
+      "answer": 0,
+      "rightNote": {
+        "vi": "Châu Âu, em và anh. Chốt kèo nhé. ✈️",
+        "en": "Europe, you and me. It’s a plan. ✈️"
+      },
+      "wrongNote": {
+        "vi": "Chuẩn bị xếp vali tưởng tượng thôi nào.",
+        "en": "Better start packing your imaginary suitcase."
+      }
     },
     {
       "id": "q3",
-      "question": { "vi": "Món em hay nhắc khi đói là gì?", "en": "What do you mention when you're hungry?" },
+      "question": {
+        "vi": "Điều gì anh thích ở em?",
+        "en": "What’s one thing I love about you?"
+      },
       "options": [
-        { "vi": "Phở", "en": "Phở" },
-        { "vi": "Bún bò", "en": "Bún bò" },
-        { "vi": "Cơm tấm", "en": "Cơm tấm" }
+        {
+          "vi": "Em quan tâm đến anh",
+          "en": "You care about me"
+        },
+        {
+          "vi": "Em chia sẻ những chuyện trong cuộc sống với anh",
+          "en": "You share what’s going on in your life"
+        },
+        {
+          "vi": "Tất cả những điều trên",
+          "en": "All of the above"
+        }
       ],
       "answer": 2,
-      "rightNote": { "vi": "Cơm tấm, thêm trứng. Anh ghi rồi.", "en": "Cơm tấm, with an egg. Written down." },
-      "wrongNote": { "vi": "Hình như là cơm tấm. Anh sẽ không quên nữa.", "en": "I think it's cơm tấm. I won't forget again." }
+      "rightNote": {
+        "vi": "Chính xác. Anh thích việc em cho anh được bước vào thế giới của em.",
+        "en": "Exactly. I love that you let me be part of your world."
+      },
+      "wrongNote": {
+        "vi": "Nhiều điều quá nên anh không chọn riêng một điều được.",
+        "en": "There are too many answers to choose just one."
+      }
     },
     {
       "id": "q4",
-      "question": { "vi": "Em dễ mềm lòng nhất khi nào?", "en": "When do you soften the fastest?" },
+      "question": {
+        "vi": "Ai nấu ăn ngon hơn?",
+        "en": "Who is the better cook?"
+      },
       "options": [
-        { "vi": "Được khen", "en": "Being praised" },
-        { "vi": "Được ôm", "en": "Being held" },
-        { "vi": "Nghe một bài hát cũ", "en": "Hearing an old song" }
+        {
+          "vi": "Em",
+          "en": "You"
+        },
+        {
+          "vi": "Anh",
+          "en": "Me"
+        },
+        {
+          "vi": "Ứng dụng giao đồ ăn",
+          "en": "The food delivery app"
+        }
       ],
-      "answer": 1,
-      "rightNote": { "vi": "Vậy thì anh ôm, không cần diễn văn.", "en": "Then I'll hold you. No speech required." },
-      "wrongNote": { "vi": "Anh đoán lệch. Câu đúng là được ôm.", "en": "I guessed wrong. The answer is being held." }
+      "answer": 0,
+      "rightNote": {
+        "vi": "Cuối cùng cũng có người nói thật. :)))",
+        "en": "Finally, an honest answer. :)))"
+      },
+      "wrongNote": {
+        "vi": "MJ, mình cần nói chuyện một chút.",
+        "en": "MJ, we need to talk."
+      }
     },
     {
       "id": "q5",
-      "question": { "vi": "Cuối tuần lý tưởng của em là gì?", "en": "What does a good weekend look like?" },
+      "question": {
+        "vi": "Điều gì khiến một ngày bình thường trở nên đặc biệt với anh?",
+        "en": "What would make an ordinary day feel special to me?"
+      },
       "options": [
-        { "vi": "Ở nhà cả ngày", "en": "Home all day" },
-        { "vi": "Đi thật xa", "en": "Going far" },
-        { "vi": "Đi lòng vòng, không kế hoạch", "en": "Wandering, no plan" }
+        {
+          "vi": "Có em bên cạnh",
+          "en": "Having you by my side"
+        },
+        {
+          "vi": "Trúng xổ số",
+          "en": "Winning the lottery"
+        },
+        {
+          "vi": "Có đồ ăn vặt miễn phí cả đời",
+          "en": "A lifetime supply of snacks"
+        }
       ],
-      "answer": 2,
-      "rightNote": { "vi": "Không bản đồ. Anh đi theo.", "en": "No map. I'll follow." },
-      "wrongNote": { "vi": "Em thích đi lòng vòng hơn. Anh nhớ rồi.", "en": "You'd rather wander. I'll remember." }
+      "answer": 0,
+      "rightNote": {
+        "vi": "Đúng rồi. Với anh, có em ở bên rất quan trọng.",
+        "en": "That’s right. You being there means a lot to me."
+      },
+      "wrongNote": {
+        "vi": "Đồ ăn vặt cũng hấp dẫn đấy, nhưng anh vẫn chọn em.",
+        "en": "The snacks are tempting, but you’re still my first choice."
+      }
     }
   ],
   "quizSummary": {
-    "vi": "Anh đúng {ok}/{total}. Phần còn lại anh học tiếp.",
-    "en": "I got {ok}/{total}. I'll keep learning the rest."
+    "vi": "{ok}/{total}",
+    "en": "{ok}/{total}"
   },
-  "quizMarks": { "vi": "ABC", "en": "ABC" },
+  "quizMarks": {
+    "vi": "ABC",
+    "en": "ABC"
+  },
   "memoryCopy": {
-    "moves": { "vi": "Lượt: {n}", "en": "Moves: {n}" },
-    "best": { "vi": "Ít lượt nhất: {n}", "en": "Fewest moves: {n}" },
-    "win": {
-      "vi": "Em tìm thấy hết rồi. Anh cũng đang cố nhớ cho đủ.",
-      "en": "You found them all. I'm trying to remember enough, too."
+    "moves": {
+      "vi": "Lượt: {n}",
+      "en": "Moves: {n}"
     },
-    "again": { "vi": "Chơi lại", "en": "Play again" },
-    "back": { "vi": "Mặt sau", "en": "Face down" },
-    "lines": [
-      { "vi": "Một khoảnh khắc nhỏ, một kỷ niệm dễ thương.", "en": "A little moment, a lovely memory." },
-      { "vi": "Anh vẫn nhớ tấm này. Còn em?", "en": "I remember this one. Do you?" },
-      { "vi": "Bằng chứng rằng chẳng cần dịp đặc biệt để vui vẻ cùng nhau.", "en": "Proof that we don’t need a special occasion to have fun." },
-      { "vi": "Vẫn còn rất nhiều kỷ niệm đang chờ phía trước.", "en": "More memories waiting to be made." },
-      { "vi": "Điều anh thích nhất trong tấm ảnh này à? Là em.", "en": "My favorite part of this photo? You." }
-    ]
+    "best": {
+      "vi": "Ít lượt nhất: {n}",
+      "en": "Fewest moves: {n}"
+    },
+    "win": {
+      "vi": "Một khoảnh khắc nhỏ, một kỷ niệm dễ thương.",
+      "en": "A little moment, a lovely memory."
+    },
+    "again": {
+      "vi": "Chơi lại",
+      "en": "Play again"
+    },
+    "back": {
+      "vi": "Mặt sau",
+      "en": "Face down"
+    }
   },
   "dreams": [
     {
       "id": "d1",
       "text": {
-        "vi": "Dậy sớm xem bình minh một lần, rồi được phép ngủ bù.",
-        "en": "Wake once for sunrise, then be allowed to sleep it off."
+        "vi": "Cùng nhau đến châu Âu",
+        "en": "Europe Together"
       },
-      "detail": { "vi": "Không cần cảnh đẹp. Chỉ cần cùng thức.", "en": "No scenic view required. Just both of us awake." }
+      "detail": {
+        "vi": "Đi qua những con phố xa lạ, chụp thật nhiều ảnh và giả vờ như hai đứa biết mình đang đi đâu.",
+        "en": "Walk through unfamiliar streets, take too many photos, and pretend we know where we’re going."
+      }
     },
     {
       "id": "d2",
       "text": {
-        "vi": "Nấu một bữa không ai phải rửa nồi một mình.",
-        "en": "Cook a meal where nobody washes up alone."
+        "vi": "Một buổi hẹn ăn uống",
+        "en": "A Food Date"
       },
-      "detail": { "vi": "Anh rửa. Em nếm.", "en": "I wash. You taste." }
+      "detail": {
+        "vi": "Tìm được quán ngon, gọi những món mình thích rồi tranh luận vui xem món nào ngon hơn.",
+        "en": "Find a good place to eat, order what we like, and argue playfully over which dish is better."
+      }
     },
     {
       "id": "d3",
       "text": {
-        "vi": "Đi tàu đêm đến một tỉnh cả hai chưa có kỷ niệm.",
-        "en": "Take a night train to a province neither of us has a memory in."
+        "vi": "Đi mua sắm cùng nhau",
+        "en": "Shopping Together"
       },
-      "detail": { "vi": "Vé cứng, không cần khách sạn sang.", "en": "Paper tickets. No fancy hotel." }
+      "detail": {
+        "vi": "Đi hết cửa hàng này đến cửa hàng khác, thử đủ thứ rồi cuối cùng mua nhiều hơn dự định.",
+        "en": "Walk around, try things on, and somehow leave with more bags than we planned."
+      }
     },
     {
       "id": "d4",
       "text": {
-        "vi": "Học một bài hát đủ để hát sai cùng nhau.",
-        "en": "Learn a song well enough to sing it wrong together."
+        "vi": "Em nấu, anh phụ",
+        "en": "Your Cooking, My Assistance"
       },
-      "detail": { "vi": "Sai cũng được tính.", "en": "Wrong still counts." }
+      "detail": {
+        "vi": "Em nấu ăn, anh phụ giúp. Cả hai đều biết ai mới là người có quyền quyết định trong bếp. :)))",
+        "en": "You cook. I help. We both know who’s actually in charge of the kitchen. :)))"
+      }
     },
     {
       "id": "d5",
-      "text": { "vi": "Giữ một chậu cây sống quá một năm.", "en": "Keep one plant alive for more than a year." },
-      "detail": { "vi": "Tưới thay phiên.", "en": "We take turns watering." }
+      "text": {
+        "vi": "Một ngày yên bình bên nhau",
+        "en": "A Quiet Day Together"
+      },
+      "detail": {
+        "vi": "Không cần kế hoạch gì lớn lao. Chỉ cần dành thời gian cho nhau và tận hưởng việc hai đứa đang ở cạnh nhau.",
+        "en": "No big plans. Just spend time together and enjoy the fact that we’re there."
+      }
     },
     {
       "id": "d6",
       "text": {
-        "vi": "In một cuốn ảnh mỏng, chỉ những tấm không cần giải thích.",
-        "en": "Print a thin photo book of pictures that don't need captions."
+        "vi": "Thêm nhiều bất ngờ",
+        "en": "More Surprises"
       },
-      "detail": { "vi": "Để ở ngăn kéo, không phải để khoe.", "en": "It lives in a drawer, not on display." }
+      "detail": {
+        "vi": "Anh muốn tiếp tục được nhìn thấy gương mặt bất ngờ của em mỗi khi có điều gì đó khiến em vui thật lòng.",
+        "en": "I want to keep seeing that surprised face of yours when something makes you genuinely happy."
+      }
     },
     {
       "id": "d7",
       "text": {
-        "vi": "Một ngày không điện thoại. Chỉ có nhau và đồ ăn.",
-        "en": "One day without phones. Just us, and food."
+        "vi": "Cùng nhau trưởng thành",
+        "en": "Growing Together"
       },
-      "detail": { "vi": "Máy để ở phòng khác.", "en": "The phones stay in another room." }
+      "detail": {
+        "vi": "Tiếp tục tìm hiểu nhau, thành thật với nhau và cùng tìm cách vượt qua những điều cuộc sống mang đến.",
+        "en": "Keep learning about each other, communicating honestly, and finding our way through whatever life brings."
+      }
     }
   ],
   "friendNotes": [
@@ -479,7 +1038,10 @@
       "id": "f1",
       "author": "Minh",
       "tone": "gold",
-      "text": { "vi": "Sinh nhật vui nha. Nhớ giữ người hay làm em cười.", "en": "Happy birthday. Keep the person who makes you laugh." }
+      "text": {
+        "vi": "Sinh nhật vui nha. Nhớ giữ người hay làm em cười.",
+        "en": "Happy birthday. Keep the person who makes you laugh."
+      }
     },
     {
       "id": "f2",
@@ -521,157 +1083,361 @@
       "id": "f6",
       "author": "My",
       "tone": "blush",
-      "text": { "vi": "Em xứng đáng những ngày không phải cố gắng.", "en": "You deserve days where you don't have to try." }
+      "text": {
+        "vi": "Em xứng đáng những ngày không phải cố gắng.",
+        "en": "You deserve days where you don't have to try."
+      }
     },
     {
       "id": "f7",
       "author": "Phát",
       "tone": "gold",
-      "text": { "vi": "Chúc em tuổi mới bớt lo. Việc lo để tụi tớ phụ.", "en": "Worry less this year. We'll take some of it." }
+      "text": {
+        "vi": "Chúc em tuổi mới bớt lo. Việc lo để tụi tớ phụ.",
+        "en": "Worry less this year. We'll take some of it."
+      }
     },
     {
       "id": "f8",
       "author": "Quỳnh",
       "tone": "cream",
-      "text": { "vi": "Hôm nay được phép nhận hết. Mai hẵng nghĩ đến người khác.", "en": "Today you're allowed to receive everything. Tomorrow can be for other people." }
+      "text": {
+        "vi": "Hôm nay được phép nhận hết. Mai hẵng nghĩ đến người khác.",
+        "en": "Today you're allowed to receive everything. Tomorrow can be for other people."
+      }
     }
   ],
   "friendsCopy": {
-    "sign": { "vi": "— {name}", "en": "— {name}" }
+    "sign": {
+      "vi": "— {name}",
+      "en": "— {name}"
+    }
   },
   "together": {
     "past": {
-      "vi": "Đã bên nhau {days} ngày {hours} giờ {minutes} phút {seconds} giây",
-      "en": "{days} days, {hours} hours, {minutes} minutes, {seconds} seconds together"
+      "vi": "{days} ngày · {hours} giờ · {minutes} phút · {seconds} giây",
+      "en": "{days} days · {hours} hours · {minutes} minutes · {seconds} seconds"
     },
     "future": {
-      "vi": "Còn {days} ngày {hours} giờ {minutes} phút {seconds} giây nữa là tới ngày mình bắt đầu",
-      "en": "{days} days, {hours} hours, {minutes} minutes, {seconds} seconds until we begin"
+      "vi": "{days} ngày · {hours} giờ · {minutes} phút · {seconds} giây",
+      "en": "{days} days · {hours} hours · {minutes} minutes · {seconds} seconds"
     },
-    "until": { "vi": "Còn", "en": "Until" }
+    "until": {
+      "vi": "Còn",
+      "en": "Until"
+    }
   },
   "cake": {
-    "title": { "vi": "Một chiếc bánh cho em", "en": "A cake for you" },
-    "kicker": { "vi": "Sinh nhật", "en": "Birthday" },
-    "lede": { "vi": "Thổi vào mic, hoặc chạm từng ngọn nến.", "en": "Blow into the mic, or tap each flame." },
-    "candles": 5,
-    "mic": { "vi": "Bật mic để thổi", "en": "Use the mic to blow" },
-    "micStop": { "vi": "Dừng mic", "en": "Stop the mic" },
-    "listening": { "vi": "Đang nghe… thổi một hơi.", "en": "Listening… blow once." },
-    "micError": { "vi": "Không mở được mic. Em chạm vào nến cũng được.", "en": "The mic won't open. Tapping a candle works too." },
-    "tapHint": { "vi": "Chạm một ngọn nến để tắt.", "en": "Tap a candle to put it out." },
-    "letterTitle": { "vi": "Sau khi nến tắt", "en": "After the candles" },
-    "letter": {
-      "vi": "J à,\n\nHôm nay anh không định nói gì thật to. Chỉ muốn em biết: trong cái ngày em được sinh ra, thế giới đã có một người mà anh sẽ tìm thấy sau này.\n\nCảm ơn em vì những buổi tối bình thường. Vì cách em gửi ảnh mây. Vì cả những lần mình im. Anh học được từ em rằng ở lại cũng là một cách nói yêu.\n\nThổi nến xong rồi thì ước một điều. Anh không hỏi điều đó là gì. Anh chỉ đứng đây, giữ que diêm, phòng khi em cần thắp lại.\n\nSinh nhật vui, em.\nAnh.",
-      "en": "J,\n\nI wasn't going to say anything loud today. I only want you to know this: the day you were born, the world gained someone I would find later.\n\nThank you for ordinary evenings. For the way you send pictures of clouds. For the times we went quiet. I learned from you that staying is also a way of saying I love you.\n\nWhen the candles are out, make a wish. I won't ask what it is. I'll just stand here with the matches, in case you want them lit again.\n\nHappy birthday.\nMe."
+    "title": {
+      "vi": "Ước một điều đi, cô gái sinh nhật",
+      "en": "Make a Wish, Birthday Girl"
     },
-    "skip": { "vi": "Đọc hết", "en": "Read it all" },
-    "next": { "vi": "Những lá thư mở khi…", "en": "Letters to open when…" }
+    "kicker": {
+      "vi": "Chiếc bánh sinh nhật",
+      "en": "Your birthday cake"
+    },
+    "lede": {
+      "vi": "Hít một hơi thật sâu rồi thổi tắt nến nhé.",
+      "en": "Take a deep breath and blow out the candles."
+    },
+    "candles": 5,
+    "mic": {
+      "vi": "Bật mic để thổi",
+      "en": "Use the mic to blow"
+    },
+    "micStop": {
+      "vi": "Dừng mic",
+      "en": "Stop the mic"
+    },
+    "listening": {
+      "vi": "Đang nghe… thổi một hơi.",
+      "en": "Listening… blow once."
+    },
+    "micError": {
+      "vi": "Không mở được mic. Em chạm vào nến cũng được.",
+      "en": "The mic won't open. Tapping a candle works too."
+    },
+    "tapHint": {
+      "vi": "Hít một hơi thật sâu rồi thổi tắt nến nhé.",
+      "en": "Take a deep breath and blow out the candles."
+    },
+    "letterTitle": {
+      "vi": "Một điều ước dành cho em, một bất ngờ nhỏ từ anh.",
+      "en": "One wish for you, one little surprise from me."
+    },
+    "letter": {
+      "vi": "Chúc mừng sinh nhật MJ! 🎂\n\nAnh mong tuổi mới sẽ mang đến cho em nhiều ngày vui hơn, bớt áp lực công việc, nhiều món ngon, những bất ngờ dễ thương và thật nhiều lý do để cười.\n\nNhững lúc mọi thứ trở nên quá tải, anh mong em nhớ rằng em không nhất thiết phải tự mình giải quyết tất cả.\n\nAnh vẫn luôn cổ vũ cho em.",
+      "en": "Happy birthday, MJ! 🎂\n\nI hope this new year of your life brings you more happy days, less stress from work, good food, lovely surprises, and plenty of reasons to smile.\n\nAnd when things get a little overwhelming, I hope you remember that you don’t have to handle everything alone.\n\nI’m cheering for you, always."
+    },
+    "skip": {
+      "vi": "Đọc hết",
+      "en": "Read it all"
+    },
+    "next": {
+      "vi": "Những lá thư mở khi…",
+      "en": "Letters to open when…"
+    }
   },
   "openWhen": [
     {
       "id": "sad",
-      "label": { "vi": "Mở khi buồn", "en": "Open when you're sad" },
+      "label": {
+        "vi": "Mở khi em buồn",
+        "en": "Open when you’re sad"
+      },
       "body": {
-        "vi": "Em không cần hết buồn ngay bây giờ.\n\nNếu đang ở giữa một ngày nặng, hãy làm một việc rất nhỏ: uống nước, hoặc ra cửa sổ một phút. Anh không viết lá này để bảo em vui lên. Anh chỉ muốn em biết là em không phải mang hết một mình.\n\nKhi nào em muốn, kể anh nghe — dài cũng được, vụn cũng được. Anh đọc.",
-        "en": "You don't have to stop being sad right now.\n\nIf the day is heavy, do one small thing: drink some water, or stand at a window for a minute. I didn't write this to tell you to cheer up. I want you to know you don't have to carry all of it alone.\n\nWhen you want, tell me — long or in pieces. I'll read."
+        "vi": "MJ à,\n\nEm không cần lúc nào cũng phải tỏ ra ổn đâu. Nếu hôm nay có nhiều chuyện khiến em mệt mỏi, cứ hít thở một chút và cho bản thân thời gian nhé.\n\nEm không cần giải quyết tất cả ngay lập tức. Anh sẵn sàng lắng nghe, kể cả khi em chỉ muốn nói ra những điều đang chất chứa trong lòng.\n\nMột ngày khó khăn không định nghĩa con người em đâu. ❤️",
+        "en": "Hey, MJ.\n\nYou don’t have to pretend to be okay all the time. If today feels heavy, take a breath and give yourself a little time.\n\nYou don’t need to solve everything right now. I’m here to listen, even if all you want to do is talk about it.\n\nOne difficult day doesn’t define you. ❤️"
       }
     },
     {
       "id": "miss",
-      "label": { "vi": "Mở khi nhớ anh", "en": "Open when you miss me" },
+      "label": {
+        "vi": "Mở khi em nhớ anh",
+        "en": "Open when you miss me"
+      },
       "body": {
-        "vi": "Anh cũng đang nhớ em, có thể đúng giây này.\n\nNếu nhớ mà không tiện gọi, hãy mở ảnh bất kỳ trong vũ trụ này. Anh giấu một câu ở mặt sau mỗi tấm. Coi như anh đang nói nhỏ.\n\nCòn nếu tiện: gọi. Anh sẽ bắt máy như thể đang đợi, vì thật ra là đang đợi.",
-        "en": "I miss you too, possibly this exact second.\n\nIf you can't call, open any picture in this universe. There's a line on the back of each one. Think of it as me speaking quietly.\n\nIf you can call: call. I'll pick up like I was waiting, because I am."
+        "vi": "Nhớ anh một chút rồi à? :)))\n\nThử tưởng tượng anh đang ngồi cạnh em, thỉnh thoảng nhìn em rồi hỏi hôm nay muốn ăn gì.\n\nTrong lúc chưa gặp được nhau, hãy dành cho anh một chút chỗ trong ngày của em nhé. Anh cũng đang mong đến lần tiếp theo được gặp em.",
+        "en": "Miss me a little? :)))\n\nImagine me sitting beside you, stealing a glance at you and asking what you want to eat.\n\nUntil we can see each other again, save me a little space in your day. I’ll be looking forward to the next time I get to see you."
       }
     },
     {
       "id": "angry",
-      "label": { "vi": "Mở khi giận anh", "en": "Open when you're angry with me" },
+      "label": {
+        "vi": "Mở khi em giận anh",
+        "en": "Open when you’re angry with me"
+      },
       "body": {
-        "vi": "Em giận là có lý do. Anh không viết lá này để em hết giận cho nhanh.\n\nCứ giận đủ. Anh sẽ không đòi em dịu xuống để anh dễ chịu. Khi em muốn nói, anh nghe mà không ngắt. Khi em chưa muốn nói, anh vẫn ở đây — hơi xa một chút, không biến mất.\n\nAnh xin lỗi trước cho những lần anh làm em phải mở lá thư này.",
-        "en": "If you're angry, there's a reason. I didn't write this so you'd get over it quickly.\n\nStay angry for as long as it takes. I won't ask you to soften so I can feel better. When you want to talk, I'll listen without cutting in. When you don't, I'm still here — a little farther off, not gone.\n\nI'm sorry in advance for the times I make you open this letter."
+        "vi": "Đầu tiên, anh sẽ nghe em nói.\n\nCó thể anh không hiểu mọi chuyện ngay lập tức, và anh cũng có lúc mắc lỗi. Nhưng anh không muốn hai đứa bỏ qua những điều khiến nhau buồn hay giả vờ như chẳng có gì xảy ra.\n\nKhi cả hai sẵn sàng, mình nói chuyện với nhau nhé. Anh muốn hiểu em, chứ không phải thắng một cuộc tranh luận.",
+        "en": "Okay, first things first: I’m listening.\n\nI may not always understand everything immediately, and I might make mistakes. But I don’t want us to ignore what hurts or pretend everything is fine.\n\nLet’s talk when we’re both ready. I want to understand you, not win an argument."
       }
     },
     {
       "id": "awake",
-      "label": { "vi": "Mở khi mất ngủ", "en": "Open when you can't sleep" },
+      "label": {
+        "vi": "Mở khi em mất ngủ",
+        "en": "Open when you can’t sleep"
+      },
       "body": {
-        "vi": "Đêm dài thì đếm chậm thôi.\n\nHít vào đếm bốn, thở ra đếm sáu. Không cần thiền cho đúng. Nếu đầu vẫn ồn, hãy đọc lại một ước mơ trong danh sách của hai đứa — chọn cái nhỏ nhất, cái không cần vé máy bay.\n\nAnh không bảo em ngủ ngay. Anh chỉ ngồi cùng em đến khi mí mắt chịu thua.",
-        "en": "If the night is long, count slowly.\n\nBreathe in for four, out for six. It doesn't have to be proper meditation. If your head is still loud, reread one dream from our list — the smallest one, the one that doesn't need a plane ticket.\n\nI'm not telling you to sleep. I'm just sitting with you until your eyes give in."
+        "vi": "Muộn rồi đấy, MJ.\n\nĐặt điện thoại xuống một chút, thả lỏng vai và hít thở thật chậm nhé.\n\nNhững lo lắng của ngày mai cứ để ngày mai giải quyết. Em cũng xứng đáng được nghỉ ngơi mà.\n\nNgủ ngon nhé, cô gái sinh nhật. 🌙",
+        "en": "It’s late, MJ.\n\nPut your phone down for a moment, relax your shoulders, and take a slow breath.\n\nYou can leave tomorrow’s worries for tomorrow. You deserve some rest, too.\n\nSleep well, birthday girl. 🌙"
       }
     }
   ],
   "lettersCopy": {
-    "title": { "vi": "Mở khi…", "en": "Open when…" },
-    "kicker": { "vi": "Hộp thư", "en": "A letter box" },
+    "title": {
+      "vi": "Dành cho những ngày em cần một chút gì đó",
+      "en": "For the Days You Need a Little Something"
+    },
+    "kicker": {
+      "vi": "Thư mở khi…",
+      "en": "Open when…"
+    },
     "lede": {
       "vi": "Mỗi lá mở được một lần trong ngày. Mai niêm lại, em có thể mở nữa.",
       "en": "Each letter opens once a day. Tomorrow it's sealed again, and you can open it once more."
     },
-    "sealed": { "vi": "Chạm để mở", "en": "Touch to open" },
-    "openedNote": { "vi": "Hôm nay em đã mở lá này. Mai mình niêm lại.", "en": "You opened this one today. We'll seal it again tomorrow." },
-    "close": { "vi": "Gấp thư lại", "en": "Fold it closed" },
-    "next": { "vi": "Một câu hỏi cuối", "en": "One last question" }
+    "sealed": {
+      "vi": "Chạm để mở",
+      "en": "Touch to open"
+    },
+    "openedNote": {
+      "vi": "Hôm nay em đã mở lá này. Mai mình niêm lại.",
+      "en": "You opened this one today. We'll seal it again tomorrow."
+    },
+    "close": {
+      "vi": "Gấp thư lại",
+      "en": "Fold it closed"
+    },
+    "next": {
+      "vi": "Một câu hỏi cuối",
+      "en": "One last question"
+    }
   },
   "finale": {
-    "question": { "vi": "Cho anh yêu em thêm một năm nữa nhé?", "en": "May I love you for another year?" },
-    "yes": { "vi": "Có", "en": "Yes" },
-    "no": { "vi": "Không", "en": "No" },
+    "question": {
+      "vi": "Cho anh thương em thêm một năm nữa nhé?",
+      "en": "Will you let me love you for another year?"
+    },
+    "yes": {
+      "vi": "Dạ được ạ! ❤️",
+      "en": "Yes, of course! ❤️"
+    },
+    "no": {
+      "vi": "Không cơ 😈",
+      "en": "No 😈"
+    },
     "teases": [
-      { "vi": "Nút này nhát lắm.", "en": "This button is shy." },
-      { "vi": "Chạy đâu vậy?", "en": "Where are you going?" },
-      { "vi": "Em thử nút bên kia xem.", "en": "Try the other button." },
-      { "vi": "Không có cửa đâu.", "en": "That door isn't real." },
-      { "vi": "Anh vẫn đứng đây.", "en": "I'm still standing here." }
+      {
+        "vi": "Em chắc chưa? Nhìn lại chiếc website dễ thương này đi.",
+        "en": "Are you sure? Look at this cute website again."
+      },
+      {
+        "vi": "Hình như em bấm nhầm nút rồi thì phải.",
+        "en": "Hmm… I think you clicked the wrong button."
+      },
+      {
+        "vi": "MJ ơi, suy nghĩ lại đi mà. :)))",
+        "en": "MJ, please reconsider. :)))"
+      },
+      {
+        "vi": "Vũ trụ đang lịch sự đề nghị em thử lại.",
+        "en": "The universe is politely asking you to try again."
+      },
+      {
+        "vi": "Thôi, cơ hội cuối cùng nhé… đi mà em!",
+        "en": "Okay, one last chance… pretty please?"
+      }
     ],
-    "yesTitle": { "vi": "Vậy là thêm một năm.", "en": "Another year, then." },
-    "yesBody": { "vi": "Anh nghe thấy rồi. Anh sẽ giữ. Và năm sau, anh hỏi lại.", "en": "I heard you. I'll keep it. And next year, I'll ask again." }
+    "yesTitle": {
+      "vi": "Vậy chốt nhé.",
+      "en": "Then it’s a date."
+    },
+    "yesBody": {
+      "vi": "Thêm một năm để hiểu nhau hơn, cùng cười, quan tâm nhau và tạo thêm thật nhiều kỷ niệm. ❤️",
+      "en": "One more year of learning, laughing, caring, and making memories together. ❤️"
+    }
   },
   "ui": {
-    "back": { "vi": "Về bầu trời", "en": "Back to the sky" },
-    "loading": { "vi": "Đang mở…", "en": "Opening…" },
-    "lit": { "vi": "Đã thắp {n}/7 vì sao", "en": "{n}/7 stars lit" },
-    "waiting": { "vi": "Khi đủ bảy vì sao, bầu trời sẽ gọi tên em.", "en": "When all seven stars are lit, the sky will say your name." },
-    "formed": { "vi": "Các vì sao vừa gọi tên em.", "en": "The stars just said your name." },
-    "doorCake": { "vi": "Bánh sinh nhật", "en": "Birthday cake" },
-    "doorLetters": { "vi": "Mở khi…", "en": "Open when…" },
-    "doorFinale": { "vi": "Câu hỏi cuối", "en": "The last question" },
-    "musicOn": { "vi": "Bật nhạc", "en": "Play music" },
-    "musicOff": { "vi": "Tắt nhạc", "en": "Pause music" },
-    "musicHint": { "vi": "Bật nhạc nhé", "en": "Tap for music" },
-    "musicBlocked": { "vi": "Trình duyệt đang chặn nhạc. Chạm nút nhạc giúp anh.", "en": "The browser is blocking the music. Tap the music button." },
-    "reset": { "vi": "Chạy lại từ đầu", "en": "Start over" },
-    "resetConfirm": { "vi": "Hành trình trên máy này sẽ về cổng. Nhạc vẫn giữ nguyên.", "en": "This journey returns to the gate. The music stays as it is." },
-    "resetYes": { "vi": "Chạy lại", "en": "Start over" },
-    "resetNo": { "vi": "Ở lại", "en": "Stay" },
-    "startOver": { "vi": "Xem lại từ đầu", "en": "Start over" },
-    "starOpened": { "vi": "đã mở", "en": "opened" },
-    "starClosed": { "vi": "chưa mở", "en": "still closed" },
-    "nextQuestion": { "vi": "Câu tiếp", "en": "Next" },
-    "seeAgain": { "vi": "Xem lại", "en": "See again" },
-    "summaryTitle": { "vi": "Kết quả nhỏ", "en": "A small result" },
-    "contentError": { "vi": "content.json đang lệch. Anh xem lại giúp em.", "en": "content.json is out of shape. Take another look." },
-    "crash": { "vi": "Có gì đó lệch quỹ đạo. Em tải lại trang giúp anh.", "en": "Something slipped out of orbit. Reload the page for me." },
-    "flip": { "vi": "Chạm để lật", "en": "Tap to flip" },
-    "candleOn": { "vi": "Tắt nến {n}", "en": "Put out candle {n}" },
-    "candleOut": { "vi": "Nến {n} đã tắt", "en": "Candle {n} is out" },
-    "language": { "vi": "Ngôn ngữ", "en": "Language" },
-    "unitDays": { "vi": "ngày", "en": "days" },
-    "unitHours": { "vi": "giờ", "en": "hours" },
-    "unitMinutes": { "vi": "phút", "en": "minutes" },
-    "unitSeconds": { "vi": "giây", "en": "seconds" },
-    "langVi": { "vi": "VI", "en": "VI" },
-    "langEn": { "vi": "EN", "en": "EN" },
-    "dottedDate": { "vi": "{d}.{m}.{y}", "en": "{d}.{m}.{y}" }
-  },
-  "lock": {
-    "unlockAt": "2026-11-18T00:00:00+07:00",
-    "title": { "vi": "Đến sinh nhật của em", "en": "Until your birthday" },
-    "subtitle": { "vi": "Nửa đêm ngày 18 tháng 11, giờ Việt Nam.", "en": "Midnight on 18 November, Vietnam time." },
-    "days": { "vi": "ngày", "en": "days" },
-    "hours": { "vi": "giờ", "en": "hours" },
-    "minutes": { "vi": "phút", "en": "minutes" },
-    "seconds": { "vi": "giây", "en": "seconds" }
+    "back": {
+      "vi": "Về bầu trời",
+      "en": "Back to the sky"
+    },
+    "loading": {
+      "vi": "Đang mở…",
+      "en": "Opening…"
+    },
+    "lit": {
+      "vi": "Đã thắp {n}/7 vì sao",
+      "en": "{n}/7 stars lit"
+    },
+    "waiting": {
+      "vi": "Giữa hàng tỷ cái tên trong vũ trụ, đây là cái tên anh thích nhìn thấy nhất.",
+      "en": "Out of all the names in the universe, this is the one I love seeing the most."
+    },
+    "formed": {
+      "vi": "Có những cái tên chỉ đơn giản là một cái tên. Còn tên em thì luôn khiến anh mỉm cười.",
+      "en": "Some names are just names. Yours always makes me smile."
+    },
+    "doorCake": {
+      "vi": "Bánh sinh nhật",
+      "en": "Birthday cake"
+    },
+    "doorLetters": {
+      "vi": "Mở khi…",
+      "en": "Open when…"
+    },
+    "doorFinale": {
+      "vi": "Câu hỏi cuối",
+      "en": "The last question"
+    },
+    "musicOn": {
+      "vi": "Bật nhạc",
+      "en": "Play music"
+    },
+    "musicOff": {
+      "vi": "Tắt nhạc",
+      "en": "Pause music"
+    },
+    "musicHint": {
+      "vi": "Bật nhạc nhé",
+      "en": "Tap for music"
+    },
+    "musicBlocked": {
+      "vi": "Trình duyệt đang chặn nhạc. Chạm nút nhạc giúp anh.",
+      "en": "The browser is blocking the music. Tap the music button."
+    },
+    "reset": {
+      "vi": "Chạy lại từ đầu",
+      "en": "Start over"
+    },
+    "resetConfirm": {
+      "vi": "Hành trình trên máy này sẽ về cổng. Nhạc vẫn giữ nguyên.",
+      "en": "This journey returns to the gate. The music stays as it is."
+    },
+    "resetYes": {
+      "vi": "Chạy lại",
+      "en": "Start over"
+    },
+    "resetNo": {
+      "vi": "Ở lại",
+      "en": "Stay"
+    },
+    "startOver": {
+      "vi": "Xem lại từ đầu",
+      "en": "Start over"
+    },
+    "starOpened": {
+      "vi": "đã mở",
+      "en": "opened"
+    },
+    "starClosed": {
+      "vi": "chưa mở",
+      "en": "still closed"
+    },
+    "nextQuestion": {
+      "vi": "Câu tiếp",
+      "en": "Next"
+    },
+    "seeAgain": {
+      "vi": "Xem lại",
+      "en": "See again"
+    },
+    "summaryTitle": {
+      "vi": "Kết quả nhỏ",
+      "en": "A small result"
+    },
+    "contentError": {
+      "vi": "content.json đang lệch. Anh xem lại giúp em.",
+      "en": "content.json is out of shape. Take another look."
+    },
+    "crash": {
+      "vi": "Có gì đó lệch quỹ đạo. Em tải lại trang giúp anh.",
+      "en": "Something slipped out of orbit. Reload the page for me."
+    },
+    "flip": {
+      "vi": "Chạm để lật",
+      "en": "Tap to flip"
+    },
+    "candleOn": {
+      "vi": "Tắt nến {n}",
+      "en": "Put out candle {n}"
+    },
+    "candleOut": {
+      "vi": "Nến {n} đã tắt",
+      "en": "Candle {n} is out"
+    },
+    "language": {
+      "vi": "Ngôn ngữ",
+      "en": "Language"
+    },
+    "unitDays": {
+      "vi": "ngày",
+      "en": "days"
+    },
+    "unitHours": {
+      "vi": "giờ",
+      "en": "hours"
+    },
+    "unitMinutes": {
+      "vi": "phút",
+      "en": "minutes"
+    },
+    "unitSeconds": {
+      "vi": "giây",
+      "en": "seconds"
+    },
+    "langVi": {
+      "vi": "VI",
+      "en": "VI"
+    },
+    "langEn": {
+      "vi": "EN",
+      "en": "EN"
+    },
+    "dottedDate": {
+      "vi": "{d}.{m}.{y}",
+      "en": "{d}.{m}.{y}"
+    }
   }
 }

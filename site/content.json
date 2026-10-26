@@ -115,8 +115,8 @@
       "kicker": { "vi": "Polaroid", "en": "Polaroid" },
       "title": { "vi": "Những tấm ảnh", "en": "The pictures" },
       "lede": {
-        "vi": "Mỗi thời là một hành tinh. Chạm vào, rồi vuốt những tấm ảnh bay đi.",
-        "en": "Each era is a planet. Tap one, then flick the pictures away."
+        "vi": "Mỗi thời là một cụm sao trên nhánh ngân hà. Chạm vào, rồi vuốt những tấm ảnh bay đi.",
+        "en": "Each era is a cluster on the spiral. Tap one, then flick the pictures away."
       }
     },
     {
@@ -171,10 +171,10 @@
   "galleryCopy": {
     "count": { "vi": "{n} ảnh", "en": "{n} photos" },
     "progress": { "vi": "{n} / {total}", "en": "{n} / {total}" },
-    "back": { "vi": "Các vì sao", "en": "The orbits" },
+    "back": { "vi": "Ngân hà", "en": "The galaxy" },
     "empty": { "vi": "Hết thời này rồi.", "en": "That's the end of this era." },
     "close": { "vi": "Đóng ảnh", "en": "Close the photo" },
-    "orbit": { "vi": "Chạm một hành tinh để mở thời đó.", "en": "Tap a planet to open that era." }
+    "orbit": { "vi": "Chạm một cụm sao để mở thời đó.", "en": "Tap a cluster to open that era." }
   },
   "eras": [
     {
@@ -554,6 +554,7 @@
     "doorFinale": { "vi": "Câu hỏi cuối", "en": "The last question" },
     "musicOn": { "vi": "Bật nhạc", "en": "Play music" },
     "musicOff": { "vi": "Tắt nhạc", "en": "Pause music" },
+    "musicHint": { "vi": "Bật nhạc nhé", "en": "Tap for music" },
     "musicBlocked": { "vi": "Trình duyệt đang chặn nhạc. Chạm nút nhạc giúp anh.", "en": "The browser is blocking the music. Tap the music button." },
     "reset": { "vi": "Chạy lại từ đầu", "en": "Start over" },
     "resetConfirm": { "vi": "Hành trình trên máy này sẽ về cổng. Nhạc vẫn giữ nguyên.", "en": "This journey returns to the gate. The music stays as it is." },

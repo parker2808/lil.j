@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { FLOW, FLOW_VERSION, FLOW_WITH_FRIENDS, INCLUDE_FRIENDS, PREVIOUS_FLOW, migrateIndex, stepDone } from "../src/lib/flow.ts";
+import { readLocale } from "../src/lib/i18n.ts";
 import { cloudinarySrcSet, cloudinaryUrl } from "../src/lib/images.ts";
 import { elapsedParts, fillTemplate, formatZoned, nicknamesMatch, todayKey } from "../src/lib/pure.ts";
 import { altAz, projectSky } from "../src/lib/stars.ts";
@@ -72,6 +73,7 @@ assert.equal(stepDone("cake", { ...blank, candlesOut: [0, 1, 2, 2] }, 5, []), fa
 assert.equal(stepDone("cake", { ...blank, candlesOut: [0, 1, 2, 3, 4] }, 5, []), true);
 assert.equal(stepDone("wish", { ...blank, wishes: [{ text: "  " }] }, 1, []), false);
 assert.equal(stepDone("wish", { ...blank, wishes: [{ text: "ở bên" }] }, 1, []), true);
+assert.equal(readLocale(), "en");
 assert.equal(stepDone("gallery", blank, 5, []), false);
 assert.equal(stepDone("gallery", { ...blank, erasViewed: ["first"] }, 5, []), true);
 

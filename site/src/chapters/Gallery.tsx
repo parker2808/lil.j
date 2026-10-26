@@ -1,7 +1,8 @@
-import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type RefObject } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from "react";
 import { createPortal } from "react-dom";
 import { content } from "../content.ts";
 import { ChapterFrame } from "../components/ChapterFrame.tsx";
+import { SpiralGalaxy, type SpiralGalaxyHandle } from "../components/SpiralGalaxy.tsx";
 import { cloudinarySrcSet, cloudinaryUrl } from "../lib/images.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import { fillTemplate } from "../lib/pure.ts";
@@ -41,19 +42,6 @@ function dottedDate(value: string): string {
   return `${match[3]}.${match[2]}.${match[1]}`;
 }
 
-function spots(count: number): Array<{ x: number; y: number }> {
-  if (count <= 1) return [{ x: 50, y: 46 }];
-  const rx = 28;
-  const ry = 26;
-  return Array.from({ length: count }, (_, index) => {
-    const angle = -Math.PI / 2 + (index * 2 * Math.PI) / count;
-    return {
-      x: 50 + Math.cos(angle) * rx,
-      y: 46 + Math.sin(angle) * ry,
-    };
-  });
-}
-
 function delivered(src: string, width: number, widths: number[], sizes: string) {
   const srcSet = cloudinarySrcSet(src, widths);
   return {
@@ -69,84 +57,6 @@ function Words({ text, delay = 0 }: { text: string; delay?: number }) {
       {index === 0 ? word : ` ${word}`}
     </span>
   ));
-}
-
-function Orbit({
-  gathering,
-  focusIndex,
-  viewed,
-  galaxyRef,
-  planetRefs,
-  onOpen,
-}: {
-  gathering: boolean;
-  focusIndex: number;
-  viewed: string[];
-  galaxyRef: RefObject<HTMLDivElement | null>;
-  planetRefs: RefObject<Array<HTMLButtonElement | null>>;
-  onOpen: (id: string) => void;
-}) {
-  const { t } = useI18n();
-  const places = spots(content.eras.length);
-  return (
-    <>
-      <div className="galaxy" ref={galaxyRef}>
-        <div className="galaxy-sun" aria-hidden="true" />
-        <div className="galaxy-ring" aria-hidden="true" />
-        {content.eras.map((era, index) => {
-          const title = t(era.title);
-          const count = fillTemplate(t(content.galleryCopy.count), { n: era.photos.length });
-          const place = places[index] ?? { x: 50, y: 46 };
-          return (
-            <button
-              key={era.id}
-              type="button"
-              className={viewed.includes(era.id) ? "planet is-viewed" : "planet"}
-              data-era={era.id}
-              style={{ "--planet": era.color, left: `${place.x}%`, top: `${place.y}%` } as CSSProperties}
-              tabIndex={index === focusIndex ? 0 : -1}
-              ref={(node) => {
-                planetRefs.current[index] = node;
-              }}
-              onClick={() => onOpen(era.id)}
-            >
-              <span className="planet-orb" aria-hidden="true">
-                {era.photos.slice(0, 4).map((photo) => (
-                  <span key={photo.id} className="sat">
-                    <img
-                      src={cloudinaryUrl(photo.src, 96)}
-                      alt=""
-                      width={96}
-                      height={96}
-                      decoding="async"
-                      loading="lazy"
-                      draggable={false}
-                    />
-                  </span>
-                ))}
-              </span>
-              <span className="planet-name">{title}</span>
-              <span className="planet-count">{count}</span>
-            </button>
-          );
-        })}
-        {gathering
-          ? content.eras.flatMap((era) =>
-              era.photos.map((photo) => (
-                <span
-                  key={photo.id}
-                  className="gather-star"
-                  data-id={photo.id}
-                  data-era={era.id}
-                  style={{ background: era.color, boxShadow: `0 0 8px ${era.color}` }}
-                />
-              )),
-            )
-          : null}
-      </div>
-      <p className="orbit-hint">{t(content.galleryCopy.orbit)}</p>
-    </>
-  );
 }
 
 function Stack({
@@ -638,15 +548,16 @@ export function Gallery({ progress, update }: ChapterProps) {
   const reduced = useReducedMotion();
   const chapter = content.chapters.find((item) => item.id === "gallery");
   const [mode, setMode] = useState<Mode>({ kind: "orbit" });
-  const [gathering, setGathering] = useState(!reduced);
+  const [cruising, setCruising] = useState(false);
   const [fullPhoto, setFullPhoto] = useState<EraPhoto | null>(null);
   const [focusIndex, setFocusIndex] = useState(0);
-  const galaxyRef = useRef<HTMLDivElement>(null);
+  const galaxyRef = useRef<SpiralGalaxyHandle>(null);
   const planetRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const controlRef = useRef<StackControl>(idleControl);
   const stateRef = useRef({ mode, full: fullPhoto });
   const focusPlanetRef = useRef<(delta: number) => void>(() => {});
   const backRef = useRef(() => {});
+  const opening = useRef(false);
 
   const era = mode.kind === "stack" ? content.eras.find((item) => item.id === mode.eraId) : undefined;
 
@@ -661,54 +572,11 @@ export function Gallery({ progress, update }: ChapterProps) {
     };
     backRef.current = () => {
       setFullPhoto(null);
+      setCruising(!reduced);
       setMode({ kind: "orbit" });
+      void galaxyRef.current?.settle().finally(() => setCruising(false));
     };
   });
-
-  useEffect(() => {
-    if (reduced || !gathering) return;
-    const timer = window.setTimeout(() => setGathering(false), 1200);
-    return () => window.clearTimeout(timer);
-  }, [gathering, reduced]);
-
-  useLayoutEffect(() => {
-    if (!gathering || reduced) return;
-    const root = galaxyRef.current;
-    if (!root) return;
-    const stars = [...root.querySelectorAll<HTMLElement>(".gather-star")];
-    const scatter = () => {
-      const bounds = root.getBoundingClientRect();
-      for (const star of stars) {
-        const id = star.dataset.id ?? "";
-        const x = ((hash(id) % 1000) / 1000) * Math.max(bounds.width - 8, 0);
-        const y = ((hash(`${id}y`) % 1000) / 1000) * Math.max(bounds.height - 8, 0);
-        star.style.transition = "none";
-        star.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-      }
-    };
-    const gather = () => {
-      const bounds = root.getBoundingClientRect();
-      for (const star of stars) {
-        const eraId = star.dataset.era ?? "";
-        const orb = root.querySelector<HTMLElement>(`.planet[data-era="${CSS.escape(eraId)}"] .planet-orb`);
-        if (!orb) continue;
-        const box = orb.getBoundingClientRect();
-        const x = box.left + box.width / 2 - bounds.left;
-        const y = box.top + box.height / 2 - bounds.top;
-        star.style.transition = "transform 0.9s cubic-bezier(0.4, 0, 0.2, 1)";
-        star.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-      }
-    };
-    scatter();
-    let inner = 0;
-    const outer = requestAnimationFrame(() => {
-      inner = requestAnimationFrame(gather);
-    });
-    return () => {
-      cancelAnimationFrame(outer);
-      cancelAnimationFrame(inner);
-    };
-  }, [gathering, reduced]);
 
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
@@ -758,10 +626,16 @@ export function Gallery({ progress, update }: ChapterProps) {
   }, [era, mode, update]);
 
   function openEra(id: string) {
+    if (opening.current) return;
+    opening.current = true;
     const next = content.eras.findIndex((item) => item.id === id);
     if (next >= 0) setFocusIndex(next);
-    setGathering(false);
-    setMode({ kind: "stack", eraId: id, index: 0 });
+    setCruising(!reduced);
+    void galaxyRef.current?.flyTo(id).finally(() => {
+      setMode({ kind: "stack", eraId: id, index: 0 });
+      setCruising(false);
+      opening.current = false;
+    });
   }
 
   function toggleFlip(id: string) {
@@ -783,15 +657,18 @@ export function Gallery({ progress, update }: ChapterProps) {
       title={t(chapter?.title)}
       lede={t(chapter?.lede)}
     >
+      <SpiralGalaxy
+        viewed={progress.erasViewed}
+        focusIndex={focusIndex}
+        reduced={reduced}
+        hidden={mode.kind === "stack"}
+        cruising={cruising}
+        handleRef={galaxyRef}
+        buttonRefs={planetRefs}
+        onOpen={openEra}
+      />
       {mode.kind === "orbit" || !era ? (
-        <Orbit
-          gathering={gathering && !reduced && mode.kind === "orbit"}
-          focusIndex={focusIndex}
-          viewed={progress.erasViewed}
-          galaxyRef={galaxyRef}
-          planetRefs={planetRefs}
-          onOpen={openEra}
-        />
+        <p className="orbit-hint">{t(content.galleryCopy.orbit)}</p>
       ) : (
         <Stack
           era={era}
@@ -802,10 +679,7 @@ export function Gallery({ progress, update }: ChapterProps) {
           onAdvance={() => {
             setMode((current) => (current.kind === "stack" ? { ...current, index: current.index + 1 } : current));
           }}
-          onBack={() => {
-            setFullPhoto(null);
-            setMode({ kind: "orbit" });
-          }}
+          onBack={() => backRef.current()}
           onFlip={toggleFlip}
           onOpen={setFullPhoto}
         />

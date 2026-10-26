@@ -74,6 +74,10 @@ export function bindViewport(): () => void {
     lastX = x;
     lastY = y;
     pinWindow();
+    if (event.target instanceof Element && event.target.closest(".scratch")) {
+      event.preventDefault();
+      return;
+    }
     if (Math.abs(dy) < 10 || Math.abs(dy) < Math.abs(dx)) return;
     if (!gestureCanScroll(event.target, dy)) event.preventDefault();
   };

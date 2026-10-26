@@ -236,8 +236,10 @@ export type Progress = {
   skyDone: boolean;
   birthSeen: boolean;
   counterSeen: boolean;
+  friendsSeen: boolean;
   letterDone: boolean;
   wishes: Wish[];
+  flowVersion: number;
 };
 
 export type ChapterProps = {

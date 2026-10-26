@@ -6,11 +6,9 @@ import type { Progress } from "../types.ts";
 type LettersProps = {
   progress: Progress;
   update: (recipe: (progress: Progress) => Progress) => void;
-  onBack: () => void;
-  onNext: () => void;
 };
 
-export function Letters({ progress, update, onBack, onNext }: LettersProps) {
+export function Letters({ progress, update }: LettersProps) {
   const { t } = useI18n();
   const today = todayKey();
 
@@ -22,10 +20,7 @@ export function Letters({ progress, update, onBack, onNext }: LettersProps) {
   }
 
   return (
-    <section className="scene">
-      <button type="button" className="back" onClick={onBack}>
-        ← {t(content.ui.back)}
-      </button>
+    <section className="scene letters-scene">
       <p className="kicker">{t(content.lettersCopy.kicker)}</p>
       <h1>{t(content.lettersCopy.title)}</h1>
       <p className="lede">{t(content.lettersCopy.lede)}</p>
@@ -53,9 +48,6 @@ export function Letters({ progress, update, onBack, onNext }: LettersProps) {
           );
         })}
       </div>
-      <button type="button" className="btn" onClick={onNext}>
-        {t(content.lettersCopy.next)}
-      </button>
     </section>
   );
 }

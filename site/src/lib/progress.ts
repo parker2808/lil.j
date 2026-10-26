@@ -1,4 +1,4 @@
-import { clampStep } from "./flow.ts";
+import { FLOW, FLOW_VERSION, PREVIOUS_FLOW, clampStep } from "./flow.ts";
 import type { Progress, Wish } from "../types.ts";
 
 export const PROGRESS_KEY = "lilj.progress.v1";
@@ -22,8 +22,10 @@ export function emptyProgress(): Progress {
     skyDone: false,
     birthSeen: false,
     counterSeen: false,
+    friendsSeen: false,
     letterDone: false,
     wishes: [],
+    flowVersion: FLOW_VERSION,
   };
 }
 
@@ -79,9 +81,8 @@ export function loadProgress(): Progress {
     if (!data || typeof data !== "object") return base;
     const record = data as Record<string, unknown>;
     const gateUnlocked = record.gateUnlocked === true;
-    const legacy = typeof record.step !== "number";
-    const step = legacy ? (gateUnlocked ? 1 : 0) : clampStep(record.step);
-    let unlocked = legacy ? step : clampStep(record.unlocked);
+    const step = resumeIndex(record, "step", gateUnlocked);
+    let unlocked = resumeIndex(record, "unlocked", gateUnlocked);
     if (unlocked < step) unlocked = step;
     return {
       gateUnlocked,
@@ -101,12 +102,28 @@ export function loadProgress(): Progress {
       skyDone: record.skyDone === true,
       birthSeen: record.birthSeen === true,
       counterSeen: record.counterSeen === true,
+      friendsSeen: record.friendsSeen === true,
       letterDone: record.letterDone === true,
       wishes: wishList(record.wishes),
+      flowVersion: FLOW_VERSION,
     };
   } catch {
     return base;
   }
+}
+
+function resumeIndex(record: Record<string, unknown>, key: "step" | "unlocked", gateUnlocked: boolean): number {
+  const raw = record[key];
+  if (typeof raw !== "number" || !Number.isFinite(raw)) {
+    if (key === "unlocked") return resumeIndex(record, "step", gateUnlocked);
+    return gateUnlocked ? 1 : 0;
+  }
+  const index = Math.floor(raw);
+  if (record.flowVersion === FLOW_VERSION) return clampStep(index);
+  const id = PREVIOUS_FLOW[index];
+  if (!id) return clampStep(index);
+  const placed = FLOW.indexOf(id);
+  return placed < 0 ? clampStep(index) : placed;
 }
 
 export function saveProgress(progress: Progress): void {

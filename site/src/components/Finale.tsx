@@ -6,10 +6,9 @@ import { Hearts } from "./Hearts.tsx";
 type FinaleProps = {
   saidYes: boolean;
   onYes: () => void;
-  onBack: () => void;
 };
 
-export function Finale({ saidYes, onYes, onBack }: FinaleProps) {
+export function Finale({ saidYes, onYes }: FinaleProps) {
   const { t } = useI18n();
   const stageRef = useRef<HTMLDivElement>(null);
   const noRef = useRef<HTMLButtonElement>(null);
@@ -60,9 +59,6 @@ export function Finale({ saidYes, onYes, onBack }: FinaleProps) {
   return (
     <section className="scene finale">
       <Hearts active={saidYes} />
-      <button type="button" className="back" onClick={onBack}>
-        ← {t(content.ui.back)}
-      </button>
       {saidYes ? (
         <>
           <h1>{t(content.finale.yesTitle)}</h1>

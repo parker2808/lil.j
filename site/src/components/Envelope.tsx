@@ -5,10 +5,9 @@ import { Hearts } from "./Hearts.tsx";
 type EnvelopeProps = {
   open: boolean;
   onOpen: () => void;
-  onEnter: () => void;
 };
 
-export function Envelope({ open, onOpen, onEnter }: EnvelopeProps) {
+export function Envelope({ open, onOpen }: EnvelopeProps) {
   const { t } = useI18n();
 
   return (
@@ -21,11 +20,6 @@ export function Envelope({ open, onOpen, onEnter }: EnvelopeProps) {
           <div className="env-paper" aria-hidden={!open}>
             <p className="greet">{t(content.envelope.greeting)}</p>
             <p>{t(content.envelope.body)}</p>
-            {open && (
-              <button type="button" className="btn btn-gold" onClick={onEnter}>
-                {t(content.envelope.enter)}
-              </button>
-            )}
           </div>
           <div className="env-front" />
           <div className="env-flap" />

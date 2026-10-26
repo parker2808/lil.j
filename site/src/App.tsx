@@ -1,6 +1,7 @@
 import { lazy, Suspense, useCallback, useEffect, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { content, validateContent } from "./content.ts";
+import { Envelope } from "./components/Envelope.tsx";
 import { Gate } from "./components/Gate.tsx";
 import { LanguageToggle } from "./components/LanguageToggle.tsx";
 import { MusicButton } from "./components/MusicButton.tsx";
@@ -21,8 +22,16 @@ const FinalLetter = lazy(() => import("./components/FinalLetter.tsx").then((mod)
 const Gallery = lazy(() => import("./chapters/Gallery.tsx").then((mod) => ({ default: mod.Gallery })));
 const Quiz = lazy(() => import("./chapters/Quiz.tsx").then((mod) => ({ default: mod.Quiz })));
 const Counter = lazy(() => import("./chapters/Counter.tsx").then((mod) => ({ default: mod.Counter })));
+const Memory = lazy(() => import("./chapters/Memory.tsx").then((mod) => ({ default: mod.Memory })));
+const Scratch = lazy(() => import("./chapters/Scratch.tsx").then((mod) => ({ default: mod.Scratch })));
+const Dreams = lazy(() => import("./chapters/Dreams.tsx").then((mod) => ({ default: mod.Dreams })));
+const Friends = lazy(() => import("./chapters/Friends.tsx").then((mod) => ({ default: mod.Friends })));
+const Letters = lazy(() => import("./components/Letters.tsx").then((mod) => ({ default: mod.Letters })));
+const Finale = lazy(() => import("./components/Finale.tsx").then((mod) => ({ default: mod.Finale })));
 
 const QUIZ_IDS = content.quiz.map((question) => question.id);
+const SCRATCH_IDS = content.scratches.map((card) => card.id);
+const LETTER_IDS = content.openWhen.map((letter) => letter.id);
 const CANDLES = Math.max(1, Math.min(8, content.cake.candles || 5));
 
 export function App() {
@@ -84,6 +93,19 @@ export function App() {
   }, [progress.counterSeen, stepId, update]);
 
   useEffect(() => {
+    if (stepId !== "friends" || progress.friendsSeen) return;
+    const timer = window.setTimeout(() => {
+      update((current) => (current.friendsSeen ? current : { ...current, friendsSeen: true }));
+    }, 1800);
+    return () => window.clearTimeout(timer);
+  }, [progress.friendsSeen, stepId, update]);
+
+  useEffect(() => {
+    if (!dev) return;
+    document.querySelector(".dev-jump [aria-current='step']")?.scrollIntoView({ inline: "center", block: "nearest" });
+  }, [dev, step]);
+
+  useEffect(() => {
     if (stepId !== "letter") restoreMusicVolume();
   }, [stepId]);
 
@@ -108,7 +130,7 @@ export function App() {
     void startMusic(content.music, progress.muted).catch(() => setMusicNote(t(content.ui.musicBlocked)));
   }
 
-  const done = stepDone(stepId, progress, CANDLES, QUIZ_IDS);
+  const done = stepDone(stepId, progress, CANDLES, QUIZ_IDS, SCRATCH_IDS, LETTER_IDS);
   const showNext = done && stepId !== "letter" && step < FLOW.length - 1;
   const hint = done
     ? stepId === "letter"
@@ -147,6 +169,52 @@ export function App() {
     node = (
       <Suspense fallback={<p className="scene loading">{t(content.ui.loading)}</p>}>
         <Cake progress={progress} update={update} />
+      </Suspense>
+    );
+  } else if (stepId === "envelope") {
+    node = (
+      <Envelope
+        open={progress.envelopeOpened}
+        onOpen={() => update((current) => (current.envelopeOpened ? current : { ...current, envelopeOpened: true }))}
+      />
+    );
+  } else if (stepId === "memory") {
+    node = (
+      <Suspense fallback={<p className="scene loading">{t(content.ui.loading)}</p>}>
+        <Memory progress={progress} update={update} />
+      </Suspense>
+    );
+  } else if (stepId === "scratch") {
+    node = (
+      <Suspense fallback={<p className="scene loading">{t(content.ui.loading)}</p>}>
+        <Scratch progress={progress} update={update} />
+      </Suspense>
+    );
+  } else if (stepId === "letters") {
+    node = (
+      <Suspense fallback={<p className="scene loading">{t(content.ui.loading)}</p>}>
+        <Letters progress={progress} update={update} />
+      </Suspense>
+    );
+  } else if (stepId === "friends") {
+    node = (
+      <Suspense fallback={<p className="scene loading">{t(content.ui.loading)}</p>}>
+        <Friends />
+      </Suspense>
+    );
+  } else if (stepId === "dreams") {
+    node = (
+      <Suspense fallback={<p className="scene loading">{t(content.ui.loading)}</p>}>
+        <Dreams progress={progress} update={update} />
+      </Suspense>
+    );
+  } else if (stepId === "finale") {
+    node = (
+      <Suspense fallback={<p className="scene loading">{t(content.ui.loading)}</p>}>
+        <Finale
+          saidYes={progress.saidYes}
+          onYes={() => update((current) => (current.saidYes ? current : { ...current, saidYes: true }))}
+        />
       </Suspense>
     );
   } else if (stepId === "wish") {

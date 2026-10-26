@@ -42,9 +42,29 @@ const blank = {
   quiz: {},
   counterSeen: false,
   candlesOut: [],
+  envelopeOpened: false,
+  memoryBest: null,
+  scratched: [],
+  openWhen: {},
+  friendsSeen: false,
+  dreamsDone: [],
+  saidYes: false,
   wishes: [],
   letterDone: false,
 };
+assert.equal(stepDone("envelope", blank, 5, []), false);
+assert.equal(stepDone("envelope", { ...blank, envelopeOpened: true }, 5, []), true);
+assert.equal(stepDone("memory", blank, 5, []), false);
+assert.equal(stepDone("memory", { ...blank, memoryBest: 6 }, 5, []), true);
+assert.equal(stepDone("scratch", blank, 5, [], ["a", "b"]), false);
+assert.equal(stepDone("scratch", { ...blank, scratched: ["a"] }, 5, [], ["a", "b"]), false);
+assert.equal(stepDone("scratch", { ...blank, scratched: ["b", "a"] }, 5, [], ["a", "b"]), true);
+assert.equal(stepDone("letters", { ...blank, openWhen: { sad: "today" } }, 5, [], [], ["sad", "miss"]), false);
+assert.equal(stepDone("letters", { ...blank, openWhen: { sad: "today", miss: "today" } }, 5, [], [], ["sad", "miss"]), true);
+assert.equal(stepDone("dreams", blank, 5, []), false);
+assert.equal(stepDone("dreams", { ...blank, dreamsDone: ["d1"] }, 5, []), true);
+assert.equal(stepDone("finale", blank, 5, []), false);
+assert.equal(stepDone("finale", { ...blank, saidYes: true }, 5, []), true);
 assert.equal(stepDone("quiz", { ...blank, quiz: { a: 0 } }, 5, ["a", "b"]), false);
 assert.equal(stepDone("quiz", { ...blank, quiz: { a: 1, b: 0 } }, 5, ["a", "b"]), true);
 assert.equal(stepDone("cake", { ...blank, candlesOut: [0, 1, 2, 2] }, 5, []), false);

@@ -87,6 +87,13 @@
       "quiz": { "vi": "Trả lời hết các câu.", "en": "Answer every question." },
       "counter": { "vi": "Ở lại một lát với đồng hồ.", "en": "Stay with the clock for a moment." },
       "cake": { "vi": "Thổi hoặc chạm cho nến tắt hết.", "en": "Blow, or tap, until every candle is out." },
+      "envelope": { "vi": "Chạm con dấu để mở thư.", "en": "Touch the seal to open the letter." },
+      "memory": { "vi": "Tìm hết các cặp ảnh.", "en": "Find every matching pair." },
+      "scratch": { "vi": "Cào hết các thẻ.", "en": "Scratch every card." },
+      "letters": { "vi": "Mở từng lá thư một lần.", "en": "Open each letter once." },
+      "friends": { "vi": "Đọc những lời bạn bè để lại.", "en": "Read the notes your friends left." },
+      "dreams": { "vi": "Tích một ước của hai đứa.", "en": "Tick one dream for the two of you." },
+      "finale": { "vi": "Trả lời câu hỏi.", "en": "Answer the question." },
       "wish": { "vi": "Viết một ước và gửi lên trời.", "en": "Write a wish and send it up." },
       "letter": { "vi": "Đọc lá thư đến dòng cuối.", "en": "Read the letter through to the last line." }
     }
@@ -112,9 +119,9 @@
     {
       "id": "scratch",
       "star": { "vi": "Cào", "en": "Scratch" },
-      "kicker": { "vi": "Thẻ cào", "en": "Gold cards" },
+      "kicker": { "vi": "Thẻ cào", "en": "Scratch cards" },
       "title": { "vi": "Những điều anh thương", "en": "Things I love" },
-      "lede": { "vi": "Cào lớp vàng bằng ngón tay. Mỗi thẻ là một điều.", "en": "Scratch the gold with a finger. Each card is one thing." }
+      "lede": { "vi": "Cào lớp hồng bằng ngón tay. Mỗi thẻ là một điều.", "en": "Scratch the pink foil with a finger. Each card is one thing." }
     },
     {
       "id": "quiz",

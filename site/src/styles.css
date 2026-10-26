@@ -755,7 +755,7 @@ h2 {
 .mem-inner {
   position: relative;
   display: block;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 1 / 1;
   transform-style: preserve-3d;
   transition: transform 0.45s ease;
 }
@@ -1103,6 +1103,8 @@ h2 {
   line-height: 1.45;
 }
 
+.letters-scene .lede { margin-inline: auto; }
+
 .finale { text-align: center; }
 .finale h1 { margin: 12px auto 20px; max-width: 14ch; }
 .yes-btn { min-width: 148px; }
@@ -1243,12 +1245,12 @@ h2 {
 
 .dots {
   display: flex;
-  gap: 7px;
+  gap: 5px;
 }
 
 .dot {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: rgba(255, 247, 251, 0.28);
 }
@@ -1282,8 +1284,10 @@ h2 {
   left: 64px;
   right: 12px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 3px;
+  overflow-x: auto;
+  scrollbar-width: none;
   padding: 4px;
   border-radius: 999px;
   background: rgba(48, 28, 62, 0.72);
@@ -1291,7 +1295,10 @@ h2 {
   backdrop-filter: blur(12px);
 }
 
+.dev-jump::-webkit-scrollbar { display: none; }
+
 .dev-jump button {
+  flex: 0 0 auto;
   min-width: 26px;
   min-height: 26px;
   padding: 0 5px;

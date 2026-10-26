@@ -114,13 +114,7 @@ export function FinalLetter({ already, onDone, onRestart }: FinalLetterProps) {
           })}
           {!done && <span ref={caretRef} className="ink-caret" aria-hidden="true" />}
         </div>
-        {done && (
-          <svg className="letter-sign" viewBox="0 0 168 70" aria-hidden="true">
-            <path d="M10 58 L30 16 L50 58 M18 42 H42" />
-            <path d="M66 58 V34 C66 20 98 18 100 36 V58" />
-            <path d="M118 14 V58 M118 38 C118 22 156 20 158 40 V58" />
-          </svg>
-        )}
+        {done && <p className="letter-sign">{t(content.finalLetter.signature)}</p>}
       </article>
       {!done && (
         <button type="button" className="btn btn-quiet" onClick={skip}>

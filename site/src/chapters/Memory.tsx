@@ -107,28 +107,30 @@ export function Memory({ progress, update }: ChapterProps) {
           </button>
         ) : null}
       </div>
-      <div className="memory-grid">
-        {deck.map((card) => {
-          const matchedCard = matched.includes(card.photoId);
-          const up = flipped.includes(card.uid) || matchedCard;
-          return (
-            <div key={card.uid} className={matchedCard ? "mem is-up is-matched" : up ? "mem is-up" : "mem"}>
-              <div className="mem-inner" aria-hidden="true">
-                <div className="mem-face mem-back">{content.meta.monogram}</div>
-                <div className="mem-face mem-front">
-                  <img src={cloudinaryUrl(card.src, 480)} alt="" width={800} height={1000} loading="lazy" decoding="async" />
+      <div className="memory-fit">
+        <div className="memory-grid">
+          {deck.map((card) => {
+            const matchedCard = matched.includes(card.photoId);
+            const up = flipped.includes(card.uid) || matchedCard;
+            return (
+              <div key={card.uid} className={matchedCard ? "mem is-up is-matched" : up ? "mem is-up" : "mem"}>
+                <div className="mem-inner" aria-hidden="true">
+                  <div className="mem-face mem-back">{content.meta.monogram}</div>
+                  <div className="mem-face mem-front">
+                    <img src={cloudinaryUrl(card.src, 480)} alt="" width={800} height={1000} loading="lazy" decoding="async" />
+                  </div>
                 </div>
+                <button
+                  type="button"
+                  className="hit"
+                  onClick={() => onFlip(card)}
+                  disabled={up}
+                  aria-label={up ? t(card.alt) : t(content.memoryCopy.back)}
+                />
               </div>
-              <button
-                type="button"
-                className="hit"
-                onClick={() => onFlip(card)}
-                disabled={up}
-                aria-label={up ? t(card.alt) : t(content.memoryCopy.back)}
-              />
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </ChapterFrame>
   );

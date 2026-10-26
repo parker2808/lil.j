@@ -324,12 +324,15 @@ function Stack({
   return (
     <div className="stack-view">
       <header className="stack-head">
-        <button type="button" className="pill-back" onClick={onBack}>
-          {backLabel}
-        </button>
+        {visible.length > 0 ? (
+          <button type="button" className="pill-back" onClick={onBack}>
+            {backLabel}
+          </button>
+        ) : null}
         <h2 className="stack-era">{t(era.title)}</h2>
         <p className="stack-count">{progressLabel}</p>
       </header>
+      <div className="stack-body">
       {visible.length === 0 ? (
         <div className="era-end">
           <p className="era-end-title">{t(content.galleryCopy.empty)}</p>
@@ -414,6 +417,7 @@ function Stack({
           })}
         </div>
       )}
+      </div>
       <div className="stack-progress">
         {photos.length <= 12 ? (
           <span className="stack-dots" aria-hidden="true">

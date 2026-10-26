@@ -12,6 +12,7 @@ const VIEWPORTS = [
   { name: "375x667", width: 375, height: 667 },
   { name: "390x844", width: 390, height: 844 },
   { name: "430x932", width: 430, height: 932 },
+  { name: "430x739", width: 430, height: 739, bare: true },
   { name: "844x390", width: 844, height: 390 },
   { name: "507x768", width: 507, height: 768 },
   { name: "678x1024", width: 678, height: 1024 },
@@ -48,7 +49,7 @@ function deviceKind(width, height) {
 
 const viewports = baseViewports.flatMap((viewport) => {
   const kind = deviceKind(viewport.width, viewport.height);
-  const bars = kind === "phone" ? (toolbarOffsets.length ? toolbarOffsets : [0]) : [0];
+  const bars = viewport.bare ? [0] : kind === "phone" ? (toolbarOffsets.length ? toolbarOffsets : [0]) : [0];
   return bars.map((bar) => ({
     name: bar > 0 ? `${viewport.name}-bar${bar}` : viewport.name,
     width: viewport.width,
@@ -68,6 +69,7 @@ function safeFor(viewport) {
   const kind = viewport.kind || deviceKind(viewport.width, viewport.height);
   if (kind === "phone") {
     if (viewport.width > viewport.height) return { top: "0px", bottom: "21px", left: "47px", right: "47px" };
+    if (viewport.width >= 428) return { top: "59px", bottom: "34px", left: "0px", right: "0px" };
     return { top: "47px", bottom: "34px", left: "0px", right: "0px" };
   }
   if (kind === "ipad") return { top: "24px", bottom: "20px", left: "0px", right: "0px" };
@@ -608,10 +610,46 @@ async function extras(page, id, label) {
   if (id === "gate" || id === "wish") {
     const field = page.locator(id === "gate" ? ".gate input" : ".wish-field input");
     if ((await field.count()) === 0) return found;
+    const desktop = await page.evaluate(() => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      return width >= 1200 && height <= 1100 && width / height >= 1.5;
+    });
     await field.focus();
+    if (desktop) {
+      await delay(80);
+      const changed = await page.evaluate(() => {
+        const open = document.documentElement.classList.contains("keyboard-open");
+        const flow = document.querySelector(".flow");
+        const hidden = flow ? getComputedStyle(flow).display === "none" : false;
+        return open || hidden;
+      });
+      if (changed) found.push({ kind: "keyboard-desktop", detail: "focus changed the desktop layout", where: label });
+      found.push(...(await audit(page, `${label} keyboard`)));
+      await field.blur();
+      return found;
+    }
     await page.waitForFunction(() => document.documentElement.classList.contains("keyboard-open"));
     await page.waitForFunction(() => getComputedStyle(document.querySelector(".flow")).display === "none");
     await delay(120);
+    const headingHidden = await page.evaluate((step) => {
+      const heading = document.querySelector(step === "gate" ? ".gate h1" : ".wish-copy h1");
+      const input = document.activeElement;
+      if (!(heading instanceof HTMLElement) || !(input instanceof HTMLElement)) return "missing heading";
+      const style = getComputedStyle(heading);
+      if (style.display === "none" || style.visibility === "hidden") return "heading hidden";
+      const stage = heading.closest(".stage") ?? document.querySelector(".stage");
+      if (!(stage instanceof HTMLElement)) return "missing stage";
+      const stageBox = stage.getBoundingClientRect();
+      const headBox = heading.getBoundingClientRect();
+      const fieldBox = input.getBoundingClientRect();
+      if (headBox.bottom < stageBox.top + 4 || headBox.top > stageBox.bottom - 4) return "heading outside the stage";
+      if (fieldBox.bottom < stageBox.top + 4 || fieldBox.top > stageBox.bottom - 4) return "field outside the stage";
+      const fontSize = parseFloat(getComputedStyle(input).fontSize);
+      if (fontSize < 16) return `input font ${fontSize}px`;
+      return "";
+    }, id);
+    if (headingHidden) found.push({ kind: "keyboard-heading", detail: headingHidden, where: label });
     found.push(...(await audit(page, `${label} keyboard`)));
     await field.blur();
     await page.waitForFunction(() => !document.documentElement.classList.contains("keyboard-open"));

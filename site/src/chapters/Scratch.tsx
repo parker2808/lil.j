@@ -95,15 +95,34 @@ function ScratchCard({
         ctx.stroke();
       }
       ctx.globalAlpha = 1;
-      ctx.fillStyle = "#6a3454";
-      const rootStyle = getComputedStyle(document.documentElement);
-      const bodyPx = Number.parseFloat(rootStyle.getPropertyValue("--text-body")) || 14;
-      const letterPx = Number.parseFloat(rootStyle.getPropertyValue("--text-letter")) || 16;
-      const label = Math.round(Math.max(bodyPx, Math.min(letterPx, height / 12)));
-      ctx.font = `600 ${label}px Inter, ui-sans-serif, sans-serif`;
+      ctx.fillStyle = "#5c2844";
+      const cssWidth = Math.max(card.clientWidth, 1);
+      const dpr = width / cssWidth;
+      const labelCss = 18;
+      ctx.font = `600 ${Math.round(labelCss * dpr)}px ${getComputedStyle(document.body).fontFamily}`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.fillText(cover, width / 2, height / 2);
+      const maxText = Math.max(24, cssWidth - 36) * dpr;
+      const words = cover.split(/\s+/).filter(Boolean);
+      const lines: string[] = [];
+      let line = "";
+      for (const word of words) {
+        const trial = line ? `${line} ${word}` : word;
+        if (line && ctx.measureText(trial).width > maxText) {
+          lines.push(line);
+          line = word;
+        } else {
+          line = trial;
+        }
+      }
+      if (line) lines.push(line);
+      const shown = lines.length > 0 ? lines : [cover];
+      const lineHeight = labelCss * 1.25 * dpr;
+      let y = height / 2 - ((shown.length - 1) * lineHeight) / 2;
+      for (const row of shown) {
+        ctx.fillText(row, width / 2, y);
+        y += lineHeight;
+      }
     };
 
     const fit = () => {

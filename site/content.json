@@ -342,6 +342,10 @@
     "closing": {
       "vi": "Em có thể đọc lại, hoặc quay lại bước trước.",
       "en": "You can read it again, or step back."
+    },
+    "signature": {
+      "vi": "Parker",
+      "en": "Parker"
     }
   },
   "flow": {

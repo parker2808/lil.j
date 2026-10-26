@@ -25,11 +25,47 @@ function gestureCanScroll(start: EventTarget | null, dy: number): boolean {
   return false;
 }
 
+/** Wide desktop windows keep their layout when a field is focused. */
+function isDesktopLayout(): boolean {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  return width >= 1200 && height <= 1100 && width / height >= 1.5;
+}
+
+/** Scrolls the stage, not the window, so the field and its heading stay above the keyboard. */
+function revealFocused(field: HTMLInputElement | HTMLTextAreaElement) {
+  const stage = field.closest(".stage");
+  if (!(stage instanceof HTMLElement)) return;
+  const heading = field.closest("section")?.querySelector("h1");
+  const pad = 8;
+  const fit = () => {
+    const stageBox = stage.getBoundingClientRect();
+    const fieldBox = field.getBoundingClientRect();
+    const below = fieldBox.bottom - (stageBox.bottom - pad);
+    const above = stageBox.top + pad - fieldBox.top;
+    if (below > 1) stage.scrollTop += below;
+    else if (above > 1) stage.scrollTop -= above;
+    if (!(heading instanceof HTMLElement)) return;
+    let headBox = heading.getBoundingClientRect();
+    let nextStage = stage.getBoundingClientRect();
+    if (headBox.bottom < nextStage.top + pad) stage.scrollTop -= nextStage.top + pad - headBox.bottom;
+    const nextField = field.getBoundingClientRect();
+    nextStage = stage.getBoundingClientRect();
+    if (nextField.top > nextStage.bottom - pad) stage.scrollTop += nextField.top - (nextStage.bottom - pad);
+    headBox = heading.getBoundingClientRect();
+    nextStage = stage.getBoundingClientRect();
+    if (headBox.top > nextStage.bottom - pad) stage.scrollTop -= headBox.top - (nextStage.bottom - pad);
+  };
+  fit();
+  requestAnimationFrame(fit);
+}
+
 /** Tracks the visual viewport and keeps the window itself from scrolling. */
 export function bindViewport(): () => void {
   const root = document.documentElement;
   let lastX = 0;
   let lastY = 0;
+  let lastVisible = 0;
 
   const pinWindow = () => {
     if (window.scrollY !== 0 || root.scrollTop !== 0 || document.body.scrollTop !== 0) {
@@ -45,22 +81,36 @@ export function bindViewport(): () => void {
     const vv = window.visualViewport;
     const height = vv?.height ?? window.innerHeight;
     const offsetTop = vv?.offsetTop ?? 0;
+    const offsetLeft = vv?.offsetLeft ?? 0;
+    const width = vv?.width ?? window.innerWidth;
     const inset = Math.max(0, window.innerHeight - height - offsetTop);
     const focused = isTextField(document.activeElement);
-    const realKeyboard = focused && inset > 140;
-    const visible = !focused
+    const desktop = isDesktopLayout();
+    const keyboardLayout = focused && !desktop;
+    const realKeyboard = keyboardLayout && inset > 140;
+    const visible = !keyboardLayout
       ? height
       : realKeyboard
         ? height
         : Math.max(220, Math.round(window.innerHeight * 0.58));
-    root.style.setProperty("--vv-top", `${offsetTop}px`);
+    root.style.setProperty("--vv-top", `${keyboardLayout ? offsetTop : 0}px`);
+    root.style.setProperty("--vv-left", `${keyboardLayout ? offsetLeft : 0}px`);
+    root.style.setProperty("--vv-width", `${keyboardLayout ? width : window.innerWidth}px`);
     root.style.setProperty("--vv-height", `${visible}px`);
-    root.classList.toggle("keyboard-open", focused);
+    root.classList.toggle("keyboard-open", keyboardLayout);
     const footer = document.querySelector(".flow");
     if (footer instanceof HTMLElement) {
-      root.style.setProperty("--footer-h", focused ? "0px" : `${footer.offsetHeight}px`);
+      root.style.setProperty("--footer-h", keyboardLayout ? "0px" : `${footer.offsetHeight}px`);
     }
+    const opened = keyboardLayout && Math.abs(visible - lastVisible) > 40;
+    lastVisible = visible;
     pinWindow();
+    if (opened && isTextField(document.activeElement)) {
+      const field = document.activeElement;
+      requestAnimationFrame(() => {
+        if (document.activeElement === field) revealFocused(field);
+      });
+    }
   };
 
   const onTouchStart = (event: TouchEvent) => {
@@ -104,11 +154,30 @@ export function bindViewport(): () => void {
   };
 
   sync();
+  const refit = new ResizeObserver(() => {
+    if (!isTextField(document.activeElement) || isDesktopLayout()) return;
+    const field = document.activeElement;
+    requestAnimationFrame(() => {
+      if (document.activeElement === field) revealFocused(field);
+    });
+  });
+  const chrome = document.querySelector(".chrome");
+  const stage = document.querySelector(".stage");
+  if (chrome) refit.observe(chrome);
+  if (stage) refit.observe(stage);
   window.visualViewport?.addEventListener("resize", sync);
   window.visualViewport?.addEventListener("scroll", sync);
   window.addEventListener("resize", sync);
   window.addEventListener("scroll", pinWindow, { passive: true });
-  window.addEventListener("focusin", sync);
+  const onFocusIn = (event: FocusEvent) => {
+    sync();
+    if (!isTextField(event.target) || isDesktopLayout()) return;
+    const field = event.target;
+    requestAnimationFrame(() => {
+      if (document.activeElement === field) revealFocused(field);
+    });
+  };
+  window.addEventListener("focusin", onFocusIn);
   window.addEventListener("focusout", sync);
   document.addEventListener("touchstart", onTouchStart, { passive: true });
   document.addEventListener("touchmove", onTouchMove, { passive: false });
@@ -117,9 +186,10 @@ export function bindViewport(): () => void {
     window.visualViewport?.removeEventListener("scroll", sync);
     window.removeEventListener("resize", sync);
     window.removeEventListener("scroll", pinWindow);
-    window.removeEventListener("focusin", sync);
+    window.removeEventListener("focusin", onFocusIn);
     window.removeEventListener("focusout", sync);
     document.removeEventListener("touchstart", onTouchStart);
     document.removeEventListener("touchmove", onTouchMove);
+    refit.disconnect();
   };
 }

@@ -23,6 +23,8 @@
   --shadow: 0 24px 50px rgba(74, 36, 96, 0.28);
   color-scheme: dark;
   --vv-top: 0px;
+  --vv-left: 0px;
+  --vv-width: 100%;
   --vv-height: 100dvh;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -132,13 +134,19 @@ body::after {
 :root.keyboard-open #root {
   position: fixed;
   top: var(--vv-top);
-  right: 0;
-  left: 0;
+  left: var(--vv-left);
+  width: var(--vv-width);
+  right: auto;
   height: var(--vv-height);
   max-height: calc(100% - var(--vv-top));
+  overflow-x: clip;
 }
 
 button, input { font: inherit; color: inherit; }
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="hidden"]):not([type="image"]),
+textarea {
+  font-size: max(16px, 1em);
+}
 button { cursor: pointer; touch-action: manipulation; }
 img { max-width: 100%; display: block; }
 h1, h2, p { margin: 0; }
@@ -442,13 +450,6 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   padding-top: 4px;
 }
 
-:root.keyboard-open .gate .kicker,
-:root.keyboard-open .gate .gate-mark,
-:root.keyboard-open .gate .reveal,
-:root.keyboard-open .gate h1 {
-  display: none;
-}
-
 :root.keyboard-open .gate .hint {
   margin-top: 8px;
   min-height: 0;
@@ -456,8 +457,15 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 
 :root.keyboard-open .gate-form { margin-top: 8px; }
 
-:root.keyboard-open .gate-field input {
-  height: 48px;
+@media (max-height: 520px) {
+  :root.keyboard-open .gate-mark,
+  :root.keyboard-open .gate .kicker,
+  :root.keyboard-open .gate .lede,
+  :root.keyboard-open .wish-stars,
+  :root.keyboard-open .wish-copy .kicker,
+  :root.keyboard-open .wish-copy .lede {
+    display: none;
+  }
 }
 
 .gate-mark {
@@ -573,7 +581,7 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   border-radius: var(--radius-pill);
   border: 1px solid rgba(255, 228, 240, 0.48);
   background: rgba(255, 245, 250, 0.1);
-  font-size: var(--text-body);
+  font-size: max(16px, var(--text-body));
   line-height: 1.2;
   outline: none;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
@@ -1075,7 +1083,7 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   position: relative;
   min-width: 0;
   max-width: 100%;
-  min-height: 168px;
+  min-height: 120px;
   border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid rgba(247, 196, 220, 0.28);
@@ -1091,16 +1099,16 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 .scratch.is-open { touch-action: auto; }
 
 .scratch-reveal {
-  min-height: 168px;
+  min-height: 120px;
   max-width: 100%;
   margin: 0;
-  padding: 28px 20px;
+  padding: 16px 18px;
   display: grid;
   place-items: center;
   text-align: center;
   font-family: var(--serif);
   font-style: normal;
-  font-size: var(--text-letter);
+  font-size: max(17px, var(--text-letter));
   line-height: var(--leading-body);
   overflow-wrap: anywhere;
 }
@@ -1226,15 +1234,62 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   visibility: hidden;
 }
 
+.stage-pane:has(.memory-grid) {
+  min-height: 0;
+  height: 100%;
+  max-height: 100%;
+}
+
+.scene:has(.memory-grid) {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+.memory-fit {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+  container-type: size;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .memory-grid {
-  --mem: clamp(56px, calc((100dvh - 430px) / 4), 84px);
+  --gap: 8px;
+  --mem: clamp(
+    32px,
+    min(
+      calc((min(90vw, 100cqi) - 2 * var(--gap)) / 3),
+      calc((100cqb - 3 * var(--gap)) / 4)
+    ),
+    124px
+  );
   display: grid;
   grid-template-columns: repeat(3, var(--mem));
   justify-content: center;
-  gap: 6px;
+  gap: var(--gap);
   width: max-content;
   max-width: 100%;
-  margin: 8px auto 0;
+  margin: 0 auto;
+}
+
+@media (min-width: 660px) and (min-height: 640px) {
+  .memory-grid {
+    --mem: clamp(
+      44px,
+      min(
+        calc((min(90vw, 100cqi) - 2 * var(--gap)) / 3),
+        calc((100cqb - 3 * var(--gap)) / 4)
+      ),
+      124px
+    );
+  }
 }
 
 .mem { position: relative; perspective: 800px; }
@@ -2154,14 +2209,10 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 }
 
 :root.keyboard-open .flow { display: none; }
-:root.keyboard-open .wish-copy .kicker,
-:root.keyboard-open .wish-copy .lede,
-:root.keyboard-open .wish-stars { display: none; }
 :root.keyboard-open .wish-copy {
   max-height: none;
   overflow: visible;
 }
-:root.keyboard-open .wish-copy h1 { font-size: var(--text-h2); margin-bottom: 0; }
 :root.keyboard-open .wish-read { margin-top: 6px; }
 :root.keyboard-open .wish-read:empty { display: none; }
 :root.keyboard-open .wish-scene { min-height: 0; }
@@ -2572,7 +2623,7 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   border-radius: var(--radius-pill);
   border: 1px solid rgba(255, 228, 240, 0.48);
   background: rgba(255, 245, 250, 0.1);
-  font-size: var(--text-body);
+  font-size: max(16px, var(--text-body));
   line-height: 1.2;
   outline: none;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
@@ -2697,20 +2748,17 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 
 .letter-sign {
   display: block;
-  width: 132px;
-  height: 52px;
-  margin-top: 18px;
-}
-
-.letter-sign path {
-  fill: none;
-  stroke: #6d3550;
-  stroke-width: 1.7;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 240;
-  stroke-dashoffset: 240;
-  animation: sign-draw 1.3s ease forwards;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  margin: 8px 0 0;
+  padding: 6px 4px 0;
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: clamp(42px, 12vw, 58px);
+  line-height: 1.2;
+  color: #6d3550;
+  animation: sign-in 0.9s ease both;
 }
 
 .letter-scene { padding-bottom: calc(var(--stage-fade) + 28px); }
@@ -2950,7 +2998,10 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   50%, 100% { opacity: 0; }
 }
 
-@keyframes sign-draw { to { stroke-dashoffset: 0; } }
+@keyframes sign-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
 
 @keyframes sky-parallax {
   0% { transform: translate3d(0, 8px, 0); }
@@ -3169,15 +3220,34 @@ input:focus-visible,
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 1 1 auto;
   width: 100%;
   min-width: 0;
+  min-height: 0;
   max-width: 100%;
+}
+
+.stack-body {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
 }
 
 .gallery-scene.is-stack > .kicker,
 .gallery-scene.is-stack > h1,
 .gallery-scene.is-stack > .lede {
   display: none;
+}
+
+.gallery-scene.is-stack {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  min-height: calc(var(--vv-height) - var(--header-h) - var(--footer-h) - var(--stage-fade));
 }
 
 .stack-head {
@@ -3543,7 +3613,6 @@ input:focus-visible,
 @media (max-height: 700px) {
   .gallery-scene:not(.is-stack) > .lede { display: none; }
   .galaxy { height: clamp(180px, calc(100dvh - 420px), 280px); }
-  .stack-flip { height: min(200px, 32vh); aspect-ratio: auto; }
 }
 
 @keyframes stack-arrive {
@@ -3556,11 +3625,48 @@ input:focus-visible,
   .galaxy { width: min(100%, 860px); height: clamp(500px, 62vh, 680px); }
 }
 
+@media (max-width: 659px) {
+  .stack-deck {
+    width: min(
+      90%,
+      calc((var(--vv-height) - var(--header-h) - var(--footer-h) - var(--stage-fade) - 120px) * 0.8 + 20px)
+    );
+  }
+}
+
 @media (max-width: 360px) {
   .seal-grid { gap: 8px; }
   .seal-card { min-height: 0; padding: 10px 8px; }
   .mini-env { width: 72px; height: 48px; }
   .dots { gap: 4px; }
+}
+
+@media (hover: hover) and (pointer: fine) and (min-width: 1100px) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(214, 150, 186, 0.88) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background-clip: padding-box;
+    background-color: rgba(214, 150, 186, 0.82);
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(232, 176, 206, 0.96);
+    box-shadow: 0 0 8px rgba(196, 176, 232, 0.85);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

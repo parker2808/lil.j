@@ -212,6 +212,7 @@ export function validateContent(value: Content): string | null {
     [value.ui?.musicHint, "ui.musicHint"],
     [value.friendsCopy?.sign, "friendsCopy.sign"],
     [value.quizMarks, "quizMarks"],
+    [value.finalLetter?.signature, "finalLetter.signature"],
   ];
   for (const [copy, path] of requiredCopy) {
     if (!copy?.vi?.trim() || !copy?.en?.trim()) return `content.json thiếu ${path}.`;

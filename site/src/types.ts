@@ -211,6 +211,7 @@ export type Content = {
     skip: Copy;
     replay: Copy;
     closing: Copy;
+    signature: Copy;
   };
   flow: {
     next: Copy;

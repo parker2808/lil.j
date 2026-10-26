@@ -257,6 +257,40 @@ async function audit(page, label) {
     const stage = document.querySelector(".stage");
     const regions = [chrome, footer].filter((el) => el && getComputedStyle(el).display !== "none");
 
+    const nextBtn = document.querySelector(".sticky-next");
+    const dock = document.querySelector(".stage-dock");
+    const dockShown = dock && getComputedStyle(dock).display !== "none";
+    if (keyboard && dockShown) push("sticky-next", "visible while keyboard is open");
+    if (dockShown && nextBtn) {
+      const nextBox = boxOf(nextBtn);
+      if (nextBox.width < 2 || nextBox.height < 2) {
+        push("sticky-next", "missing box");
+      } else {
+        for (const region of regions) {
+          const hit = intersection(nextBox, boxOf(region));
+          if (hit) push("sticky-next", `${region.className} by ${Math.round(hit.width)}×${Math.round(hit.height)}`);
+        }
+        const interactives = [...document.querySelectorAll("button, a, input, textarea, select")].filter((el) => {
+          if (el === nextBtn || el.closest(".stage-dock, .sr-only")) return false;
+          const style = getComputedStyle(el);
+          return style.display !== "none" && style.visibility !== "hidden";
+        });
+        for (const el of interactives) {
+          const visible = visibleBox(el);
+          if (!visible) continue;
+          const hit = intersection(visible, nextBox);
+          if (hit) push("sticky-next", `${describe(el)} by ${Math.round(hit.width)}×${Math.round(hit.height)}`);
+        }
+        if (nextBox.left < safe.left - 2 || nextBox.right > vw - safe.right + 2) {
+          push("sticky-next", `safe x ${Math.round(nextBox.left)}–${Math.round(nextBox.right)}`);
+        }
+        if (stage) {
+          const pad = parseFloat(getComputedStyle(stage).paddingBottom) || 0;
+          if (pad < 12) push("sticky-next", `stage padding-bottom ${pad}px`);
+        }
+      }
+    }
+
     if (stage) {
       const stageBox = boxOf(stage);
       for (const region of regions) {
@@ -289,7 +323,7 @@ async function audit(page, label) {
     }
 
     const contentNodes = [...document.querySelectorAll("button, a, input, textarea, select, label, h1, h2, h3, p, li, figcaption, svg text")].filter((el) => {
-      if (el.closest(".sr-only, .starfield, .chrome, .flow")) return false;
+      if (el.closest(".sr-only, .starfield, .chrome, .flow, .stage-dock")) return false;
       const style = getComputedStyle(el);
       return style.display !== "none" && style.visibility !== "hidden";
     });

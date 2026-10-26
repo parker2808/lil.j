@@ -2,6 +2,7 @@ import { useState } from "react";
 import { content } from "../content.ts";
 import { ChapterFrame } from "../components/ChapterFrame.tsx";
 import { Spark } from "../components/Fireworks.tsx";
+import { useRegisterSticky } from "../components/sticky-next-context.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import { fillTemplate } from "../lib/pure.ts";
 import type { ChapterProps } from "../types.ts";
@@ -10,11 +11,21 @@ export function Quiz({ progress, update }: ChapterProps) {
   const { t } = useI18n();
   const chapter = content.chapters.find((item) => item.id === "quiz");
   const total = content.quiz.length;
-  const answered = content.quiz.filter((question) => typeof progress.quiz[question.id] === "number").length;
-  const [step, setStep] = useState(answered >= total ? total : answered);
+  const answeredCount = content.quiz.filter((item) => typeof progress.quiz[item.id] === "number").length;
+  const [step, setStep] = useState(answeredCount >= total ? total : answeredCount);
   const [cheer, setCheer] = useState(0);
   const question = content.quiz[step];
   const correct = content.quiz.filter((item) => progress.quiz[item.id] === item.answer).length;
+  const answered = question ? typeof progress.quiz[question.id] === "number" : false;
+  useRegisterSticky(
+    question
+      ? {
+          label: t(content.ui.nextQuestion),
+          disabled: !answered,
+          onClick: () => setStep((current) => current + 1),
+        }
+      : null,
+  );
 
   function choose(index: number) {
     if (!question || typeof progress.quiz[question.id] === "number") return;
@@ -65,15 +76,10 @@ export function Quiz({ progress, update }: ChapterProps) {
               );
             })}
           </div>
-          {typeof progress.quiz[question.id] === "number" && (
-            <>
-              <p className={progress.quiz[question.id] === question.answer ? "quiz-note is-right" : "quiz-note"}>
-                {progress.quiz[question.id] === question.answer ? t(question.rightNote) : t(question.wrongNote)}
-              </p>
-              <button type="button" className="btn" onClick={() => setStep(step + 1)}>
-                {step + 1 >= total ? t(content.ui.summaryTitle) : t(content.ui.nextQuestion)}
-              </button>
-            </>
+          {answered && (
+            <p className={progress.quiz[question.id] === question.answer ? "quiz-note is-right" : "quiz-note"}>
+              {progress.quiz[question.id] === question.answer ? t(question.rightNote) : t(question.wrongNote)}
+            </p>
           )}
         </div>
       ) : (

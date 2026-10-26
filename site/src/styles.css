@@ -29,6 +29,7 @@
   --safe-right: env(safe-area-inset-right, 0px);
   --header-h: 72px;
   --footer-h: 128px;
+  --dock-h: 0px;
 }
 
 * { box-sizing: border-box; }
@@ -198,7 +199,7 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 .chrome-row > * { pointer-events: auto; }
 .chrome-spacer { flex: 1; pointer-events: none; }
 
-.stage {
+.stage-shell {
   position: relative;
   z-index: 1;
   flex: 1 1 auto;
@@ -207,6 +208,15 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   margin-right: var(--safe-right);
   display: flex;
   flex-direction: column;
+}
+
+.stage {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -1388,7 +1398,7 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   top: calc(var(--vv-top) + var(--header-h));
   left: var(--safe-left);
   right: var(--safe-right);
-  height: calc(var(--vv-height) - var(--header-h) - var(--footer-h));
+  height: calc(var(--vv-height) - var(--header-h) - var(--footer-h) - var(--dock-h));
   display: grid;
   align-items: end;
   padding: 12px;
@@ -1578,7 +1588,8 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   pointer-events: none;
 }
 
-:root.keyboard-open .flow { display: none; }
+:root.keyboard-open .flow,
+:root.keyboard-open .stage-dock { display: none; }
 :root.keyboard-open .wish-copy .lede,
 :root.keyboard-open .wish-read { display: none; }
 
@@ -1615,25 +1626,56 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   pointer-events: auto;
 }
 
-.flow-next {
-  position: relative;
-  overflow: hidden;
-  min-width: 0;
-  min-height: 32px;
-  padding: 4px 14px;
-  font-size: 0.82rem;
-  line-height: 1.1;
-  pointer-events: auto;
+.stage-dock {
+  position: sticky;
+  bottom: 0;
+  z-index: 6;
+  flex: none;
+  display: flex;
+  justify-content: flex-end;
+  pointer-events: none;
+  padding: 8px 12px 4px;
 }
 
-.flow-next::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.55), transparent 70%);
-  transform: translateX(-120%);
-  animation: shimmer 2.8s ease-in-out infinite;
+.sticky-next {
+  position: relative;
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+  align-self: center;
+  width: max-content;
+  max-width: 100%;
+  min-height: 44px;
+  padding: 8px 16px 8px 18px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #ffe4f0, #f4b4cf 58%, #e792b4);
+  color: #4a2340;
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1;
+  white-space: nowrap;
+  touch-action: manipulation;
+  box-shadow:
+    0 10px 22px rgba(224, 140, 176, 0.38),
+    0 0 0 1px rgba(255, 255, 255, 0.55),
+    0 0 18px rgba(247, 198, 220, 0.45);
 }
+
+.sticky-next:not(:disabled) {
+  animation: next-glow 2.8s ease-in-out infinite;
+}
+
+.sticky-next:disabled {
+  opacity: 0.42;
+  cursor: default;
+  box-shadow: none;
+  animation: none;
+}
+
+.sticky-next svg { flex: none; }
 
 .dev-jump {
   position: relative;
@@ -1984,6 +2026,21 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   animation-delay: calc(var(--i) * -0.6s);
 }
 
+@keyframes next-glow {
+  0%, 100% {
+    box-shadow:
+      0 10px 22px rgba(224, 140, 176, 0.38),
+      0 0 0 1px rgba(255, 255, 255, 0.55),
+      0 0 18px rgba(247, 198, 220, 0.45);
+  }
+  50% {
+    box-shadow:
+      0 12px 28px rgba(224, 140, 176, 0.52),
+      0 0 0 1px rgba(255, 255, 255, 0.72),
+      0 0 28px rgba(255, 214, 230, 0.8);
+  }
+}
+
 @keyframes shimmer {
   0%, 55% { transform: translateX(-120%); }
   100% { transform: translateX(120%); }
@@ -2062,7 +2119,6 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   .seal-grid { gap: 8px; }
   .seal-card { min-height: 0; padding: 10px 8px; }
   .mini-env { width: 72px; height: 48px; }
-  .flow-next { min-width: 0; }
   .dots { gap: 4px; }
 }
 

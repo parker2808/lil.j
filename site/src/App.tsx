@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { content, validateContent } from "./content.ts";
 import { Envelope } from "./components/Envelope.tsx";
@@ -7,6 +7,8 @@ import { Gate } from "./components/Gate.tsx";
 import { LanguageToggle } from "./components/LanguageToggle.tsx";
 import { MusicButton } from "./components/MusicButton.tsx";
 import { Starfield } from "./components/Starfield.tsx";
+import { StickyNext } from "./components/StickyNext.tsx";
+import { StickyNextContext, type StickyAction } from "./components/sticky-next-context.ts";
 import { Universe } from "./components/Universe.tsx";
 import { FLOW, clampStep, stepDone, type StepId } from "./lib/flow.ts";
 import { useI18n } from "./lib/locale-context.ts";
@@ -46,6 +48,16 @@ export function App() {
   const [dev] = useState(() => new URLSearchParams(window.location.search).get("dev") === "1");
   const headerRef = useRef<HTMLElement>(null);
   const footerRef = useRef<HTMLElement>(null);
+  const dockRef = useRef<HTMLDivElement>(null);
+  const [quizAction, setQuizAction] = useState<StickyAction | null>(null);
+  const setStickyAction = useCallback((action: StickyAction | null) => {
+    setQuizAction((current) => {
+      if (!action && !current) return current;
+      if (action && current && action.label === current.label && action.disabled === current.disabled) return current;
+      return action;
+    });
+  }, []);
+  const stickyValue = useMemo(() => setStickyAction, [setStickyAction]);
   const step = clampStep(progress.step);
   const stepId = (FLOW[step] ?? "gate") as StepId;
 
@@ -108,10 +120,13 @@ export function App() {
   useEffect(() => bindViewport(), []);
 
   useEffect(() => {
-    const watch = (element: HTMLElement | null, name: "--header-h" | "--footer-h") => {
+    const watch = (element: HTMLElement | null, name: "--header-h" | "--footer-h" | "--dock-h") => {
       if (!element) return () => {};
       const apply = () => {
-        if (name === "--footer-h" && document.documentElement.classList.contains("keyboard-open")) {
+        if (
+          (name === "--footer-h" || name === "--dock-h") &&
+          document.documentElement.classList.contains("keyboard-open")
+        ) {
           document.documentElement.style.setProperty(name, "0px");
           return;
         }
@@ -125,9 +140,12 @@ export function App() {
     };
     const stopHeader = watch(headerRef.current, "--header-h");
     const stopFooter = watch(footerRef.current, "--footer-h");
+    const stopDock = watch(dockRef.current, "--dock-h");
+    if (!dockRef.current) document.documentElement.style.setProperty("--dock-h", "0px");
     return () => {
       stopHeader();
       stopFooter();
+      stopDock();
     };
   }, [dev, stepId]);
 
@@ -171,7 +189,15 @@ export function App() {
   }
 
   const done = stepDone(stepId, progress, CANDLES, QUIZ_IDS, SCRATCH_IDS, LETTER_IDS);
-  const showNext = done && stepId !== "letter" && step < FLOW.length - 1;
+  const flowAction: StickyAction | null =
+    stepId === "letter" || quizAction
+      ? null
+      : {
+          label: t(content.flow.next),
+          disabled: !done,
+          onClick: () => go(step + 1),
+        };
+  const stickyAction = quizAction ?? flowAction;
   const hint = done
     ? stepId === "letter"
       ? content.flow.doneLast
@@ -272,7 +298,7 @@ export function App() {
   }
 
   return (
-    <>
+    <StickyNextContext.Provider value={stickyValue}>
       <Starfield />
       <header className="chrome" ref={headerRef}>
         <div className="chrome-row">
@@ -317,6 +343,7 @@ export function App() {
           </div>
         )}
       </header>
+      <div className="stage-shell">
       <div className="stage">
         <AnimatePresence mode="wait">
           <motion.div
@@ -336,6 +363,18 @@ export function App() {
           </motion.div>
         </AnimatePresence>
       </div>
+      {stickyAction && (
+        <div className="stage-dock" ref={dockRef}>
+          <StickyNext
+            motionKey={`${stepId}-${stickyAction.label}-${stickyAction.disabled ? "wait" : "go"}`}
+            label={stickyAction.label}
+            disabled={stickyAction.disabled}
+            reduced={reduced}
+            onClick={stickyAction.onClick}
+          />
+        </div>
+      )}
+      </div>
       <footer className="flow" ref={footerRef}>
         <p className="sr-only">{fillTemplate(t(content.flow.progress), { n: step + 1, total: FLOW.length })}</p>
         <div className="dots" aria-hidden="true">
@@ -346,22 +385,6 @@ export function App() {
         <p className="flow-hint" aria-live="polite">
           {t(hint)}
         </p>
-        <AnimatePresence>
-          {showNext && (
-            <motion.button
-              key="next"
-              type="button"
-              className="btn btn-gold flow-next"
-              initial={reduced ? false : { opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={reduced ? { opacity: 1 } : { opacity: 0, y: 8 }}
-              transition={{ duration: reduced ? 0 : 0.35, ease: [0.22, 1, 0.36, 1] }}
-              onClick={() => go(step + 1)}
-            >
-              {t(content.flow.next)}
-            </motion.button>
-          )}
-        </AnimatePresence>
       </footer>
       {opening && <GateBurst />}
       {musicNote && (
@@ -369,6 +392,6 @@ export function App() {
           {musicNote}
         </p>
       )}
-    </>
+    </StickyNextContext.Provider>
   );
 }

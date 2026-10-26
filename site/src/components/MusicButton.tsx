@@ -1,19 +1,58 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { content } from "../content.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import { musicIsPlaying, startMusic, subscribeMusic } from "../lib/music.ts";
+
+const HEARD_KEY = "lilj.musicHeard.v1";
+
+function musicWasHeard(): boolean {
+  try {
+    return localStorage.getItem(HEARD_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function rememberMusic(): void {
+  try {
+    localStorage.setItem(HEARD_KEY, "1");
+  } catch {
+    // Private mode can refuse storage. This session still remembers.
+  }
+}
 
 type MusicButtonProps = {
   muted: boolean;
   onMuted: (muted: boolean) => void;
   onBlocked: () => void;
+  onInvite: (invite: boolean) => void;
 };
 
-export function MusicButton({ onMuted, onBlocked }: MusicButtonProps) {
+export function MusicButton({ onMuted, onBlocked, onInvite }: MusicButtonProps) {
   const { t } = useI18n();
   const [playing, setPlaying] = useState(musicIsPlaying);
+  const [heard, setHeard] = useState(() => {
+    if (musicIsPlaying()) rememberMusic();
+    return musicWasHeard() || musicIsPlaying();
+  });
 
-  useEffect(() => subscribeMusic(() => setPlaying(musicIsPlaying())), []);
+  useEffect(() => {
+    return subscribeMusic(() => {
+      const on = musicIsPlaying();
+      setPlaying(on);
+      if (!on) return;
+      rememberMusic();
+      setHeard(true);
+    });
+  }, []);
+
+  const invite = !playing && !heard;
+
+  useLayoutEffect(() => {
+    onInvite(invite);
+  }, [invite, onInvite]);
+
+  useEffect(() => () => onInvite(false), [onInvite]);
 
   async function onClick() {
     const turningOff = musicIsPlaying();
@@ -27,14 +66,16 @@ export function MusicButton({ onMuted, onBlocked }: MusicButtonProps) {
   }
 
   const label = playing ? t(content.ui.musicOff) : t(content.ui.musicOn);
+  const className = playing ? "music is-on" : invite ? "music is-quiet is-first" : "music is-quiet";
 
   return (
     <button
       type="button"
-      className={playing ? "music is-on" : "music"}
+      className={className}
       onClick={() => void onClick()}
       aria-pressed={playing}
       aria-label={label}
+      aria-describedby={invite ? "music-hint" : undefined}
     >
       {playing ? (
         <span className="eq" aria-hidden="true">

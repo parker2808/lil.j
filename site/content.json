@@ -554,6 +554,7 @@
     "doorFinale": { "vi": "Câu hỏi cuối", "en": "The last question" },
     "musicOn": { "vi": "Bật nhạc", "en": "Play music" },
     "musicOff": { "vi": "Tắt nhạc", "en": "Pause music" },
+    "musicHint": { "vi": "Bật nhạc nhé", "en": "Tap for music" },
     "musicBlocked": { "vi": "Trình duyệt đang chặn nhạc. Chạm nút nhạc giúp anh.", "en": "The browser is blocking the music. Tap the music button." },
     "reset": { "vi": "Chạy lại từ đầu", "en": "Start over" },
     "resetConfirm": { "vi": "Hành trình trên máy này sẽ về cổng. Nhạc vẫn giữ nguyên.", "en": "This journey returns to the gate. The music stays as it is." },

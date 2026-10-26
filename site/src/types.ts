@@ -224,6 +224,7 @@ export type Content = {
     doorFinale: Copy;
     musicOn: Copy;
     musicOff: Copy;
+    musicHint: Copy;
     musicBlocked: Copy;
     reset: Copy;
     resetConfirm: Copy;

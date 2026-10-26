@@ -44,6 +44,7 @@ export function App() {
   const problem = validateContent(content);
   const { progress, update } = useProgress();
   const [musicNote, setMusicNote] = useState("");
+  const [musicInvite, setMusicInvite] = useState(false);
   const [opening, setOpening] = useState(false);
   const [askReset, setAskReset] = useState(false);
   const [dev] = useState(() => new URLSearchParams(window.location.search).get("dev") === "1");
@@ -338,10 +339,16 @@ export function App() {
                 muted={progress.muted}
                 onMuted={(muted) => update((current) => ({ ...current, muted }))}
                 onBlocked={() => setMusicNote(t(content.ui.musicBlocked))}
+                onInvite={setMusicInvite}
               />
             </div>
           )}
         </div>
+        {progress.gateUnlocked && musicInvite && (
+          <p className="music-hint" id="music-hint">
+            {t(content.ui.musicHint)}
+          </p>
+        )}
         {dev && (
           <div className="dev-jump">
             {FLOW.map((id, index) => (

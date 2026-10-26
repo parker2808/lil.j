@@ -1792,6 +1792,50 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   outline-offset: 3px;
 }
 
+.music.is-quiet {
+  box-shadow:
+    0 0 0 1px rgba(247, 196, 220, 0.75),
+    0 0 8px rgba(244, 180, 207, 0.4);
+}
+
+.music.is-first {
+  box-shadow:
+    0 0 0 2px rgba(255, 214, 230, 0.95),
+    0 0 8px rgba(244, 160, 196, 0.55);
+  animation: music-invite 1.8s ease-in-out infinite;
+}
+
+@keyframes music-invite {
+  0%, 100% {
+    box-shadow:
+      0 0 0 2px rgba(255, 214, 230, 0.8),
+      0 0 6px rgba(244, 160, 196, 0.35);
+  }
+  50% {
+    box-shadow:
+      0 0 0 2px rgba(255, 228, 240, 1),
+      0 0 10px rgba(244, 150, 190, 0.7);
+  }
+}
+
+.music-hint {
+  align-self: flex-end;
+  width: max-content;
+  max-width: 100%;
+  margin: 0;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: #ffe4f0;
+  color: #4a2340;
+  font-family: var(--sans);
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--text-eyebrow);
+  line-height: 1.2;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
 .journey-reset {
   position: relative;
   z-index: 1;
@@ -3211,4 +3255,6 @@ input:focus-visible,
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+
+  .music.is-first { animation: none; }
 }

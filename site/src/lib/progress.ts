@@ -17,7 +17,8 @@ export function emptyProgress(): Progress {
     candlesOut: [],
     saidYes: false,
     openWhen: {},
-    muted: false,
+    // First visit stays quiet. Browsers block autoplay, so the music button asks for a tap.
+    muted: true,
     step: 0,
     unlocked: 0,
     skyDone: false,

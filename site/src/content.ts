@@ -2,7 +2,7 @@ import rawJson from "../content.json";
 import { FLOW } from "./lib/flow.ts";
 import { collectCopyProblems } from "./lib/i18n.ts";
 import { CONSTELLATION_IDS, projectSky } from "./lib/stars.ts";
-import type { Content, Copy, Era, Photo } from "./types.ts";
+import type { Content, Copy, Era, MusicTrack, Photo } from "./types.ts";
 import { lockProblem } from "./lib/lock.ts";
 
 type RawContent = Omit<Content, "photos">;
@@ -27,6 +27,12 @@ export const content: Content = {
   ...raw,
   photos: flattenPhotos(raw.eras ?? []),
 };
+
+function musicTrackProblem(track: MusicTrack | undefined, label: string): string | null {
+  if (!track?.title?.trim() || !track.artist?.trim()) return `${label} thiếu title hoặc artist.`;
+  if (!track.src?.startsWith("/music/")) return `${label} cần src bắt đầu bằng /music/.`;
+  return null;
+}
 
 const REQUIRED_CHAPTERS = [
   "gallery",
@@ -76,7 +82,23 @@ export function validateContent(value: Content): string | null {
   if (!value.startDate || Number.isNaN(Date.parse(value.startDate))) {
     return "startDate không phải ngày hợp lệ.";
   }
-  if (!value.music) return "content.json thiếu đường dẫn nhạc.";
+  if (!value.music?.credit?.vi?.trim() || !value.music?.credit?.en?.trim()) {
+    return "content.json thiếu music.credit.";
+  }
+  if (!Array.isArray(value.music.tracks) || value.music.tracks.length < 2) {
+    return "content.json cần ít nhất 2 bài trong music.tracks.";
+  }
+  const seenSrc = new Set<string>();
+  for (const [index, track] of value.music.tracks.entries()) {
+    const problem = musicTrackProblem(track, `music.tracks[${index}]`);
+    if (problem) return problem;
+    if (seenSrc.has(track.src)) return `music.tracks có src trùng (${track.src}).`;
+    seenSrc.add(track.src);
+  }
+  if (value.music.birthday) {
+    const problem = musicTrackProblem(value.music.birthday, "music.birthday");
+    if (problem) return problem;
+  }
   if (!Array.isArray(value.scratches) || value.scratches.length < 1) {
     return "content.json thiếu thẻ cào.";
   }

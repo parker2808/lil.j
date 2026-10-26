@@ -13,7 +13,6 @@ const PLAIN = new Set([
   "src",
   "tone",
   "startDate",
-  "music",
   "herName",
   "constellationName",
   "monogram",
@@ -62,6 +61,12 @@ export function collectCopyProblems(value: unknown, path = "content"): string[] 
 }
 
 function walk(value: unknown, path: string, problems: string[], key?: string): void {
+  if ((key === "title" || key === "artist") && path.includes(".music")) {
+    if (typeof value !== "string" || !value.trim()) {
+      problems.push(`${path} phải là một chuỗi không trống.`);
+    }
+    return;
+  }
   if (key && PLAIN.has(key)) {
     if (typeof value !== "string") problems.push(`${path} phải là một chuỗi, không phải {vi, en}.`);
     return;

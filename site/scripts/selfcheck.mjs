@@ -4,6 +4,7 @@ import { FLOW, FLOW_VERSION, FLOW_WITH_FRIENDS, INCLUDE_FRIENDS, PREVIOUS_FLOW, 
 import { readLocale } from "../src/lib/i18n.ts";
 import { cloudinarySrcSet, cloudinaryUrl } from "../src/lib/images.ts";
 import { countdownParts, isBeforeUnlock, unlockTime } from "../src/lib/lock.ts";
+import { nextTrackIndex } from "../src/lib/music.ts";
 import { elapsedParts, fillTemplate, formatDotted, formatZoned, nicknamesMatch, todayKey } from "../src/lib/pure.ts";
 import { altAz, projectSky } from "../src/lib/stars.ts";
 
@@ -41,6 +42,31 @@ assert.deepEqual(countdownParts("2026-11-18T00:00:00+07:00", Date.UTC(2026, 10, 
 assert.equal(content.lock.unlockAt, "2026-11-18T00:00:00+07:00");
 assert.equal(content.constellations.lyr.en, "Lyra");
 assert.equal(content.ui.musicHint.en, "Tap for music");
+assert.equal(content.music.credit.en, "Music · MondayHopes");
+assert.deepEqual(
+  content.music.tracks.map((track) => `${track.title} · ${track.artist}`),
+  [
+    "Echoes of the Stars · sleepvolume",
+    "Dream of Little Prince · SergeQuadrado",
+    "Twinkle Like a Star · MondayHopes",
+  ],
+);
+assert.equal(content.music.birthday.title, "Happy Birthday Music Box Loop");
+assert.equal(content.music.birthday.artist, "SergeQuadrado");
+for (const track of [...content.music.tracks, content.music.birthday]) {
+  assert.match(track.src, /^\/music\/.+\.mp3$/);
+}
+for (let current = 0; current < 3; current += 1) {
+  for (let n = 0; n < 20; n += 1) {
+    const next = nextTrackIndex(3, current);
+    assert.notEqual(next, current);
+    assert.ok(next >= 0 && next < 3);
+  }
+}
+assert.equal(nextTrackIndex(1, 0, () => 0.9), 0);
+assert.equal(nextTrackIndex(3, 0, () => 0), 1);
+assert.equal(nextTrackIndex(3, 0, () => 0.999), 2);
+assert.equal(nextTrackIndex(3, 2, () => 0), 0);
 
 const born = new Date("2002-08-18T21:30:00+07:00");
 const polaris = altAz(2.5303, 89.2642, 21.0278, 105.8342, born);

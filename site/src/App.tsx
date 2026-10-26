@@ -6,14 +6,14 @@ import { GateBurst } from "./components/Fireworks.tsx";
 import { Gate } from "./components/Gate.tsx";
 import { LockScreen } from "./components/LockScreen.tsx";
 import { LanguageToggle } from "./components/LanguageToggle.tsx";
-import { MusicButton } from "./components/MusicButton.tsx";
+import { MusicButton, MusicCredit } from "./components/MusicButton.tsx";
 import { Starfield } from "./components/Starfield.tsx";
 import { StickyNext } from "./components/StickyNext.tsx";
 import { StickyNextContext, type StickyAction } from "./components/sticky-next-context.ts";
 import { Universe } from "./components/Universe.tsx";
 import { FLOW, clampStep, stepDone, type StepId } from "./lib/flow.ts";
 import { useI18n } from "./lib/locale-context.ts";
-import { bindMusicVisibility, restoreMusicVolume, startMusic } from "./lib/music.ts";
+import { bindMusicVisibility, bindPlaylist, playBirthday, restoreMusicVolume, resumePlaylist, startMusic } from "./lib/music.ts";
 import { bindViewport } from "./lib/viewport.ts";
 import { isBeforeUnlock } from "./lib/lock.ts";
 import { clearProgress, restartedProgress } from "./lib/progress.ts";
@@ -128,7 +128,10 @@ export function App() {
   }, [progress.friendsSeen, stepId, update]);
 
   useEffect(() => bindViewport(), []);
-  useEffect(() => bindMusicVisibility(content.music), []);
+  useEffect(() => {
+    bindPlaylist(content.music.tracks);
+    return bindMusicVisibility();
+  }, []);
 
   useEffect(() => {
     const watch = (element: HTMLElement | null, name: "--header-h" | "--footer-h") => {
@@ -168,6 +171,15 @@ export function App() {
   }, [stepId]);
 
   useEffect(() => {
+    const birthday = content.music.birthday;
+    if (stepId !== "cake" || !birthday) return;
+    void playBirthday(birthday);
+    return () => {
+      void resumePlaylist();
+    };
+  }, [stepId]);
+
+  useEffect(() => {
     if (!askReset) return;
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") setAskReset(false);
@@ -196,7 +208,7 @@ export function App() {
   function unlock() {
     if (opening) return;
     setOpening(true);
-    void startMusic(content.music, progress.muted).catch(() => setMusicNote(t(content.ui.musicBlocked)));
+    void startMusic(progress.muted).catch(() => setMusicNote(t(content.ui.musicBlocked)));
     window.setTimeout(() => {
       update((current) => ({
         ...current,
@@ -358,6 +370,7 @@ export function App() {
             {t(content.ui.musicHint)}
           </p>
         )}
+        {released && progress.gateUnlocked && <MusicCredit />}
         {released && dev && (
           <div className="dev-jump">
             {FLOW.map((id, index) => (

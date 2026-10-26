@@ -84,6 +84,12 @@ export type Letter = {
   body: Copy;
 };
 
+export type MusicTrack = {
+  title: string;
+  artist: string;
+  src: string;
+};
+
 export type Content = {
   meta: {
     title: Copy;
@@ -101,7 +107,11 @@ export type Content = {
     hints: Copy[];
   };
   startDate: string;
-  music: string;
+  music: {
+    credit: Copy;
+    tracks: MusicTrack[];
+    birthday?: MusicTrack;
+  };
   envelope: {
     greeting: Copy;
     sealCaption: Copy;

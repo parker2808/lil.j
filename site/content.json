@@ -22,7 +22,19 @@
     ]
   },
   "startDate": "2024-02-14T19:30:00+07:00",
-  "music": "/music/nen.wav",
+  "music": {
+    "credit": { "vi": "Nhạc · MondayHopes", "en": "Music · MondayHopes" },
+    "tracks": [
+      { "title": "Echoes of the Stars", "artist": "sleepvolume", "src": "/music/echoes-of-the-stars.mp3" },
+      { "title": "Dream of Little Prince", "artist": "SergeQuadrado", "src": "/music/dream-of-little-prince.mp3" },
+      { "title": "Twinkle Like a Star", "artist": "MondayHopes", "src": "/music/twinkle-like-a-star.mp3" }
+    ],
+    "birthday": {
+      "title": "Happy Birthday Music Box Loop",
+      "artist": "SergeQuadrado",
+      "src": "/music/happy-birthday-music-box.mp3"
+    }
+  },
   "birth": {
     "when": "2002-11-18T21:30:00+07:00",
     "lat": 20.97,

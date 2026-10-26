@@ -13,17 +13,17 @@ type CakeProps = {
   onNext: () => void;
 };
 
-const COLORS = ["#f0d092", "#e7a0b4", "#fff6ea", "#c4536a", "#f3d48a", "#d7e3cb"];
+const COLORS = ["#f6b7d0", "#d4c4f6", "#c5dff5", "#f8d0c2", "#fff4f8", "#e7b7c4"];
 
 const SPRINKLES: { x: number; y: number; rot: number; fill: string }[] = [
-  { x: 132, y: 78, rot: -28, fill: "#f0d092" },
+  { x: 132, y: 78, rot: -28, fill: "#f6b7d0" },
   { x: 154, y: 70, rot: 18, fill: "#fff" },
-  { x: 176, y: 84, rot: 48, fill: "#c4536a" },
-  { x: 198, y: 68, rot: -12, fill: "#7d9a78" },
-  { x: 214, y: 86, rot: 24, fill: "#f0d092" },
+  { x: 176, y: 84, rot: 48, fill: "#c5dff5" },
+  { x: 198, y: 68, rot: -12, fill: "#d4c4f6" },
+  { x: 214, y: 86, rot: 24, fill: "#f8d0c2" },
   { x: 148, y: 92, rot: 70, fill: "#fff" },
-  { x: 188, y: 96, rot: -40, fill: "#e7a0b4" },
-  { x: 168, y: 64, rot: 8, fill: "#c8964a" },
+  { x: 188, y: 96, rot: -40, fill: "#e7b7c4" },
+  { x: 168, y: 64, rot: 8, fill: "#f3c6dc" },
 ];
 
 export function Cake({ progress, update, onBack, onNext }: CakeProps) {
@@ -214,41 +214,41 @@ function CakeArt() {
     <svg className="cake-art" viewBox="0 0 360 320" aria-hidden="true">
       <defs>
         <linearGradient id="spongeTop" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#f3c48e" />
-          <stop offset="48%" stopColor="#d4894c" />
-          <stop offset="100%" stopColor="#9a552c" />
+          <stop offset="0%" stopColor="#f8d4c6" />
+          <stop offset="48%" stopColor="#f0b4c4" />
+          <stop offset="100%" stopColor="#e094ae" />
         </linearGradient>
         <linearGradient id="spongeBot" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#e7a86c" />
-          <stop offset="100%" stopColor="#7d4324" />
+          <stop offset="0%" stopColor="#f3c4b8" />
+          <stop offset="100%" stopColor="#d989a4" />
         </linearGradient>
         <linearGradient id="icing" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#fff9fc" />
-          <stop offset="100%" stopColor="#f0b4c6" />
+          <stop offset="0%" stopColor="#fff8fb" />
+          <stop offset="100%" stopColor="#f6c5dc" />
         </linearGradient>
         <radialGradient id="underGlow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="rgba(240, 176, 140, 0.7)" />
-          <stop offset="70%" stopColor="rgba(141, 49, 72, 0.18)" />
-          <stop offset="100%" stopColor="rgba(141, 49, 72, 0)" />
+          <stop offset="0%" stopColor="rgba(246, 183, 208, 0.75)" />
+          <stop offset="70%" stopColor="rgba(212, 196, 246, 0.28)" />
+          <stop offset="100%" stopColor="rgba(212, 196, 246, 0)" />
         </radialGradient>
         <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#fffaf4" />
-          <stop offset="100%" stopColor="#e6d5c2" />
+          <stop offset="0%" stopColor="#fff8fb" />
+          <stop offset="100%" stopColor="#f3d5e4" />
         </linearGradient>
       </defs>
       <ellipse cx="180" cy="286" rx="148" ry="26" fill="url(#underGlow)" />
       <ellipse cx="180" cy="268" rx="136" ry="18" fill="url(#plate)" />
-      <ellipse cx="180" cy="262" rx="116" ry="9" fill="#f8f1e6" />
-      <ellipse cx="180" cy="262" rx="116" ry="9" fill="none" stroke="rgba(200, 150, 74, 0.45)" />
+      <ellipse cx="180" cy="262" rx="116" ry="9" fill="#fff4f8" />
+      <ellipse cx="180" cy="262" rx="116" ry="9" fill="none" stroke="rgba(231, 183, 196, 0.7)" />
 
       <path
         d="M48 176 h264 a16 16 0 0 1 16 16 v34 c0 22 -66 34 -148 34 s-148 -12 -148 -34 v-34 a16 16 0 0 1 16 -16z"
         fill="url(#spongeBot)"
       />
-      <path d="M64 214 h232" stroke="#8d3148" strokeWidth="11" strokeLinecap="round" />
-      <path d="M64 214 h232" stroke="#f0d092" strokeWidth="2.2" strokeLinecap="round" />
-      <ellipse cx="64" cy="214" rx="7" ry="5.5" fill="#f0d092" />
-      <path d="M58 214 c-8 10 -2 22 8 18 c6 -8 4 -16 0 -18z" fill="#8d3148" />
+      <path d="M64 214 h232" stroke="#e7a0b8" strokeWidth="11" strokeLinecap="round" />
+      <path d="M64 214 h232" stroke="#fff4f8" strokeWidth="2.2" strokeLinecap="round" />
+      <ellipse cx="64" cy="214" rx="7" ry="5.5" fill="#fff4f8" />
+      <path d="M58 214 c-8 10 -2 22 8 18 c6 -8 4 -16 0 -18z" fill="#e7a0b8" />
 
       <path d="M70 176 c8 22 8 36 16 36 s12 -16 16 -36" fill="url(#icing)" />
       <path d="M118 176 c10 28 12 48 20 48 s12 -22 18 -48" fill="url(#icing)" />
@@ -282,9 +282,9 @@ function CakeArt() {
           transform={`rotate(${bit.rot} ${bit.x + 5} ${bit.y + 1.6})`}
         />
       ))}
-      <circle cx="128" cy="108" r="4.2" fill="#f0d092" />
+      <circle cx="128" cy="108" r="4.2" fill="#d4c4f6" />
       <circle cx="230" cy="112" r="3.4" fill="#fff" />
-      <circle cx="206" cy="100" r="3" fill="#c4536a" />
+      <circle cx="206" cy="100" r="3" fill="#c5dff5" />
     </svg>
   );
 }

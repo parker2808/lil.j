@@ -16,7 +16,7 @@ export function Hearts({ active }: HeartsProps) {
         duration: 7 + (index % 5),
         size: 12 + (index % 4) * 5,
         drift: (index % 2 === 0 ? -1 : 1) * (12 + (index % 5) * 8),
-        color: index % 3 === 0 ? "#e6c48a" : index % 3 === 1 ? "#efb4c0" : "#f7f1e8",
+        color: index % 4 === 0 ? "#f6b7d0" : index % 4 === 1 ? "#d4c4f6" : index % 4 === 2 ? "#c5dff5" : "#f8d0c2",
       })),
     [],
   );

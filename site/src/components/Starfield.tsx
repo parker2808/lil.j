@@ -8,8 +8,10 @@ type Star = {
   a: number;
   tw: number;
   phase: number;
-  gold: boolean;
+  hue: string;
 };
+
+const STAR_HUES = ["#fff7fb", "#f7c6dc", "#d7c6f6", "#c9e2f8", "#f8d4c6"];
 
 type Shot = {
   x: number;
@@ -55,7 +57,7 @@ export function Starfield() {
           a: 0.2 + Math.random() * 0.75,
           tw: 0.5 + Math.random() * 2.4,
           phase: Math.random() * Math.PI * 2,
-          gold: Math.random() < 0.14,
+          hue: STAR_HUES[index % STAR_HUES.length] ?? "#fff7fb",
         });
       }
     };
@@ -66,7 +68,7 @@ export function Starfield() {
       for (const star of stars) {
         const pulse = reduced ? 1 : 0.45 + 0.55 * Math.sin(time / 900 * star.tw + star.phase);
         ctx.globalAlpha = Math.max(0.08, star.a * pulse);
-        ctx.fillStyle = star.gold ? "#f0d092" : "#fff7ee";
+        ctx.fillStyle = star.hue;
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
         ctx.fill();
@@ -100,7 +102,7 @@ export function Starfield() {
           for (let index = 0; index < 16; index += 1) {
             const trail = index / 16;
             ctx.globalAlpha = Math.max(0, fade * (1 - trail));
-            ctx.fillStyle = index < 2 ? "#fffaf2" : "#f0d092";
+            ctx.fillStyle = index < 2 ? "#fff7fb" : "#f4b7d4";
             ctx.beginPath();
             ctx.arc(shot.x - shot.vx * trail * 2.1, shot.y - shot.vy * trail * 2.1, Math.max(0.3, 1.8 - trail * 1.5), 0, Math.PI * 2);
             ctx.fill();

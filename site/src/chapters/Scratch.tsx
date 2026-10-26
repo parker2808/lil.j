@@ -72,14 +72,14 @@ function ScratchCard({
       const width = rect.width;
       const height = rect.height;
       const gradient = ctx.createLinearGradient(0, 0, width, height);
-      gradient.addColorStop(0, "#c6a36a");
-      gradient.addColorStop(0.45, "#f3e2bf");
-      gradient.addColorStop(1, "#a8844a");
+      gradient.addColorStop(0, "#e7b4c8");
+      gradient.addColorStop(0.45, "#fbe4ee");
+      gradient.addColorStop(1, "#d489a8");
       ctx.globalCompositeOperation = "source-over";
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, width, height);
       ctx.globalAlpha = 0.22;
-      ctx.strokeStyle = "#fff8ea";
+      ctx.strokeStyle = "#fff6fb";
       ctx.lineWidth = 2;
       for (let x = -height; x < width; x += 14) {
         ctx.beginPath();
@@ -88,7 +88,7 @@ function ScratchCard({
         ctx.stroke();
       }
       ctx.globalAlpha = 1;
-      ctx.fillStyle = "#5c3d28";
+      ctx.fillStyle = "#6a3454";
       ctx.font = "600 16px 'Be Vietnam Pro', sans-serif";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";

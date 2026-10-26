@@ -5,12 +5,13 @@ type ChapterFrameProps = {
   kicker: string;
   title: string;
   lede: string;
+  className?: string;
   children: ReactNode;
 };
 
-export function ChapterFrame({ kicker, title, lede, children }: ChapterFrameProps) {
+export function ChapterFrame({ kicker, title, lede, className, children }: ChapterFrameProps) {
   return (
-    <section className="scene chapter">
+    <section className={className ? `scene chapter ${className}` : "scene chapter"}>
       <p className="kicker">{kicker}</p>
       <Reveal text={title} />
       <p className="lede">{lede}</p>

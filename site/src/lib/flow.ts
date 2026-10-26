@@ -74,6 +74,7 @@ export function stepDone(
     skyDone: boolean;
     birthSeen: boolean;
     flippedPhotos: string[];
+    erasViewed?: string[];
     quiz: Record<string, number>;
     counterSeen: boolean;
     candlesOut: number[];
@@ -102,7 +103,7 @@ export function stepDone(
     case "birth":
       return progress.birthSeen;
     case "gallery":
-      return progress.flippedPhotos.length > 0;
+      return (progress.erasViewed?.length ?? 0) > 0;
     case "quiz":
       return quizIds.every((qid) => typeof progress.quiz[qid] === "number");
     case "cake": {

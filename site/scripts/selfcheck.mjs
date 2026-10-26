@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { FLOW, FLOW_VERSION, FLOW_WITH_FRIENDS, INCLUDE_FRIENDS, PREVIOUS_FLOW, migrateIndex, stepDone } from "../src/lib/flow.ts";
+import { cloudinarySrcSet, cloudinaryUrl } from "../src/lib/images.ts";
 import { elapsedParts, fillTemplate, formatZoned, nicknamesMatch, todayKey } from "../src/lib/pure.ts";
 import { altAz, projectSky } from "../src/lib/stars.ts";
 
@@ -71,6 +72,25 @@ assert.equal(stepDone("cake", { ...blank, candlesOut: [0, 1, 2, 2] }, 5, []), fa
 assert.equal(stepDone("cake", { ...blank, candlesOut: [0, 1, 2, 3, 4] }, 5, []), true);
 assert.equal(stepDone("wish", { ...blank, wishes: [{ text: "  " }] }, 1, []), false);
 assert.equal(stepDone("wish", { ...blank, wishes: [{ text: "ở bên" }] }, 1, []), true);
+assert.equal(stepDone("gallery", blank, 5, []), false);
+assert.equal(stepDone("gallery", { ...blank, erasViewed: ["first"] }, 5, []), true);
+
+assert.equal(cloudinaryUrl("/photos/01.svg", 720), "/photos/01.svg");
+assert.equal(cloudinarySrcSet("/photos/01.svg", [360, 720]), undefined);
+const remote = "https://res.cloudinary.com/demo/image/upload/v123/folder/a.jpg";
+assert.equal(
+  cloudinaryUrl(remote, 720),
+  "https://res.cloudinary.com/demo/image/upload/c_limit,w_720/f_auto/q_auto/v123/folder/a.jpg",
+);
+const transformed = "https://res.cloudinary.com/demo/image/upload/c_limit,w_400/f_auto/q_auto/v123/folder/a.jpg";
+assert.equal(
+  cloudinaryUrl(transformed, 360),
+  "https://res.cloudinary.com/demo/image/upload/c_limit,w_360/f_auto/q_auto/v123/folder/a.jpg",
+);
+assert.equal(
+  cloudinaryUrl("https://res.cloudinary.com/demo/image/upload/w_photos/c_keep.jpg", 200),
+  "https://res.cloudinary.com/demo/image/upload/c_limit,w_200/f_auto/q_auto/w_photos/c_keep.jpg",
+);
 
 assert.equal(INCLUDE_FRIENDS, false);
 assert.equal(FLOW_VERSION, 3);

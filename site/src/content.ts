@@ -1,9 +1,30 @@
-import raw from "../content.json";
+import rawJson from "../content.json";
 import { FLOW } from "./lib/flow.ts";
 import { collectCopyProblems } from "./lib/i18n.ts";
-import type { Content } from "./types.ts";
+import type { Content, Era, Photo } from "./types.ts";
 
-export const content = raw as Content;
+type RawContent = Omit<Content, "photos">;
+
+const raw = rawJson as RawContent;
+
+function flattenPhotos(eras: Era[]): Photo[] {
+  const pairIds = new Set(eras.flatMap((era) => era.photos.slice(0, 2).map((photo) => photo.id)));
+  return eras.flatMap((era) =>
+    era.photos.map((photo) => ({
+      id: photo.id,
+      src: photo.src,
+      alt: photo.caption,
+      caption: photo.caption,
+      compliment: photo.compliment,
+      pair: pairIds.has(photo.id),
+    })),
+  );
+}
+
+export const content: Content = {
+  ...raw,
+  photos: flattenPhotos(raw.eras ?? []),
+};
 
 const REQUIRED_CHAPTERS = [
   "gallery",
@@ -24,6 +45,12 @@ export function validateContent(value: Content): string | null {
   const ids = value.chapters.map((chapter) => chapter.id);
   for (const id of REQUIRED_CHAPTERS) {
     if (!ids.includes(id)) return `content.json thiếu chương "${id}".`;
+  }
+  if (!Array.isArray(value.eras) || value.eras.length < 1) {
+    return "content.json cần ít nhất một thời của ảnh.";
+  }
+  for (const era of value.eras) {
+    if (!era.photos?.length) return `Thời "${era.id}" chưa có ảnh.`;
   }
   if (!Array.isArray(value.photos) || value.photos.length < 1) {
     return "content.json cần ít nhất một ảnh.";

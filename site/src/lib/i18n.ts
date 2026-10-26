@@ -19,6 +19,8 @@ const PLAIN = new Set([
   "monogram",
   "author",
   "when",
+  "date",
+  "color",
 ]);
 
 export function isCopy(value: unknown): value is Copy {

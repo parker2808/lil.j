@@ -1,7 +1,8 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { content } from "../content.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import { nicknamesMatch } from "../lib/pure.ts";
+import { useReducedMotion } from "../lib/useReducedMotion.ts";
 import { Reveal } from "./Reveal.tsx";
 
 type GateProps = {
@@ -10,11 +11,18 @@ type GateProps = {
 
 export function Gate({ onUnlock }: GateProps) {
   const { t } = useI18n();
+  const reduced = useReducedMotion();
+  const unlockRef = useRef(onUnlock);
   const [value, setValue] = useState("");
   const [hintIndex, setHintIndex] = useState(-1);
   const [shaking, setShaking] = useState(false);
   const [empty, setEmpty] = useState(false);
+  const [passed, setPassed] = useState(false);
   const hint = hintIndex >= 0 ? content.gate.hints[hintIndex % content.gate.hints.length] : undefined;
+
+  useEffect(() => {
+    unlockRef.current = onUnlock;
+  }, [onUnlock]);
 
   useEffect(() => {
     if (!shaking) return;
@@ -22,8 +30,15 @@ export function Gate({ onUnlock }: GateProps) {
     return () => window.clearTimeout(timer);
   }, [shaking]);
 
+  useEffect(() => {
+    if (!passed) return;
+    const timer = window.setTimeout(() => unlockRef.current(), reduced ? 800 : 2100);
+    return () => window.clearTimeout(timer);
+  }, [passed, reduced]);
+
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (passed) return;
     if (!value.trim()) {
       setEmpty(true);
       setShaking(true);
@@ -31,7 +46,8 @@ export function Gate({ onUnlock }: GateProps) {
     }
     setEmpty(false);
     if (nicknamesMatch(value, content.gate.password)) {
-      onUnlock();
+      if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
+      setPassed(true);
       return;
     }
     setHintIndex((index) => index + 1);
@@ -58,45 +74,55 @@ export function Gate({ onUnlock }: GateProps) {
           </svg>
         </span>
       </div>
-      <Reveal text={t(content.gate.question)} />
-      <form onSubmit={onSubmit} className={shaking ? "gate-form shake" : "gate-form"}>
-        <div className="gate-field">
-          <label>
-            <input
-              id="nickname"
-              value={value}
-              placeholder=" "
-              autoComplete="off"
-              autoCapitalize="none"
-              autoCorrect="off"
-              spellCheck={false}
-              enterKeyHint="go"
-              onChange={(event) => setValue(event.target.value)}
-            />
-            <span>{t(content.gate.placeholder)}</span>
-          </label>
-          <button
-            type="submit"
-            className="gate-go"
-            aria-label={t(content.gate.submit)}
-            onPointerDown={(event) => event.preventDefault()}
-          >
-            <svg viewBox="0 0 20 20" aria-hidden="true">
-              <path
-                d="M4 10h11M11 5l5 5-5 5"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
+      {passed ? (
+        <div className="gate-success">
+          <Reveal text={t(content.gate.found)} />
+          <Reveal as="p" className="lede" text={t(content.gate.welcome)} delay={0.45} />
         </div>
-      </form>
-      <p className="hint" role="status">
-        {empty ? t(content.gate.empty) : t(hint)}
-      </p>
+      ) : (
+        <>
+          <Reveal text={t(content.gate.question)} />
+          <p className="lede">{t(content.gate.subtitle)}</p>
+          <form onSubmit={onSubmit} className={shaking ? "gate-form shake" : "gate-form"}>
+            <div className="gate-field">
+              <label>
+                <input
+                  id="nickname"
+                  value={value}
+                  placeholder=" "
+                  autoComplete="off"
+                  autoCapitalize="none"
+                  autoCorrect="off"
+                  spellCheck={false}
+                  enterKeyHint="go"
+                  onChange={(event) => setValue(event.target.value)}
+                />
+                <span>{t(content.gate.placeholder)}</span>
+              </label>
+              <button
+                type="submit"
+                className="gate-go"
+                aria-label={t(content.gate.submit)}
+                onPointerDown={(event) => event.preventDefault()}
+              >
+                <svg viewBox="0 0 20 20" aria-hidden="true">
+                  <path
+                    d="M4 10h11M11 5l5 5-5 5"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+          </form>
+          <p className="hint" role="status">
+            {empty ? t(content.gate.empty) : t(hint)}
+          </p>
+        </>
+      )}
     </section>
   );
 }

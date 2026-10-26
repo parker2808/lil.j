@@ -55,12 +55,60 @@
         "vi": "Thử viết tắt tên của cô gái anh thích nhất xem.",
         "en": "Try the initials of my favorite girl."
       }
-    ]
+    ],
+    "subtitle": {
+      "vi": "Mỗi ngôi sao ở đây đều có một câu chuyện. Và chẳng hiểu sao, tất cả đều dẫn đến em.",
+      "en": "Every star here has a story. And somehow, they all lead to you."
+    },
+    "found": {
+      "vi": "Em tìm được đường vào rồi, MJ.",
+      "en": "You found your way in, MJ."
+    },
+    "welcome": {
+      "vi": "Chào mừng em đến với vũ trụ nhỏ của riêng mình. ✨",
+      "en": "Welcome to your own little universe. ✨"
+    }
   },
   "startDate": "2026-07-01T00:00:00+07:00",
-  "music": "/music/nen.wav",
+  "music": {
+    "tracks": [
+      {
+        "title": "From The Start",
+        "artist": "Laufey",
+        "src": "/music/from-the-start.mp3"
+      },
+      {
+        "title": "Bewitched",
+        "artist": "Laufey",
+        "src": "/music/bewitched.mp3"
+      },
+      {
+        "title": "Valentine",
+        "artist": "Laufey",
+        "src": "/music/valentine.mp3"
+      },
+      {
+        "title": "Glue Song",
+        "artist": "beabadoobee",
+        "src": "/music/glue-song.mp3"
+      },
+      {
+        "title": "Echoes of the Stars",
+        "artist": "sleepvolume",
+        "src": "/music/echoes-of-the-stars.mp3"
+      },
+      {
+        "title": "Twinkle Twinkle Little Star (Grand Piano)",
+        "src": "/music/twinkle-twinkle-little-star.mp3"
+      }
+    ],
+    "birthday": {
+      "title": "Happy Birthday Music Box Loop",
+      "src": "/music/happy-birthday-music-box.mp3"
+    }
+  },
   "birth": {
-    "when": "2002-11-18T21:30:00+07:00",
+    "when": "2002-11-18T16:45:00+07:00",
     "lat": 20.97,
     "lon": 105.78,
     "place": {
@@ -68,8 +116,8 @@
       "en": "Hà Đông, Hà Nội, Vietnam"
     },
     "kicker": {
-      "vi": "Bầu trời đêm em sinh ra",
-      "en": "The night you were born"
+      "vi": "Chiều em sinh ra",
+      "en": "The afternoon you were born"
     },
     "title": {
       "vi": "Bầu trời trong ngày đặc biệt của em",
@@ -98,6 +146,60 @@
     "caption": {
       "vi": "{when} · {place}",
       "en": "{when} · {place}"
+    },
+    "notes": [
+      {
+        "id": "cas",
+        "title": {
+          "vi": "Sự quan tâm của em",
+          "en": "Your kindness"
+        },
+        "body": {
+          "vi": "Em khiến việc quan tâm đến người khác trở thành một điều rất tự nhiên.",
+          "en": "You make caring feel like the most natural thing in the world."
+        }
+      },
+      {
+        "id": "lyr",
+        "title": {
+          "vi": "Chiếc mặt phụng phịu",
+          "en": "Your little pout"
+        },
+        "body": {
+          "vi": "Nhất là mỗi lần anh trêu em. Ừ, anh để ý hết đấy. :)))",
+          "en": "Especially when I tease you. Yes, I notice it every time. :)))"
+        }
+      },
+      {
+        "id": "cyg",
+        "title": {
+          "vi": "Nụ cười của em",
+          "en": "Your smile"
+        },
+        "body": {
+          "vi": "Một trong những điều anh thích nhìn thấy nhất, nhất là khi biết mình là người khiến em cười.",
+          "en": "One of my favorite things to see, especially when I know I caused it."
+        }
+      },
+      {
+        "id": "aql",
+        "title": {
+          "vi": "Tương lai của em",
+          "en": "Your future"
+        },
+        "body": {
+          "vi": "Anh mong thế giới sẽ cho em thật nhiều lý do để mỉm cười.",
+          "en": "I hope the world gives you a thousand reasons to smile."
+        }
+      }
+    ],
+    "progress": {
+      "vi": "{n}/{total} lời nhắn",
+      "en": "{n}/{total} notes"
+    },
+    "sign": {
+      "vi": "Cung của em",
+      "en": "Your sign"
     }
   },
   "constellations": {
@@ -277,8 +379,8 @@
         "en": "Seven stars appear one by one, forming the name JOLIE."
       },
       "birth": {
-        "vi": "Chạm vào từng ngôi sao để khám phá lời nhắn.",
-        "en": "Tap a star to discover a little message."
+        "vi": "Chạm những sao nhấp nháy để đọc hết lời nhắn.",
+        "en": "Tap the pulsing stars until every note is open."
       },
       "gallery": {
         "vi": "Chạm một chương.",
@@ -503,6 +605,26 @@
     "back": {
       "vi": "Ngân hà",
       "en": "The galaxy"
+    },
+    "backToGalaxy": {
+      "vi": "← Về ngân hà",
+      "en": "← Back to the galaxy"
+    },
+    "eraProgress": {
+      "vi": "Thời {n}/{total} · ảnh {photo}/{photos}",
+      "en": "Era {n} of {total} · photo {photo}/{photos}"
+    },
+    "nextEra": {
+      "vi": "Thời tiếp theo",
+      "en": "Next era"
+    },
+    "seen": {
+      "vi": "Đã xem",
+      "en": "Seen"
+    },
+    "pending": {
+      "vi": "Chưa xem",
+      "en": "Not yet"
     },
     "empty": {
       "vi": "Hết thời này rồi.",
@@ -952,7 +1074,29 @@
     "back": {
       "vi": "Mặt sau",
       "en": "Face down"
-    }
+    },
+    "lines": [
+      {
+        "vi": "Một khoảnh khắc nhỏ, một kỷ niệm dễ thương.",
+        "en": "A little moment, a lovely memory."
+      },
+      {
+        "vi": "Anh vẫn nhớ tấm này. Còn em?",
+        "en": "I remember this one. Do you?"
+      },
+      {
+        "vi": "Bằng chứng rằng chẳng cần dịp đặc biệt để vui vẻ cùng nhau.",
+        "en": "Proof that we don’t need a special occasion to have fun."
+      },
+      {
+        "vi": "Vẫn còn rất nhiều kỷ niệm đang chờ phía trước.",
+        "en": "More memories waiting to be made."
+      },
+      {
+        "vi": "Điều anh thích nhất trong tấm ảnh này à? Là em.",
+        "en": "My favorite part of this photo? You."
+      }
+    ]
   },
   "dreams": [
     {
@@ -1296,6 +1440,14 @@
     "yesBody": {
       "vi": "Thêm một năm để hiểu nhau hơn, cùng cười, quan tâm nhau và tạo thêm thật nhiều kỷ niệm. ❤️",
       "en": "One more year of learning, laughing, caring, and making memories together. ❤️"
+    },
+    "lead": {
+      "vi": "MJ à, anh hỏi câu cuối nhé…",
+      "en": "MJ, One Last Question…"
+    },
+    "celebrate": {
+      "vi": "Cả vũ trụ đang ăn mừng cho hai đứa mình!",
+      "en": "The universe is celebrating us!"
     }
   },
   "ui": {
@@ -1438,6 +1590,33 @@
     "dottedDate": {
       "vi": "{d}.{m}.{y}",
       "en": "{d}.{m}.{y}"
+    }
+  },
+  "lock": {
+    "unlockAt": "2026-11-18T00:00:00+07:00",
+    "title": {
+      "vi": "Đến sinh nhật của em",
+      "en": "Until your birthday"
+    },
+    "subtitle": {
+      "vi": "Nửa đêm ngày 18 tháng 11, giờ Việt Nam.",
+      "en": "Midnight on 18 November, Vietnam time."
+    },
+    "days": {
+      "vi": "ngày",
+      "en": "days"
+    },
+    "hours": {
+      "vi": "giờ",
+      "en": "hours"
+    },
+    "minutes": {
+      "vi": "phút",
+      "en": "minutes"
+    },
+    "seconds": {
+      "vi": "giây",
+      "en": "seconds"
     }
   }
 }

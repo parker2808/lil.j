@@ -123,6 +123,23 @@ export function validateContent(value: Content): string | null {
   if (!value.finale?.question?.vi?.trim() || !value.finale?.question?.en?.trim()) {
     return "content.json thiếu câu hỏi cuối (cả vi và en).";
   }
+  if (!value.finale?.lead?.vi?.trim() || !value.finale?.lead?.en?.trim()) {
+    return "content.json thiếu lời dẫn câu hỏi cuối (finale.lead).";
+  }
+  if (!value.finale?.celebrate?.vi?.trim() || !value.finale?.celebrate?.en?.trim()) {
+    return "content.json thiếu dòng pháo hoa (finale.celebrate).";
+  }
+  if (!value.gate?.subtitle?.vi?.trim() || !value.gate?.subtitle?.en?.trim()) {
+    return "content.json thiếu phụ đề cánh cửa (gate.subtitle).";
+  }
+  if (
+    !value.gate?.found?.vi?.trim() ||
+    !value.gate?.found?.en?.trim() ||
+    !value.gate?.welcome?.vi?.trim() ||
+    !value.gate?.welcome?.en?.trim()
+  ) {
+    return "content.json thiếu lời chào khi mở được cửa (gate.found, gate.welcome).";
+  }
   if (!Array.isArray(value.birth?.notes) || value.birth.notes.length !== 4) {
     return "content.json cần đúng 4 lời nhắn trên bầu trời sinh (birth.notes).";
   }

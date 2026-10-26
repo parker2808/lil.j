@@ -101,6 +101,9 @@ export type Content = {
   gate: {
     password: string;
     question: Copy;
+    subtitle: Copy;
+    found: Copy;
+    welcome: Copy;
     placeholder: Copy;
     submit: Copy;
     empty: Copy;
@@ -235,6 +238,8 @@ export type Content = {
     teases: Copy[];
     yesTitle: Copy;
     yesBody: Copy;
+    lead: Copy;
+    celebrate: Copy;
   };
   ui: {
     back: Copy;

@@ -66,10 +66,12 @@ export function Finale({ saidYes, onYes }: FinaleProps) {
         <div className="finale-copy">
           <Reveal text={t(content.finale.yesTitle)} />
           <p className="lede">{t(content.finale.yesBody)}</p>
+          <Reveal as="p" className="finale-celebrate" text={t(content.finale.celebrate)} delay={0.55} />
         </div>
       ) : (
         <>
-          <Reveal as="h2" className="finale-question" text={t(content.finale.question)} />
+          <Reveal as="p" className="finale-lead" text={t(content.finale.lead)} />
+          <Reveal as="h2" className="finale-question" text={t(content.finale.question)} delay={0.28} />
           <button type="button" className="btn btn-gold yes-btn" onClick={onYes}>
             {t(content.finale.yes)}
           </button>

@@ -9,14 +9,18 @@ type RawContent = Omit<Content, "photos">;
 
 const raw = rawJson as RawContent;
 
+function captionBlank(copy: Copy | undefined): boolean {
+  return !copy?.vi.trim() && !copy?.en.trim();
+}
+
 function flattenPhotos(eras: Era[]): Photo[] {
   const pairIds = new Set(eras.flatMap((era) => era.photos.slice(0, 2).map((photo) => photo.id)));
   return eras.flatMap((era) =>
     era.photos.map((photo) => ({
       id: photo.id,
       src: photo.src,
-      alt: photo.caption,
-      caption: photo.caption,
+      alt: captionBlank(photo.caption) ? era.title : (photo.caption ?? era.title),
+      caption: photo.caption ?? { vi: "", en: "" },
       compliment: photo.compliment,
       pair: pairIds.has(photo.id),
     })),
@@ -87,7 +91,12 @@ export function validateContent(value: Content): string | null {
   for (const era of value.eras) {
     if (era.date < startDay) return `Thời "${era.id}" bắt đầu trước ngày bên nhau.`;
     for (const photo of era.photos) {
-      if (!photo.date || photo.date < startDay) return `Ảnh "${photo.id}" trước ngày bên nhau.`;
+      if (photo.date && !/^\d{4}-\d{2}-\d{2}$/.test(photo.date)) {
+        return `Ảnh "${photo.id}" có ngày không hợp lệ.`;
+      }
+      if (!photo.src?.startsWith("lilj/")) {
+        return `Ảnh "${photo.id}" cần public id Cloudinary (lilj/...).`;
+      }
     }
   }
   if (!Array.isArray(value.music.tracks) || value.music.tracks.length < 2) {
@@ -122,6 +131,23 @@ export function validateContent(value: Content): string | null {
   }
   if (!value.finale?.question?.vi?.trim() || !value.finale?.question?.en?.trim()) {
     return "content.json thiếu câu hỏi cuối (cả vi và en).";
+  }
+  if (!value.finale?.lead?.vi?.trim() || !value.finale?.lead?.en?.trim()) {
+    return "content.json thiếu lời dẫn câu hỏi cuối (finale.lead).";
+  }
+  if (!value.finale?.celebrate?.vi?.trim() || !value.finale?.celebrate?.en?.trim()) {
+    return "content.json thiếu dòng pháo hoa (finale.celebrate).";
+  }
+  if (!value.gate?.subtitle?.vi?.trim() || !value.gate?.subtitle?.en?.trim()) {
+    return "content.json thiếu phụ đề cánh cửa (gate.subtitle).";
+  }
+  if (
+    !value.gate?.found?.vi?.trim() ||
+    !value.gate?.found?.en?.trim() ||
+    !value.gate?.welcome?.vi?.trim() ||
+    !value.gate?.welcome?.en?.trim()
+  ) {
+    return "content.json thiếu lời chào khi mở được cửa (gate.found, gate.welcome).";
   }
   if (!Array.isArray(value.birth?.notes) || value.birth.notes.length !== 4) {
     return "content.json cần đúng 4 lời nhắn trên bầu trời sinh (birth.notes).";

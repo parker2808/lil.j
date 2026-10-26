@@ -541,7 +541,17 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 
 .gate-moon circle { fill: #fff; filter: drop-shadow(0 0 3px #fff); }
 
-.gate h1 { margin-bottom: 4px; max-width: min(14ch, 100%); }
+.gate .kicker,
+.envelope-scene .kicker {
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+}
+
+.gate h1 { margin-bottom: 4px; max-width: min(18ch, 100%); }
+
+.gate-success { width: min(100%, 22rem); margin-top: 4px; }
+.gate-success h1 { max-width: min(22ch, 100%); }
+.gate-success .lede { margin-top: 10px; }
 
 .gate-form {
   width: min(100%, 340px);
@@ -557,8 +567,9 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 
 .gate-field input {
   width: 100%;
-  height: 54px;
-  padding: 16px 58px 0 22px;
+  height: auto;
+  min-height: 72px;
+  padding: 28px 58px 12px 22px;
   border-radius: var(--radius-pill);
   border: 1px solid rgba(255, 228, 240, 0.48);
   background: rgba(255, 245, 250, 0.1);
@@ -572,12 +583,15 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 .gate-field span {
   position: absolute;
   left: 22px;
-  top: 17px;
+  right: 58px;
+  top: 50%;
+  transform: translateY(-50%);
   color: var(--muted);
   font-size: var(--text-secondary);
-  line-height: var(--leading-body);
+  line-height: 1.2;
+  white-space: normal;
   pointer-events: none;
-  transition: top 0.2s ease, color 0.2s ease, font-size 0.2s ease, letter-spacing 0.2s ease;
+  transition: top 0.2s ease, color 0.2s ease, font-size 0.2s ease, letter-spacing 0.2s ease, transform 0.2s ease;
 }
 
 .gate-field input:focus {
@@ -589,11 +603,12 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 
 .gate-field input:focus + span,
 .gate-field input:not(:placeholder-shown) + span {
-  top: 6px;
+  top: 8px;
+  transform: none;
   font-size: var(--text-eyebrow);
-  line-height: 1.2;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  line-height: 1.15;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--gold);
 }
 
@@ -657,7 +672,13 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   box-shadow: var(--shadow), inset 0 0 0 1px rgba(255, 255, 255, 0.25);
 }
 
-.envelope.is-open .env-pocket { overflow: visible; }
+.envelope.is-open .env-pocket {
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+  background: transparent;
+  box-shadow: none;
+}
 
 .env-paper {
   position: absolute;
@@ -678,9 +699,23 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 }
 
 .envelope.is-open .env-paper {
+  position: relative;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  width: min(100%, 420px);
+  margin: 8px auto 0;
+  transform: none;
   opacity: 1;
-  transform: translateY(-132px);
   z-index: 5;
+}
+
+.envelope.is-open .env-front,
+.envelope.is-open .env-flap { display: none; }
+
+.env-paper p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 .greet {
@@ -692,6 +727,13 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 }
 
 .env-paper .btn { margin-top: 14px; }
+
+.env-accept {
+  width: 100%;
+  max-width: 100%;
+  white-space: normal;
+  text-align: center;
+}
 
 .env-front {
   position: absolute;
@@ -1800,7 +1842,27 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   letter-spacing: -0.02em;
   line-height: var(--leading-title);
 }
-.yes-btn { min-width: 148px; }
+
+.finale-lead {
+  margin: 0 auto 8px;
+  max-width: min(24ch, 100%);
+  color: var(--gold);
+  font-size: var(--text-h2);
+  line-height: var(--leading-title);
+  font-weight: 600;
+}
+
+.finale-celebrate {
+  margin: 14px auto 0;
+  max-width: min(28ch, 100%);
+  color: #ffe6f4;
+  font-size: var(--text-h2);
+  line-height: var(--leading-title);
+  font-weight: 600;
+  text-shadow: 0 1px 1px rgba(42, 18, 58, 0.42);
+}
+
+.yes-btn { min-width: 148px; max-width: 100%; white-space: normal; }
 
 .finale-stage {
   position: relative;
@@ -1808,7 +1870,7 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   margin-top: 18px;
 }
 
-.no-btn { position: absolute; min-width: 108px; }
+.no-btn { position: absolute; min-width: 108px; max-width: calc(100% - 16px); white-space: normal; }
 
 .confetti {
   position: fixed;

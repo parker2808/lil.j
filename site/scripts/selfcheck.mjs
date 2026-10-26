@@ -162,6 +162,26 @@ assert.equal(
   cloudinaryUrl("https://res.cloudinary.com/demo/image/upload/w_photos/c_keep.jpg", 200),
   "https://res.cloudinary.com/demo/image/upload/c_limit,w_200/f_auto/q_auto/w_photos/c_keep.jpg",
 );
+assert.equal(
+  cloudinaryUrl("lilj/care/01_IMG_4956", 720),
+  "https://res.cloudinary.com/oiounrmh/image/upload/c_limit,w_720/f_auto/q_auto/lilj/care/01_IMG_4956",
+);
+assert.equal(
+  cloudinarySrcSet("lilj/care/01_IMG_4956", [360, 720]),
+  "https://res.cloudinary.com/oiounrmh/image/upload/c_limit,w_360/f_auto/q_auto/lilj/care/01_IMG_4956 360w, https://res.cloudinary.com/oiounrmh/image/upload/c_limit,w_720/f_auto/q_auto/lilj/care/01_IMG_4956 720w",
+);
+const eraPhotos = content.eras.flatMap((era) => era.photos);
+assert.equal(eraPhotos.length, 39);
+for (const photo of eraPhotos) {
+  assert.equal(photo.date, undefined);
+  assert.equal(photo.caption.vi, "");
+  assert.equal(photo.caption.en, "");
+  assert.match(photo.src, /^lilj\/(?:care|pout|surprise|ordinary|more)\/\d{2}_/);
+}
+assert.deepEqual(
+  content.eras.flatMap((era) => era.photos.slice(0, 2).map((photo) => photo.id)).slice(0, 6),
+  ["care-01", "care-02", "pout-01", "pout-02", "surprise-01", "surprise-02"],
+);
 
 assert.equal(INCLUDE_FRIENDS, false);
 assert.equal(FLOW_VERSION, 3);

@@ -75,7 +75,7 @@ Cả hai ngôn ngữ đều bắt buộc, không để trống. `npm run build` 
 | `flow` | Lời dẫn đường đi thẳng: `next`, `back`, `progress` (`{n}`, `{total}`), `done`, `doneLast`, `devJump` (`{n}`), và `hints` cho từng bước. Đường đang mở có 15 khóa: `gate`, `sky`, `birth`, `gallery`, `quiz`, `counter`, `cake`, `envelope`, `memory`, `scratch`, `letters`, `dreams`, `finale`, `wish`, `letter`. Khóa `friends` vẫn để trong file để bật lại bước lời bạn. |
 | `envelope` | Phong thư sáp, bước ngay sau bánh. `greeting`, `sealCaption`, `openHint`, `body`. |
 | `chapters` | Bảy mục nội dung, `id` cố định: `gallery`, `scratch`, `quiz`, `memory`, `dreams`, `friends`, `counter`. Đường đi đang mở sáu mục; `friends` tạm rút khỏi đường (dữ liệu và màn hình vẫn giữ). Đổi được `star`, `kicker`, `title`, `lede`. Không đổi `id`. |
-| `photos` | Ảnh polaroid. `src` trỏ file trong `public` (`/photos/01.webp`). `alt`, `caption`, `compliment` (câu giấu mặt sau). `pair: true` thì ảnh được đưa vào trò nhớ — lấy tối đa 6 ảnh đầu tiên có `pair: true` (12 thẻ). Cần ít nhất 2 ảnh `pair`. |
+| `eras[].photos` | Ảnh polaroid của từng thời. `src` là public id Cloudinary (`lilj/care/01_…`), không phải file trong repo. `caption` có thể để trống để điền sau. `date` bỏ trống — không in ngày giả. `compliment` là câu mặt sau. Hai ảnh đầu mỗi thời được đánh `pair`; trò nhớ lấy 6 ảnh đó. |
 | `scratches` | Thẻ cào. `cover` là chữ trên lớp phủ hồng, `reveal` là điều anh thương. |
 | `quiz` | Câu hỏi. `options` là mảng, `answer` là **chỉ số bắt đầu từ 0**. `rightNote` / `wrongNote` hiện sau khi chọn. |
 | `quizSummary` | Câu tổng kết. Chỗ trống `{ok}` và `{total}`. |
@@ -94,30 +94,18 @@ Ví dụ thêm một ảnh:
 
 ```json
 {
-  "id": "p9",
-  "src": "/photos/anh-bien.webp",
-  "alt": { "vi": "Hai đứa ở biển", "en": "The two of us at the sea" },
-  "caption": { "vi": "Biển tháng sáu", "en": "June sea" },
-  "compliment": { "vi": "Em nhìn sóng lâu hơn anh nhìn em.", "en": "You watched the waves longer than I watched you." },
-  "pair": true
+  "id": "care-07",
+  "src": "lilj/care/07_ten-anh",
+  "caption": { "vi": "", "en": "" },
+  "compliment": { "vi": "Em nhìn sóng lâu hơn anh nhìn em.", "en": "You watched the waves longer than I watched you." }
 }
 ```
 
-Bỏ file vào `site/public/photos/`, rồi trỏ `src`.
+`src` là public id trên cloud `oiounrmh`. Trang tự thêm `c_limit`, `f_auto`, `q_auto` theo bề rộng. Không commit file ảnh vào repo.
 
 ## Ảnh thật
 
-Dùng pipeline có sẵn, **không sửa** `tools/fb-photo-downloader`:
-
-```bash
-cd tools/fb-photo-downloader/compress
-npm install
-node compress.mjs ./input ../../../site/public/photos
-```
-
-Mặc định: rộng tối đa ~1200px, WebP. Chỉnh `MAX_WIDTH` và `WEBP_QUALITY` như README của tool. Ảnh ra dạng `0001.webp`. Sửa `photos[].src` cho khớp. Trang dùng `loading="lazy"` (hai ảnh polaroid đầu tải sớm).
-
-Đừng commit ảnh riêng tư nếu repo công khai.
+Ảnh đang giao từ Cloudinary, thư mục `lilj/<thời>/<nn_tên>`. Thứ tự trong mỗi thời là tiền tố `01_`, `02_`, … `caption` để trống cho đến khi có lời. Không ghi ngày lên polaroid. Ảnh phía sau và ảnh trong trò nhớ dùng `loading="lazy"`.
 
 ## Nhạc
 

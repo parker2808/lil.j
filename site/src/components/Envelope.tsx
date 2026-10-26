@@ -13,18 +13,20 @@ export function Envelope({ open, onOpen }: EnvelopeProps) {
   const { t } = useI18n();
   const reduced = useReducedMotion();
   const [cracking, setCracking] = useState(false);
+  const [revealed, setRevealed] = useState(open);
   const timer = useRef(0);
+  const shown = open || revealed;
 
   useEffect(() => () => window.clearTimeout(timer.current), []);
 
   function crack() {
-    if (open || cracking) return;
+    if (shown || cracking) return;
     if (reduced) {
-      onOpen();
+      setRevealed(true);
       return;
     }
     setCracking(true);
-    timer.current = window.setTimeout(onOpen, 480);
+    timer.current = window.setTimeout(() => setRevealed(true), 480);
   }
 
   return (
@@ -32,15 +34,22 @@ export function Envelope({ open, onOpen }: EnvelopeProps) {
       <Hearts active={open} />
       <p className="kicker">{t(content.meta.title)}</p>
       <p className="seal-caption">{t(content.envelope.sealCaption)}</p>
-      <div className={open ? "envelope is-open" : "envelope"}>
-        <div className="env-pocket">
-          <div className="env-paper" aria-hidden={!open}>
+      <div className={shown ? "envelope is-open" : "envelope"}>
+        {shown && (
+          <div className="env-paper">
             <p className="greet">{t(content.envelope.greeting)}</p>
             <p>{t(content.envelope.body)}</p>
+            {!open && (
+              <button type="button" className="btn btn-gold env-accept" onClick={onOpen}>
+                {t(content.envelope.enter)}
+              </button>
+            )}
           </div>
+        )}
+        <div className="env-pocket">
           <div className="env-front" />
           <div className="env-flap" />
-          {!open && (
+          {!shown && (
             <button type="button" className={cracking ? "wax is-crack" : "wax"} onClick={crack} disabled={cracking}>
               <span aria-hidden="true">{content.meta.monogram}</span>
               <span className="sr-only">{t(content.envelope.openHint)}</span>
@@ -48,7 +57,7 @@ export function Envelope({ open, onOpen }: EnvelopeProps) {
           )}
         </div>
       </div>
-      {!open && <p className="hint">{t(content.envelope.openHint)}</p>}
+      {!shown && <p className="hint">{t(content.envelope.openHint)}</p>}
     </section>
   );
 }

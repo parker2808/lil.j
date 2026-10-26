@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { content } from "../content.ts";
+import { cloudinaryUrl } from "../lib/images.ts";
 import { ChapterFrame } from "../components/ChapterFrame.tsx";
 import { Spark } from "../components/Fireworks.tsx";
 import type { Copy } from "../lib/i18n.ts";
@@ -115,7 +116,7 @@ export function Memory({ progress, update }: ChapterProps) {
               <div className="mem-inner" aria-hidden="true">
                 <div className="mem-face mem-back">{content.meta.monogram}</div>
                 <div className="mem-face mem-front">
-                  <img src={card.src} alt="" width={800} height={1000} loading="lazy" decoding="async" />
+                  <img src={cloudinaryUrl(card.src, 480)} alt="" width={800} height={1000} loading="lazy" decoding="async" />
                 </div>
               </div>
               <button

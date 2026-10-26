@@ -82,6 +82,10 @@ function walk(value: unknown, path: string, problems: string[], key?: string): v
   }
   if (typeof value !== "object") return;
   const record = value as Record<string, unknown>;
+  if (key === "caption") {
+    if (!isCopy(record)) problems.push(`${path} cần dạng { "vi": "...", "en": "..." }.`);
+    return;
+  }
   if ("vi" in record || "en" in record) {
     if (!isCopy(record) || !record.vi.trim() || !record.en.trim()) {
       problems.push(`${path} cần đủ cả vi và en, không để trống.`);

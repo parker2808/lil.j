@@ -457,6 +457,17 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 
 :root.keyboard-open .gate-form { margin-top: 8px; }
 
+@media (max-height: 520px) {
+  :root.keyboard-open .gate-mark,
+  :root.keyboard-open .gate .kicker,
+  :root.keyboard-open .gate .lede,
+  :root.keyboard-open .wish-stars,
+  :root.keyboard-open .wish-copy .kicker,
+  :root.keyboard-open .wish-copy .lede {
+    display: none;
+  }
+}
+
 .gate-mark {
   position: relative;
   width: 148px;

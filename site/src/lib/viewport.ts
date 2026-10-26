@@ -37,7 +37,7 @@ function revealFocused(field: HTMLInputElement | HTMLTextAreaElement) {
   const stage = field.closest(".stage");
   if (!(stage instanceof HTMLElement)) return;
   const heading = field.closest("section")?.querySelector("h1");
-  const pad = 12;
+  const pad = 8;
   const fit = () => {
     const stageBox = stage.getBoundingClientRect();
     const fieldBox = field.getBoundingClientRect();
@@ -46,15 +46,15 @@ function revealFocused(field: HTMLInputElement | HTMLTextAreaElement) {
     if (below > 1) stage.scrollTop += below;
     else if (above > 1) stage.scrollTop -= above;
     if (!(heading instanceof HTMLElement)) return;
-    const headBox = heading.getBoundingClientRect();
+    let headBox = heading.getBoundingClientRect();
+    let nextStage = stage.getBoundingClientRect();
+    if (headBox.bottom < nextStage.top + pad) stage.scrollTop -= nextStage.top + pad - headBox.bottom;
     const nextField = field.getBoundingClientRect();
-    const nextStage = stage.getBoundingClientRect();
-    const headAbove = nextStage.top + pad - headBox.top;
-    if (headAbove > 1) {
-      const room = nextStage.bottom - pad - nextField.bottom;
-      const shift = Math.min(headAbove, Math.max(0, room));
-      if (shift > 1) stage.scrollTop -= shift;
-    }
+    nextStage = stage.getBoundingClientRect();
+    if (nextField.top > nextStage.bottom - pad) stage.scrollTop += nextField.top - (nextStage.bottom - pad);
+    headBox = heading.getBoundingClientRect();
+    nextStage = stage.getBoundingClientRect();
+    if (headBox.top > nextStage.bottom - pad) stage.scrollTop -= headBox.top - (nextStage.bottom - pad);
   };
   fit();
   requestAnimationFrame(fit);
@@ -154,6 +154,17 @@ export function bindViewport(): () => void {
   };
 
   sync();
+  const refit = new ResizeObserver(() => {
+    if (!isTextField(document.activeElement) || isDesktopLayout()) return;
+    const field = document.activeElement;
+    requestAnimationFrame(() => {
+      if (document.activeElement === field) revealFocused(field);
+    });
+  });
+  const chrome = document.querySelector(".chrome");
+  const stage = document.querySelector(".stage");
+  if (chrome) refit.observe(chrome);
+  if (stage) refit.observe(stage);
   window.visualViewport?.addEventListener("resize", sync);
   window.visualViewport?.addEventListener("scroll", sync);
   window.addEventListener("resize", sync);
@@ -179,5 +190,6 @@ export function bindViewport(): () => void {
     window.removeEventListener("focusout", sync);
     document.removeEventListener("touchstart", onTouchStart);
     document.removeEventListener("touchmove", onTouchMove);
+    refit.disconnect();
   };
 }

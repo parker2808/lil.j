@@ -272,7 +272,7 @@ export function App() {
   }
 
   return (
-    <div className="shell">
+    <>
       <Starfield />
       <header className="chrome" ref={headerRef}>
         <div className="chrome-row">
@@ -369,6 +369,6 @@ export function App() {
           {musicNote}
         </p>
       )}
-    </div>
+    </>
   );
 }

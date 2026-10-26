@@ -93,7 +93,7 @@ function ScratchCard({
       }
       ctx.globalAlpha = 1;
       ctx.fillStyle = "#6a3454";
-      ctx.font = "600 16px 'Be Vietnam Pro', sans-serif";
+      ctx.font = "600 16px Inter, ui-sans-serif, sans-serif";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.fillText(cover, width / 2, height / 2);

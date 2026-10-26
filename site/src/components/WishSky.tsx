@@ -234,7 +234,7 @@ function sampleWords(text: string, width: number): { x: number; y: number }[] {
   canvas.height = height;
   const ctx = canvas.getContext("2d");
   if (!ctx) return [{ x: width / 2, y: 18 }];
-  ctx.font = "600 16px 'Be Vietnam Pro', sans-serif";
+  ctx.font = "600 16px Inter, ui-sans-serif, sans-serif";
   ctx.fillStyle = "#fff";
   ctx.fillText(text.slice(0, 42), 0, 24);
   const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;

@@ -19,7 +19,18 @@ const pickedViews = (process.env.OVERLAP_VIEWPORTS || "")
   .split(",")
   .map((item) => item.trim())
   .filter(Boolean);
-const viewports = pickedViews.length ? VIEWPORTS.filter((item) => pickedViews.includes(item.name)) : VIEWPORTS;
+const baseViewports = pickedViews.length ? VIEWPORTS.filter((item) => pickedViews.includes(item.name)) : VIEWPORTS;
+const toolbarOffsets = (process.env.OVERLAP_TOOLBAR || "0,80")
+  .split(",")
+  .map((item) => Number(item.trim()))
+  .filter((item) => Number.isFinite(item) && item >= 0);
+const viewports = baseViewports.flatMap((viewport) =>
+  (toolbarOffsets.length ? toolbarOffsets : [0]).map((bar) => ({
+    name: bar > 0 ? `${viewport.name}-bar${bar}` : viewport.name,
+    width: viewport.width,
+    height: Math.max(240, viewport.height - bar),
+  })),
+);
 const locales = (process.env.OVERLAP_LOCALES || "vi,en").split(",").map((item) => item.trim()).filter(Boolean);
 const devModes = (process.env.OVERLAP_DEV || "1,0").split(",").map((item) => item.trim()).filter(Boolean);
 const states = (process.env.OVERLAP_STATES || "done,pending").split(",").map((item) => item.trim()).filter(Boolean);
@@ -228,6 +239,17 @@ async function audit(page, label) {
 
     if (document.documentElement.scrollWidth > vw + 2 || document.body.scrollWidth > vw + 2) {
       push("page-overflow", `scrollWidth ${Math.max(document.documentElement.scrollWidth, document.body.scrollWidth)} > ${vw}`);
+    }
+
+    const scroller = document.scrollingElement;
+    if (scroller && scroller.scrollHeight > vh + 1) {
+      push("document-scroll", `scrollHeight ${scroller.scrollHeight} > ${vh}`);
+    }
+    if (window.scrollY !== 0 || document.documentElement.scrollTop !== 0 || document.body.scrollTop !== 0) {
+      push(
+        "document-scroll",
+        `scrollY ${window.scrollY} html ${document.documentElement.scrollTop} body ${document.body.scrollTop}`,
+      );
     }
 
     const chrome = document.querySelector(".chrome");

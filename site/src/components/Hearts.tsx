@@ -7,16 +7,16 @@ type HeartsProps = {
 
 export function Hearts({ active }: HeartsProps) {
   const reduced = useReducedMotion();
-  const hearts = useMemo(
+  const bits = useMemo(
     () =>
-      Array.from({ length: 14 }, (_, index) => ({
+      Array.from({ length: 16 }, (_, index) => ({
         id: index,
         left: 4 + ((index * 37) % 92),
-        delay: (index * 0.45) % 5.5,
-        duration: 7 + (index % 5),
-        size: 12 + (index % 4) * 5,
-        drift: (index % 2 === 0 ? -1 : 1) * (12 + (index % 5) * 8),
-        color: index % 4 === 0 ? "#f6b7d0" : index % 4 === 1 ? "#d4c4f6" : index % 4 === 2 ? "#c5dff5" : "#f8d0c2",
+        delay: (index * 0.42) % 5.2,
+        duration: 8 + (index % 5) * 0.8,
+        size: index % 3 === 0 ? 10 + (index % 3) * 4 : 16 + (index % 4) * 6,
+        drift: (index % 2 === 0 ? -1 : 1) * (16 + (index % 5) * 10),
+        spark: index % 3 === 0,
       })),
     [],
   );
@@ -25,20 +25,39 @@ export function Hearts({ active }: HeartsProps) {
 
   return (
     <div className="hearts" aria-hidden="true">
-      {hearts.map((heart) => (
+      {bits.map((bit) => (
         <span
-          key={heart.id}
-          className="heart"
+          key={bit.id}
+          className={bit.spark ? "heart is-spark" : "heart"}
           style={{
-            left: `${heart.left}%`,
-            animationDelay: `${heart.delay}s`,
-            animationDuration: `${heart.duration}s`,
-            fontSize: `${heart.size}px`,
-            color: heart.color,
-            ["--drift" as string]: `${heart.drift}px`,
+            left: `${bit.left}%`,
+            animationDelay: `${bit.delay}s`,
+            animationDuration: `${bit.duration}s`,
+            width: bit.size,
+            height: bit.size,
+            ["--drift" as string]: `${bit.drift}px`,
           }}
         >
-          ♥
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <defs>
+              <linearGradient id={`pearl-${bit.id}`} x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stopColor="#fff7fb" />
+                <stop offset="0.42" stopColor="#f7c6dc" />
+                <stop offset="1" stopColor="#e4d4ff" />
+              </linearGradient>
+            </defs>
+            {bit.spark ? (
+              <path
+                fill={`url(#pearl-${bit.id})`}
+                d="M12 1.5 13.6 9.2 21.5 12 13.6 14.8 12 22.5 10.4 14.8 2.5 12 10.4 9.2Z"
+              />
+            ) : (
+              <path
+                fill={`url(#pearl-${bit.id})`}
+                d="M12 20.6s-6.4-4.1-8.9-7.7C1.2 10.2 1.8 6.9 4.5 5.8c2-.8 3.9-.1 5.2 1.6L12 9.2l2.3-1.8c1.3-1.7 3.2-2.4 5.2-1.6 2.7 1.1 3.3 4.4 1.4 7.1-2.5 3.6-8.9 7.7-8.9 7.7z"
+              />
+            )}
+          </svg>
         </span>
       ))}
     </div>

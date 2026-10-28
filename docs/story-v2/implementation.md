@@ -72,7 +72,7 @@ Three separate ideas:
 
 ## Migration
 
-1. Unreadable storage (`{`, `null`) returns the empty state. A JSON array is not a progress record; today it loads as a blank record with `muted: false`. V4 treats any non-plain object the same as unreadable storage.
+1. Unreadable storage (`{`, `null`, or a JSON array) returns the empty state.
 2. An unknown version greater than the version this build writes runs for the session and is never written back.
 3. Invalid indexes clamp. If `unlocked < step`, keep that step as the current scene. Do not raise `unlocked` before mapping, because that would grant extra old scenes.
 4. Resolve the current scene by id on the frozen flow for that version.

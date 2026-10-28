@@ -82,6 +82,9 @@ function progressFor(stepIndex, done) {
     for (const question of content.quiz) quiz[question.id] = question.answer;
   }
   const candles = Math.max(1, Math.min(8, content.cake.candles || 5));
+  const frontier = done ? FLOW.length - 1 : stepIndex;
+  const accessibleSteps = [];
+  for (let index = 0; index <= frontier; index += 1) accessibleSteps.push(FLOW[index]);
   return {
     gateUnlocked: done || stepIndex > 0,
     envelopeOpened: done,
@@ -97,7 +100,10 @@ function progressFor(stepIndex, done) {
     openWhen: done ? Object.fromEntries(content.openWhen.map((letter) => [letter.id, "2026-10-26"])) : {},
     muted: true,
     step: stepIndex,
-    unlocked: FLOW.length - 1,
+    unlocked: frontier,
+    accessibleSteps,
+    skippedSteps: [],
+    wishPrivate: false,
     skyDone: done,
     birthSeen: done,
     counterSeen: done,

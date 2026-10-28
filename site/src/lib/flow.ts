@@ -54,16 +54,35 @@ export const FLOW_V3 = [
   "letter",
 ] as const;
 
+/** Five chapters. Friends stay off this path. */
+export const FLOW_V4 = [
+  "gate",
+  "sky",
+  "birth",
+  "gallery",
+  "memory",
+  "quiz",
+  "scratch",
+  "counter",
+  "dreams",
+  "letters",
+  "cake",
+  "wish",
+  "envelope",
+  "finale",
+  "letter",
+] as const;
+
 export const FLOW_WITH_FRIENDS = FLOW_V2;
 export const FLOW_WITHOUT_FRIENDS = FLOW_V3;
 
-export const FLOW = INCLUDE_FRIENDS ? FLOW_WITH_FRIENDS : FLOW_WITHOUT_FRIENDS;
+export const FLOW = INCLUDE_FRIENDS ? FLOW_WITH_FRIENDS : FLOW_V4;
 
 /** The 9-step path from before the middle chapters were restored. */
 export const PREVIOUS_FLOW = FLOW_V1;
 
-/** 2 = the 16-step path that included friend notes. 3 = that step removed. */
-export const FLOW_VERSION = INCLUDE_FRIENDS ? 2 : 3;
+/** 2 = 16 steps with friend notes. 3 = those notes removed. 4 = the five-chapter order. */
+export const FLOW_VERSION = INCLUDE_FRIENDS ? 2 : 4;
 
 export type StepId = (typeof FLOW_WITH_FRIENDS)[number];
 
@@ -73,25 +92,35 @@ export function clampStep(value: unknown): number {
   return Math.max(0, Math.min(FLOW.length - 1, Math.floor(number)));
 }
 
-function pathForVersion(version: unknown): readonly string[] {
+export function pathForVersion(version: unknown): readonly string[] {
   if (version === 2) return FLOW_V2;
   if (version === 3) return FLOW_V3;
+  if (version === 4) return FLOW_V4;
   return FLOW_V1;
 }
 
-export function migrateIndex(version: unknown, index: number): number {
-  const current = Math.max(0, Math.floor(index));
-  if (version === FLOW_VERSION) return clampStep(current);
-  const saved = pathForVersion(version);
-  const id = saved[current];
-  if (!id) return clampStep(current);
-  const placed = (FLOW as readonly string[]).indexOf(id);
-  if (placed >= 0) return placed;
+/** Map a historical scene id onto the live path. Friend notes land on dreams. */
+export function mapSceneId(id: string): StepId | null {
   if (id === "friends") {
-    const dreams = (FLOW as readonly string[]).indexOf("dreams");
-    return dreams >= 0 ? dreams : clampStep(current);
+    return (FLOW as readonly string[]).includes("dreams") ? "dreams" : null;
   }
-  return clampStep(current);
+  if ((FLOW as readonly string[]).includes(id)) return id as StepId;
+  return null;
+}
+
+export function migrateIndex(version: unknown, index: number): number {
+  if (version === FLOW_VERSION) return clampStep(index);
+  const saved = pathForVersion(version);
+  const current = clampHistorical(index, saved.length);
+  const mapped = mapSceneId(saved[current] ?? "");
+  if (!mapped) return 0;
+  const placed = (FLOW as readonly string[]).indexOf(mapped);
+  return placed >= 0 ? placed : 0;
+}
+
+function clampHistorical(index: number, length: number): number {
+  if (!Number.isFinite(index) || length <= 0) return 0;
+  return Math.max(0, Math.min(length - 1, Math.floor(index)));
 }
 
 export function stepDone(

@@ -1,3 +1,4 @@
+import type { StepId } from "./lib/flow.ts";
 import type { Copy } from "./lib/i18n.ts";
 
 export type { Copy } from "./lib/i18n.ts";
@@ -313,6 +314,12 @@ export type Progress = {
   letterDone: boolean;
   wishes: Wish[];
   flowVersion: number;
+  /** Scenes the visitor may open. This is a set of ids, not a prefix of `unlocked`. */
+  accessibleSteps: StepId[];
+  /** Explicit later choices. Never inferred from missing interaction data. */
+  skippedSteps: StepId[];
+  /** The wish stays on this device with no wish record and no sent line. */
+  wishPrivate: boolean;
 };
 
 export type ChapterProps = {

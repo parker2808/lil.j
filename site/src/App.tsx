@@ -16,7 +16,7 @@ import { useI18n } from "./lib/locale-context.ts";
 import { bindMusicVisibility, bindPlaylist, musicIsPlaying, playBirthday, restoreMusicVolume, resumePlaylist, startMusic, subscribeMusic } from "./lib/music.ts";
 import { bindViewport } from "./lib/viewport.ts";
 import { isBeforeUnlock } from "./lib/lock.ts";
-import { clearProgress, restartedProgress } from "./lib/progress.ts";
+import { clearProgress, moveTo, restartedProgress } from "./lib/progress.ts";
 import { fillTemplate } from "./lib/pure.ts";
 import { useReducedMotion } from "./lib/useReducedMotion.ts";
 import { useProgress } from "./lib/useProgress.ts";
@@ -90,17 +90,13 @@ export function App() {
   const go = useCallback(
     (target: number, jump = false) => {
       update((current) => {
-        const next = clampStep(target);
-        const unlocked = clampStep(current.unlocked);
-        if (!jump && (next < 0 || next > unlocked + 1)) return current;
-        const raised = Math.max(unlocked, next);
-        if (next === current.step && raised === unlocked) return current;
-        return {
-          ...current,
-          step: next,
-          unlocked: raised,
-          gateUnlocked: next > 0 || current.gateUnlocked,
-        };
+        const index = clampStep(current.step);
+        const id = (FLOW[index] ?? "gate") as StepId;
+        const ahead = FLOW[index + 1];
+        const mayLeave =
+          Boolean(ahead && current.accessibleSteps.includes(ahead)) ||
+          stepDone(id, current, CANDLES, QUIZ_IDS, SCRATCH_IDS, LETTER_IDS);
+        return moveTo(current, target, jump, mayLeave);
       });
     },
     [update],
@@ -254,19 +250,18 @@ export function App() {
     setOpening(true);
     void startMusic(progress.muted).catch(() => showMusicNote(false));
     window.setTimeout(() => {
-      update((current) => ({
-        ...current,
-        gateUnlocked: true,
-        step: Math.max(current.step, 1),
-        unlocked: Math.max(current.unlocked, 1),
-      }));
+      update((current) =>
+        moveTo({ ...current, gateUnlocked: true }, Math.max(clampStep(current.step), 1), false, true),
+      );
       setOpening(false);
     }, reduced ? 0 : 1200);
   }
 
   const done = stepDone(stepId, progress, CANDLES, QUIZ_IDS, SCRATCH_IDS, LETTER_IDS);
+  const ahead = FLOW[step + 1];
+  const mayLeave = done || Boolean(ahead && progress.accessibleSteps.includes(ahead));
   const flowAction: StickyAction | null =
-    stepId === "letter" || stepId === "gate" || quizAction || !done
+    stepId === "letter" || stepId === "gate" || quizAction || !mayLeave
       ? null
       : {
           label: t(content.flow.next),

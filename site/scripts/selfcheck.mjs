@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { FLOW, FLOW_VERSION, FLOW_WITH_FRIENDS, INCLUDE_FRIENDS, PREVIOUS_FLOW, migrateIndex, stepDone } from "../src/lib/flow.ts";
+import { FLOW, FLOW_V3, FLOW_VERSION, FLOW_WITH_FRIENDS, INCLUDE_FRIENDS, PREVIOUS_FLOW, migrateIndex, stepDone } from "../src/lib/flow.ts";
 import { readLocale } from "../src/lib/i18n.ts";
 import { cloudinarySrcSet, cloudinaryUrl } from "../src/lib/images.ts";
 import { countdownParts, isBeforeUnlock, unlockTime } from "../src/lib/lock.ts";
@@ -184,17 +184,25 @@ assert.deepEqual(
 );
 
 assert.equal(INCLUDE_FRIENDS, false);
-assert.equal(FLOW_VERSION, 3);
+assert.equal(FLOW_VERSION, 4);
 assert.equal(FLOW.length, 15);
 assert.equal(FLOW.includes("friends"), false);
+assert.equal(FLOW[4], "memory");
+assert.equal(FLOW[11], "wish");
 assert.equal(FLOW_WITH_FRIENDS.length, 16);
+assert.equal(migrateIndex(3, 8), 4);
+assert.equal(FLOW[migrateIndex(3, 8)], "memory");
+assert.equal(migrateIndex(3, 13), 11);
+assert.equal(FLOW[migrateIndex(3, 13)], "wish");
 assert.equal(FLOW[migrateIndex(2, FLOW_WITH_FRIENDS.indexOf("friends"))], "dreams");
 assert.equal(FLOW[migrateIndex(2, FLOW_WITH_FRIENDS.indexOf("wish"))], "wish");
 assert.equal(FLOW[migrateIndex(2, FLOW_WITH_FRIENDS.indexOf("letter"))], "letter");
 assert.equal(FLOW[migrateIndex(1, PREVIOUS_FLOW.indexOf("wish"))], "wish");
 assert.equal(FLOW[migrateIndex(1, PREVIOUS_FLOW.indexOf("letter"))], "letter");
-assert.equal(FLOW[migrateIndex(3, FLOW.indexOf("letters"))], "letters");
+assert.equal(FLOW[migrateIndex(3, FLOW_V3.indexOf("letters"))], "letters");
 assert.equal(migrateIndex(3, 0), 0);
 assert.equal(migrateIndex(3, 99), FLOW.length - 1);
+assert.equal(migrateIndex(4, 0), 0);
+assert.equal(migrateIndex(4, 99), FLOW.length - 1);
 
 console.log("selfcheck ok");

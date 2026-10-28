@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { content } from "../content.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import { STAR_LAYOUT } from "../lib/pure.ts";
@@ -19,11 +19,13 @@ export function Universe({ already, onDone }: UniverseProps) {
   const [named, setNamed] = useState(instant);
   const lineRef = useRef<SVGPolylineElement>(null);
 
+  useLayoutEffect(() => {
+    if (!instant) return;
+    onDone();
+  }, [instant, onDone]);
+
   useEffect(() => {
-    if (instant) {
-      onDone();
-      return;
-    }
+    if (instant) return;
     const timers: number[] = [];
     STAR_LAYOUT.forEach((_, index) => {
       timers.push(window.setTimeout(() => setLit(index + 1), 320 * (index + 1)));

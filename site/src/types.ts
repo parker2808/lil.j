@@ -1,4 +1,5 @@
 import type { StepId } from "./lib/flow.ts";
+import type { StoryChapterId } from "./lib/story.ts";
 import type { Copy } from "./lib/i18n.ts";
 
 export type { Copy } from "./lib/i18n.ts";
@@ -123,6 +124,7 @@ export type Content = {
     enter: Copy;
   };
   chapters: Chapter[];
+  storyChapters: Record<StoryChapterId, Copy>;
   eras: Era[];
   photos: Photo[];
   galleryCopy: {

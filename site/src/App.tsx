@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { content, validateContent } from "./content.ts";
 import { Envelope } from "./components/Envelope.tsx";
@@ -8,6 +8,7 @@ import { LockScreen } from "./components/LockScreen.tsx";
 import { LanguageToggle } from "./components/LanguageToggle.tsx";
 import { MusicButton, MusicCredit } from "./components/MusicButton.tsx";
 import { Starfield } from "./components/Starfield.tsx";
+import { StoryChapterLabel } from "./components/StoryChapterLabel.tsx";
 import { StickyNext } from "./components/StickyNext.tsx";
 import { StickyNextContext, type StickyAction } from "./components/sticky-next-context.ts";
 import { Universe } from "./components/Universe.tsx";
@@ -113,13 +114,17 @@ export function App() {
     [update],
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (stepId !== "counter" || progress.counterSeen) return;
+    if (reduced) {
+      update((current) => (current.counterSeen ? current : { ...current, counterSeen: true }));
+      return;
+    }
     const timer = window.setTimeout(() => {
       update((current) => (current.counterSeen ? current : { ...current, counterSeen: true }));
     }, 2000);
     return () => window.clearTimeout(timer);
-  }, [progress.counterSeen, stepId, update]);
+  }, [progress.counterSeen, reduced, stepId, update]);
 
   useEffect(() => {
     if (stepId !== "friends" || progress.friendsSeen) return;
@@ -405,6 +410,7 @@ export function App() {
             </div>
           )}
         </div>
+        {released && <StoryChapterLabel stepId={stepId} />}
         {released && progress.gateUnlocked && musicInvite && !blockedCue && (
           <p className="music-hint" id="music-hint">
             {t(content.ui.musicHint)}

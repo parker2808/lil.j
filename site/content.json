@@ -462,6 +462,28 @@
       "en": "Accept the invitation"
     }
   },
+  "storyChapters": {
+    "I": {
+      "vi": "Một vũ trụ mang tên em",
+      "en": "A universe with your name"
+    },
+    "II": {
+      "vi": "Những điều anh nhớ",
+      "en": "Things I remember"
+    },
+    "III": {
+      "vi": "Từ ngày có hai đứa mình",
+      "en": "Since there were two of us"
+    },
+    "IV": {
+      "vi": "Ngày đặc biệt của em",
+      "en": "Your day"
+    },
+    "V": {
+      "vi": "Còn nhiều điều phía trước",
+      "en": "More ahead"
+    }
+  },
   "chapters": [
     {
       "id": "gallery",

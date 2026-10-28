@@ -1,5 +1,6 @@
 import rawJson from "../content.json";
 import { FLOW } from "./lib/flow.ts";
+import { STORY_CHAPTERS } from "./lib/story.ts";
 import { collectCopyProblems } from "./lib/i18n.ts";
 import { CONSTELLATION_IDS, projectSky } from "./lib/stars.ts";
 import type { Content, Copy, Era, MusicTrack, Photo } from "./types.ts";
@@ -226,6 +227,10 @@ export function validateContent(value: Content): string | null {
   for (const id of FLOW) {
     const hint = value.flow?.hints?.[id];
     if (!hint?.vi?.trim() || !hint?.en?.trim()) return `content.json thiếu flow.hints.${id}.`;
+  }
+  for (const chapter of STORY_CHAPTERS) {
+    const title = value.storyChapters?.[chapter.id];
+    if (!title?.vi?.trim() || !title?.en?.trim()) return `content.json thiếu storyChapters.${chapter.id}.`;
   }
   const copyProblem = collectCopyProblems(value)[0];
   return copyProblem ?? null;

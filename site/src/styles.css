@@ -245,6 +245,29 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 }
 
 .chrome-row > * { pointer-events: auto; }
+
+.story-chapter {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  max-width: 100%;
+  margin: 0;
+  color: var(--gold);
+  font-size: 12px;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  pointer-events: none;
+}
+
+.story-chapter-index {
+  flex: none;
+  font-weight: 600;
+}
+
+.story-chapter-title {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
 .chrome-spacer { flex: 1; pointer-events: none; }
 .chrome-tools { display: flex; align-items: center; gap: 6px; }
 

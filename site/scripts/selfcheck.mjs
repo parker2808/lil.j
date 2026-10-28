@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { FLOW, FLOW_V3, FLOW_VERSION, FLOW_WITH_FRIENDS, INCLUDE_FRIENDS, PREVIOUS_FLOW, migrateIndex, stepDone } from "../src/lib/flow.ts";
+import { STORY_CHAPTERS, chapterFor } from "../src/lib/story.ts";
 import { readLocale } from "../src/lib/i18n.ts";
 import { cloudinarySrcSet, cloudinaryUrl } from "../src/lib/images.ts";
 import { countdownParts, isBeforeUnlock, unlockTime } from "../src/lib/lock.ts";
@@ -143,6 +144,10 @@ assert.equal(stepDone("cake", { ...blank, candlesOut: [0, 1, 2, 3, 4] }, 5, []),
 assert.equal(stepDone("wish", { ...blank, wishes: [{ text: "  " }] }, 1, []), false);
 assert.equal(stepDone("wish", { ...blank, wishes: [{ text: "ở bên" }] }, 1, []), true);
 assert.equal(readLocale(), "en");
+assert.equal(stepDone("sky", blank, 5, []), false);
+assert.equal(stepDone("sky", { ...blank, skyDone: true }, 5, []), true);
+assert.equal(stepDone("counter", blank, 5, []), false);
+assert.equal(stepDone("counter", { ...blank, counterSeen: true }, 5, []), true);
 assert.equal(stepDone("gallery", blank, 5, []), false);
 assert.equal(stepDone("gallery", { ...blank, erasViewed: ["first"] }, 5, []), true);
 
@@ -182,6 +187,17 @@ assert.deepEqual(
   content.eras.flatMap((era) => era.photos.slice(0, 2).map((photo) => photo.id)).slice(0, 6),
   ["care-01", "care-02", "pout-01", "pout-02", "surprise-01", "surprise-02"],
 );
+
+assert.equal(STORY_CHAPTERS.length, 5);
+assert.equal(chapterFor("gate"), "I");
+assert.equal(chapterFor("memory"), "II");
+assert.equal(chapterFor("letters"), "III");
+assert.equal(chapterFor("wish"), "IV");
+assert.equal(chapterFor("letter"), "V");
+assert.equal(chapterFor("friends"), null);
+for (const id of FLOW) assert.ok(chapterFor(id), id);
+assert.equal(content.storyChapters.I.vi, "Một vũ trụ mang tên em");
+assert.equal(content.storyChapters.V.en, "More ahead");
 
 assert.equal(INCLUDE_FRIENDS, false);
 assert.equal(FLOW_VERSION, 4);

@@ -169,7 +169,9 @@ function sceneCompleted(
     case "gate":
       return progress.gateUnlocked;
     case "sky":
+      return progress.skyDone;
     case "counter":
+      return progress.counterSeen;
     case "friends":
       return true;
     case "birth":

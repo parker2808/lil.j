@@ -179,10 +179,29 @@ const eraPhotos = content.eras.flatMap((era) => era.photos);
 assert.equal(eraPhotos.length, 39);
 for (const photo of eraPhotos) {
   assert.equal(photo.date, undefined);
-  assert.equal(photo.caption.vi, "");
-  assert.equal(photo.caption.en, "");
+  assert.equal(typeof photo.caption?.vi, "string");
+  assert.equal(typeof photo.caption?.en, "string");
+  assert.equal(Boolean(photo.caption.vi.trim()), Boolean(photo.caption.en.trim()), photo.id);
   assert.match(photo.src, /^lilj\/(?:care|pout|surprise|ordinary|more)\/\d{2}_/);
 }
+const togetherAtBirthday = elapsedParts("2026-07-01T00:00:00+07:00", new Date("2026-11-18T00:00:00+07:00"));
+assert.equal(togetherAtBirthday.future, false);
+assert.equal(togetherAtBirthday.days, 140);
+assert.equal(togetherAtBirthday.hours, 0);
+assert.equal(content.quiz.length, 5);
+assert.deepEqual(
+  content.quiz.map((question) => [question.id, question.answer]),
+  [
+    ["q1", 0],
+    ["q2", 0],
+    ["q3", 2],
+    ["q4", 0],
+    ["q5", 0],
+  ],
+);
+assert.equal(content.scratches.length, 6);
+assert.equal(content.firstMeeting, "2022-11-18");
+assert.equal(content.startDate, "2026-07-01T00:00:00+07:00");
 assert.deepEqual(
   content.eras.flatMap((era) => era.photos.slice(0, 2).map((photo) => photo.id)).slice(0, 6),
   ["care-01", "care-02", "pout-01", "pout-02", "surprise-01", "surprise-02"],

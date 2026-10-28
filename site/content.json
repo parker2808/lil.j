@@ -503,8 +503,8 @@
         "en": "Little Moments, Big Feelings"
       },
       "lede": {
-        "vi": "Mình không cần hàng nghìn khoảnh khắc đặc biệt. Đôi khi, những điều nhỏ bé đã là quá đủ rồi.",
-        "en": "We don’t need a thousand extraordinary moments. Sometimes, the little things are more than enough."
+        "vi": "Những điều anh nhớ từ ngày mình gặp nhau, 18/11/2022. Mình không cần hàng nghìn khoảnh khắc đặc biệt.",
+        "en": "Things I remember from the day we met, 18/11/2022. We don’t need a thousand extraordinary moments."
       }
     },
     {
@@ -522,8 +522,8 @@
         "en": "Scratch to Reveal"
       },
       "lede": {
-        "vi": "Sáu điều nhỏ bé. Một cô gái rất đặc biệt.",
-        "en": "Six little things. One very special girl."
+        "vi": "Sáu điều anh thương ở em. Cào lúc nào em muốn.",
+        "en": "Six things I love about you. Scratch them whenever you want."
       }
     },
     {
@@ -541,8 +541,8 @@
         "en": "Let’s See If You Know Me"
       },
       "lede": {
-        "vi": "Trả lời hết các câu.",
-        "en": "Answer every question."
+        "vi": "Trả lời hết năm câu. Sai vẫn qua.",
+        "en": "Answer all five. A wrong answer still counts."
       }
     },
     {
@@ -579,8 +579,8 @@
         "en": "Someday, You and Me"
       },
       "lede": {
-        "vi": "Một vài điều anh muốn được trải nghiệm cùng em.",
-        "en": "A few things I’d love to experience with you."
+        "vi": "Những việc để hai đứa làm cùng nhau.",
+        "en": "Things for the two of us to do together."
       }
     },
     {
@@ -617,8 +617,8 @@
         "en": "Since You Said Yes"
       },
       "lede": {
-        "vi": "Ngày em đồng ý cũng là ngày câu chuyện nhỏ của hai đứa mình bắt đầu. Và chúng mình mới chỉ bắt đầu thôi.",
-        "en": "The day you said yes became the beginning of our little story. And we’re only getting started."
+        "vi": "Mình gặp nhau ngày 18/11/2022. Đồng hồ này đếm từ 01/07/2026, ngày em đồng ý. Và chúng mình mới chỉ bắt đầu thôi.",
+        "en": "We met on 18/11/2022. This clock counts from 01/07/2026, the day you said yes. And we’re only getting started."
       }
     }
   ],
@@ -1754,16 +1754,16 @@
       "en": "Open when…"
     },
     "lede": {
-      "vi": "Mỗi lá mở được một lần trong ngày. Mai niêm lại, em có thể mở nữa.",
-      "en": "Each letter opens once a day. Tomorrow it's sealed again, and you can open it once more."
+      "vi": "Những lá thư để dành. Em mở lúc nào cũng được, không cần mở hết hôm nay.",
+      "en": "Letters to save for later. Open them whenever you want. You don't have to open them all today."
     },
     "sealed": {
       "vi": "Chạm để mở",
       "en": "Touch to open"
     },
     "openedNote": {
-      "vi": "Hôm nay em đã mở lá này. Mai mình niêm lại.",
-      "en": "You opened this one today. We'll seal it again tomorrow."
+      "vi": "Lá này ở đây khi em muốn đọc lại.",
+      "en": "This one stays here whenever you want to read it again."
     },
     "close": {
       "vi": "Gấp thư lại",

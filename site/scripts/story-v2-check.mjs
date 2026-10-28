@@ -249,7 +249,7 @@ async function openEnvelope(page) {
 }
 
 async function sayYes(page) {
-  await page.getByRole("button", { name: /Dạ được|Yes, of course/ }).click();
+  await page.getByRole("button", { name: /Em đồng ý|I'd love to/ }).click();
   const record = await saved(page);
   if (!record.saidYes) fail("finale", "yes did not record");
   await page.locator(".sticky-next").waitFor();

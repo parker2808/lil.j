@@ -143,7 +143,7 @@ Change [`site/content.json`](site/content.json), then refresh the dev server or 
 
 Both languages are required on anything a visitor reads. A few fields stay plain strings or numbers: ids, `src`, `startDate`, `lock.unlockAt`, `birth.when`, `birth.lat`, `birth.lon`, music titles, the gate answer, and the short names in `meta`. `npm run build` reports a missing translation, a bad unlock timestamp, an empty era, or a quiz answer that does not point at an option.
 
-Photos are Cloudinary public ids, for example `lilj/care/01_name`. The page builds the delivery URL. Image files do not belong in the repo. The first two photos of each era are the pairs used by the memory game.
+Photos are Cloudinary public ids, for example `lilj/galaxy-v3/childhood/g-childhood-02cb6fb950`. The page builds the delivery URL. Image files do not belong in the repo. `memoryPhotoIds` chooses the memory-game pairs.
 
 `lock.unlockAt` has to be an ISO timestamp with a `+07:00` offset. The countdown uses that instant as an absolute time, so the phone’s timezone does not move the birthday.
 

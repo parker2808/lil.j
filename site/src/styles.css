@@ -294,6 +294,7 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   display: flex;
   flex-direction: column;
   padding-bottom: var(--stage-fade);
+  scroll-padding-bottom: var(--stage-fade);
   overflow-x: hidden;
   overflow-x: clip;
   overflow-y: auto;

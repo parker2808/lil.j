@@ -49,7 +49,7 @@ export type EraKind = "her-life" | "first-meeting" | "together";
 export type Era = {
   id: string;
   title: Copy;
-  date: string;
+  date?: string;
   kind: EraKind;
   color: string;
   photos: EraPhoto[];

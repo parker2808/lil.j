@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, type CSSProperties, type RefObject } from "react";
 import { content } from "../content.ts";
-import { eraAnchor, parseColor, type GalaxyCamera } from "../lib/galaxy.ts";
+import { eraAnchor, parseColor, separatePoints, type GalaxyCamera, type PlacedCluster } from "../lib/galaxy.ts";
 import { mountGalaxy, type GalaxyMount } from "../lib/galaxy-gl.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import { fillTemplate } from "../lib/pure.ts";
@@ -75,6 +75,7 @@ export function SpiralGalaxy({
     const width = root.clientWidth;
     const height = root.clientHeight;
     if (width < 2 || height < 2) return;
+    const placed: { button: HTMLButtonElement; point: PlacedCluster }[] = [];
     content.eras.forEach((_, index) => {
       const button = buttonRefs.current[index];
       const anchor = anchors.current[index];
@@ -86,10 +87,24 @@ export function SpiralGalaxy({
       const len = Math.hypot(vx, vy) || 1;
       const halfW = Math.max(22, button.offsetWidth / 2);
       const halfH = Math.max(22, button.offsetHeight / 2);
-      const x = Math.min(width - halfW - 2, Math.max(halfW + 2, point.x + (vx / len) * 22));
-      const y = Math.min(height - halfH - 2, Math.max(halfH + 2, point.y + (vy / len) * 22));
-      button.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+      placed.push({
+        button,
+        point: {
+          x: Math.min(width - halfW - 2, Math.max(halfW + 2, point.x + (vx / len) * 22)),
+          y: Math.min(height - halfH - 2, Math.max(halfH + 2, point.y + (vy / len) * 22)),
+          halfW,
+          halfH,
+        },
+      });
     });
+    separatePoints(
+      placed.map((item) => item.point),
+      width,
+      height,
+    );
+    for (const item of placed) {
+      item.button.style.transform = `translate3d(${item.point.x}px, ${item.point.y}px, 0) translate(-50%, -50%)`;
+    }
   };
   const placeRef = useRef<() => void>(() => {});
   useLayoutEffect(() => {

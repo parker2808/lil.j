@@ -304,6 +304,10 @@
       "vi": "Em viết điều ước đã.",
       "en": "Write a wish first."
     },
+    "keep": {
+      "vi": "Giữ điều ước cho riêng em",
+      "en": "Keep this wish to yourself"
+    },
     "sent": {
       "vi": "Điều ước của em đang trên đường đến với những vì sao. Mong rằng từng chút một, nó sẽ tìm được đường đến với em. 🌠",
       "en": "Your wish is on its way to the stars. May it find its way to you, one little step at a time. 🌠"
@@ -1649,16 +1653,16 @@
   },
   "cake": {
     "title": {
-      "vi": "Ước một điều đi, cô gái sinh nhật",
-      "en": "Make a Wish, Birthday Girl"
+      "vi": "Thổi nến nhé",
+      "en": "Blow out the candles"
     },
     "kicker": {
       "vi": "Chiếc bánh sinh nhật",
       "en": "Your birthday cake"
     },
     "lede": {
-      "vi": "Hít một hơi thật sâu rồi thổi tắt nến nhé.",
-      "en": "Take a deep breath and blow out the candles."
+      "vi": "Chạm một ngọn nến, hoặc bật mic rồi thổi.",
+      "en": "Tap a candle, or turn the mic on and blow."
     },
     "candles": 5,
     "mic": {
@@ -1678,16 +1682,16 @@
       "en": "The mic won't open. Tapping a candle works too."
     },
     "tapHint": {
-      "vi": "Hít một hơi thật sâu rồi thổi tắt nến nhé.",
-      "en": "Take a deep breath and blow out the candles."
+      "vi": "Chạm nến cũng được.",
+      "en": "Tapping a candle works too."
     },
     "letterTitle": {
-      "vi": "Một điều ước dành cho em, một bất ngờ nhỏ từ anh.",
-      "en": "One wish for you, one little surprise from me."
+      "vi": "Một lời chúc ngắn",
+      "en": "A short note"
     },
     "letter": {
-      "vi": "Chúc mừng sinh nhật MJ! 🎂\n\nAnh mong tuổi mới sẽ mang đến cho em nhiều ngày vui hơn, bớt áp lực công việc, nhiều món ngon, những bất ngờ dễ thương và thật nhiều lý do để cười.\n\nNhững lúc mọi thứ trở nên quá tải, anh mong em nhớ rằng em không nhất thiết phải tự mình giải quyết tất cả.\n\nAnh vẫn luôn cổ vũ cho em.",
-      "en": "Happy birthday, MJ! 🎂\n\nI hope this new year of your life brings you more happy days, less stress from work, good food, lovely surprises, and plenty of reasons to smile.\n\nAnd when things get a little overwhelming, I hope you remember that you don’t have to handle everything alone.\n\nI’m cheering for you, always."
+      "vi": "Chúc mừng sinh nhật MJ.\n\nAnh mong tuổi mới bớt áp lực, nhiều món ngon, và nhiều lý do để cười. Em không phải một mình lo hết.\n\nAnh vẫn cổ vũ cho em.",
+      "en": "Happy birthday, MJ.\n\nI hope this year brings less stress, good food, and more reasons to smile. You don't have to handle it all alone.\n\nI'm still cheering for you."
     },
     "skip": {
       "vi": "Đọc hết",

@@ -214,6 +214,7 @@ export type Content = {
     lede: Copy;
     placeholder: Copy;
     send: Copy;
+    keep: Copy;
     empty: Copy;
     sent: Copy;
     more: Copy;

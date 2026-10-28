@@ -2271,7 +2271,15 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 :root.keyboard-open .wish-read:empty { display: none; }
 :root.keyboard-open .wish-scene { min-height: 0; }
 :root.keyboard-open .wish-sky { overflow: visible; }
-:root.keyboard-open .wish-form { margin-top: 8px; }
+:root.keyboard-open .wish-keep { display: none; }
+:root.keyboard-open .wish-form {
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
+  margin-top: auto;
+  padding-bottom: 8px;
+  background: linear-gradient(180deg, transparent, var(--bg) 28%);
+}
 
 .flow-copy {
   flex: 1 1 auto;

@@ -143,6 +143,7 @@ type SceneState = {
   letterDone: boolean;
   skippedSteps?: readonly StepId[];
   accessibleSteps?: readonly StepId[];
+  wishPrivate?: boolean;
 };
 
 /** Real interaction data. A skip is not completion. */
@@ -197,7 +198,7 @@ function sceneCompleted(
     case "finale":
       return progress.saidYes;
     case "wish":
-      return progress.wishes.some((wish) => wish.text.trim().length > 0);
+      return progress.wishPrivate === true || progress.wishes.some((wish) => wish.text.trim().length > 0);
     case "letter":
       return progress.letterDone;
     default:

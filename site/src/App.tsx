@@ -361,7 +361,14 @@ export function App() {
   } else if (stepId === "wish") {
     node = (
       <Suspense fallback={<p className="scene loading">{t(content.ui.loading)}</p>}>
-        <WishSky wishes={progress.wishes} onSend={sendWish} />
+        <WishSky
+          wishes={progress.wishes}
+          wishPrivate={progress.wishPrivate}
+          onSend={sendWish}
+          onKeepPrivate={() =>
+            update((current) => (current.wishPrivate ? current : { ...current, wishPrivate: true }))
+          }
+        />
       </Suspense>
     );
   } else {

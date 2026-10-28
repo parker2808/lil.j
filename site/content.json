@@ -1894,6 +1894,10 @@
       "vi": "Trình duyệt đang chặn nhạc. Chạm nút nhạc giúp anh.",
       "en": "The browser is blocking the music. Tap the music button."
     },
+    "journey": {
+      "vi": "Hành trình",
+      "en": "Journey"
+    },
     "reset": {
       "vi": "Chạy lại từ đầu",
       "en": "Start over"

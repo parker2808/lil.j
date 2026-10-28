@@ -2,6 +2,7 @@ import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRe
 import { AnimatePresence, motion } from "framer-motion";
 import { content, validateContent } from "./content.ts";
 import { Envelope } from "./components/Envelope.tsx";
+import { JourneyMenu } from "./components/JourneyMenu.tsx";
 import { GateBurst } from "./components/Fireworks.tsx";
 import { Gate } from "./components/Gate.tsx";
 import { LockScreen } from "./components/LockScreen.tsx";
@@ -395,6 +396,7 @@ export function App() {
           <span className="chrome-spacer" />
           {released && progress.gateUnlocked && (
             <div className="chrome-tools">
+              <JourneyMenu accessible={progress.accessibleSteps} current={stepId} onGo={(index) => go(index)} />
               <button type="button" className="journey-reset" aria-label={t(content.ui.reset)} onClick={() => setAskReset(true)}>
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path

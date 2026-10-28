@@ -275,6 +275,7 @@ export type Content = {
     musicOff: Copy;
     musicHint: Copy;
     musicBlocked: Copy;
+    journey: Copy;
     reset: Copy;
     resetConfirm: Copy;
     resetYes: Copy;

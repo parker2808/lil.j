@@ -2106,6 +2106,36 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   outline-offset: 3px;
 }
 
+.journey-sheet {
+  width: min(100%, 420px);
+  margin-inline: auto;
+  min-height: 0;
+  max-height: 100%;
+}
+.journey-group { margin-top: 14px; }
+.journey-chapter {
+  margin: 0 0 6px;
+  color: #6a4460;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+  text-transform: none;
+  overflow-wrap: anywhere;
+}
+.journey-scenes { display: grid; gap: 6px; }
+.journey-scene {
+  min-height: 44px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: left;
+  justify-content: flex-start;
+}
+.journey-scene[aria-current="step"] {
+  border-color: rgba(244, 160, 196, 0.9);
+  background: rgba(255, 255, 255, 0.72);
+}
+
 .start-over {
   display: block;
   margin: 4px auto 0;

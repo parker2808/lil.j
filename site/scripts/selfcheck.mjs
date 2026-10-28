@@ -145,7 +145,25 @@ assert.equal(stepDone("cake", { ...blank, candlesOut: [0, 1, 2, 3, 4] }, 5, []),
 assert.equal(stepDone("wish", { ...blank, wishes: [{ text: "  " }] }, 1, []), false);
 assert.equal(stepDone("wish", { ...blank, wishes: [{ text: "ở bên" }] }, 1, []), true);
 assert.equal(stepDone("wish", { ...blank, wishes: [], wishPrivate: true }, 1, []), true);
-assert.equal(readLocale(), "en");
+assert.equal(readLocale(), "vi");
+{
+  const store = new Map([["lilj.locale.v1", "en"]]);
+  globalThis.localStorage = {
+    getItem: (key) => store.get(key) ?? null,
+    setItem: (key, value) => store.set(key, value),
+    removeItem: (key) => store.delete(key),
+  };
+  assert.equal(readLocale(), "en");
+  store.set("lilj.locale.v1", "vi");
+  assert.equal(readLocale(), "vi");
+  store.delete("lilj.locale.v1");
+  assert.equal(readLocale(), "vi");
+}
+const indexHtml = readFileSync(new URL("../index.html", import.meta.url), "utf8");
+assert.match(indexHtml, /<html lang="vi">/);
+const viteConfig = readFileSync(new URL("../vite.config.ts", import.meta.url), "utf8");
+assert.match(viteConfig, /title\.vi/);
+assert.match(viteConfig, /description\.vi/);
 assert.equal(stepDone("sky", blank, 5, []), false);
 assert.equal(stepDone("sky", { ...blank, skyDone: true }, 5, []), true);
 assert.equal(stepDone("counter", blank, 5, []), false);

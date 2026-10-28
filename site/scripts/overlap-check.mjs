@@ -602,6 +602,17 @@ async function extras(page, id, label) {
     await page.waitForSelector(".chart-float", { timeout: 2000 }).catch(() => {});
     found.push(...(await scrollAudit(page, `${label} chart-label`)));
   }
+  if (id === "memory" && (await page.locator(".journey-open").count()) > 0) {
+    const before = await page.evaluate(() => JSON.parse(localStorage.getItem("lilj.progress.v1")).accessibleSteps);
+    await page.locator(".journey-open").click();
+    await page.waitForSelector("#journey-menu", { timeout: 2000 });
+    await page.keyboard.press("Escape");
+    await page.waitForSelector("#journey-menu", { state: "detached", timeout: 2000 });
+    const after = await page.evaluate(() => JSON.parse(localStorage.getItem("lilj.progress.v1")).accessibleSteps);
+    if (JSON.stringify(before) !== JSON.stringify(after)) {
+      found.push({ kind: "journey-unlock", detail: "the menu changed which scenes are open", where: label });
+    }
+  }
   if (id === "letters" && (await page.locator(".seal-card").count()) > 0) {
     await page.locator(".seal-card").first().click();
     await page.waitForSelector(".sheet", { timeout: 2000 });

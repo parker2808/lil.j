@@ -6,6 +6,7 @@ import { readLocale } from "../src/lib/i18n.ts";
 import { cloudinarySrcSet, cloudinaryUrl } from "../src/lib/images.ts";
 import { countdownParts, isBeforeUnlock, unlockTime } from "../src/lib/lock.ts";
 import { nextTrackIndex } from "../src/lib/music.ts";
+import { emptyProgress, skipAhead } from "../src/lib/progress.ts";
 import { elapsedParts, fillTemplate, formatDotted, formatZoned, nicknamesMatch, todayKey } from "../src/lib/pure.ts";
 import { altAz, projectSky } from "../src/lib/stars.ts";
 
@@ -203,6 +204,14 @@ assert.deepEqual(
 assert.equal(content.scratches.length, 6);
 assert.equal(content.firstMeeting, "2022-11-18");
 assert.equal(content.startDate, "2026-07-01T00:00:00+07:00");
+assert.equal(content.finalLetter.date, "2026-11-18");
+assert.equal(content.finalLetter.signature.vi, "Parker");
+assert.equal(content.finalLetter.signature.en, "Parker");
+const finaleLater = skipAhead({ ...emptyProgress(), step: 13, unlocked: 13, accessibleSteps: FLOW.slice(0, 14) }, "finale");
+assert.equal(finaleLater.saidYes, false);
+assert.equal(finaleLater.step, 14);
+assert.deepEqual(finaleLater.skippedSteps, ["finale"]);
+assert.equal(skipAhead(finaleLater, "finale").step, 14);
 assert.deepEqual(
   content.eras.flatMap((era) => era.photos.slice(0, 2).map((photo) => photo.id)).slice(0, 6),
   ["care-01", "care-02", "pout-01", "pout-02", "surprise-01", "surprise-02"],

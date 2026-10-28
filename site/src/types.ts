@@ -221,6 +221,7 @@ export type Content = {
     saved: Copy;
   };
   finalLetter: {
+    date: string;
     kicker: Copy;
     title: Copy;
     lede: Copy;
@@ -259,6 +260,7 @@ export type Content = {
     yesBody: Copy;
     lead: Copy;
     celebrate: Copy;
+    later: Copy;
   };
   ui: {
     back: Copy;

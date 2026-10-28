@@ -322,6 +322,7 @@
     }
   },
   "finalLetter": {
+    "date": "2026-11-18",
     "kicker": {
       "vi": "Lá thư cuối",
       "en": "The last letter"
@@ -1838,6 +1839,10 @@
     "celebrate": {
       "vi": "Cả vũ trụ đang ăn mừng cho hai đứa mình!",
       "en": "The universe is celebrating us!"
+    },
+    "later": {
+      "vi": "Để sau",
+      "en": "Later"
     }
   },
   "ui": {

@@ -17,7 +17,7 @@ import { useI18n } from "./lib/locale-context.ts";
 import { bindMusicVisibility, bindPlaylist, musicIsPlaying, playBirthday, restoreMusicVolume, resumePlaylist, startMusic, subscribeMusic } from "./lib/music.ts";
 import { bindViewport } from "./lib/viewport.ts";
 import { isBeforeUnlock } from "./lib/lock.ts";
-import { clearProgress, moveTo, restartedProgress } from "./lib/progress.ts";
+import { clearProgress, moveTo, restartedProgress, skipAhead } from "./lib/progress.ts";
 import { fillTemplate } from "./lib/pure.ts";
 import { useReducedMotion } from "./lib/useReducedMotion.ts";
 import { useProgress } from "./lib/useProgress.ts";
@@ -355,6 +355,7 @@ export function App() {
         <Finale
           saidYes={progress.saidYes}
           onYes={() => update((current) => (current.saidYes ? current : { ...current, saidYes: true }))}
+          onLater={() => update((current) => skipAhead(current, "finale"))}
         />
       </Suspense>
     );

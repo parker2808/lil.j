@@ -222,6 +222,9 @@ export function validateContent(value: Content): string | null {
   if (!value.finalLetter?.body?.vi?.trim() || !value.finalLetter?.body?.en?.trim()) {
     return "content.json thiếu lá thư cuối (cả vi và en).";
   }
+  if (value.finalLetter.date !== "2026-11-18") {
+    return "finalLetter.date phải là 2026-11-18.";
+  }
   if (!value.constellations) return "content.json thiếu tên chòm sao.";
   for (const id of CONSTELLATION_IDS) {
     const name = value.constellations[id];

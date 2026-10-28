@@ -1954,6 +1954,17 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 
 .yes-btn { min-width: 148px; max-width: 100%; white-space: normal; }
 
+.finale-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  width: min(100%, 280px);
+  margin: 18px auto 0;
+}
+
+.finale-actions .later { width: 100%; }
+
 .finale-stage {
   position: relative;
   height: 230px;
@@ -2806,6 +2817,37 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   background: #c96d82;
   box-shadow: 0 0 8px rgba(247, 198, 220, 0.95);
   animation: caret-blink 1s steps(1) infinite;
+}
+
+.letter-constellation {
+  position: relative;
+  z-index: 1;
+  width: min(168px, 46%);
+  margin: 18px auto 0;
+  text-align: center;
+}
+
+.letter-constellation svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.letter-constellation line {
+  stroke: rgba(255, 244, 250, 0.72);
+  stroke-width: 0.7;
+  stroke-linecap: round;
+}
+
+.letter-constellation circle { fill: #fff7fb; }
+
+.letter-constellation figcaption {
+  margin-top: 4px;
+  color: var(--paper-ink);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .letter-sign {

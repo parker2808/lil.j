@@ -311,7 +311,20 @@ async function skipPlay(page) {
   await page.locator(".sticky-next").click();
   await page.waitForSelector('[data-step="envelope"]');
   await openEnvelope(page);
-  await page.getByRole("button", { name: /^Để sau$|^Later$/ }).click();
+  const later = page.getByRole("button", { name: /^Để sau$|^Later$/ });
+  const place = () => later.evaluate((el) => `${el.style.left}|${el.style.top}`);
+  let moved = false;
+  for (let attempt = 0; attempt < 4 && !moved; attempt += 1) {
+    const before = await place();
+    const box = await later.boundingBox();
+    if (!box) fail("finale-dodge", "later has no box");
+    await page.mouse.move(box.x + box.width / 2, box.y + 8);
+    await delay(40);
+    moved = (await place()) !== before;
+  }
+  if (!moved) fail("finale-dodge", "later stayed put");
+  await later.focus();
+  await page.keyboard.press("Enter");
   await page.waitForSelector('[data-step="letter"]');
   const afterFinale = await saved(page);
   if (afterFinale.saidYes) fail("skip-finale", "saidYes was set");

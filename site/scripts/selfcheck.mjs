@@ -51,7 +51,7 @@ assert.equal(togetherAtUnlock.hours, 0);
 assert.equal(togetherAtUnlock.minutes, 0);
 assert.equal(new Date("2026-09-06T12:00:00+07:00").getUTCDay(), 0);
 assert.equal(content.constellations.lyr.en, "Lyra");
-assert.equal(content.ui.musicHint.en, "Tap for music");
+assert.equal(content.ui.musicHint.en, "Put some music on with me");
 assert.equal(content.music.credit, undefined);
 assert.deepEqual(
   content.music.tracks.map((track) => (track.artist ? `${track.title} · ${track.artist}` : track.title)),

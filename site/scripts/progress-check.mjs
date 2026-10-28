@@ -15,6 +15,7 @@ globalThis.localStorage = {
 
 const { FLOW, FLOW_V1, FLOW_V2, FLOW_V3, FLOW_V4, FLOW_VERSION, mayContinue, stepDone } = await import("../src/lib/flow.ts");
 const { PROGRESS_KEY, clearProgress, emptyProgress, loadProgress, moveTo, saveProgress, skipAhead } = await import("../src/lib/progress.ts");
+const { content } = await import("../src/content.ts");
 
 assert.deepEqual([...FLOW_V1], ["gate", "sky", "birth", "gallery", "quiz", "counter", "cake", "wish", "letter"]);
 assert.equal(FLOW_V1.length, 9);
@@ -218,5 +219,41 @@ const afterLetters = skipAhead(standing("letters"), "letters");
 assert.deepEqual(afterLetters.openWhen, {});
 assert.equal(afterLetters.skippedSteps.includes("letters"), true);
 assert.equal(FLOW[afterLetters.step], "cake");
+
+const liveEra = content.eras[0].id;
+const livePhoto = content.eras[0].photos[0].id;
+const quizStep = FLOW.indexOf("quiz");
+put(base(4, quizStep, quizStep, {
+  erasViewed: ["care", liveEra, "pout", liveEra],
+  flippedPhotos: ["care-01", livePhoto, "surprise-02", livePhoto],
+  accessibleSteps: FLOW.slice(0, quizStep + 1),
+}));
+const filtered = loadProgress();
+assert.deepEqual(filtered.erasViewed, [liveEra]);
+assert.deepEqual(filtered.flippedPhotos, [livePhoto]);
+assert.equal(filtered.wishes[0].text, "stay");
+assert.deepEqual(filtered.quiz, { q1: 0 });
+assert.equal(filtered.memoryBest, 8);
+assert.equal(filtered.flowVersion, 4);
+assert.equal(FLOW[filtered.step], "quiz");
+saveProgress(filtered);
+const filteredAgain = loadProgress();
+assert.deepEqual(filteredAgain.erasViewed, [liveEra]);
+assert.deepEqual(filteredAgain.flippedPhotos, [livePhoto]);
+assert.equal(filteredAgain.step, filtered.step);
+
+put(base(4, quizStep, quizStep, {
+  erasViewed: ["care", "pout"],
+  flippedPhotos: ["care-01"],
+  accessibleSteps: FLOW.slice(0, quizStep + 1),
+}));
+const stripped = loadProgress();
+assert.deepEqual(stripped.erasViewed, []);
+assert.deepEqual(stripped.flippedPhotos, []);
+assert.equal(stripped.wishes[0].text, "stay");
+assert.equal(stripped.openWhen.sad, "2026-10-01");
+assert.equal(FLOW[stripped.step], "quiz");
+assert.equal(stepDone("gallery", stripped, 5, []), false);
+assert.equal(mayContinue("gallery", stripped, 5, []), true);
 
 console.log("progress-check ok");

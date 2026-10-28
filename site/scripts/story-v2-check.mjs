@@ -118,6 +118,17 @@ async function passGallery(page) {
 }
 
 async function matchMemory(page) {
+  await page.waitForSelector('[data-step="memory"]');
+  const cards = await page.locator(".mem").count();
+  if (cards === 0) {
+    if (content.memoryPhotoIds.length !== 0) fail("memory", "deck is empty while memoryPhotoIds is set");
+    await page.getByRole("button", { name: /Chơi sau|Play later/ }).click();
+    await page.waitForSelector('[data-step="quiz"]');
+    const record = await saved(page);
+    if (record.memoryBest != null) fail("memory", "empty deck recorded a win");
+    if (!record.skippedSteps.includes("memory")) fail("memory", "empty deck was not skipped");
+    return;
+  }
   for (let guard = 0; guard < 8; guard += 1) {
     const record = await saved(page);
     if (record.memoryBest != null) break;
@@ -273,7 +284,10 @@ async function fullPlay(page) {
   await sayYes(page);
   await finishLetter(page);
   const first = await saved(page);
-  if (first.step !== 14 || first.skippedSteps.length !== 0) fail("full", JSON.stringify({ step: first.step, skipped: first.skippedSteps }));
+  const expectedSkip = content.memoryPhotoIds.length === 0 ? ["memory"] : [];
+  if (first.step !== 14 || JSON.stringify(first.skippedSteps) !== JSON.stringify(expectedSkip)) {
+    fail("full", JSON.stringify({ step: first.step, skipped: first.skippedSteps }));
+  }
   await page.reload({ waitUntil: "networkidle" });
   await page.reload({ waitUntil: "networkidle" });
   const again = await saved(page);
@@ -505,6 +519,118 @@ async function journey(page) {
   note("a11y", "journey menu focuses the current scene, Escape returns, access stays");
 }
 
+async function chapterList(browser) {
+  const views = [
+    { name: "430x932", width: 430, height: 932, top: "59px", bottom: "34px", left: "0px", right: "0px" },
+    { name: "430x739", width: 430, height: 739, top: "59px", bottom: "34px", left: "0px", right: "0px" },
+  ];
+  for (const view of views) {
+    const context = await browser.newContext({
+      viewport: { width: view.width, height: view.height },
+      isMobile: true,
+      hasTouch: true,
+      reducedMotion: "reduce",
+    });
+    await context.addInitScript((safe) => {
+      const apply = () => {
+        const root = document.documentElement;
+        if (!root) return;
+        root.style.setProperty("--safe-top", safe.top);
+        root.style.setProperty("--safe-bottom", safe.bottom);
+        root.style.setProperty("--safe-left", safe.left);
+        root.style.setProperty("--safe-right", safe.right);
+      };
+      apply();
+      document.addEventListener("DOMContentLoaded", apply);
+    }, view);
+    const page = await context.newPage();
+    page.setDefaultTimeout(20000);
+    await page.goto(`${base}/?dev=1`, { waitUntil: "domcontentloaded" });
+    const record = historical(4, FLOW.indexOf("gallery"), FLOW.indexOf("gallery"));
+    record.accessibleSteps = FLOW.slice(0, FLOW.indexOf("gallery") + 1);
+    record.gateUnlocked = true;
+    record.flowVersion = 4;
+    await page.evaluate(({ key, value }) => {
+      localStorage.setItem("lilj.locale.v1", "vi");
+      localStorage.setItem(key, JSON.stringify(value));
+    }, { key: PROGRESS_KEY, value: record });
+    await page.goto(`${base}/?dev=1`, { waitUntil: "networkidle" });
+    await page.waitForSelector(".era-legend button");
+    const names = await page.locator(".era-legend-name").allInnerTexts();
+    if (names.length !== 13) fail(`legend-${view.name}`, `rows ${names.length}`);
+    if (names[0] !== "Em hồi bé" || names[12] !== "Thử một kiểu khác") {
+      fail(`legend-${view.name}`, names.join(" | "));
+    }
+    await page.waitForFunction(() => {
+      const button = document.querySelector(".cluster");
+      return button instanceof HTMLElement && button.style.transform.includes("translate");
+    });
+    const clusters = await page.evaluate(() => {
+      const boxes = [...document.querySelectorAll(".cluster")].map((node) => node.getBoundingClientRect());
+      let overlaps = 0;
+      for (let i = 0; i < boxes.length; i += 1) {
+        for (let j = i + 1; j < boxes.length; j += 1) {
+          const ix = Math.min(boxes[i].right, boxes[j].right) - Math.max(boxes[i].left, boxes[j].left);
+          const iy = Math.min(boxes[i].bottom, boxes[j].bottom) - Math.max(boxes[i].top, boxes[j].top);
+          if (ix > 2 && iy > 2) overlaps += 1;
+        }
+      }
+      return { count: boxes.length, overlaps };
+    });
+    if (clusters.count !== 13 || clusters.overlaps !== 0) {
+      fail(`clusters-${view.name}`, JSON.stringify(clusters));
+    }
+    const fit = await page.evaluate(() => {
+      const stage = document.querySelector(".stage");
+      const row = document.querySelectorAll(".era-legend button")[12];
+      const footer = document.querySelector("footer");
+      if (!(stage instanceof HTMLElement) || !(row instanceof HTMLElement) || !(footer instanceof HTMLElement)) return null;
+      stage.scrollTop = stage.scrollHeight;
+      const rowBox = row.getBoundingClientRect();
+      const stageBox = stage.getBoundingClientRect();
+      const footerBox = footer.getBoundingClientRect();
+      const fade = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--stage-fade")) || 0;
+      return {
+        rowTop: rowBox.top,
+        rowBottom: rowBox.bottom,
+        rowHeight: rowBox.height,
+        stageTop: stageBox.top,
+        stageBottom: stageBox.bottom,
+        footerTop: footerBox.top,
+        fade,
+        canScroll: stage.scrollHeight > stage.clientHeight + 1,
+      };
+    });
+    if (!fit) fail(`legend-${view.name}`, "missing stage");
+    if (!fit.canScroll) fail(`legend-${view.name}`, "list does not scroll");
+    if (fit.rowHeight < 44) fail(`legend-${view.name}`, `row height ${fit.rowHeight}`);
+    if (fit.rowTop < fit.stageTop - 1) fail(`legend-${view.name}`, `row above stage ${JSON.stringify(fit)}`);
+    if (fit.rowBottom > fit.footerTop + 1) fail(`legend-${view.name}`, `row under footer ${JSON.stringify(fit)}`);
+    if (fit.rowBottom > fit.stageBottom - fit.fade + 1) fail(`legend-${view.name}`, `row in fade ${JSON.stringify(fit)}`);
+    await page.locator(".era-legend button").first().click();
+    await page.waitForSelector(".stack-caption");
+    const caption = (await page.locator(".stack-caption").innerText()).replace(/\s+/g, " ").trim();
+    if (!caption.startsWith("Tóc buộc hai bên")) fail(`caption-${view.name}`, caption);
+    const captionFit = await page.evaluate(() => {
+      const stage = document.querySelector(".stage");
+      const node = document.querySelector(".stack-caption");
+      if (!(stage instanceof HTMLElement) || !(node instanceof HTMLElement)) return null;
+      node.scrollIntoView({ block: "nearest" });
+      const box = node.getBoundingClientRect();
+      const stageBox = stage.getBoundingClientRect();
+      return { top: box.top, bottom: box.bottom, stageTop: stageBox.top, stageBottom: stageBox.bottom, height: box.height };
+    });
+    if (!captionFit || captionFit.height < 20) fail(`caption-${view.name}`, "caption has no box");
+    if (captionFit.top < captionFit.stageTop - 1 || captionFit.bottom > captionFit.stageBottom + 1) {
+      fail(`caption-${view.name}`, JSON.stringify(captionFit));
+    }
+    const progress = await page.locator(".stack-count").innerText();
+    if (!progress.includes("Chương")) fail(`caption-${view.name}`, progress);
+    await context.close();
+  }
+  note("legend", "row 13 scrolls clear of the footer at 430x932 and 430x739");
+}
+
 async function layouts(browser) {
   const views = [
     { name: "320x568", width: 320, height: 568, top: "47px", bottom: "34px", left: "0px", right: "0px" },
@@ -602,6 +728,7 @@ async function main() {
     await audio(audioPage);
     await audioContext.close();
     await locks(browser);
+    await chapterList(browser);
     await layouts(browser);
     console.log(JSON.stringify({ ok: true, results }, null, 2));
   } finally {

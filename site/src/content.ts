@@ -63,16 +63,16 @@ export function validateContent(value: Content): string | null {
     if (!ids.includes(id)) return `content.json thiếu chương "${id}".`;
   }
   if (!Array.isArray(value.eras) || value.eras.length < 1) {
-    return "content.json cần ít nhất một thời của ảnh.";
+    return "content.json cần ít nhất một chương ảnh.";
   }
   for (const era of value.eras) {
-    if (!era.photos?.length) return `Thời "${era.id}" chưa có ảnh.`;
+    if (!era.photos?.length) return `Chương "${era.id}" chưa có ảnh.`;
   }
   if (!Array.isArray(value.photos) || value.photos.length < 1) {
     return "content.json cần ít nhất một ảnh.";
   }
-  if (!Array.isArray(value.memoryPhotoIds) || value.memoryPhotoIds.length !== 6) {
-    return "content.json cần đúng 6 memoryPhotoIds.";
+  if (!Array.isArray(value.memoryPhotoIds) || value.memoryPhotoIds.length > 6) {
+    return "content.json cần tối đa 6 memoryPhotoIds.";
   }
   const photoIds = new Set(value.eras.flatMap((era) => era.photos.map((photo) => photo.id)));
   if (new Set(value.memoryPhotoIds).size !== value.memoryPhotoIds.length) {
@@ -98,7 +98,6 @@ export function validateContent(value: Content): string | null {
   if (!value.startDate || Number.isNaN(Date.parse(value.startDate))) {
     return "startDate không phải ngày hợp lệ.";
   }
-  const startDay = value.startDate.slice(0, 10);
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value.firstMeeting) || Number.isNaN(Date.parse(`${value.firstMeeting}T00:00:00+07:00`))) {
     return "firstMeeting không phải ngày hợp lệ.";
   }
@@ -106,12 +105,15 @@ export function validateContent(value: Content): string | null {
   if (!value.birth?.when?.includes("T16:45:00+07:00")) return "birth.when cần giữ 16:45 UTC+7.";
   for (const era of value.eras) {
     if (era.kind !== "her-life" && era.kind !== "first-meeting" && era.kind !== "together") {
-      return `Thời "${era.id}" cần kind her-life, first-meeting hoặc together.`;
+      return `Chương "${era.id}" cần kind her-life, first-meeting hoặc together.`;
     }
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(era.date) || Number.isNaN(Date.parse(`${era.date}T00:00:00+07:00`))) {
-      return `Thời "${era.id}" có ngày không hợp lệ.`;
+    if (
+      era.date != null &&
+      era.date !== "" &&
+      (!/^\d{4}-\d{2}-\d{2}$/.test(era.date) || Number.isNaN(Date.parse(`${era.date}T00:00:00+07:00`)))
+    ) {
+      return `Chương "${era.id}" có ngày không hợp lệ.`;
     }
-    if (era.kind === "together" && era.date < startDay) return `Thời "${era.id}" bắt đầu trước ngày bên nhau.`;
     for (const photo of era.photos) {
       if (photo.date && !/^\d{4}-\d{2}-\d{2}$/.test(photo.date)) {
         return `Ảnh "${photo.id}" có ngày không hợp lệ.`;

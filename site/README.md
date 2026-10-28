@@ -75,7 +75,7 @@ Cả hai ngôn ngữ đều bắt buộc, không để trống. `npm run build` 
 | `flow` | Lời dẫn đường đi thẳng: `next`, `back`, `progress` (`{n}`, `{total}`), `done`, `doneLast`, `devJump` (`{n}`), và `hints` cho từng bước. Đường đang mở có 15 khóa: `gate`, `sky`, `birth`, `gallery`, `quiz`, `counter`, `cake`, `envelope`, `memory`, `scratch`, `letters`, `dreams`, `finale`, `wish`, `letter`. Khóa `friends` vẫn để trong file để bật lại bước lời bạn. |
 | `envelope` | Phong thư sáp, bước ngay sau bánh. `greeting`, `sealCaption`, `openHint`, `body`. |
 | `chapters` | Bảy mục nội dung, `id` cố định: `gallery`, `scratch`, `quiz`, `memory`, `dreams`, `friends`, `counter`. Đường đi đang mở sáu mục; `friends` tạm rút khỏi đường (dữ liệu và màn hình vẫn giữ). Đổi được `star`, `kicker`, `title`, `lede`. Không đổi `id`. |
-| `eras[].photos` | Ảnh polaroid của từng thời. `src` là public id Cloudinary (`lilj/care/01_…`), không phải file trong repo. `caption` có thể để trống để điền sau. `date` bỏ trống — không in ngày giả. `compliment` là câu mặt sau. Hai ảnh đầu mỗi thời được đánh `pair`; trò nhớ lấy 6 ảnh đó. |
+| `eras[].photos` | Ảnh polaroid của từng chương. `src` là public id Cloudinary (`lilj/galaxy-v3/…`), không phải file trong repo. Chỉ ảnh đầu mỗi chương có `caption`. `date` bỏ trống — không in ngày giả. `compliment` là câu mặt sau. `memoryPhotoIds` chọn ảnh cho trò nhớ. |
 | `scratches` | Thẻ cào. `cover` là chữ trên lớp phủ hồng, `reveal` là điều anh thương. |
 | `quiz` | Câu hỏi. `options` là mảng, `answer` là **chỉ số bắt đầu từ 0**. `rightNote` / `wrongNote` hiện sau khi chọn. |
 | `quizSummary` | Câu tổng kết. Chỗ trống `{ok}` và `{total}`. |
@@ -94,8 +94,8 @@ Ví dụ thêm một ảnh:
 
 ```json
 {
-  "id": "care-07",
-  "src": "lilj/care/07_ten-anh",
+  "id": "g-example",
+  "src": "lilj/galaxy-v3/example/g-example",
   "caption": { "vi": "", "en": "" },
   "compliment": { "vi": "Em nhìn sóng lâu hơn anh nhìn em.", "en": "You watched the waves longer than I watched you." }
 }
@@ -105,7 +105,7 @@ Ví dụ thêm một ảnh:
 
 ## Ảnh thật
 
-Ảnh đang giao từ Cloudinary, thư mục `lilj/<thời>/<nn_tên>`. Thứ tự trong mỗi thời là tiền tố `01_`, `02_`, … `caption` để trống cho đến khi có lời. Không ghi ngày lên polaroid. Ảnh phía sau và ảnh trong trò nhớ dùng `loading="lazy"`.
+Ảnh đang giao từ Cloudinary, public id `lilj/galaxy-v3/<chủ đề>/<photo-id>`. Chỉ ảnh đầu mỗi chương có caption. Không ghi ngày lên polaroid. Ảnh phía sau dùng `loading="lazy"`.
 
 ## Nhạc
 

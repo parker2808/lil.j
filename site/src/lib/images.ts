@@ -1,7 +1,7 @@
 const UPLOAD = "/image/upload/";
 const CLOUD_BASE = "https://res.cloudinary.com/oiounrmh/image/upload/";
 
-/** A stored public id (`lilj/care/01_…`) or an existing delivery URL. Local files stay local. */
+/** A stored public id (`lilj/galaxy-v3/…`) or an existing delivery URL. Local files stay local. */
 function toDeliveryUrl(src: string): string | null {
   if (src.includes(UPLOAD)) return src;
   if (src.startsWith("lilj/")) return `${CLOUD_BASE}${src}`;

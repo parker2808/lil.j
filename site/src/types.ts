@@ -44,10 +44,13 @@ export type EraPhoto = {
   date?: string;
 };
 
+export type EraKind = "her-life" | "first-meeting" | "together";
+
 export type Era = {
   id: string;
   title: Copy;
   date: string;
+  kind: EraKind;
   color: string;
   photos: EraPhoto[];
 };
@@ -112,6 +115,10 @@ export type Content = {
     hints: Copy[];
   };
   startDate: string;
+  /** First meeting, separate from startDate. Date only, YYYY-MM-DD. */
+  firstMeeting: string;
+  /** The six photos the memory game pairs. Order is the deal order. */
+  memoryPhotoIds: string[];
   music: {
     tracks: MusicTrack[];
     birthday?: MusicTrack;
@@ -183,6 +190,8 @@ export type Content = {
   };
   birth: {
     when: string;
+    /** Parker confirmed 2002-11-18 16:45 UTC+7. The sky uses this time. */
+    timeConfirmed: boolean;
     lat: number;
     lon: number;
     place: Copy;

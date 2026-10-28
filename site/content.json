@@ -70,6 +70,8 @@
     }
   },
   "startDate": "2026-07-01T00:00:00+07:00",
+  "firstMeeting": "2022-11-18",
+  "memoryPhotoIds": ["care-01", "care-02", "pout-01", "pout-02", "surprise-01", "surprise-02"],
   "music": {
     "tracks": [
       {
@@ -109,6 +111,7 @@
   },
   "birth": {
     "when": "2002-11-18T16:45:00+07:00",
+    "timeConfirmed": true,
     "lat": 20.97,
     "lon": 105.78,
     "place": {
@@ -673,6 +676,7 @@
         "en": "When You Take Care of Me"
       },
       "date": "2026-07-01",
+      "kind": "together",
       "color": "#f4b4cf",
       "photos": [
         {
@@ -756,6 +760,7 @@
         "en": "That Little Pout"
       },
       "date": "2026-07-01",
+      "kind": "together",
       "color": "#c5dff5",
       "photos": [
         {
@@ -851,6 +856,7 @@
         "en": "Your Surprised Face"
       },
       "date": "2026-07-01",
+      "kind": "together",
       "color": "#e7d4ff",
       "photos": [
         {
@@ -946,6 +952,7 @@
         "en": "Ordinary Days, Favorite Person"
       },
       "date": "2026-07-01",
+      "kind": "together",
       "color": "#f8d4c6",
       "photos": [
         {
@@ -1077,6 +1084,7 @@
         "en": "More Memories to Come"
       },
       "date": "2026-07-01",
+      "kind": "together",
       "color": "#d7e8c9",
       "photos": [
         {

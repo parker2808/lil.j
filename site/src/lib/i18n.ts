@@ -21,6 +21,8 @@ const PLAIN = new Set([
   "date",
   "color",
   "unlockAt",
+  "kind",
+  "firstMeeting",
 ]);
 
 export function isCopy(value: unknown): value is Copy {
@@ -64,6 +66,12 @@ function walk(value: unknown, path: string, problems: string[], key?: string): v
   if ((key === "title" || key === "artist") && path.includes(".music")) {
     if (typeof value !== "string" || !value.trim()) {
       problems.push(`${path} phải là một chuỗi không trống.`);
+    }
+    return;
+  }
+  if (key === "memoryPhotoIds") {
+    if (!Array.isArray(value) || value.some((item) => typeof item !== "string")) {
+      problems.push(`${path} phải là một danh sách id.`);
     }
     return;
   }

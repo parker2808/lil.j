@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "placeholders": "node scripts/make-placeholders.mjs",
     "overlap": "npm run build && node scripts/overlap-check.mjs",
-    "progress-check": "node scripts/progress-check.mjs"
+    "progress-check": "node scripts/progress-check.mjs",
+    "content-check": "node scripts/content-check.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "^5.3.0",

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef } from "react";
 import { content } from "../content.ts";
+import { skipAhead } from "../lib/progress.ts";
 import { ChapterFrame } from "../components/ChapterFrame.tsx";
 import { useI18n } from "../lib/locale-context.ts";
 import { useReducedMotion } from "../lib/useReducedMotion.ts";
@@ -21,6 +22,9 @@ export function Scratch({ progress, update }: ChapterProps) {
       title={t(chapter?.title)}
       lede={t(chapter?.lede)}
     >
+      <button type="button" className="btn btn-quiet later" onClick={() => update((current) => skipAhead(current, "scratch"))}>
+        {t(content.scratchCopy.later)}
+      </button>
       <div className="scratch-list">
         {content.scratches.map((item) => (
           <ScratchCard
@@ -73,6 +77,7 @@ function ScratchCard({
     let lastCssX = 0;
     let lastCssY = 0;
     let moves = 0;
+    let alive = true;
     let painted = false;
 
     const foil = (width: number, height: number) => {
@@ -223,6 +228,7 @@ function ScratchCard({
     };
 
     const maybeDone = () => {
+      if (!alive || !card.isConnected) return;
       if (cleared()) onReveal(id);
     };
 
@@ -282,7 +288,6 @@ function ScratchCard({
     };
 
     let raf = 0;
-    let alive = true;
     let glittering = false;
     const glitterFrame = () => {
       glittering = false;

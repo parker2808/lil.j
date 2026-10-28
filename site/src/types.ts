@@ -148,7 +148,11 @@ export type Content = {
     win: Copy;
     again: Copy;
     back: Copy;
+    later: Copy;
     lines: Copy[];
+  };
+  scratchCopy: {
+    later: Copy;
   };
   dreams: Dream[];
   friendNotes: FriendNote[];
@@ -232,6 +236,7 @@ export type Content = {
     openedNote: Copy;
     close: Copy;
     next: Copy;
+    later: Copy;
   };
   finale: {
     question: Copy;

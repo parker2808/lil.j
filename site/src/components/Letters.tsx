@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { content } from "../content.ts";
+import { skipAhead } from "../lib/progress.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import { todayKey } from "../lib/pure.ts";
 import type { Progress } from "../types.ts";
@@ -9,9 +10,10 @@ import { Reveal } from "./Reveal.tsx";
 type LettersProps = {
   progress: Progress;
   update: (recipe: (progress: Progress) => Progress) => void;
+  onSheet?: (open: boolean) => void;
 };
 
-export function Letters({ progress, update }: LettersProps) {
+export function Letters({ progress, update, onSheet }: LettersProps) {
   const { t } = useI18n();
   const today = todayKey();
   const [openId, setOpenId] = useState<string | null>(null);
@@ -19,14 +21,18 @@ export function Letters({ progress, update }: LettersProps) {
   const active = content.openWhen.find((letter) => letter.id === openId) ?? null;
 
   useEffect(() => {
-    if (!active) return;
+    onSheet?.(Boolean(active));
+    if (!active) return () => onSheet?.(false);
     closeRef.current?.focus();
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") setOpenId(null);
     };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [active]);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      onSheet?.(false);
+    };
+  }, [active, onSheet]);
 
   function openLetter(id: string) {
     update((current) => {
@@ -41,6 +47,9 @@ export function Letters({ progress, update }: LettersProps) {
       <p className="kicker">{t(content.lettersCopy.kicker)}</p>
       <Reveal text={t(content.lettersCopy.title)} />
       <p className="lede">{t(content.lettersCopy.lede)}</p>
+      <button type="button" className="btn btn-quiet later" onClick={() => update((current) => skipAhead(current, "letters"))}>
+        {t(content.lettersCopy.later)}
+      </button>
       <div className="seal-grid">
         {content.openWhen.map((letter) => {
           const seen = Boolean(progress.openWhen[letter.id]);

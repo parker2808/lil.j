@@ -123,31 +123,47 @@ function clampHistorical(index: number, length: number): number {
   return Math.max(0, Math.min(length - 1, Math.floor(index)));
 }
 
+type SceneState = {
+  gateUnlocked: boolean;
+  skyDone: boolean;
+  birthSeen: boolean;
+  flippedPhotos: string[];
+  erasViewed?: string[];
+  quiz: Record<string, number>;
+  counterSeen: boolean;
+  candlesOut: number[];
+  envelopeOpened: boolean;
+  memoryBest: number | null;
+  scratched: string[];
+  openWhen: Record<string, string>;
+  friendsSeen: boolean;
+  dreamsDone: string[];
+  saidYes: boolean;
+  wishes: { text: string }[];
+  letterDone: boolean;
+  skippedSteps?: readonly StepId[];
+  accessibleSteps?: readonly StepId[];
+};
+
+/** Real interaction data. A skip is not completion. */
 export function stepDone(
   id: StepId,
-  progress: {
-    gateUnlocked: boolean;
-    skyDone: boolean;
-    birthSeen: boolean;
-    flippedPhotos: string[];
-    erasViewed?: string[];
-    quiz: Record<string, number>;
-    counterSeen: boolean;
-    candlesOut: number[];
-    envelopeOpened: boolean;
-    memoryBest: number | null;
-    scratched: string[];
-    openWhen: Record<string, string>;
-    friendsSeen: boolean;
-    dreamsDone: string[];
-    saidYes: boolean;
-    wishes: { text: string }[];
-    letterDone: boolean;
-  },
+  progress: SceneState,
   candleCount: number,
   quizIds: string[],
   scratchIds: string[] = [],
   letterIds: string[] = [],
+): boolean {
+  return sceneCompleted(id, progress, candleCount, quizIds, scratchIds, letterIds);
+}
+
+function sceneCompleted(
+  id: StepId,
+  progress: SceneState,
+  candleCount: number,
+  quizIds: string[],
+  scratchIds: string[],
+  letterIds: string[],
 ): boolean {
   switch (id) {
     case "gate":
@@ -185,4 +201,20 @@ export function stepDone(
     default:
       return false;
   }
+}
+
+/** Completed, explicitly skipped, or the next scene is already open. */
+export function mayContinue(
+  id: StepId,
+  progress: SceneState,
+  candleCount: number,
+  quizIds: string[],
+  scratchIds: string[] = [],
+  letterIds: string[] = [],
+): boolean {
+  if (sceneCompleted(id, progress, candleCount, quizIds, scratchIds, letterIds)) return true;
+  if (progress.skippedSteps?.includes(id)) return true;
+  const index = (FLOW as readonly string[]).indexOf(id);
+  const next = FLOW[index + 1];
+  return Boolean(next && progress.accessibleSteps?.includes(next));
 }

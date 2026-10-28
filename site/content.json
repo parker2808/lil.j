@@ -1417,6 +1417,10 @@
       "vi": "Mặt sau",
       "en": "Face down"
     },
+    "later": {
+      "vi": "Chơi sau",
+      "en": "Play later"
+    },
     "lines": [
       {
         "vi": "Một khoảnh khắc nhỏ, một kỷ niệm dễ thương.",
@@ -1738,6 +1742,16 @@
     "next": {
       "vi": "Một câu hỏi cuối",
       "en": "One last question"
+    },
+    "later": {
+      "vi": "Để dành những lá thư",
+      "en": "Save the letters for later"
+    }
+  },
+  "scratchCopy": {
+    "later": {
+      "vi": "Khám phá sau",
+      "en": "Explore later"
     }
   },
   "finale": {

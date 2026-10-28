@@ -249,6 +249,14 @@ export function restartedProgress(muted: boolean): Progress {
   return { ...emptyProgress(), muted };
 }
 
+/** Record an explicit later choice and open the next scene. A second call for the same scene does not walk further. */
+export function skipAhead(current: Progress, id: StepId): Progress {
+  const from = clampStep(current.step);
+  if (FLOW[from] !== id || from >= FLOW.length - 1) return current;
+  const skippedSteps = current.skippedSteps.includes(id) ? current.skippedSteps : ordered([...current.skippedSteps, id]);
+  return moveTo({ ...current, skippedSteps }, from + 1, false, true);
+}
+
 /**
  * Move along the path.
  * A dev jump may open every scene up to the target.

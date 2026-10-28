@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { content } from "../content.ts";
 import { cloudinaryUrl } from "../lib/images.ts";
+import { skipAhead } from "../lib/progress.ts";
 import { ChapterFrame } from "../components/ChapterFrame.tsx";
 import { Spark } from "../components/Fireworks.tsx";
 import type { Copy } from "../lib/i18n.ts";
@@ -35,10 +36,18 @@ export function Memory({ progress, update }: ChapterProps) {
   const [lock, setLock] = useState(false);
   const [cheer, setCheer] = useState(0);
   const timerRef = useRef(0);
+  const aliveRef = useRef(true);
   const pairCount = new Set(deck.map((card) => card.photoId)).size;
   const won = matched.length > 0 && matched.length === pairCount;
 
-  useEffect(() => () => window.clearTimeout(timerRef.current), []);
+  useEffect(() => {
+    aliveRef.current = true;
+    return () => {
+      aliveRef.current = false;
+      window.clearTimeout(timerRef.current);
+      timerRef.current = 0;
+    };
+  }, []);
 
   function onFlip(card: Card) {
     if (lock || flipped.includes(card.uid) || matched.includes(card.photoId) || flipped.length >= 2) return;
@@ -68,6 +77,8 @@ export function Memory({ progress, update }: ChapterProps) {
     setLock(true);
     window.clearTimeout(timerRef.current);
     timerRef.current = window.setTimeout(() => {
+      timerRef.current = 0;
+      if (!aliveRef.current) return;
       setFlipped([]);
       setLock(false);
     }, 700);
@@ -88,6 +99,9 @@ export function Memory({ progress, update }: ChapterProps) {
       title={t(chapter?.title)}
       lede={t(chapter?.lede)}
     >
+      <button type="button" className="btn btn-quiet later" onClick={() => update((current) => skipAhead(current, "memory"))}>
+        {t(content.memoryCopy.later)}
+      </button>
       <p className="count">
         {fillTemplate(t(content.memoryCopy.moves), { n: moves })}
         {progress.memoryBest != null

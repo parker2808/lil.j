@@ -11,7 +11,7 @@ import { Starfield } from "./components/Starfield.tsx";
 import { StickyNext } from "./components/StickyNext.tsx";
 import { StickyNextContext, type StickyAction } from "./components/sticky-next-context.ts";
 import { Universe } from "./components/Universe.tsx";
-import { FLOW, clampStep, stepDone, type StepId } from "./lib/flow.ts";
+import { FLOW, clampStep, mayContinue, stepDone, type StepId } from "./lib/flow.ts";
 import { useI18n } from "./lib/locale-context.ts";
 import { bindMusicVisibility, bindPlaylist, musicIsPlaying, playBirthday, restoreMusicVolume, resumePlaylist, startMusic, subscribeMusic } from "./lib/music.ts";
 import { bindViewport } from "./lib/viewport.ts";
@@ -66,6 +66,10 @@ export function App() {
   const headerRef = useRef<HTMLElement>(null);
   const footerRef = useRef<HTMLElement>(null);
   const [quizAction, setQuizAction] = useState<StickyAction | null>(null);
+  const [letterSheet, setLetterSheetState] = useState(false);
+  const setLetterSheet = useCallback((open: boolean) => {
+    setLetterSheetState((current) => (current === open ? current : open));
+  }, []);
   const setStickyAction = useCallback((action: StickyAction | null) => {
     setQuizAction((current) => {
       if (!action && !current) return current;
@@ -92,11 +96,7 @@ export function App() {
       update((current) => {
         const index = clampStep(current.step);
         const id = (FLOW[index] ?? "gate") as StepId;
-        const ahead = FLOW[index + 1];
-        const mayLeave =
-          Boolean(ahead && current.accessibleSteps.includes(ahead)) ||
-          stepDone(id, current, CANDLES, QUIZ_IDS, SCRATCH_IDS, LETTER_IDS);
-        return moveTo(current, target, jump, mayLeave);
+        return moveTo(current, target, jump, mayContinue(id, current, CANDLES, QUIZ_IDS, SCRATCH_IDS, LETTER_IDS));
       });
     },
     [update],
@@ -258,10 +258,9 @@ export function App() {
   }
 
   const done = stepDone(stepId, progress, CANDLES, QUIZ_IDS, SCRATCH_IDS, LETTER_IDS);
-  const ahead = FLOW[step + 1];
-  const mayLeave = done || Boolean(ahead && progress.accessibleSteps.includes(ahead));
+  const canContinue = mayContinue(stepId, progress, CANDLES, QUIZ_IDS, SCRATCH_IDS, LETTER_IDS);
   const flowAction: StickyAction | null =
-    stepId === "letter" || stepId === "gate" || quizAction || !mayLeave
+    stepId === "letter" || stepId === "gate" || quizAction || letterSheet || !canContinue
       ? null
       : {
           label: t(content.flow.next),
@@ -330,7 +329,7 @@ export function App() {
   } else if (stepId === "letters") {
     node = (
       <Suspense fallback={<p className="scene loading">{t(content.ui.loading)}</p>}>
-        <Letters progress={progress} update={update} />
+        <Letters progress={progress} update={update} onSheet={setLetterSheet} />
       </Suspense>
     );
   } else if (stepId === "friends") {

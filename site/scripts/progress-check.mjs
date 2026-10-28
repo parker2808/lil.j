@@ -13,8 +13,8 @@ globalThis.localStorage = {
   },
 };
 
-const { FLOW, FLOW_V1, FLOW_V2, FLOW_V3, FLOW_V4, FLOW_VERSION } = await import("../src/lib/flow.ts");
-const { PROGRESS_KEY, clearProgress, emptyProgress, loadProgress, moveTo, saveProgress } = await import("../src/lib/progress.ts");
+const { FLOW, FLOW_V1, FLOW_V2, FLOW_V3, FLOW_V4, FLOW_VERSION, mayContinue, stepDone } = await import("../src/lib/flow.ts");
+const { PROGRESS_KEY, clearProgress, emptyProgress, loadProgress, moveTo, saveProgress, skipAhead } = await import("../src/lib/progress.ts");
 
 assert.deepEqual([...FLOW_V1], ["gate", "sky", "birth", "gallery", "quiz", "counter", "cake", "wish", "letter"]);
 assert.equal(FLOW_V1.length, 9);
@@ -181,5 +181,42 @@ const saved = { ...emptyProgress(), step: 2, unlocked: 2, gateUnlocked: true, mu
 saveProgress(saved);
 assert.equal(JSON.parse(store.get(PROGRESS_KEY)).muted, false);
 assert.equal(loadProgress().step, 2);
+
+function standing(id) {
+  const step = FLOW.indexOf(id);
+  return {
+    ...emptyProgress(),
+    step,
+    unlocked: step,
+    accessibleSteps: FLOW.slice(0, step + 1),
+    gateUnlocked: true,
+    memoryBest: null,
+    scratched: [],
+    openWhen: {},
+  };
+}
+
+const memory = standing("memory");
+const afterMemory = skipAhead(memory, "memory");
+const memoryAgain = skipAhead(afterMemory, "memory");
+assert.equal(afterMemory.memoryBest, null);
+assert.deepEqual(afterMemory.scratched, []);
+assert.deepEqual(afterMemory.openWhen, {});
+assert.equal(afterMemory.skippedSteps.includes("memory"), true);
+assert.equal(FLOW[afterMemory.step], "quiz");
+assert.equal(memoryAgain.step, afterMemory.step);
+assert.equal(memoryAgain.skippedSteps.includes("quiz"), false);
+assert.equal(stepDone("memory", afterMemory, 5, [], [], []), false);
+assert.equal(mayContinue("memory", afterMemory, 5, [], [], []), true);
+
+const afterScratch = skipAhead(standing("scratch"), "scratch");
+assert.deepEqual(afterScratch.scratched, []);
+assert.equal(afterScratch.skippedSteps.includes("scratch"), true);
+assert.equal(FLOW[afterScratch.step], "counter");
+
+const afterLetters = skipAhead(standing("letters"), "letters");
+assert.deepEqual(afterLetters.openWhen, {});
+assert.equal(afterLetters.skippedSteps.includes("letters"), true);
+assert.equal(FLOW[afterLetters.step], "cake");
 
 console.log("progress-check ok");

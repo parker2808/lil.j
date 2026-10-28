@@ -385,6 +385,18 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   backdrop-filter: none;
 }
 
+.later {
+  width: 100%;
+  max-width: 100%;
+  min-height: 44px;
+  height: auto;
+  margin: 4px 0 8px;
+  padding: 8px 12px;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.3;
+}
+
 .back, .reset {
   border: none;
   background: none;

@@ -1,7 +1,23 @@
 /** Friend notes stay in the repo. Flip this to put them back on the path, between the open-when letters and the dreams. */
 export const INCLUDE_FRIENDS = false;
 
-const BEFORE_FRIENDS = [
+/**
+ * Frozen historical paths. Story V2 will reorder the live FLOW.
+ * These names stay put so a saved index can still be resolved by scene id.
+ */
+export const FLOW_V1 = [
+  "gate",
+  "sky",
+  "birth",
+  "gallery",
+  "quiz",
+  "counter",
+  "cake",
+  "wish",
+  "letter",
+] as const;
+
+export const FLOW_V2 = [
   "gate",
   "sky",
   "birth",
@@ -13,17 +29,14 @@ const BEFORE_FRIENDS = [
   "memory",
   "scratch",
   "letters",
+  "friends",
+  "dreams",
+  "finale",
+  "wish",
+  "letter",
 ] as const;
 
-const AFTER_FRIENDS = ["dreams", "finale", "wish", "letter"] as const;
-
-export const FLOW_WITH_FRIENDS = [...BEFORE_FRIENDS, "friends", ...AFTER_FRIENDS] as const;
-export const FLOW_WITHOUT_FRIENDS = [...BEFORE_FRIENDS, ...AFTER_FRIENDS] as const;
-
-export const FLOW = INCLUDE_FRIENDS ? FLOW_WITH_FRIENDS : FLOW_WITHOUT_FRIENDS;
-
-/** The 9-step path from before the middle chapters were restored. */
-export const PREVIOUS_FLOW = [
+export const FLOW_V3 = [
   "gate",
   "sky",
   "birth",
@@ -31,9 +44,23 @@ export const PREVIOUS_FLOW = [
   "quiz",
   "counter",
   "cake",
+  "envelope",
+  "memory",
+  "scratch",
+  "letters",
+  "dreams",
+  "finale",
   "wish",
   "letter",
 ] as const;
+
+export const FLOW_WITH_FRIENDS = FLOW_V2;
+export const FLOW_WITHOUT_FRIENDS = FLOW_V3;
+
+export const FLOW = INCLUDE_FRIENDS ? FLOW_WITH_FRIENDS : FLOW_WITHOUT_FRIENDS;
+
+/** The 9-step path from before the middle chapters were restored. */
+export const PREVIOUS_FLOW = FLOW_V1;
 
 /** 2 = the 16-step path that included friend notes. 3 = that step removed. */
 export const FLOW_VERSION = INCLUDE_FRIENDS ? 2 : 3;
@@ -47,9 +74,9 @@ export function clampStep(value: unknown): number {
 }
 
 function pathForVersion(version: unknown): readonly string[] {
-  if (version === 2) return FLOW_WITH_FRIENDS;
-  if (version === 3) return FLOW_WITHOUT_FRIENDS;
-  return PREVIOUS_FLOW;
+  if (version === 2) return FLOW_V2;
+  if (version === 3) return FLOW_V3;
+  return FLOW_V1;
 }
 
 export function migrateIndex(version: unknown, index: number): number {

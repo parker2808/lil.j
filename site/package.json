@@ -13,7 +13,8 @@
     "progress-check": "node scripts/progress-check.mjs",
     "content-check": "node scripts/content-check.mjs",
     "memory-deck-test": "node --test scripts/memory-deck.test.mjs",
-    "story-v2-check": "npm run build && node scripts/story-v2-check.mjs"
+    "sheet-sync-test": "node --test scripts/sheet-sync.test.mjs",
+    "story-v2-check": "VITE_SHEET_URL=https://sheet.invalid/exec npm run build && node scripts/story-v2-check.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "^5.3.0",

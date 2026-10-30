@@ -11,6 +11,42 @@ const base = process.env.STORY_URL || "http://127.0.0.1:4173";
 const devUrl = `${base}/?dev=1&seed=${STORY_V2_MEMORY_SEED}`;
 const ownServer = !process.env.STORY_URL;
 const results = [];
+/** The build bakes this fake sheet URL (see `npm run story-v2-check`). Requests never leave the browser. */
+const SHEET_URL = "https://sheet.invalid/exec";
+const sheet = { mode: "ok", posts: [] };
+
+async function routeSheet(context) {
+  await context.route(`${SHEET_URL}*`, async (route) => {
+    const request = route.request();
+    let body = null;
+    try {
+      body = JSON.parse(request.postData() ?? "");
+    } catch {
+      body = null;
+    }
+    sheet.posts.push({ body, mode: sheet.mode });
+    const headers = { "access-control-allow-origin": "*" };
+    if (sheet.mode === "fail") {
+      await route.fulfill({ status: 503, headers, body: "" });
+      return;
+    }
+    await route.fulfill({ status: 200, headers, contentType: "application/json", body: JSON.stringify({ ok: true }) });
+  });
+}
+
+async function sheetPost(name, match, from = 0, timeout = 8000) {
+  const end = Date.now() + timeout;
+  while (Date.now() < end) {
+    const found = sheet.posts.slice(from).find((post) => post.mode === "ok" && post.body && match(post.body));
+    if (found) return found.body;
+    await delay(100);
+  }
+  fail(name, `no matching sheet request (${sheet.posts.length} seen). Build with VITE_SHEET_URL=${SHEET_URL}`);
+}
+
+async function outbox(page) {
+  return page.evaluate(() => JSON.parse(localStorage.getItem("lilj.outbox.v1") ?? "null"));
+}
 
 function note(name, detail) {
   results.push({ name, detail });
@@ -232,11 +268,26 @@ async function passCake(page) {
 }
 
 async function sendWish(page) {
+  const toggle = page.getByRole("switch", { name: /Giữ điều ước|Keep this wish/ });
+  if ((await toggle.getAttribute("aria-checked")) !== "false") fail("wish-switch", "keep private is on by default");
+  const failedBefore = sheet.posts.length;
+  sheet.mode = "fail";
   await page.locator(".wish-field input").fill("ở bên");
   await page.locator(".wish-go").click();
   await page.locator(".sticky-next").waitFor();
   const record = await saved(page);
-  if (record.wishes.length === 0) fail("wish", "wish was not stored");
+  const sent = record.wishes.at(-1);
+  if (!sent || sent.text !== "ở bên" || sent.private) fail("wish", "wish was not stored as shared");
+  const end = Date.now() + 5000;
+  while (sheet.posts.length === failedBefore && Date.now() < end) await delay(100);
+  const queued = await outbox(page);
+  if (!queued?.wishes?.some((item) => item.id === sent.id)) fail("sheet-retry", "a failed wish left the outbox");
+  sheet.mode = "ok";
+  await page.evaluate(() => window.dispatchEvent(new Event("online")));
+  const body = await sheetPost("sheet-wish", (post) => post.kind === "wish" && post.id === sent.id, failedBefore);
+  if (body.text !== "ở bên" || body.test !== true) fail("sheet-wish", JSON.stringify(body));
+  await page.waitForFunction(() => localStorage.getItem("lilj.outbox.v1") === null);
+  note("sheet-wish", "a failed send stays queued, then goes out once the phone is back online");
   await advance(page);
 }
 
@@ -279,7 +330,13 @@ async function fullPlay(page) {
   await passQuiz(page);
   await scratchAll(page);
   await passCounter(page);
+  const dreamsFrom = sheet.posts.length;
   await passDreams(page);
+  const picked = await sheetPost("sheet-dreams", (post) => post.kind === "dreams", dreamsFrom);
+  if (picked.ids.join(",") !== content.dreams[0].id || picked.items[0] !== content.dreams[0].text.vi || picked.test !== true) {
+    fail("sheet-dreams", JSON.stringify(picked));
+  }
+  note("sheet-dreams", "the ticked list reaches the sheet with its Vietnamese text");
   await openLetters(page);
   await sendWish(page);
   await passCake(page);
@@ -320,10 +377,22 @@ async function skipPlay(page) {
   await page.waitForSelector('[data-step="wish"]');
   const afterLetters = await saved(page);
   if (Object.keys(afterLetters.openWhen).length !== 0) fail("skip-letters", "openWhen was written");
-  await page.getByRole("button", { name: /Giữ điều ước|Keep this wish/ }).click();
+  if (await page.locator(".sticky-next").count()) fail("wish-required", "Next shows before any wish");
+  const toggle = page.getByRole("switch", { name: /Giữ điều ước|Keep this wish/ });
+  await toggle.click();
+  if ((await toggle.getAttribute("aria-checked")) !== "true") fail("private-wish", "switch did not turn on");
+  const postsBefore = sheet.posts.length;
+  await page.locator(".wish-field input").fill("chỉ em biết");
+  await page.locator(".wish-go").click();
+  await page.locator(".sticky-next").waitFor();
   const afterWish = await saved(page);
-  if (afterWish.wishes.length !== 0 || afterWish.wishPrivate !== true) fail("private-wish", "wish record changed");
-  if ((await page.locator(".wish-read").innerText()).trim()) fail("private-wish", "sent line is showing");
+  const kept = afterWish.wishes.at(-1);
+  if (!kept || kept.text !== "chỉ em biết" || kept.private !== true) fail("private-wish", "wish was not kept as private");
+  if ((await toggle.getAttribute("aria-checked")) !== "true") fail("private-wish", "switch reset after sending");
+  await delay(2000);
+  if (sheet.posts.slice(postsBefore).some((post) => post.body?.kind === "wish")) fail("private-wish", "a private wish was sent");
+  if ((await outbox(page))?.wishes?.length) fail("private-wish", "a private wish was queued");
+  note("private-wish", "a private wish stays in the sky, is never queued or sent, and the switch stays on");
   await page.locator(".sticky-next").click();
   await page.waitForSelector('[data-step="cake"]');
   await passCake(page);
@@ -711,6 +780,7 @@ async function main() {
       apply();
       document.addEventListener("DOMContentLoaded", apply);
     });
+    await routeSheet(context);
     const page = await context.newPage();
     page.setDefaultTimeout(20000);
     await migrate(page);
@@ -718,6 +788,9 @@ async function main() {
     await fullPlay(page);
     await journey(page);
     await skipPlay(page);
+    if (sheet.posts.some((post) => post.body?.kind === "wish" && post.body.text === "stay")) {
+      fail("sheet-old-wishes", "a wish saved before this build was sent");
+    }
     await context.close();
     const audioContext = await browser.newContext({
       viewport: { width: 430, height: 932 },

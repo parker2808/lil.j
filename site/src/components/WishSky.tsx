@@ -9,9 +9,8 @@ import { Reveal } from "./Reveal.tsx";
 
 type WishSkyProps = {
   wishes: Wish[];
-  wishPrivate: boolean;
-  onSend: (text: string) => void;
-  onKeepPrivate: () => void;
+  /** `keep` keeps the wish on this device only. */
+  onSend: (text: string, keep: boolean) => void;
 };
 
 type Particle = {
@@ -39,10 +38,12 @@ const HUES = ["#fff7fb", "#f7c6dc", "#e7d4ff", "#c9e2f8", "#ffd0e4", "#f8d4c6"];
 let flownId: string | null = null;
 let seeded = false;
 
-export function WishSky({ wishes, wishPrivate, onSend, onKeepPrivate }: WishSkyProps) {
+export function WishSky({ wishes, onSend }: WishSkyProps) {
   const { t } = useI18n();
   const reduced = useReducedMotion();
   const [value, setValue] = useState("");
+  // Stays as she left it after each wish, so a private streak never flips to shared by surprise.
+  const [keep, setKeep] = useState(false);
   const [empty, setEmpty] = useState(false);
   const [shaking, setShaking] = useState(false);
   const [openId, setOpenId] = useState<string | null>(null);
@@ -330,7 +331,7 @@ export function WishSky({ wishes, wishPrivate, onSend, onKeepPrivate }: WishSkyP
     setEmpty(false);
     setValue("");
     setOpenId(null);
-    onSend(text);
+    onSend(text, keep);
     const field = event.currentTarget.querySelector("input");
     if (field instanceof HTMLInputElement) field.blur();
   }
@@ -394,47 +395,65 @@ export function WishSky({ wishes, wishPrivate, onSend, onKeepPrivate }: WishSkyP
               )
             : null}
         </div>
-        {!wishPrivate && (
-          <button type="button" className="btn btn-quiet later wish-keep" onClick={onKeepPrivate}>
-            {t(content.wish.keep)}
-          </button>
-        )}
-        <form className={shaking ? "wish-form shake" : "wish-form"} onSubmit={submit} ref={formRef}>
-          <div className="wish-field">
-            <label>
-              <input
-                value={value}
-                placeholder=" "
-                maxLength={180}
-                autoComplete="off"
-                enterKeyHint="send"
-                aria-invalid={empty}
-                onChange={(event) => {
-                  setValue(event.target.value);
-                  setEmpty(false);
-                }}
-              />
-              <span>{t(content.wish.placeholder)}</span>
-            </label>
-            <button
-              type="submit"
-              className="wish-go"
-              aria-label={t(content.wish.send)}
-              onPointerDown={(event) => event.preventDefault()}
-            >
-              <svg viewBox="0 0 20 20" aria-hidden="true">
-                <path
-                  d="M4 10h11M11 5l5 5-5 5"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+        <div className="wish-dock" data-keyboard-block>
+          <p className="wish-note">{t(content.wish.note)}</p>
+          <form className={shaking ? "wish-form shake" : "wish-form"} onSubmit={submit} ref={formRef}>
+            <div className="wish-field">
+              <label>
+                <input
+                  value={value}
+                  placeholder=" "
+                  maxLength={180}
+                  autoComplete="off"
+                  enterKeyHint="send"
+                  aria-invalid={empty}
+                  onChange={(event) => {
+                    setValue(event.target.value);
+                    setEmpty(false);
+                  }}
                 />
-              </svg>
-            </button>
-          </div>
-        </form>
+                <span>{t(content.wish.placeholder)}</span>
+              </label>
+              <button
+                type="submit"
+                className="wish-go"
+                aria-label={t(content.wish.send)}
+                onPointerDown={(event) => event.preventDefault()}
+              >
+                <svg viewBox="0 0 20 20" aria-hidden="true">
+                  <path
+                    d="M4 10h11M11 5l5 5-5 5"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+          </form>
+          <button
+            type="button"
+            role="switch"
+            aria-checked={keep}
+            className="wish-keep"
+            onPointerDown={(event) => event.preventDefault()}
+            onClick={() => setKeep((current) => !current)}
+          >
+            <span>{t(content.wish.keep)}</span>
+            <span className="wish-keep-track" aria-hidden="true">
+              <span className="wish-keep-knob">
+                <svg className="wish-keep-star" viewBox="0 0 24 24">
+                  <path d="M12 1.5c.7 6.3 3.2 9.6 10.5 10.5-7.3.9-9.8 4.2-10.5 10.5-.7-6.3-3.2-9.6-10.5-10.5C8.8 11.1 11.3 7.8 12 1.5Z" />
+                </svg>
+                <svg className="wish-keep-moon" viewBox="0 0 24 24">
+                  <path d="M19.5 15.2A8.2 8.2 0 0 1 8.8 4.5a8.2 8.2 0 1 0 10.7 10.7Z" />
+                </svg>
+              </span>
+            </span>
+          </button>
+        </div>
         <p className={empty ? "wish-read is-empty" : "wish-read"} role="status">
           {note}
         </p>

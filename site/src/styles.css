@@ -2431,7 +2431,6 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 :root.keyboard-open .wish-read:empty { display: none; }
 :root.keyboard-open .wish-scene { min-height: 0; }
 :root.keyboard-open .wish-sky { overflow: visible; }
-:root.keyboard-open .wish-keep { display: none; }
 :root.keyboard-open .wish-form {
   position: sticky;
   bottom: 0;
@@ -4764,6 +4763,121 @@ html::-webkit-scrollbar-track, .stage::-webkit-scrollbar-track, .scene::-webkit-
   pointer-events: none;
 }
 .wish-sky > .wish-read:empty { display: none; }
+
+/* Wish: who reads it. Note, field and switch travel together, also above the keyboard. */
+.wish-dock {
+  position: relative;
+  z-index: 5;
+  flex: none;
+}
+.wish-note {
+  width: min(100%, 380px);
+  margin: 0 auto 8px;
+  padding: 0 12px;
+  text-align: center;
+  color: var(--muted);
+  font-size: var(--text-secondary);
+  line-height: var(--leading-body);
+}
+.wish-dock .wish-form,
+:root.keyboard-open .wish-dock .wish-form { margin-top: 0; margin-bottom: 4px; }
+.wish-keep {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: min(100%, 340px);
+  min-height: 44px;
+  margin: 0 auto 8px;
+  padding: 0 6px;
+  border: none;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.wish-keep[aria-checked="true"] { color: var(--ink); }
+.wish-keep-track {
+  --sky-dots:
+    radial-gradient(circle at 18% 30%, rgba(255, 247, 251, 0.9) 0 0.8px, transparent 1.4px),
+    radial-gradient(circle at 34% 72%, rgba(255, 247, 251, 0.7) 0 0.7px, transparent 1.3px),
+    radial-gradient(circle at 58% 24%, rgba(255, 247, 251, 0.8) 0 0.6px, transparent 1.2px),
+    radial-gradient(circle at 76% 64%, rgba(255, 247, 251, 0.7) 0 0.8px, transparent 1.4px),
+    radial-gradient(circle at 88% 30%, rgba(255, 247, 251, 0.6) 0 0.6px, transparent 1.2px);
+  position: relative;
+  flex: none;
+  width: 58px;
+  height: 32px;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(247, 213, 230, 0.38);
+  background: var(--sky-dots), linear-gradient(135deg, rgba(48, 28, 78, 0.72), rgba(96, 62, 120, 0.55));
+  box-shadow: inset 0 1px 6px rgba(20, 8, 40, 0.45);
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+}
+.wish-keep[aria-checked="true"] .wish-keep-track {
+  border-color: rgba(212, 196, 246, 0.6);
+  background: var(--sky-dots), linear-gradient(135deg, rgba(30, 18, 60, 0.85), rgba(66, 42, 104, 0.75));
+  box-shadow: inset 0 1px 6px rgba(10, 4, 30, 0.55), 0 0 14px rgba(212, 196, 246, 0.35);
+}
+.wish-keep-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 228, 240, 0.55), rgba(255, 228, 240, 0) 70%);
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.wish-keep[aria-checked="true"] .wish-keep-knob {
+  transform: translateX(26px);
+  background: radial-gradient(circle, rgba(212, 196, 246, 0.55), rgba(212, 196, 246, 0) 70%);
+}
+.wish-keep-knob svg {
+  grid-area: 1 / 1;
+  display: block;
+  width: 18px;
+  height: 18px;
+  transition: opacity 0.3s ease, transform 0.4s ease;
+}
+.wish-keep-star {
+  fill: #fff7fb;
+  filter: drop-shadow(0 0 4px #f6b7d0) drop-shadow(0 0 8px rgba(246, 183, 208, 0.7));
+}
+.wish-keep-moon {
+  fill: #f7e9ff;
+  opacity: 0;
+  transform: rotate(-40deg) scale(0.6);
+  filter: drop-shadow(0 0 5px rgba(212, 196, 246, 0.9));
+}
+.wish-keep[aria-checked="true"] .wish-keep-star { opacity: 0; transform: rotate(90deg) scale(0.5); }
+.wish-keep[aria-checked="true"] .wish-keep-moon { opacity: 1; transform: none; }
+.wish-keep:focus { outline: none; }
+.wish-keep:focus-visible .wish-keep-track { outline: 2px solid #fff7fb; outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  .wish-keep-track,
+  .wish-keep-knob,
+  .wish-keep-knob svg { transition: none; }
+}
+:root.keyboard-open .wish-copy .lede { display: none; }
+:root.keyboard-open .wish-note { margin-top: 12px; }
+
+.dreams-note {
+  max-width: min(42ch, 100%);
+  margin: 8px auto 0;
+  text-align: center;
+  text-wrap: pretty;
+  color: var(--muted);
+  font-size: var(--text-secondary);
+  line-height: var(--leading-body);
+}
+
 :root.keyboard-open .wish-form { position: relative; bottom: auto; margin-top: 12px; }
 :root.keyboard-open .wish-stars { display: none; }
 :root.keyboard-open .wish-flight { display: none; }

@@ -23,6 +23,8 @@ import { clearProgress, moveTo, restartedProgress } from "./lib/progress.ts";
 import { fillTemplate } from "./lib/pure.ts";
 import { useReducedMotion } from "./lib/useReducedMotion.ts";
 import { useProgress } from "./lib/useProgress.ts";
+import { bindSheetSync, queueWish } from "./lib/sheet-sync.ts";
+import type { Wish } from "./types.ts";
 
 const Cake = lazy(() => import("./components/Cake.tsx").then((mod) => ({ default: mod.Cake })));
 const BirthSky = lazy(() => import("./components/BirthSky.tsx").then((mod) => ({ default: mod.BirthSky })));
@@ -107,12 +109,15 @@ export function App() {
   );
 
   const sendWish = useCallback(
-    (text: string) => {
+    (text: string, keep: boolean) => {
       const id = typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : `wish-${Date.now()}`;
+      const at = Date.now();
+      const wish: Wish = keep ? { id, text, at, private: true } : { id, text, at };
       update((current) => ({
         ...current,
-        wishes: [...current.wishes, { id, text, at: Date.now() }].slice(-24),
+        wishes: [...current.wishes, wish].slice(-24),
       }));
+      if (!keep) queueWish(id, text, at);
     },
     [update],
   );
@@ -176,6 +181,7 @@ export function App() {
   }), [hideMusicNote]);
 
   useEffect(() => bindViewport(), []);
+  useEffect(() => bindSheetSync(), []);
   useEffect(() => {
     bindPlaylist(content.music.tracks);
     return bindMusicVisibility();
@@ -364,14 +370,7 @@ export function App() {
   } else if (stepId === "wish") {
     node = (
       <Suspense fallback={<p className="scene loading">{t(content.ui.loading)}</p>}>
-        <WishSky
-          wishes={progress.wishes}
-          wishPrivate={progress.wishPrivate}
-          onSend={sendWish}
-          onKeepPrivate={() =>
-            update((current) => (current.wishPrivate ? current : { ...current, wishPrivate: true }))
-          }
-        />
+        <WishSky wishes={progress.wishes} onSend={sendWish} />
       </Suspense>
     );
   } else {

@@ -319,6 +319,10 @@
       "vi": "Giữ điều ước cho riêng em",
       "en": "Keep this wish to yourself"
     },
+    "note": {
+      "vi": "Gửi lên thì anh đọc được, giữ riêng thì chỉ em biết.",
+      "en": "Send it and I'll read it. Keep it, and it's only yours."
+    },
     "sent": {
       "vi": "Điều ước đã lên bầu trời nhỏ này rồi. Anh mong em sớm có tin vui về nó. 🌠",
       "en": "Your wish is up in this little sky. I hope you'll have good news about it soon. 🌠"
@@ -3365,6 +3369,12 @@
     "later": {
       "vi": "Khám phá sau",
       "en": "Explore later"
+    }
+  },
+  "dreamsCopy": {
+    "note": {
+      "vi": "Em thích điều nào thì tích lại nhé. Anh sẽ thấy để mình cùng lên kế hoạch.",
+      "en": "Tick the ones you like. I'll see them, so we can plan them together."
     }
   },
   "finale": {

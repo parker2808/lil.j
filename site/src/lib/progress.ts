@@ -87,7 +87,9 @@ function wishList(value: unknown): Wish[] {
     const text = record.text.trim();
     if (!text) continue;
     const at = typeof record.at === "number" && Number.isFinite(record.at) ? record.at : 0;
-    wishes.push({ id: record.id, text: text.slice(0, 180), at });
+    const wish: Wish = { id: record.id, text: text.slice(0, 180), at };
+    if (record.private === true) wish.private = true;
+    wishes.push(wish);
   }
   return wishes.slice(-24);
 }

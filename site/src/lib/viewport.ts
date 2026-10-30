@@ -32,17 +32,21 @@ function isDesktopLayout(): boolean {
   return width >= 1200 && height <= 1100 && width / height >= 1.5;
 }
 
-/** Scrolls the stage, not the window, so the field and its heading stay above the keyboard. */
+/**
+ * Scrolls the stage, not the window, so the field and its heading stay above the keyboard.
+ * A `[data-keyboard-block]` around the field keeps its controls in view too (the wish switch).
+ */
 function revealFocused(field: HTMLInputElement | HTMLTextAreaElement) {
   const stage = field.closest(".stage");
   if (!(stage instanceof HTMLElement)) return;
   const heading = field.closest("section")?.querySelector("h1");
+  const block = field.closest("[data-keyboard-block]") ?? field;
   const pad = 8;
   const fit = () => {
     const stageBox = stage.getBoundingClientRect();
-    const fieldBox = field.getBoundingClientRect();
-    const below = fieldBox.bottom - (stageBox.bottom - pad);
-    const above = stageBox.top + pad - fieldBox.top;
+    const blockBox = block.getBoundingClientRect();
+    const below = blockBox.bottom - (stageBox.bottom - pad);
+    const above = stageBox.top + pad - blockBox.top;
     if (below > 1) stage.scrollTop += below;
     else if (above > 1) stage.scrollTop -= above;
     if (!(heading instanceof HTMLElement)) return;

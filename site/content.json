@@ -134,12 +134,12 @@
       "en": "The day you were born"
     },
     "title": {
-      "vi": "Bắt đầu từ ngày có em",
-      "en": "Starting with your birthday"
+      "vi": "Ngày có em",
+      "en": "The day you arrived"
     },
     "lede": {
-      "vi": "Dưới bầu trời này, câu chuyện của em đã bắt đầu. Anh không biết hết những ngày trước khi có anh, nhưng anh muốn được nghe em kể thêm. Còn từ 01/07/2026, hai đứa mình có một cột mốc để cùng nhớ.",
-      "en": "Under this sky, your story began. I don't know every chapter from before we were together, but I'd love to hear more of them from you. Since 1 July 2026, we've had a milestone of our own."
+      "vi": "Câu chuyện của em bắt đầu dưới bầu trời này. Những ngày trước khi có anh, kể anh nghe thêm nhé. Còn từ 01/07/2026, mình có chung một cột mốc.",
+      "en": "Your story began under this sky. Tell me more about the days before me. And since 1 July 2026, we've shared a milestone."
     },
     "north": {
       "vi": "B",
@@ -169,8 +169,8 @@
           "en": "The way you care"
         },
         "body": {
-          "vi": "Anh thích cách em để ý đến người khác. Và anh cũng mong em dành một phần quan tâm ấy cho chính em nữa.",
-          "en": "I like how thoughtful you are with other people. I hope you save some of that care for yourself, too."
+          "vi": "Anh thích cách em quan tâm mọi người. Nhớ chừa một phần cho chính em nhé.",
+          "en": "I love how you care for people. Save some for yourself."
         }
       },
       {
@@ -180,8 +180,8 @@
           "en": "That face when I tease you"
         },
         "body": {
-          "vi": "Anh biết, lại là anh trêu trước. Nhưng cái mặt em lúc ấy thì khó mà không để ý. :)))",
-          "en": "I know, I'm usually the one who starts it. But that face of yours is hard to miss. :)))"
+          "vi": "Biết rồi, lại là anh trêu trước. Nhưng cái mặt em lúc ấy khó mà bỏ qua. :)))",
+          "en": "I know, I started it again. But that face is hard to miss. :)))"
         }
       },
       {
@@ -191,8 +191,8 @@
           "en": "Keep that smile"
         },
         "body": {
-          "vi": "Anh thích nhìn em cười. Nếu hôm nào anh góp được một chút vào đấy thì anh càng vui.",
-          "en": "I love seeing you smile. If I get to be part of the reason, even better."
+          "vi": "Anh thích nhìn em cười, nhất là khi anh góp một chút vào đó.",
+          "en": "I love your smile, especially when I'm part of the reason."
         }
       },
       {
@@ -202,8 +202,8 @@
           "en": "The things you want"
         },
         "body": {
-          "vi": "Tuổi mới, anh mong em có thời gian cho những điều mình thích, cả những điều chưa kịp thử nữa.",
-          "en": "This year, I hope you have time for the things you enjoy, and the things you haven't tried yet."
+          "vi": "Tuổi mới, mong em có thời gian cho điều mình thích và cả điều chưa kịp thử.",
+          "en": "This year, time for what you love and what you haven't tried yet."
         }
       }
     ],
@@ -402,7 +402,7 @@
         "en": "Give it a moment to see your name appear."
       },
       "birth": {
-        "vi": "Chạm các ngôi sao nhấp nháy để đọc lời anh nhắn.",
+        "vi": "Chạm sao nhấp nháy để đọc lời anh nhắn.",
         "en": "Tap the pulsing stars to read my notes."
       },
       "gallery": {
@@ -426,8 +426,8 @@
         "en": "Tap the envelope to read my invitation."
       },
       "memory": {
-        "vi": "Lật hai thẻ mỗi lượt, tìm những ảnh giống nhau nhé.",
-        "en": "Flip two cards at a time and find the matching photos."
+        "vi": "Lật hai thẻ mỗi lượt, tìm cặp ảnh giống nhau.",
+        "en": "Flip two cards a turn and match the photos."
       },
       "scratch": {
         "vi": "Cào từng thẻ để đọc hết sáu điều nhé.",
@@ -572,12 +572,12 @@
         "en": "Flip and find a pair"
       },
       "title": {
-        "vi": "Thử trí nhớ của em nào",
+        "vi": "Thử trí nhớ em nào",
         "en": "Let's try your memory"
       },
       "lede": {
-        "vi": "Mỗi ảnh có một tấm giống nó. Em lật thẻ tìm đủ các cặp nhé.",
-        "en": "Every photo has a match. Flip the cards and find all the pairs."
+        "vi": "Mỗi ảnh có một tấm giống nó. Lật thẻ, tìm đủ các cặp nhé.",
+        "en": "Every photo has a twin. Flip and find them all."
       }
     },
     {
@@ -3019,7 +3019,7 @@
       "en": "Fewest moves: {n}"
     },
     "win": {
-      "vi": "Ghép đủ rồi! Anh biết em làm được mà.",
+      "vi": "Ghép đủ rồi! Biết ngay em làm được mà.",
       "en": "All matched! I knew you'd get there."
     },
     "again": {
@@ -3036,24 +3036,24 @@
     },
     "lines": [
       {
-        "vi": "Đúng cặp rồi, nhớ vị trí giỏi đấy em.",
+        "vi": "Đúng cặp rồi, em nhớ giỏi ghê.",
         "en": "A match. Nice memory."
       },
       {
-        "vi": "Lại tìm được một cặp nữa rồi.",
+        "vi": "Thêm một cặp nữa rồi.",
         "en": "Another pair found."
       },
       {
-        "vi": "Chơi một chút rồi mình xem tiếp nhé.",
-        "en": "A little game, then we'll keep going."
+        "vi": "Chơi chút rồi mình xem tiếp nhé.",
+        "en": "Quick game, then we keep going."
       },
       {
-        "vi": "Cặp này xong, mình tìm tiếp nào.",
+        "vi": "Xong cặp này, tìm tiếp nào.",
         "en": "That pair's done. Let's find the next one."
       },
       {
-        "vi": "Anh thích ảnh có em. Câu này chắc không bất ngờ lắm. :)))",
-        "en": "I like photos with you in them. Probably not a surprise. :)))"
+        "vi": "Anh thích ảnh có em. Chắc em đoán được rồi. :)))",
+        "en": "I like photos with you in them. No surprise. :)))"
       }
     ]
   },

@@ -81,6 +81,7 @@ For the 15-screen visual check, run `node scripts/story-v2-screenshots.mjs` with
 ### CI workflows
 - `.github/workflows/context-check.yml` runs for PRs to `main`. Its script requires `PROJECT_CONTEXT.md` at HEAD and an update to it when files outside `docs/` change. The `skip-context` label bypasses the job only with Parker's agreement. Update §12 status and §13 changelog in the same PR.
 - `.github/workflows/story-v2-verify.yml` runs on PRs, pushes to `main`, and manual dispatch. Shared setup (Node 22, Chrome, `npm ci`) is in `.github/actions/setup-site`. Three groups of jobs run in parallel: `checks` (lint, build, content and progress checks, every `scripts/*.test.mjs`, iPhone screenshots), `journey` (the full Story V2 browser journey) and `overlap (1/6…6/6)` (the overlap check split by `OVERLAP_SHARD`, all parts together cover every case). A new push to a PR cancels its older run; runs on `main` are never cancelled.
+- Any CI change must follow the shared front-end CI/CD lessons in Parker's memory repo and keep this design: parallel jobs, sharded browser checks, the shared setup action, npm cache, stale-PR cancel, `timeout-minutes` on every job, and logs/screenshots uploaded with `if: always()`.
 
 ### Content and data
 - All visitor-facing VI and EN text and scene data live in `site/content.json`; `site/src/content.ts` loads and validates them. Keep copy out of components and include both languages where content uses them.

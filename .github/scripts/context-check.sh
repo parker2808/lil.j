@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # Fails if the diff BASE...HEAD touches files outside docs/ without touching PROJECT_CONTEXT.md.
 set -euo pipefail
+if ! git cat-file -e "$2:PROJECT_CONTEXT.md" 2>/dev/null; then
+  echo "::error::PROJECT_CONTEXT.md must exist at HEAD; deleting it is not allowed."
+  exit 1
+fi
 files=$(git diff --name-only "$1...$2")
 echo "Changed files:"; echo "$files"
 if echo "$files" | grep -qx 'PROJECT_CONTEXT.md'; then echo "OK: PROJECT_CONTEXT.md updated."; exit 0; fi

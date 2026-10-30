@@ -1,7 +1,7 @@
 # PROJECT_CONTEXT — MJ Universe (lil.j)
 
 > **Mandatory reading for every agent** (Cursor, Claude Code, Codex, T3 Code threads, cloud agents) before touching this repo.
-> Every PR that changes `main` must update **§12 Current status** and **§13 Changelog** in the same PR (enforced by `.github/workflows/context-check.yml`).
+> Every PR that changes `main` must update **§12 Current status** and **§13 Changelog** in the same PR. CI checks that `PROJECT_CONTEXT.md` exists at HEAD and is changed for PRs touching files outside `docs/`; it does not check individual sections. Docs-only changes are exempt from the update requirement, and the `skip-context` label bypasses CI.
 > Sources: Parker's instructions in the lil.j bot chat (2026-10-25 → 2026-10-30, dates in UTC+7), merged PRs #1–#25, draft PR #26, the code on `main` at `3e1c9f3`. Anything marked **(uncertain)** has not been confirmed by Parker.
 
 ## 1. Project overview
@@ -32,7 +32,7 @@
 
 ## 4. Content rules
 - **All non-image text (VI and EN) lives in `site/content.json`**, never hardcoded in components — 2026-10-26 (PR #5, #6).
-- Visitor-facing copy is `{ "vi": "...", "en": "..." }`; the build fails if a side is missing.
+- Visitor-facing copy is `{ "vi": "...", "en": "..." }`; missing translations are checked by runtime validation and `npm run content-check`, not by `npm run build`.
 - Plain strings allowed only for ids, `src`, dates, `lock.unlockAt`, `birth.*` coordinates, music titles, the gate answer, `meta` short names.
 - **Never expose the gate password or any secret** in chat, reports, PR bodies, logs, or screenshots. (Note: the nickname is stored in plain text in `content.json`; privacy is social, not cryptographic.) Cloudinary API credentials never go into the repo, frontend, Git, or logs.
 - Content-only tasks change copy only: no code/UI/scene order/routing/migration changes, no added/removed keys, no edits to logic fields (req4 plan).
@@ -112,6 +112,7 @@ Rules (docs/story-v2/implementation.md): memory/scratch/letters have a "later" a
 7. **Skip deferred items (§12a).** Don't work on anything outside the 15 Story V2 scenes unless Parker asks (decision 2026-10-30).
 
 ## 12. Current status and open items (as of 2026-10-30)
+- PR #27: context-check rejects missing/deleted context at HEAD and requires a file update for changes outside `docs/`; section updates remain a review responsibility.
 - `main` @ `3e1c9f3`: Story V2 (15 scenes), Galaxy v3, approved VI/EN copy (155 applied, 12 skipped).
 - **Known bugs on production** (fixed in **draft PR #26**, branch `fix/story-v2-production-review`, not yet verified by build/iPhone run):
   - Scenes 3 & 8: unverified 18/11/2022 first-meeting claim.
@@ -131,6 +132,7 @@ Parker's decision (2026-10-30): anything not shown in the 15 Story V2 scenes (§
 - Frozen old flows `FLOW_V1`–`FLOW_V3`: kept only for progress migration. Don't edit them.
 
 ## 13. Changelog
+- 2026-10-30 — PR #27 review fixes: reject missing/deleted context at HEAD; clarify file-level CI enforcement and runtime/content-check translation validation.
 - 2026-10-30 — Everything outside the 15 scenes marked Deferred (phát triển sau).
 - 2026-10-30 — Parker's decisions recorded: English is the default language; 16:45 birth time confirmed; former unknowns checked against PR #26.
 - 2026-10-30 — PROJECT_CONTEXT.md, AGENTS.md and context-check workflow added (this PR).

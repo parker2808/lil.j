@@ -10,4 +10,4 @@ Hard rules (details in PROJECT_CONTEXT.md):
 - Test on iPhone 14 Pro Max (430×932 and 430×739) first.
 - One task = one branch/worktree = one PR. Never merge or deploy to `main`; Parker merges only after he says "merge".
 - Stay inside your task's scope; don't edit other agents' branches or keys.
-- **Every PR that changes `main` must update `PROJECT_CONTEXT.md` (§12 status and §13 changelog) in the same PR.** CI (`context-check`) fails otherwise; changes only under `docs/` are exempt, and the `skip-context` label bypasses it.
+- **Every PR that changes `main` must update `PROJECT_CONTEXT.md` (§12 status and §13 changelog) in the same PR.** CI (`context-check`) checks file existence at HEAD and a file update for changes outside `docs/`, not individual sections. Docs-only changes are exempt from the update requirement, and the `skip-context` label bypasses CI.

@@ -9,11 +9,15 @@ type JourneyMenuProps = {
   accessible: readonly StepId[];
   current: StepId;
   onGo: (index: number) => void;
+  canReset: boolean;
+  onReset: () => void;
 };
 
-export function JourneyMenu({ accessible, current, onGo }: JourneyMenuProps) {
+export function JourneyMenu({ accessible, current, onGo, canReset, onReset }: JourneyMenuProps) {
   const { t } = useI18n();
   const [open, setOpen] = useState(false);
+  const [closing, setClosing] = useState(false);
+  const closeTimer = useRef(0);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const wasOpen = useRef(false);
@@ -34,7 +38,7 @@ export function JourneyMenu({ accessible, current, onGo }: JourneyMenuProps) {
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         event.preventDefault();
-        setOpen(false);
+        closeRef.current();
         return;
       }
       if (event.key !== "Tab" || !dialog) return;
@@ -55,8 +59,22 @@ export function JourneyMenu({ accessible, current, onGo }: JourneyMenuProps) {
   }, [open]);
 
   function close() {
-    setOpen(false);
+    const reduce =
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      !window.matchMedia("(min-width: 769px)").matches;
+    if (reduce) {
+      setOpen(false);
+      return;
+    }
+    setClosing(true);
+    window.clearTimeout(closeTimer.current);
+    closeTimer.current = window.setTimeout(() => {
+      setClosing(false);
+      setOpen(false);
+    }, 220);
   }
+  const closeRef = useRef(close);
+  closeRef.current = close;
 
   return (
     <>
@@ -80,7 +98,7 @@ export function JourneyMenu({ accessible, current, onGo }: JourneyMenuProps) {
         </svg>
       </button>
       {open && (
-        <div className="sheet-backdrop" onClick={close}>
+        <div className={closing ? "sheet-backdrop journey-backdrop is-closing" : "sheet-backdrop journey-backdrop"} onClick={close}>
           <div
             ref={dialogRef}
             id="journey-menu"
@@ -90,7 +108,14 @@ export function JourneyMenu({ accessible, current, onGo }: JourneyMenuProps) {
             aria-labelledby="journey-title"
             onClick={(event) => event.stopPropagation()}
           >
-            <h2 id="journey-title">{t(content.ui.journey)}</h2>
+            <div className="journey-head">
+              <h2 id="journey-title">{t(content.ui.journey)}</h2>
+              <button type="button" className="journey-close" aria-label={t(content.ui.journeyClose)} onClick={close}>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M7 7l10 10M17 7L7 17" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+                </svg>
+              </button>
+            </div>
             {STORY_CHAPTERS.map((chapter) => {
               const scenes = chapter.scenes.filter((id) => openSet.has(id));
               if (scenes.length === 0) return null;
@@ -118,6 +143,24 @@ export function JourneyMenu({ accessible, current, onGo }: JourneyMenuProps) {
                 </section>
               );
             })}
+            {canReset && (
+              <div className="journey-foot">
+                <button
+                  type="button"
+                  className="btn journey-start-over"
+                  onClick={() => {
+                    setOpen(false);
+                    setClosing(false);
+                    onReset();
+                  }}
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M7.2 7.2V4.4H4.4M7.4 16.6a7 7 0 1 0-.8-8.4" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  {t(content.ui.reset)}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}

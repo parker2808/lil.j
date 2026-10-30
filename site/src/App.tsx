@@ -395,19 +395,13 @@ export function App() {
           <span className="chrome-spacer" />
           {released && progress.gateUnlocked && (
             <div className="chrome-tools">
-              <JourneyMenu accessible={progress.accessibleSteps} current={stepId} onGo={(index) => go(index)} />
-              <button type="button" className="journey-reset" aria-label={t(content.ui.reset)} onClick={() => setAskReset(true)}>
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path
-                    d="M7.2 7.2V4.4H4.4M7.4 16.6a7 7 0 1 0-.8-8.4"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.7"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
+              <JourneyMenu
+                accessible={progress.accessibleSteps}
+                current={stepId}
+                onGo={(index) => go(index)}
+                canReset={FLOW.every((id) => progress.accessibleSteps.includes(id))}
+                onReset={() => setAskReset(true)}
+              />
               <MusicButton
                 muted={progress.muted}
                 onMuted={(muted) => update((current) => ({ ...current, muted }))}

@@ -3464,6 +3464,10 @@
       "vi": "Hành trình",
       "en": "Journey"
     },
+    "journeyClose": {
+      "vi": "Đóng hành trình",
+      "en": "Close journey"
+    },
     "reset": {
       "vi": "Xem lại từ đầu",
       "en": "Start over"

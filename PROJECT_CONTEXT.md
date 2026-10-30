@@ -128,6 +128,7 @@ Parker's decision (2026-10-30): anything not shown in the 15 Story V2 scenes (§
 - Frozen old flows `FLOW_V1`–`FLOW_V3`: kept only for progress migration. Don't edit them.
 
 ## 13. Changelog
+- 2026-10-30 — Desktop (>768px) Journey menu is now a right-side dark drawer (full height, backdrop/Esc/close button, slide respecting reduced motion, themed scrollbar); mobile sheet kept (scene text contrast fixed). Reset (↻) moved from header into the Journey menu and shown only after all 15 scenes are seen. Desktop footer is full width with header padding. New copy: `ui.journeyClose`.
 - 2026-10-30 — Scene 5 Memory end layout: stats line centred above the grid; action row below the grid shows "Play later" only while unfinished and "All matched" + "Play again" (secondary) after completion; no overlap at 430×932, 430×739, 1280×800 (Parker iPhone feedback).
 - 2026-10-30 — PR #26: Memory grid height clamp + meta aligned above deck; QA asserts all 12 cards fit 390×844 and desktop.
 - 2026-10-30 — PR #26: Memory match feedback moved to auto-hiding overlay toast (screen 5).

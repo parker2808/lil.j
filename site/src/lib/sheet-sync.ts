@@ -1,3 +1,4 @@
+import { devQuery } from "./dev-mode.ts";
 import { detectSheetDevice } from "./sheet-device.ts";
 import {
   TEXT_LIMIT,
@@ -74,10 +75,8 @@ function visitorId(): string {
   return visitor;
 }
 
-/** `?dev=1` rows are marked so Parker can filter out his own tests. */
-function isTest(): boolean {
-  return new URLSearchParams(window.location.search).get("dev") === "1";
-}
+/** `?dev=1` rows are marked so Parker can filter out his own tests. Ignored unless `VITE_DEV_MODE=true`. */
+const isTest = devQuery;
 
 async function deliver(entry: SheetEntry, keepalive: boolean): Promise<Delivery> {
   try {

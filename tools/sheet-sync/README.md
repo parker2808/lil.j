@@ -30,7 +30,7 @@ Khi chưa cài link, website vẫn chạy bình thường và không gửi gì.
    - Thêm biến `VITE_SHEET_URL` có giá trị là URL vừa copy. Chọn loại **Config** (không phải Secret vì `VITE_` được đưa vào website), bật **Preview** để thử PR. Production dùng ở lần build sau khi Parker cho merge.
    - Bấm **Redeploy** bản Preview của nhánh `feat/share-choices` để website nhận link mới.
 7. **Thử một lần.**
-   - Mở website với `?dev=1`, chọn vài việc ở màn 9 và gửi một điều ước ở màn 11.
+   - Mở website với `?dev=1`, chọn vài việc ở màn 9 và gửi một điều ước ở màn 11. `?dev=1` chỉ chạy trên môi trường có biến `VITE_DEV_MODE=true` (xem mục "Bật dev mode" bên dưới), nên hãy thử trên Preview.
    - Trong khoảng vài giây sẽ có dòng mới, với cột "Thử nghiệm" là "có".
    - Xóa các dòng thử trước ngày 18/11.
 
@@ -65,6 +65,19 @@ Cách đổi:
 3. Vào **Deployments**, bấm **Redeploy** bản mới nhất của môi trường đó. Website chỉ đọc biến lúc build, nên chưa Redeploy thì chưa đổi.
 
 Điều ước em đã giữ riêng từ trước vẫn nằm trên máy em, không bao giờ bị gửi, kể cả khi cờ là `false`.
+
+## Bật dev mode (cờ Vercel)
+
+Biến `VITE_DEV_MODE` quyết định `?dev=1` có tác dụng hay không (bỏ qua khóa đếm ngược, hiện dãy số nhảy màn, đánh dấu dòng gửi lên Sheet là "Thử nghiệm"):
+
+| Giá trị | `?dev=1` |
+|---|---|
+| `true` | Có tác dụng. Nên đặt cho **Preview** để thử. |
+| Không có biến, hoặc giá trị khác | Bị bỏ qua. Ai mở site cũng thấy đúng như khách bình thường. Nên để vậy cho **Production**. |
+
+Cách đổi giống cờ ở trên: thêm biến trong **Settings → Environment Variables**, chọn môi trường, rồi **Redeploy**.
+
+Khóa đếm ngược theo giờ của server Vercel, không theo giờ trên máy, nên chỉnh ngày giờ điện thoại không mở được site sớm.
 
 ## Tắt tính năng
 

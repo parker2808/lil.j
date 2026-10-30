@@ -123,7 +123,7 @@ Khóa `lilj.progress.v1` trong `localStorage`:
 - đã đọc hết lá thư cuối
 - đang tắt tiếng hay không
 
-Bản lưu cũ, nếu đã qua cổng mà chưa có `step`, sẽ mở lại ở bầu trời. Bản lưu của đường đi 9 bước được đặt lại đúng cảnh (ước vẫn là ước, thư cuối vẫn là thư cuối). Bản lưu `flowVersion` 2 (đường 16 bước, có lời bạn) được đặt lại theo tên bước; nếu đang đứng ở lời bạn thì mở lại ở ước mơ. Xóa khóa này trong DevTools để đi từ đầu. Thêm `?dev=1` vào địa chỉ thì có dãy số để nhảy bước và nút đặt lại — chỉ khi có tham số đó, không ghi nhớ. Dãy số nằm trong phần đầu trang và trượt ngang nếu không đủ chỗ.
+Bản lưu cũ, nếu đã qua cổng mà chưa có `step`, sẽ mở lại ở bầu trời. Bản lưu của đường đi 9 bước được đặt lại đúng cảnh (ước vẫn là ước, thư cuối vẫn là thư cuối). Bản lưu `flowVersion` 2 (đường 16 bước, có lời bạn) được đặt lại theo tên bước; nếu đang đứng ở lời bạn thì mở lại ở ước mơ. Xóa khóa này trong DevTools để đi từ đầu. Thêm `?dev=1` vào địa chỉ thì có dãy số để nhảy bước và nút đặt lại — chỉ khi có tham số đó, không ghi nhớ, và chỉ trên bản build có biến Vercel `VITE_DEV_MODE=true` (hoặc khi chạy `npm run dev`). Dãy số nằm trong phần đầu trang và trượt ngang nếu không đủ chỗ.
 
 Lời bạn tạm không nằm trên đường đi. Trong `src/lib/flow.ts`, đổi `INCLUDE_FRIENDS` thành `true` thì bước đó trở lại giữa thư "Mở khi…" và ước mơ, và `flowVersion` về 2.
 

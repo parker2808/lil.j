@@ -4,17 +4,14 @@ import { content, validateContent } from "../src/content.ts";
 const problem = validateContent(content);
 assert.equal(problem, null);
 assert.equal(content.startDate, "2026-07-01T00:00:00+07:00");
-assert.equal(content.firstMeeting, "2022-11-18");
-assert.notEqual(content.firstMeeting, content.startDate.slice(0, 10));
+assert.equal(content.firstMeeting, null);
 assert.equal(content.birth.when, "2002-11-18T16:45:00+07:00");
-assert.equal(content.birth.timeConfirmed, true);
+assert.equal(content.birth.timeConfirmed, false);
 
-// No SHA-256 match exists between the deleted assets and galaxy-v3, so no pair is selected.
-assert.deepEqual(content.memoryPhotoIds, []);
-assert.deepEqual(
-  content.photos.filter((photo) => photo.pair).map((photo) => photo.id),
-  [],
-);
+// Memory deck must remain playable after Galaxy assets change.
+assert.equal(content.memoryPhotoIds.length, 6);
+assert.equal(new Set(content.memoryPhotoIds).size, 6);
+assert.deepEqual(content.photos.filter((photo) => photo.pair).map((photo) => photo.id), content.eras.flatMap((era) => era.photos).filter((photo) => content.memoryPhotoIds.includes(photo.id)).map((photo) => photo.id));
 
 const chapters = [
   {

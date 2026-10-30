@@ -4,33 +4,25 @@ on:
   push:
     branches:
       - main
-      - fix/story-v2-production-review
   pull_request:
   workflow_dispatch:
 
+# A new push to a PR replaces its running check; runs on main always finish.
+concurrency:
+  group: story-v2-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+defaults:
+  run:
+    working-directory: site
+
 jobs:
-  verify:
+  checks:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
-    defaults:
-      run:
-        working-directory: site
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: npm
-          cache-dependency-path: site/package-lock.json
-      - name: Set up Chrome browser
-        id: chrome
-        uses: browser-actions/setup-chrome@v1
-        with:
-          chrome-version: stable
-      - name: Install dependencies
-        run: npm ci
-      - name: Prepare QA logs
-        run: mkdir -p qa-logs
+      - uses: ./.github/actions/setup-site
       - name: Lint
         run: set -o pipefail; npm run lint 2>&1 | tee qa-logs/lint.txt
       - name: TypeScript and Vite production build
@@ -39,18 +31,11 @@ jobs:
         run: set -o pipefail; npm run content-check 2>&1 | tee qa-logs/content.txt
       - name: Progress migration assertions
         run: set -o pipefail; npm run progress-check 2>&1 | tee qa-logs/progress.txt
-      - name: Memory deck unit tests
-        run: set -o pipefail; npm run memory-deck-test 2>&1 | tee qa-logs/memory-deck.txt
+      - name: Unit tests
+        run: set -o pipefail; node --test scripts/*.test.mjs 2>&1 | tee qa-logs/unit.txt
       - name: Capture all 15 screens at iPhone 430x932
         if: always()
         run: set -o pipefail; node scripts/story-v2-screenshots.mjs 2>&1 | tee qa-logs/screenshots.txt
-        env:
-          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
-      - name: Mobile overlap checks
-        if: always()
-        run: set -o pipefail; npm run overlap 2>&1 | tee qa-logs/overlap.txt
-        env:
-          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
       - name: Upload visual QA screenshots
         if: always()
         uses: actions/upload-artifact@v4
@@ -58,14 +43,49 @@ jobs:
           name: story-v2-iphone-screenshots
           path: site/qa-screenshots/*.png
           if-no-files-found: warn
-      - name: Full Story V2 browser journey
-        run: set -o pipefail; npm run story-v2-check 2>&1 | tee qa-logs/journey.txt
-        env:
-          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
       - name: Upload test logs for diagnosis
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: story-v2-test-logs
+          name: story-v2-test-logs-checks
+          path: site/qa-logs/*.txt
+          if-no-files-found: warn
+
+  journey:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-site
+      - name: Full Story V2 browser journey
+        run: set -o pipefail; npm run story-v2-check 2>&1 | tee qa-logs/journey.txt
+      - name: Upload test logs for diagnosis
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: story-v2-test-logs-journey
+          path: site/qa-logs/*.txt
+          if-no-files-found: warn
+
+  overlap:
+    name: overlap (${{ matrix.shard }}/6)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4, 5, 6]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-site
+      - name: Mobile overlap checks (VI/EN, dev on/off, pending/done)
+        run: set -o pipefail; npm run overlap 2>&1 | tee qa-logs/overlap.txt
+        env:
+          OVERLAP_SHARD: ${{ matrix.shard }}/6
+      - name: Upload test logs for diagnosis
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: story-v2-test-logs-overlap-${{ matrix.shard }}
           path: site/qa-logs/*.txt
           if-no-files-found: warn

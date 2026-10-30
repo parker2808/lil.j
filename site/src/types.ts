@@ -190,7 +190,7 @@ export type Content = {
   };
   birth: {
     when: string;
-    /** Whether the actual birth time has been confirmed; false means the sky is illustrative. */
+    /** The 16:45 birth time was confirmed by Parker. */
     timeConfirmed: boolean;
     lat: number;
     lon: number;

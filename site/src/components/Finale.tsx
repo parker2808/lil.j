@@ -1,22 +1,23 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState, type SyntheticEvent } from "react";
 import { content } from "../content.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import { useReducedMotion } from "../lib/useReducedMotion.ts";
 import { Reveal } from "./Reveal.tsx";
+import { Hearts } from "./Hearts.tsx";
 
 type FinaleProps = {
   saidYes: boolean;
   onYes: () => void;
-  onLater: () => void;
 };
 
-export function Finale({ saidYes, onYes, onLater }: FinaleProps) {
+export function Finale({ saidYes, onYes }: FinaleProps) {
   const { t } = useI18n();
   const reduced = useReducedMotion();
   const stageRef = useRef<HTMLDivElement>(null);
   const laterRef = useRef<HTMLButtonElement>(null);
   const lock = useRef(false);
   const [pos, setPos] = useState({ x: 24, y: 24 });
+  const [teaseIndex, setTeaseIndex] = useState(-1);
 
   useLayoutEffect(() => {
     if (saidYes) return;
@@ -52,14 +53,23 @@ export function Finale({ saidYes, onYes, onLater }: FinaleProps) {
       if (dx * dx + dy * dy > 140 * 140) break;
     }
     setPos({ x, y });
+    if (content.finale.teases.length > 0) {
+      setTeaseIndex((index) => (index + 1) % content.finale.teases.length);
+    }
+  }
+
+  function blockFinaleBubble(event: SyntheticEvent) {
+    event.stopPropagation();
   }
 
   return (
-    <section className="scene finale">
+    <section className="scene finale" onPointerDown={blockFinaleBubble} onClick={blockFinaleBubble}>
+      <Hearts active={saidYes} />
       {saidYes ? (
         <div className="finale-copy">
           <Reveal text={t(content.finale.yesTitle)} />
           <p className="lede">{t(content.finale.yesBody)}</p>
+          <p className="finale-celebrate">{t(content.finale.celebrate)}</p>
         </div>
       ) : (
         <>
@@ -68,22 +78,33 @@ export function Finale({ saidYes, onYes, onLater }: FinaleProps) {
           <button type="button" className="btn btn-gold yes-btn" onClick={onYes}>
             {t(content.finale.yes)}
           </button>
-          <div className="finale-stage" ref={stageRef}>
+          <div className="finale-stage" ref={stageRef} onPointerDown={blockFinaleBubble} onClick={blockFinaleBubble}>
             <button
               ref={laterRef}
               type="button"
               className="btn later no-btn"
               style={{ left: pos.x, top: pos.y }}
-              onPointerEnter={(event) => jump(event.clientX, event.clientY)}
+              onPointerEnter={(event) => {
+                blockFinaleBubble(event);
+                jump(event.clientX, event.clientY);
+              }}
               onPointerDown={(event) => {
+                blockFinaleBubble(event);
                 event.preventDefault();
                 jump(event.clientX, event.clientY);
               }}
-              onClick={onLater}
+              onClick={(event) => {
+                blockFinaleBubble(event);
+                event.preventDefault();
+                jump(event.clientX, event.clientY);
+              }}
             >
               {t(content.finale.later)}
             </button>
           </div>
+          <p className="finale-tease" role="status" aria-live="polite">
+            {teaseIndex >= 0 ? t(content.finale.teases[teaseIndex]) : ""}
+          </p>
         </>
       )}
     </section>

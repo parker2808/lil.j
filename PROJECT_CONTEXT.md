@@ -112,18 +112,14 @@ Rules (docs/story-v2/implementation.md): memory/scratch/letters have a "later" a
 7. **Skip deferred items (§12a).** Don't work on anything outside the 15 Story V2 scenes unless Parker asks (decision 2026-10-30).
 
 ## 12. Current status and open items (as of 2026-10-30)
-- PR #27: context-check rejects missing/deleted context at HEAD and requires a file update for changes outside `docs/`; section updates remain a review responsibility.
-- `main` @ `3e1c9f3`: Story V2 (15 scenes), Galaxy v3, approved VI/EN copy (155 applied, 12 skipped).
-- **Known bugs on production** (fixed in **draft PR #26**, branch `fix/story-v2-production-review`, not yet verified by build/iPhone run):
-  - Scenes 3 & 8: unverified 18/11/2022 first-meeting claim.
-  - Scene 5: Memory deck empty.
-  - Scene 12: rectangle behind the rounded Wish input with keyboard open (suspected `.wish-form` gradient backdrop — confirm on iPhone).
-  - Scene 14: Finale less engaging than before.
-  - Pending: full 15-scene VI/EN review and `docs/story-v2-qa/` deliverables.
+- `main` @ `3e1c9f3` plus **draft PR #26** (`fix/story-v2-production-review`, merged with current `main`): Story V2 production-review fixes — drop unverified first-meeting date claims (`firstMeeting: null`), set `birth.timeConfirmed: true` with 16:45 in content, restore six Galaxy v3 Memory photo IDs (12 cards), remove Wish keyboard-open rectangle suspect (`.wish-form` backdrop), surface Finale teases and Yes celebration copy, and add `.github/workflows/story-v2-verify.yml` (lint, build, content/progress checks, iPhone screenshots, overlap, full journey).
+- **Confirmed by Parker (2026-10-30):** the six Memory deck photo IDs and birth time **16:45** (matches `birth.timeConfirmed: true` in content/code).
+- **Draft PR #26 (2026-10-30, iPhone preview):** Memory scene uses full-width tiles, match feedback as a short-lived top overlay toast (grid layout unchanged), random six-photo deal from the full era pool (`?seed=` for QA); Finale “Later” dodge no longer skips or advances (only Yes + sticky Next after `saidYes`); Yes label uses an orange heart.
+- **Parker review still before merge:** full VI/EN copy across the 15 scenes; test Wish keyboard layout on a real iPhone (CSS fix is unverified on device).
 - **Open: switch the default language to EN** in code (`i18n.ts`) and in tests/acceptance (`story-v2-check`, `docs/story-v2/acceptance.md`). Decided 2026-10-30; not done.
-- **Open: remove the birth-time caveat.** 16:45 is confirmed (2026-10-30). A later PR must drop the "illustrative sky" label that PR #26 adds and any `timeConfirmed` caveat in code or content.
 - **Open: update `README.md`.** Its visit list is an older 16-step path; it should list the 15 Story V2 scenes (§6). Its "English is the default" line is already correct.
-- Still blank even in PR #26, inside the 15 scenes: photo dates (Gallery, scene 4, shows a date only when a photo has one), captions beyond the first photo of each era (Gallery), the date-invitation time and place (Envelope, scene 13), and Parker's approval of the 6 Memory photos (scene 5). The first-meeting date stays unknown on purpose.
+- Still blank inside the 15 scenes: photo dates (Gallery, scene 4), captions beyond the first photo of each era (Gallery), and the date-invitation time and place (Envelope, scene 13). The first-meeting date stays unknown on purpose.
+- Pending: full 15-scene VI/EN review and `docs/story-v2-qa/` deliverables after PR #26 lands.
 
 ## 12a. Deferred (phát triển sau)
 Parker's decision (2026-10-30): anything not shown in the 15 Story V2 scenes (§6) is out of scope for now. Agents skip these unless Parker asks.
@@ -132,6 +128,12 @@ Parker's decision (2026-10-30): anything not shown in the 15 Story V2 scenes (§
 - Frozen old flows `FLOW_V1`–`FLOW_V3`: kept only for progress migration. Don't edit them.
 
 ## 13. Changelog
+- 2026-10-30 — PR #26: Memory grid height clamp + meta aligned above deck; QA asserts all 12 cards fit 390×844 and desktop.
+- 2026-10-30 — PR #26: Memory match feedback moved to auto-hiding overlay toast (screen 5).
+- 2026-10-30 — PR #26: seeded Memory deck randomization (`memory-deck.ts` + unit test in Story V2 verify).
+- 2026-10-30 — PR #26 mobile fixes: Memory tile layout, Finale Later cannot navigate, orange Yes heart; Parker iPhone feedback on screen 5.
+- 2026-10-30 — Parker confirmed Memory deck photo choices and 16:45 birth time; §12 updated (copy review and iPhone Wish keyboard still open).
+- 2026-10-30 — Draft PR #26 production review: factual/copy fixes (first meeting unknown, birth time 16:45 confirmed in content), Memory deck IDs, Wish/Finale UX, Story V2 verify workflow on PRs and `main`; merged `main` into the branch and refreshed §12/§13 for context-check.
 - 2026-10-30 — PR #27 review fixes: reject missing/deleted context at HEAD; clarify file-level CI enforcement and runtime/content-check translation validation.
 - 2026-10-30 — Everything outside the 15 scenes marked Deferred (phát triển sau).
 - 2026-10-30 — Parker's decisions recorded: English is the default language; 16:45 birth time confirmed; former unknowns checked against PR #26.

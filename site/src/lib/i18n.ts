@@ -75,6 +75,7 @@ function walk(value: unknown, path: string, problems: string[], key?: string): v
     }
     return;
   }
+  if (key === "firstMeeting" && value == null) return;
   if (key && PLAIN.has(key)) {
     if (typeof value !== "string") problems.push(`${path} phải là một chuỗi, không phải {vi, en}.`);
     return;

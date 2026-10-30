@@ -352,6 +352,14 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   overflow-wrap: break-word;
 }
 
+/* Left-aligned chapters use the entire content column, not the 36ch reading cap.
+   Centered scenes keep their existing alignment and widths. */
+.chapter:not(.gallery-scene) > .lede,
+.chapter:not(.gallery-scene) > .reveal {
+  width: 100%;
+  max-width: 100%;
+}
+
 .universe .lede,
 .gate .lede,
 .finale .lede,
@@ -1249,31 +1257,125 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   color: var(--ink);
 }
 
-.pair-toast {
-  min-height: 2.8em;
-  margin-top: 8px;
-  padding: 8px 12px;
-  border-radius: var(--radius-md);
-  background: rgba(255, 244, 250, 0.12);
-  border: 1px solid rgba(247, 196, 220, 0.38);
-  text-align: center;
-  color: var(--ink);
-  font-size: var(--text-body);
-  line-height: var(--leading-body);
+.memory-board {
+  position: relative;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 10px;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
+  align-content: stretch;
 }
 
-.pair-toast p { margin: 0; }
+.memory-spark {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
 
-.pair-toast .btn { margin-top: 8px; min-height: 44px; }
+.memory-board > .memory-fit {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  width: 100%;
+}
 
-.pair-toast.is-idle {
-  visibility: hidden;
+.memory-play {
+  --gap: clamp(6px, 1.5vw, 10px);
+  --mem-w: calc((min(100cqi, 520px) - 2 * var(--gap)) / 3);
+  --mem-h: calc(
+    (
+      100svh - var(--header-h, 0px) - var(--footer-h, 0px) - 9.5rem - 44px - 3 * var(--gap)
+    ) / 4
+  );
+  --mem: clamp(48px, min(var(--mem-w), var(--mem-h)), 120px);
+  container-type: size;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  margin-inline: auto;
+}
+
+.memory-meta {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+  width: min(100%, calc(3 * var(--mem) + 2 * var(--gap)));
+  max-width: 100%;
+}
+
+.memory-meta .count {
+  margin: 0;
+  flex: 0 1 auto;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.memory-toast-host {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  z-index: 4;
+  width: min(calc(100% - 16px), 360px);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.memory-toast {
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  background: rgba(34, 12, 46, 0.92);
+  border: 1px solid rgba(247, 196, 220, 0.55);
+  box-shadow: 0 10px 28px rgba(16, 6, 28, 0.42);
+  color: #fff7fb;
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease;
+}
+
+.memory-toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.memory-again {
+  display: flex;
+  justify-content: center;
+}
+
+.memory-again .btn {
+  min-height: 44px;
 }
 
 .stage-pane:has(.memory-grid) {
   min-height: 0;
-  height: 100%;
-  max-height: 100%;
+  flex: 1 1 auto;
+}
+
+.stage:has(.memory-grid) {
+  -webkit-mask-image: none;
+  mask-image: none;
+  padding-bottom: 0;
 }
 
 .scene:has(.memory-grid) {
@@ -1281,60 +1383,34 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   flex-direction: column;
   flex: 1 1 auto;
   min-height: 0;
-  height: 100%;
-  max-height: 100%;
-  overflow: hidden;
-}
-
-.memory-fit {
-  flex: 1 1 0;
-  min-height: 0;
-  overflow: hidden;
-  container-type: size;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .memory-grid {
-  --gap: 8px;
-  --mem: clamp(
-    32px,
-    min(
-      calc((min(90vw, 100cqi) - 2 * var(--gap)) / 3),
-      calc((100cqb - 3 * var(--gap)) / 4)
-    ),
-    124px
-  );
   display: grid;
   grid-template-columns: repeat(3, var(--mem));
-  justify-content: center;
+  grid-template-rows: repeat(4, var(--mem));
   gap: var(--gap);
-  width: max-content;
+  width: calc(3 * var(--mem) + 2 * var(--gap));
   max-width: 100%;
   margin: 0 auto;
+  flex: 0 0 auto;
 }
 
-@media (min-width: 660px) and (min-height: 640px) {
-  .memory-grid {
-    --mem: clamp(
-      44px,
-      min(
-        calc((min(90vw, 100cqi) - 2 * var(--gap)) / 3),
-        calc((100cqb - 3 * var(--gap)) / 4)
-      ),
-      124px
-    );
-  }
-}
-
-.mem { position: relative; perspective: 800px; }
-
-.mem-inner {
+.mem {
   position: relative;
-  display: block;
+  perspective: 800px;
   width: var(--mem);
   height: var(--mem);
+}
+
+.mem-inner {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
   transform-style: preserve-3d;
   transition: transform 0.55s cubic-bezier(0.18, 0.9, 0.22, 1.12);
 }
@@ -1967,6 +2043,16 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   overflow: hidden;
 }
 
+.finale-tease {
+  min-height: 2.8em;
+  max-width: min(34ch, 100%);
+  margin: 4px auto 0;
+  color: var(--gold);
+  font-size: var(--text-secondary);
+  line-height: var(--leading-body);
+  text-align: center;
+}
+
 .no-btn {
   position: absolute;
   width: auto;
@@ -2328,7 +2414,7 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   z-index: 3;
   margin-top: auto;
   padding-bottom: 8px;
-  background: linear-gradient(180deg, transparent, var(--bg) 28%);
+  background: transparent;
 }
 
 .flow-copy {

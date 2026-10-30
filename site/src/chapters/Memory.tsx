@@ -4,26 +4,32 @@ import { cloudinaryUrl } from "../lib/images.ts";
 import { skipAhead } from "../lib/progress.ts";
 import { ChapterFrame } from "../components/ChapterFrame.tsx";
 import { Spark } from "../components/Fireworks.tsx";
-import type { Copy } from "../lib/i18n.ts";
 import { useI18n } from "../lib/locale-context.ts";
-import { fillTemplate, shuffle } from "../lib/pure.ts";
+import {
+  buildMemoryDeck,
+  randomSeed,
+  readMemorySeedFromSearch,
+  type MemoryCard,
+} from "../lib/memory-deck.ts";
+import { fillTemplate } from "../lib/pure.ts";
 import type { ChapterProps } from "../types.ts";
 
-type Card = {
-  uid: string;
-  photoId: string;
-  src: string;
-  alt: Copy;
-};
+function memoryPool() {
+  return content.photos.map((photo) => ({
+    id: photo.id,
+    src: photo.src,
+    alt: photo.alt,
+  }));
+}
 
-function buildDeck(): Card[] {
-  const pairs = content.photos.filter((photo) => photo.pair).slice(0, 6);
-  return shuffle(
-    pairs.flatMap((photo) => [
-      { uid: `${photo.id}-a`, photoId: photo.id, src: photo.src, alt: photo.alt },
-      { uid: `${photo.id}-b`, photoId: photo.id, src: photo.src, alt: photo.alt },
-    ]),
-  );
+function deckSeed(): number {
+  const fromUrl = readMemorySeedFromSearch(window.location.search);
+  if (fromUrl !== undefined) return fromUrl;
+  return randomSeed();
+}
+
+function buildDeck(): MemoryCard[] {
+  return buildMemoryDeck(memoryPool(), content.memoryPhotoIds.length, deckSeed());
 }
 
 export function Memory({ progress, update }: ChapterProps) {
@@ -36,6 +42,8 @@ export function Memory({ progress, update }: ChapterProps) {
   const [lock, setLock] = useState(false);
   const [cheer, setCheer] = useState(0);
   const timerRef = useRef(0);
+  const toastTimerRef = useRef(0);
+  const [toast, setToast] = useState<string | null>(null);
   const aliveRef = useRef(true);
   const pairCount = new Set(deck.map((card) => card.photoId)).size;
   const won = matched.length > 0 && matched.length === pairCount;
@@ -46,10 +54,25 @@ export function Memory({ progress, update }: ChapterProps) {
       aliveRef.current = false;
       window.clearTimeout(timerRef.current);
       timerRef.current = 0;
+      window.clearTimeout(toastTimerRef.current);
+      toastTimerRef.current = 0;
     };
   }, []);
 
-  function onFlip(card: Card) {
+  function showMatchToast(matchIndex: number) {
+    const message = t(
+      content.memoryCopy.lines[matchIndex % content.memoryCopy.lines.length] ?? content.memoryCopy.win,
+    );
+    setToast(message);
+    window.clearTimeout(toastTimerRef.current);
+    toastTimerRef.current = window.setTimeout(() => {
+      toastTimerRef.current = 0;
+      if (!aliveRef.current) return;
+      setToast(null);
+    }, 1800);
+  }
+
+  function onFlip(card: MemoryCard) {
     if (lock || flipped.includes(card.uid) || matched.includes(card.photoId) || flipped.length >= 2) return;
     const next = [...flipped, card.uid];
     if (next.length < 2) {
@@ -64,6 +87,7 @@ export function Memory({ progress, update }: ChapterProps) {
       setMatched(nextMatched);
       setFlipped([]);
       setCheer((count) => count + 1);
+      showMatchToast(nextMatched.length - 1);
       if (nextMatched.length === pairCount) {
         update((current) => {
           const best = current.memoryBest == null ? nextMoves : Math.min(current.memoryBest, nextMoves);
@@ -86,6 +110,9 @@ export function Memory({ progress, update }: ChapterProps) {
 
   function again() {
     window.clearTimeout(timerRef.current);
+    window.clearTimeout(toastTimerRef.current);
+    toastTimerRef.current = 0;
+    setToast(null);
     setFlipped([]);
     setMatched([]);
     setMoves(0);
@@ -99,30 +126,27 @@ export function Memory({ progress, update }: ChapterProps) {
       title={t(chapter?.title)}
       lede={t(chapter?.lede)}
     >
-      <button type="button" className="btn btn-quiet later" onClick={() => update((current) => skipAhead(current, "memory"))}>
-        {t(content.memoryCopy.later)}
-      </button>
-      <p className="count">
-        {fillTemplate(t(content.memoryCopy.moves), { n: moves })}
-        {progress.memoryBest != null
-          ? ` · ${fillTemplate(t(content.memoryCopy.best), { n: progress.memoryBest })}`
-          : ""}
-      </p>
-      <Spark play={cheer} />
-      <div className={matched.length > 0 ? "pair-toast" : "pair-toast is-idle"} role="status" aria-live="polite">
-        {matched.length > 0 ? (
-          <p>
-            {t(content.memoryCopy.lines[(matched.length - 1) % content.memoryCopy.lines.length] ?? content.memoryCopy.win)}
-          </p>
-        ) : null}
-        {won ? (
-          <button type="button" className="btn" onClick={again}>
-            {t(content.memoryCopy.again)}
-          </button>
-        ) : null}
-      </div>
-      <div className="memory-fit">
-        <div className="memory-grid">
+      <div className="memory-board">
+        <div className="memory-spark" aria-hidden="true">
+          <Spark play={cheer} />
+        </div>
+        <div className="memory-fit">
+          <div className="memory-toast-host" aria-live="polite" role="status">
+            {toast ? <p className="memory-toast is-visible">{toast}</p> : null}
+          </div>
+          <div className="memory-play">
+            <div className="memory-meta">
+              <button type="button" className="btn btn-quiet later" onClick={() => update((current) => skipAhead(current, "memory"))}>
+                {t(content.memoryCopy.later)}
+              </button>
+              <p className="count">
+                {fillTemplate(t(content.memoryCopy.moves), { n: moves })}
+                {progress.memoryBest != null
+                  ? ` · ${fillTemplate(t(content.memoryCopy.best), { n: progress.memoryBest })}`
+                  : ""}
+              </p>
+            </div>
+            <div className="memory-grid">
           {deck.map((card) => {
             const matchedCard = matched.includes(card.photoId);
             const up = flipped.includes(card.uid) || matchedCard;
@@ -144,7 +168,16 @@ export function Memory({ progress, update }: ChapterProps) {
               </div>
             );
           })}
+            </div>
+          </div>
         </div>
+        {won ? (
+          <div className="memory-again">
+            <button type="button" className="btn" onClick={again}>
+              {t(content.memoryCopy.again)}
+            </button>
+          </div>
+        ) : null}
       </div>
     </ChapterFrame>
   );

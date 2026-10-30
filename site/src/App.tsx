@@ -18,7 +18,7 @@ import { useI18n } from "./lib/locale-context.ts";
 import { bindMusicVisibility, bindPlaylist, musicIsPlaying, playBirthday, restoreMusicVolume, resumePlaylist, startMusic, subscribeMusic } from "./lib/music.ts";
 import { bindViewport } from "./lib/viewport.ts";
 import { isBeforeUnlock } from "./lib/lock.ts";
-import { clearProgress, moveTo, restartedProgress, skipAhead } from "./lib/progress.ts";
+import { clearProgress, moveTo, restartedProgress } from "./lib/progress.ts";
 import { fillTemplate } from "./lib/pure.ts";
 import { useReducedMotion } from "./lib/useReducedMotion.ts";
 import { useProgress } from "./lib/useProgress.ts";
@@ -266,7 +266,7 @@ export function App() {
   const done = stepDone(stepId, progress, CANDLES, QUIZ_IDS, SCRATCH_IDS, LETTER_IDS);
   const canContinue = mayContinue(stepId, progress, CANDLES, QUIZ_IDS, SCRATCH_IDS, LETTER_IDS);
   const flowAction: StickyAction | null =
-    stepId === "letter" || stepId === "gate" || quizAction || letterSheet || !canContinue
+    stepId === "letter" || stepId === "gate" || (stepId === "finale" && !progress.saidYes) || quizAction || letterSheet || !canContinue
       ? null
       : {
           label: t(content.flow.next),
@@ -356,7 +356,6 @@ export function App() {
         <Finale
           saidYes={progress.saidYes}
           onYes={() => update((current) => (current.saidYes ? current : { ...current, saidYes: true }))}
-          onLater={() => update((current) => skipAhead(current, "finale"))}
         />
       </Suspense>
     );

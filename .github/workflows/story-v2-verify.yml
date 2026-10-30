@@ -1,0 +1,71 @@
+name: Story V2 verify
+
+on:
+  push:
+    branches:
+      - main
+      - fix/story-v2-production-review
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - name: Set up Chrome browser
+        id: chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+      - name: Install dependencies
+        run: npm ci
+      - name: Prepare QA logs
+        run: mkdir -p qa-logs
+      - name: Lint
+        run: set -o pipefail; npm run lint 2>&1 | tee qa-logs/lint.txt
+      - name: TypeScript and Vite production build
+        run: set -o pipefail; npm run build 2>&1 | tee qa-logs/build.txt
+      - name: Content assertions
+        run: set -o pipefail; npm run content-check 2>&1 | tee qa-logs/content.txt
+      - name: Progress migration assertions
+        run: set -o pipefail; npm run progress-check 2>&1 | tee qa-logs/progress.txt
+      - name: Memory deck unit tests
+        run: set -o pipefail; npm run memory-deck-test 2>&1 | tee qa-logs/memory-deck.txt
+      - name: Capture all 15 screens at iPhone 430x932
+        if: always()
+        run: set -o pipefail; node scripts/story-v2-screenshots.mjs 2>&1 | tee qa-logs/screenshots.txt
+        env:
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+      - name: Mobile overlap checks
+        if: always()
+        run: set -o pipefail; npm run overlap 2>&1 | tee qa-logs/overlap.txt
+        env:
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+      - name: Upload visual QA screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: story-v2-iphone-screenshots
+          path: site/qa-screenshots/*.png
+          if-no-files-found: warn
+      - name: Full Story V2 browser journey
+        run: set -o pipefail; npm run story-v2-check 2>&1 | tee qa-logs/journey.txt
+        env:
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+      - name: Upload test logs for diagnosis
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: story-v2-test-logs
+          path: site/qa-logs/*.txt
+          if-no-files-found: warn

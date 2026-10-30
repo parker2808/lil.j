@@ -721,7 +721,7 @@ async function main() {
                   },
                   { progress: progressFor(index, done), locale },
                 );
-                await page.goto(`${base}/${dev === "1" ? "?dev=1" : ""}`, { waitUntil: "domcontentloaded" });
+                await page.goto(`${base}/${dev === "1" ? "?dev=1&seed=42426" : ""}`, { waitUntil: "domcontentloaded" });
                 await settle(page, id);
                 const found = [...(await scrollAudit(page, label)), ...(await extras(page, id, label))];
                 checked += 1;

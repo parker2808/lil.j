@@ -98,11 +98,11 @@ export function validateContent(value: Content): string | null {
   if (!value.startDate || Number.isNaN(Date.parse(value.startDate))) {
     return "startDate không phải ngày hợp lệ.";
   }
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(value.firstMeeting) || Number.isNaN(Date.parse(`${value.firstMeeting}T00:00:00+07:00`))) {
+  if (value.firstMeeting != null && (!/^\d{4}-\d{2}-\d{2}$/.test(value.firstMeeting) || Number.isNaN(Date.parse(`${value.firstMeeting}T00:00:00+07:00`)))) {
     return "firstMeeting không phải ngày hợp lệ.";
   }
-  if (value.birth?.timeConfirmed !== true) return "birth.timeConfirmed cần là true.";
-  if (!value.birth?.when?.includes("T16:45:00+07:00")) return "birth.when cần giữ 16:45 UTC+7.";
+  if (typeof value.birth?.timeConfirmed !== "boolean") return "birth.timeConfirmed cần là boolean.";
+  if (!value.birth?.when || Number.isNaN(Date.parse(value.birth.when))) return "birth.when không phải ngày hợp lệ.";
   for (const era of value.eras) {
     if (era.kind !== "her-life" && era.kind !== "first-meeting" && era.kind !== "together") {
       return `Chương "${era.id}" cần kind her-life, first-meeting hoặc together.`;

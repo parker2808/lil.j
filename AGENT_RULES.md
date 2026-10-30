@@ -71,8 +71,10 @@ Run from `site/` after `npm ci`:
 - `npm run content-check`
 - `npm run progress-check`
 - `npm run memory-deck-test`
+- `npm run sheet-sync-test`
 - `npm run overlap`
 - `npm run story-v2-check`
+- `npm run sheet-ui-check` (scenes 9 and 11 at 430×932 and 430×739, VI/EN, simulated keyboard; add `-- --shots` to refresh `docs/story-v2-qa/sheet-refinement/`)
 
 For the 15-screen visual check, run `node scripts/story-v2-screenshots.mjs` with a local Chrome available. The overlap and Story V2 commands also run the build themselves. `OVERLAP_SHARD=i/n npm run overlap` checks only every n-th viewport starting at the i-th (used by CI); run it without the variable to check everything. Report commands not run. For UI changes, review iPhone 14 Pro Max at 430×932 and 430×739.
 
@@ -82,12 +84,14 @@ For the 15-screen visual check, run `node scripts/story-v2-screenshots.mjs` with
 
 ### Content and data
 - All visitor-facing VI and EN text and scene data live in `site/content.json`; `site/src/content.ts` loads and validates them. Keep copy out of components and include both languages where content uses them.
+- The only data that leaves the visitor's device: scene 9 choices and shared scene 11 wishes go to Parker's Google Sheet through `tools/sheet-sync/` (Apps Script). Private wishes are never queued or sent. Sending is off when `VITE_SHEET_URL` is empty.
 - Scene order and frozen flow versions live in `site/src/lib/flow.ts`; progress migration is in `site/src/lib/progress.ts`. Galaxy photo identifiers live in `site/content.json`, with delivery URLs built by `site/src/lib/images.ts`. Music files are in `site/public/music/`. QA reports and screenshots belong in `docs/story-v2-qa/`.
 - Work within the 15 Story V2 scenes. Keep deferred items in `PROJECT_CONTEXT.md` §12a untouched unless Parker asks.
 
 ### Forbidden items
 - Never invent dates, memories, places, captions, people, or confirmations. The claimed first-meeting date is unverified; do not show it or substitute another date.
 - Never expose the gate answer, Cloudinary credentials, other secrets, Parker's personal email, or phone number. Keep private repositories out of this public repo.
+- Never commit the Apps Script `/exec` URL. It lives only in Vercel's `VITE_SHEET_URL`, which only Parker sets. Tests use the fake `https://sheet.invalid/exec`.
 - Do not edit frozen older flows or enable the deferred friends scene. Do not merge or deploy without Parker's explicit approval.
 
 ### Branches and PRs

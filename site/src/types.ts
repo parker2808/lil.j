@@ -17,6 +17,8 @@ export type Wish = {
   id: string;
   text: string;
   at: number;
+  /** Kept on this device and never sent to Parker's sheet. */
+  private?: boolean;
 };
 
 export type Chapter = {
@@ -166,6 +168,9 @@ export type Content = {
   scratchCopy: {
     later: Copy;
   };
+  dreamsCopy: {
+    note: Copy;
+  };
   dreams: Dream[];
   friendNotes: FriendNote[];
   friendsCopy: {
@@ -218,6 +223,7 @@ export type Content = {
     placeholder: Copy;
     send: Copy;
     keep: Copy;
+    note: Copy;
     empty: Copy;
     sent: Copy;
     more: Copy;
@@ -344,7 +350,7 @@ export type Progress = {
   accessibleSteps: StepId[];
   /** Explicit later choices. Never inferred from missing interaction data. */
   skippedSteps: StepId[];
-  /** The wish stays on this device with no wish record and no sent line. */
+  /** Older builds only: the scene was finished without writing a wish. Nothing sets it now. */
   wishPrivate: boolean;
 };
 

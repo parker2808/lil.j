@@ -1,0 +1,46 @@
+name: Story V2 verify
+
+on:
+  push:
+    branches:
+      - fix/story-v2-production-review
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - run: npm ci
+      - name: Install Chromium for browser tests
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium
+      - name: Lint
+        run: npm run lint
+      - name: TypeScript and Vite production build
+        run: npm run build
+      - name: Content assertions
+        run: npm run content-check
+      - name: Progress migration assertions
+        run: npm run progress-check
+      - name: Full Story V2 browser journey
+        run: npm run story-v2-check
+        env:
+          CHROME_PATH: /usr/bin/chromium
+      - name: Mobile overlap checks
+        run: npm run overlap
+        env:
+          CHROME_PATH: /usr/bin/chromium

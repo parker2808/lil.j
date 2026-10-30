@@ -53,6 +53,8 @@ function Words({ text, delay = 0 }: { text: string; delay?: number }) {
   ));
 }
 
+const AUTO_MS = 4000;
+
 function Stack({
   era,
   index,
@@ -67,7 +69,9 @@ function Stack({
   onNext,
   onFlip,
   onOpen,
+  suspended = false,
 }: {
+  suspended?: boolean;
   era: Era;
   index: number;
   eraIndex: number;
@@ -92,6 +96,31 @@ function Stack({
   const photos = era.photos;
   const visible = photos.slice(index, index + 3);
   const arriving = !reduced && arrivedEra !== era.id;
+  const [playing, setPlaying] = useState(!reduced);
+  const [hold, setHold] = useState(false);
+  const [run, setRun] = useState(0);
+  const onNextRef = useRef(onNext);
+  const holdRef = useRef(setHold);
+  const ticking = playing && !hold && !suspended;
+  const atEnd = index >= photos.length;
+  const stopRef = useRef(() => setPlaying(false));
+
+  useLayoutEffect(() => {
+    onNextRef.current = onNext;
+  });
+
+  useEffect(() => {
+    if (!ticking) return;
+    if (atEnd && !hasNext) return;
+    const timer = window.setTimeout(
+      () => {
+        if (atEnd) onNextRef.current();
+        else controlRef.current.fling(1);
+      },
+      atEnd ? 1400 : AUTO_MS,
+    );
+    return () => window.clearTimeout(timer);
+  }, [ticking, atEnd, hasNext, index, era.id, run, controlRef]);
 
   useLayoutEffect(() => {
     onAdvanceRef.current = onAdvance;
@@ -204,6 +233,7 @@ function Stack({
 
     const onDown = (event: PointerEvent) => {
       if (event.button !== 0 || lock) return;
+      stopRef.current();
       cancelAnimationFrame(spring);
       el.style.transition = "none";
       el.setPointerCapture(event.pointerId);
@@ -322,7 +352,18 @@ function Stack({
   const backLabel = t(content.galleryCopy.backToGalaxy);
 
   return (
-    <div className="stack-view">
+    <div
+      className="stack-view"
+      onPointerEnter={(event) => {
+        if (event.pointerType === "mouse") holdRef.current(true);
+      }}
+      onPointerLeave={(event) => {
+        if (event.pointerType === "mouse") {
+          holdRef.current(false);
+          setRun((n) => n + 1);
+        }
+      }}
+    >
       <header className="stack-head">
         {visible.length > 0 ? (
           <button type="button" className="pill-back" onClick={onBack}>
@@ -331,6 +372,29 @@ function Stack({
         ) : null}
         <h2 className="stack-era">{t(era.title)}</h2>
         <p className="stack-count">{progressLabel}</p>
+        {photos.length > 1 || hasNext ? (
+          <div className="stack-auto">
+            <button
+              type="button"
+              className={playing ? "stack-play is-playing" : "stack-play"}
+              aria-pressed={playing}
+              aria-label={playing ? t(content.galleryCopy.autoPause) : t(content.galleryCopy.autoPlay)}
+              onClick={() => {
+                setPlaying((value) => !value);
+                setRun((n) => n + 1);
+              }}
+            >
+              <span aria-hidden="true">{playing ? "❚❚" : "▶"}</span>
+            </button>
+            <span className="stack-auto-track" aria-hidden="true">
+              <span
+                key={`${era.id}-${index}-${run}`}
+                className={ticking && !(atEnd && !hasNext) ? "stack-auto-bar is-running" : "stack-auto-bar"}
+                style={{ animationDuration: `${atEnd ? 1400 : AUTO_MS}ms` }}
+              />
+            </span>
+          </div>
+        ) : null}
       </header>
       <div className="stack-body">
       {visible.length === 0 ? (
@@ -579,6 +643,7 @@ export function Gallery({ progress, update }: ChapterProps) {
   const chapter = content.chapters.find((item) => item.id === "gallery");
   const [mode, setMode] = useState<Mode>({ kind: "orbit" });
   const [cruising, setCruising] = useState(false);
+  const [zoomDir, setZoomDir] = useState<"in" | "out" | null>(null);
   const [fullPhoto, setFullPhoto] = useState<EraPhoto | null>(null);
   const [focusIndex, setFocusIndex] = useState(0);
   const galaxyRef = useRef<SpiralGalaxyHandle>(null);
@@ -603,8 +668,12 @@ export function Gallery({ progress, update }: ChapterProps) {
     backRef.current = () => {
       setFullPhoto(null);
       setCruising(!reduced);
+      setZoomDir(reduced ? null : "out");
       setMode({ kind: "orbit" });
-      void galaxyRef.current?.settle().finally(() => setCruising(false));
+      void galaxyRef.current?.settle().finally(() => {
+        setCruising(false);
+        setZoomDir(null);
+      });
     };
   });
 
@@ -661,9 +730,11 @@ export function Gallery({ progress, update }: ChapterProps) {
     const next = content.eras.findIndex((item) => item.id === id);
     if (next >= 0) setFocusIndex(next);
     setCruising(!reduced);
+    setZoomDir(reduced ? null : "in");
     void galaxyRef.current?.flyTo(id).finally(() => {
       setMode({ kind: "stack", eraId: id, index: 0 });
       setCruising(false);
+      setZoomDir(null);
       opening.current = false;
     });
   }
@@ -683,7 +754,7 @@ export function Gallery({ progress, update }: ChapterProps) {
 
   return (
     <ChapterFrame
-      className={mode.kind === "stack" ? "gallery-scene is-stack" : "gallery-scene"}
+      className={["gallery-scene", mode.kind === "stack" ? "is-stack" : "", zoomDir ? `is-zoom-${zoomDir}` : ""].filter(Boolean).join(" ")}
       kicker={t(chapter?.kicker)}
       title={t(chapter?.title)}
       lede={t(chapter?.lede)}
@@ -748,6 +819,7 @@ export function Gallery({ progress, update }: ChapterProps) {
           }}
           onFlip={toggleFlip}
           onOpen={setFullPhoto}
+          suspended={Boolean(fullPhoto) || zoomDir !== null}
         />
       )}
       {fullPhoto ? <Fullscreen photo={fullPhoto} caption={fullCaption} onClose={() => setFullPhoto(null)} /> : null}

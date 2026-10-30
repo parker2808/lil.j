@@ -141,6 +141,8 @@ export type Content = {
     backToGalaxy: Copy;
     eraProgress: Copy;
     nextEra: Copy;
+    autoPlay: Copy;
+    autoPause: Copy;
     seen: Copy;
     pending: Copy;
     empty: Copy;

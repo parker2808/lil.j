@@ -678,6 +678,14 @@
     "orbit": {
       "vi": "Chạm một chương.",
       "en": "Tap a chapter."
+    },
+    "autoPlay": {
+      "vi": "Tự chuyển ảnh",
+      "en": "Play slideshow"
+    },
+    "autoPause": {
+      "vi": "Tạm dừng tự chuyển ảnh",
+      "en": "Pause slideshow"
     }
   },
   "eras": [

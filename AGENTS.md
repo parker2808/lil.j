@@ -2,6 +2,8 @@
 
 **Read [`PROJECT_CONTEXT.md`](PROJECT_CONTEXT.md) in full before doing anything.** It holds every requirement, confirmed and forbidden fact, and workflow rule for this repo.
 
+Agents must also follow [`.agents/RULES.md`](.agents/RULES.md).
+
 Hard rules (details in PROJECT_CONTEXT.md):
 - Never invent dates, memories, places or captions. "First met 2022-11-18" is unverified: never show it, never replace it with another date.
 - All visitor text (VI + EN) lives in `site/content.json`. The default language is EN (code still VI, to be switched).

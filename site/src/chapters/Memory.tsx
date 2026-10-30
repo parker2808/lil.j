@@ -4,26 +4,32 @@ import { cloudinaryUrl } from "../lib/images.ts";
 import { skipAhead } from "../lib/progress.ts";
 import { ChapterFrame } from "../components/ChapterFrame.tsx";
 import { Spark } from "../components/Fireworks.tsx";
-import type { Copy } from "../lib/i18n.ts";
 import { useI18n } from "../lib/locale-context.ts";
-import { fillTemplate, shuffle } from "../lib/pure.ts";
+import {
+  buildMemoryDeck,
+  randomSeed,
+  readMemorySeedFromSearch,
+  type MemoryCard,
+} from "../lib/memory-deck.ts";
+import { fillTemplate } from "../lib/pure.ts";
 import type { ChapterProps } from "../types.ts";
 
-type Card = {
-  uid: string;
-  photoId: string;
-  src: string;
-  alt: Copy;
-};
+function memoryPool() {
+  return content.photos.map((photo) => ({
+    id: photo.id,
+    src: photo.src,
+    alt: photo.alt,
+  }));
+}
 
-function buildDeck(): Card[] {
-  const pairs = content.photos.filter((photo) => photo.pair).slice(0, 6);
-  return shuffle(
-    pairs.flatMap((photo) => [
-      { uid: `${photo.id}-a`, photoId: photo.id, src: photo.src, alt: photo.alt },
-      { uid: `${photo.id}-b`, photoId: photo.id, src: photo.src, alt: photo.alt },
-    ]),
-  );
+function deckSeed(): number {
+  const fromUrl = readMemorySeedFromSearch(window.location.search);
+  if (fromUrl !== undefined) return fromUrl;
+  return randomSeed();
+}
+
+function buildDeck(): MemoryCard[] {
+  return buildMemoryDeck(memoryPool(), content.memoryPhotoIds.length, deckSeed());
 }
 
 export function Memory({ progress, update }: ChapterProps) {
@@ -49,7 +55,7 @@ export function Memory({ progress, update }: ChapterProps) {
     };
   }, []);
 
-  function onFlip(card: Card) {
+  function onFlip(card: MemoryCard) {
     if (lock || flipped.includes(card.uid) || matched.includes(card.photoId) || flipped.length >= 2) return;
     const next = [...flipped, card.uid];
     if (next.length < 2) {

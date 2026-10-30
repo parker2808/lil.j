@@ -3,7 +3,10 @@ import { mkdirSync, readFileSync } from "node:fs";
 import { setTimeout as delay } from "node:timers/promises";
 import { chromium } from "playwright-core";
 
+import { STORY_V2_MEMORY_SEED } from "../src/lib/memory-deck.ts";
+
 const content = JSON.parse(readFileSync(new URL("../content.json", import.meta.url), "utf8"));
+const qaSeed = STORY_V2_MEMORY_SEED;
 const url = process.env.STORY_URL || "http://127.0.0.1:4173";
 const output = new URL("../qa-screenshots/", import.meta.url);
 mkdirSync(output, { recursive: true });
@@ -23,7 +26,7 @@ try {
     await delay(300);
   }
   if (!ready) throw new Error("preview server did not respond");
-  await page.goto(url+"/?dev=1", {waitUntil:"domcontentloaded"});
+  await page.goto(`${url}/?dev=1&seed=${qaSeed}`, {waitUntil:"domcontentloaded"});
   await page.evaluate(() => {localStorage.clear();localStorage.setItem("lilj.locale.v1","vi")});
   await page.reload({waitUntil:"domcontentloaded"});
   await page.waitForSelector('[data-step="gate"]');

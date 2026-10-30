@@ -3,10 +3,12 @@ import { readFileSync } from "node:fs";
 import { setTimeout as delay } from "node:timers/promises";
 import { chromium } from "playwright-core";
 import { FLOW } from "../src/lib/flow.ts";
+import { STORY_V2_MEMORY_SEED } from "../src/lib/memory-deck.ts";
 import { PROGRESS_KEY } from "../src/lib/progress.ts";
 
 const content = JSON.parse(readFileSync(new URL("../content.json", import.meta.url), "utf8"));
 const base = process.env.STORY_URL || "http://127.0.0.1:4173";
+const devUrl = `${base}/?dev=1&seed=${STORY_V2_MEMORY_SEED}`;
 const ownServer = !process.env.STORY_URL;
 const results = [];
 
@@ -71,7 +73,7 @@ async function advance(page) {
 }
 
 async function prepare(page, locale = "vi") {
-  await page.goto(`${base}/?dev=1`, { waitUntil: "domcontentloaded" });
+  await page.goto(`${devUrl}`, { waitUntil: "domcontentloaded" });
   await page.evaluate((nextLocale) => {
     localStorage.clear();
     localStorage.setItem("lilj.locale.v1", nextLocale);
@@ -79,7 +81,7 @@ async function prepare(page, locale = "vi") {
 }
 
 async function enterGate(page) {
-  await page.goto(`${base}/?dev=1`, { waitUntil: "networkidle" });
+  await page.goto(`${devUrl}`, { waitUntil: "networkidle" });
   await page.waitForSelector('[data-step="gate"]');
   await page.locator("#nickname").fill(content.gate.password);
   await page.locator(".gate-go").click();
@@ -376,10 +378,10 @@ function historical(version, step, unlocked) {
 }
 
 async function migrate(page) {
-  await page.goto(`${base}/?dev=1`, { waitUntil: "domcontentloaded" });
+  await page.goto(`${devUrl}`, { waitUntil: "domcontentloaded" });
   const raw = historical(3, 8, 8);
   await page.evaluate(({ key, value }) => localStorage.setItem(key, JSON.stringify(value)), { key: PROGRESS_KEY, value: raw });
-  await page.goto(`${base}/?dev=1`, { waitUntil: "networkidle" });
+  await page.goto(`${devUrl}`, { waitUntil: "networkidle" });
   await page.waitForSelector('[data-step="memory"]');
   const once = await saved(page);
   if (once.step !== 4 || FLOW[once.step] !== "memory") fail("migrate-v3", `step ${once.step}`);
@@ -393,19 +395,19 @@ async function migrate(page) {
 
   const cake = historical(3, 6, 6);
   await page.evaluate(({ key, value }) => localStorage.setItem(key, JSON.stringify(value)), { key: PROGRESS_KEY, value: cake });
-  await page.goto(`${base}/?dev=1`, { waitUntil: "networkidle" });
+  await page.goto(`${devUrl}`, { waitUntil: "networkidle" });
   const cakeSaved = await saved(page);
   if (cakeSaved.accessibleSteps.includes("memory")) fail("migrate-cake", "cake granted memory");
 
   const future = { ...historical(9, 2, 2), marker: "keep-future" };
   await page.evaluate(({ key, value }) => localStorage.setItem(key, JSON.stringify(value)), { key: PROGRESS_KEY, value: future });
-  await page.goto(`${base}/?dev=1`, { waitUntil: "networkidle" });
+  await page.goto(`${devUrl}`, { waitUntil: "networkidle" });
   await delay(200);
   const kept = await page.evaluate((key) => localStorage.getItem(key), PROGRESS_KEY);
   if (!kept?.includes("keep-future") || !kept.includes('"flowVersion":9')) fail("migrate-future", "future save was overwritten");
 
   await page.evaluate((key) => localStorage.setItem(key, "[1,2,3]"), PROGRESS_KEY);
-  await page.goto(`${base}/?dev=1`, { waitUntil: "networkidle" });
+  await page.goto(`${devUrl}`, { waitUntil: "networkidle" });
   const empty = await saved(page);
   if (empty.step !== 0 || empty.flowVersion !== 4) fail("migrate-corrupt", "corrupt storage was not empty");
   note("migration", "v3 memory, cake without memory, future version, corrupt array");
@@ -443,7 +445,7 @@ async function locks(browser) {
 }
 
 async function locales(page) {
-  await page.goto(`${base}/?dev=1`, { waitUntil: "domcontentloaded" });
+  await page.goto(`${devUrl}`, { waitUntil: "domcontentloaded" });
   await page.evaluate(() => localStorage.removeItem("lilj.locale.v1"));
   await page.reload({ waitUntil: "networkidle" });
   const fresh = await page.locator('.lang button[aria-pressed="true"]').innerText();
@@ -485,12 +487,12 @@ async function audio(page) {
     wishes: [],
     flowVersion: 4,
   };
-  await page.goto(`${base}/?dev=1`, { waitUntil: "domcontentloaded" });
+  await page.goto(`${devUrl}`, { waitUntil: "domcontentloaded" });
   await page.evaluate((value) => {
     localStorage.setItem("lilj.locale.v1", "vi");
     localStorage.setItem("lilj.progress.v1", JSON.stringify(value));
   }, record);
-  await page.goto(`${base}/?dev=1`, { waitUntil: "networkidle" });
+  await page.goto(`${devUrl}`, { waitUntil: "networkidle" });
   await page.waitForSelector('[data-step="cake"]');
   await page.locator(".music").click();
   await page.waitForFunction(() => JSON.parse(localStorage.getItem("lilj.progress.v1")).muted === false);
@@ -504,7 +506,7 @@ async function audio(page) {
 }
 
 async function journey(page) {
-  await page.goto(`${base}/?dev=1`, { waitUntil: "domcontentloaded" });
+  await page.goto(`${devUrl}`, { waitUntil: "domcontentloaded" });
   const record = await saved(page);
   const accessible = record.accessibleSteps;
   await page.getByRole("button", { name: /Hành trình|Journey/ }).click();
@@ -546,7 +548,7 @@ async function chapterList(browser) {
     }, view);
     const page = await context.newPage();
     page.setDefaultTimeout(20000);
-    await page.goto(`${base}/?dev=1`, { waitUntil: "domcontentloaded" });
+    await page.goto(`${devUrl}`, { waitUntil: "domcontentloaded" });
     const record = historical(4, FLOW.indexOf("gallery"), FLOW.indexOf("gallery"));
     record.accessibleSteps = FLOW.slice(0, FLOW.indexOf("gallery") + 1);
     record.gateUnlocked = true;
@@ -555,7 +557,7 @@ async function chapterList(browser) {
       localStorage.setItem("lilj.locale.v1", "vi");
       localStorage.setItem(key, JSON.stringify(value));
     }, { key: PROGRESS_KEY, value: record });
-    await page.goto(`${base}/?dev=1`, { waitUntil: "networkidle" });
+    await page.goto(`${devUrl}`, { waitUntil: "networkidle" });
     await page.waitForSelector(".era-legend button");
     const names = await page.locator(".era-legend-name").allInnerTexts();
     if (names.length !== 13) fail(`legend-${view.name}`, `rows ${names.length}`);
@@ -661,7 +663,7 @@ async function layouts(browser) {
       document.addEventListener("DOMContentLoaded", apply);
     }, view);
     const page = await context.newPage();
-    await page.goto(`${base}/?dev=1`, { waitUntil: "domcontentloaded" });
+    await page.goto(`${devUrl}`, { waitUntil: "domcontentloaded" });
     const record = historical(4, 14, 14);
     record.accessibleSteps = [...FLOW];
     record.letterDone = true;
@@ -671,7 +673,7 @@ async function layouts(browser) {
       localStorage.setItem("lilj.locale.v1", "vi");
       localStorage.setItem(key, JSON.stringify(value));
     }, { key: PROGRESS_KEY, value: record });
-    await page.goto(`${base}/?dev=1`, { waitUntil: "networkidle" });
+    await page.goto(`${devUrl}`, { waitUntil: "networkidle" });
     await page.waitForSelector('[data-step="letter"]');
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     if (overflow > 2) fail(`layout-${view.name}`, `horizontal overflow ${overflow}`);

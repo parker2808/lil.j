@@ -39,6 +39,8 @@ jobs:
         run: set -o pipefail; npm run content-check 2>&1 | tee qa-logs/content.txt
       - name: Progress migration assertions
         run: set -o pipefail; npm run progress-check 2>&1 | tee qa-logs/progress.txt
+      - name: Memory deck unit tests
+        run: set -o pipefail; npm run memory-deck-test 2>&1 | tee qa-logs/memory-deck.txt
       - name: Capture all 15 screens at iPhone 430x932
         if: always()
         run: set -o pipefail; node scripts/story-v2-screenshots.mjs 2>&1 | tee qa-logs/screenshots.txt

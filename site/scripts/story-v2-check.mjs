@@ -1,6 +1,7 @@
 import { spawn } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { setTimeout as delay } from "node:timers/promises";
+import { fileURLToPath } from "node:url";
 import { chromium } from "playwright-core";
 import { FLOW } from "../src/lib/flow.ts";
 import { STORY_V2_MEMORY_SEED } from "../src/lib/memory-deck.ts";
@@ -62,7 +63,7 @@ function chromePath() {
 }
 
 function startPreview() {
-  const child = spawn(process.execPath, [new URL("../node_modules/vite/bin/vite.js", import.meta.url).pathname, "preview", "--host", "127.0.0.1", "--port", "4173", "--strictPort"], {
+  const child = spawn(process.execPath, [fileURLToPath(new URL("../node_modules/vite/bin/vite.js", import.meta.url)), "preview", "--host", "127.0.0.1", "--port", "4173", "--strictPort"], {
     cwd: new URL("..", import.meta.url),
     stdio: "ignore",
   });

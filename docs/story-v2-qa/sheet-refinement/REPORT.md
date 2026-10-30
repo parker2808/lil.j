@@ -18,6 +18,12 @@ Sheet có nhãn nhóm thiết bị/trình duyệt, tên gợi nhớ do Parker đ
 
 Các ảnh PNG trong thư mục dùng nội dung minh họa, không phải điều ước thật.
 
+## Sửa sau review (2026-10-31)
+
+- Tiêu đề màn 9/11 về cỡ chung (24px trên iPhone), kicker cùng khoảng chữ, lede màn 9 in nghiêng như các màn khác. Parker duyệt câu xác nhận mới `wish.sent`.
+- CSS ghi đè cuối file được gộp vào rule gốc. So computed style mọi phần tử của hai màn trước/sau ở 430×932, 430×739, 1280×800 (cả bàn phím mở): chỉ khác đúng ba điểm trên.
+- Chạy lại: lint, build, selfcheck, content/progress-check, sheet-sync-test 14/14, `npm run sheet-ui-check -- --shots` (ảnh trong thư mục này đã cập nhật), story-v2-check, overlap 0 lỗi.
+
 ## Giới hạn
 
 Apps Script được kiểm tra bằng Sheet giả lập. Chưa chạy phiên bản nâng cấp trên Google Sheet thật, chưa xác minh công thức tên/định dạng bằng Google Sheets engine và chưa thử bàn phím iPhone thật. Parker xác nhận phiên bản đồng bộ trước đó đã hoạt động. Cần dán Code.gs mới, chạy setup và triển khai phiên bản mới để kiểm tra phần nâng cấp; hướng dẫn ở tools/sheet-sync/README.md.

@@ -101,3 +101,11 @@ Quyết định của Parker (2026-10-30): dùng Google Sheet để lưu những
 - [x] Script nâng cấp sao lưu dữ liệu cũ, bảng có bộ lọc, hàng xen kẽ, giờ Việt Nam.
 - [x] Hoàn tất QA và cập nhật PR #30; chi tiết ở docs/story-v2-qa/sheet-refinement/REPORT.md.
 - [ ] Parker nâng cấp Apps Script và kiểm tra trên Google Sheets/iPhone thật.
+
+## Review fixes 2026-10-31 (Parker duyệt)
+- [x] Tiêu đề màn 9/11 về cỡ chung 24px trên iPhone; kicker cùng khoảng chữ các màn khác; lede màn 9 in nghiêng như các màn khác.
+- [x] Parker duyệt câu xác nhận mới `wish.sent` ("Điều ước đã lên bầu trời rồi ✨").
+- [x] Gộp CSS ghi đè cuối file vào rule gốc của Dreams/Wish; xóa `.dreams-note` thừa. So computed style trước/sau ở 430×932, 430×739, 1280×800 (cả bàn phím mở): chỉ khác đúng ba điểm trên.
+- [x] `npm run sheet-ui-check` (tự tìm Chrome, chỉ chụp ảnh khi có `--shots`); script dùng `fileURLToPath`.
+- [x] README Sheet: hậu quả khi đổi cột và cách khôi phục.
+- Giữ nguyên: lede cũ màn 9 trong `content.json` (không xóa key); dòng lựa chọn cũ vẫn ngăn bằng dấu phẩy sau nâng cấp vì nội dung có thể chứa dấu phẩy.

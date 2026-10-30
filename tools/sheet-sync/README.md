@@ -38,7 +38,7 @@ Khi chưa cài link, website vẫn chạy bình thường và không gửi gì.
 
 1. Dán toàn bộ `Code.gs` mới vào Apps Script rồi lưu.
 2. Chạy **setup**. Script sao lưu từng tab cũ có 5 cột trước khi đổi cấu trúc; bản sao có tên chứa `backup`. Dữ liệu cũ được giữ, thông tin thiết bị chưa có để trống. Nếu đã tự đổi tên cột, hãy khôi phục các tiêu đề cũ trước; script từ chối cấu trúc không nhận ra.
-3. Hai tab dữ liệu có 5 cột hiển thị: thời gian, tên gợi nhớ, thiết bị/trình duyệt, nội dung, thử nghiệm. Hai cột mã ở cuối được ẩn. Đừng xóa/đổi tên các cột hoặc tab.
+3. Hai tab dữ liệu có 5 cột hiển thị: thời gian, tên gợi nhớ, thiết bị/trình duyệt, nội dung, thử nghiệm. Hai cột mã ở cuối được ẩn. Đừng xóa/đổi tên/chèn thêm cột hay đổi tên tab: khi đó script từ chối mọi lần gửi mới. Dữ liệu không mất vì nó nằm chờ trên máy cô ấy và tự gửi lại ngay khi anh khôi phục tiêu đề cột như cũ. Muốn ghi chú thêm, hãy thêm cột sau cột G (cột mã cuối cùng) hoặc dùng tab riêng.
 4. Trong tab **Thiết bị**, nhập tên vào cột **Tên gợi nhớ** (màu vàng nhạt) sau khi anh xác định được trình duyệt đó. Tên tự cập nhật ở cả hai tab dữ liệu. Không sửa tên trực tiếp trong hai tab dữ liệu vì đó là ô công thức.
 5. Mở lại Sheet để thấy menu **MJ Universe → Cập nhật định dạng bảng**. Có thể chạy lại mà không nhân đôi dữ liệu. Bộ lọc "Thử nghiệm" cho phép ẩn các hàng có chữ "có".
 6. Triển khai phiên bản Apps Script mới theo bước bên dưới. Bản web mới sẽ gửi nhãn thiết bị cùng lần tương tác tiếp theo; dữ liệu cũ không bị tự gửi lại. Bản web cũ vẫn gửi được tới script mới.
@@ -65,6 +65,6 @@ Xóa biến `VITE_SHEET_URL` trên Vercel rồi Redeploy. Website sẽ ngừng g
   - thân request tối đa 4 KB.
 - Chuỗi bắt đầu bằng `= + - @` được lưu dưới dạng chữ, không chạy như công thức.
 - Website giữ hàng chờ trong `localStorage` (`lilj.outbox.v1`) và tự gửi lại khi mở lại website, khi có mạng trở lại, hoặc khi chuyển sang ứng dụng khác.
-- Kiểm tra tự động: `npm run sheet-sync-test` trong `site/`.
+- Kiểm tra tự động: `npm run sheet-sync-test` trong `site/`. Giao diện màn 9/11 trên iPhone (VI/EN, bàn phím giả lập): `npm run sheet-ui-check`, thêm `-- --shots` để lưu ảnh vào `docs/story-v2-qa/sheet-refinement/`.
 
 - `device` chỉ nhận nhãn platform/browser trong danh sách cho phép. Thông tin được ghi vào hàng chờ cùng lần tương tác và giữ nguyên khi thử gửi lại; điều ước giữ riêng không vào hàng chờ.

@@ -1487,10 +1487,12 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 
 .win { margin-top: 16px; display: grid; gap: 10px; }
 
+.dreams-scene > .lede { margin-top: 12px; }
+
 .dreams {
   position: relative;
   list-style: none;
-  margin: 14px 0 0;
+  margin: 18px 0 0;
   padding: 0 0 0 8px;
   display: grid;
 }
@@ -1511,8 +1513,9 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   grid-template-columns: 46px 1fr;
   gap: 8px;
   align-items: start;
-  padding: 10px 0 10px 8px;
+  padding: 10px 10px 10px 8px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-md);
 }
 
 .dream input {
@@ -1533,10 +1536,12 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   color: var(--gold);
   text-align: right;
   padding-top: 2px;
+  min-width: 32px;
 }
 
 .dream strong { display: block; font-weight: 500; font-size: var(--text-body); line-height: var(--leading-body); }
 .dream small { display: block; color: var(--muted); margin-top: 2px; font-size: var(--text-secondary); line-height: var(--leading-body); }
+.dream.is-done { background: rgba(255, 228, 240, 0.1); }
 .dream.is-done .dream-index { color: var(--blush); }
 .dream.is-done strong { color: var(--gold); }
 
@@ -4757,45 +4762,51 @@ html::-webkit-scrollbar-track, .stage::-webkit-scrollbar-track, .scene::-webkit-
   position: relative;
   z-index: 5;
   flex: none;
-  margin: 0 auto 10px;
+  min-height: 1.5em;
+  margin: 6px auto 0;
   padding: 0 22px;
   text-align: center;
+  font-size: var(--text-secondary);
+  line-height: 1.5;
   pointer-events: none;
 }
-.wish-sky > .wish-read:empty { display: none; }
 
 /* Wish: who reads it. Note, field and switch travel together, also above the keyboard. */
 .wish-dock {
   position: relative;
   z-index: 5;
   flex: none;
+  width: min(100%, 380px);
+  margin-inline: auto;
 }
 .wish-note {
-  width: min(100%, 380px);
-  margin: 0 auto 8px;
-  padding: 0 12px;
+  width: 100%;
+  margin: 0 auto 10px;
+  padding: 0 8px;
   text-align: center;
+  text-wrap: pretty;
   color: var(--muted);
   font-size: var(--text-secondary);
   line-height: var(--leading-body);
 }
 .wish-dock .wish-form,
-:root.keyboard-open .wish-dock .wish-form { margin-top: 0; margin-bottom: 4px; }
+:root.keyboard-open .wish-dock .wish-form { width: 100%; margin-top: 0; margin-bottom: 4px; }
 .wish-keep {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 12px;
-  width: min(100%, 340px);
+  width: 100%;
   min-height: 44px;
-  margin: 0 auto 8px;
-  padding: 0 6px;
+  margin: 0 auto;
+  padding: 0 12px;
   border: none;
   background: none;
   color: var(--muted);
   font: inherit;
   font-size: var(--text-body);
   line-height: var(--leading-body);
+  text-align: left;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
@@ -4865,18 +4876,10 @@ html::-webkit-scrollbar-track, .stage::-webkit-scrollbar-track, .scene::-webkit-
   .wish-keep-knob,
   .wish-keep-knob svg { transition: none; }
 }
+.wish-copy > .lede { max-width: 34ch; margin-inline: auto; }
+:root.keyboard-open .wish-copy .kicker,
 :root.keyboard-open .wish-copy .lede { display: none; }
-:root.keyboard-open .wish-note { margin-top: 12px; }
-
-.dreams-note {
-  max-width: min(42ch, 100%);
-  margin: 8px auto 0;
-  text-align: center;
-  text-wrap: pretty;
-  color: var(--muted);
-  font-size: var(--text-secondary);
-  line-height: var(--leading-body);
-}
+:root.keyboard-open .wish-note { margin-top: 8px; }
 
 :root.keyboard-open .wish-form { position: relative; bottom: auto; margin-top: 12px; }
 :root.keyboard-open .wish-stars { display: none; }
@@ -5001,32 +5004,3 @@ html::-webkit-scrollbar-track, .stage::-webkit-scrollbar-track, .scene::-webkit-
   .scratch-list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
   .scratch, .scratch-reveal { min-height: 140px; }
 }
-
-/* Dreams/Wish refinement: keep the existing galaxy, pink palette and star/moon switch. */
-.dreams-scene > .kicker, .wish-copy > .kicker {
-  font-size: var(--text-eyebrow);
-  letter-spacing: 0.12em;
-  margin-bottom: 8px;
-}
-.dreams-scene > .lede {
-  max-width: 38ch;
-  margin: 12px auto 0;
-  font-style: normal;
-  text-wrap: pretty;
-}
-.dreams-scene .dreams { margin-top: 18px; }
-.dreams-scene .dream { border-radius: var(--radius-md); padding-right: 10px; }
-.dreams-scene .dream.is-done { background: rgba(255, 228, 240, 0.1); }
-.dreams-scene .dream-index { min-width: 32px; }
-.wish-copy > .lede { max-width: 34ch; margin-inline: auto; }
-.wish-dock { width: min(100%, 380px); margin-inline: auto; }
-.wish-dock .wish-form { width: 100%; }
-.wish-dock .wish-note { width: 100%; padding: 0 8px; margin-bottom: 10px; text-wrap: pretty; }
-.wish-dock .wish-keep { width: 100%; justify-content: space-between; padding-inline: 12px; margin-bottom: 0; gap: 12px; text-align: left; }
-.wish-scene .wish-read:empty { display: block; }
-.wish-scene .wish-read { min-height: 1.5em; margin: 6px auto 0; font-size: var(--text-secondary); line-height: 1.5; }
-@media (max-width: 480px) {
-  .dreams-scene > h1, .dreams-scene > h2, .wish-copy > h1, .wish-copy > h2 { font-size: clamp(24px, 6.2vw, 28px); text-wrap: balance; }
-}
-:root.keyboard-open .wish-copy > .kicker { display: none; }
-:root.keyboard-open .wish-dock .wish-note { margin-top: 8px; }

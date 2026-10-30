@@ -4821,18 +4821,6 @@ html::-webkit-scrollbar-track, .stage::-webkit-scrollbar-track, .scene::-webkit-
 @media (prefers-reduced-motion: reduce) { .stack-photo::before { animation: none; } .stack-photo img { transition: none; } }
 
 /* ── Round 4 ───────────────────────────────────────────── */
-/* Rosier dusk page background (pastel pink family, no deep purple). */
-:root { --bg: #7a4c72; }
-body::before {
-  background:
-    radial-gradient(ellipse at 50% 115%, rgba(250, 182, 210, 0.6), transparent 50%),
-    radial-gradient(ellipse at 88% -8%, rgba(244, 176, 214, 0.55), transparent 46%),
-    radial-gradient(ellipse at 6% 18%, rgba(250, 206, 226, 0.36), transparent 40%),
-    radial-gradient(ellipse at 72% 62%, rgba(248, 196, 176, 0.26), transparent 36%),
-    var(--bg);
-}
-body::after { background: radial-gradient(ellipse at center, transparent 58%, rgba(96, 40, 72, 0.26) 100%); }
-
 /* Subtitles: smaller + italic, still readable (>= 13.5px). */
 .lede { font-size: max(13.5px, calc(var(--text-body) - 1.5px)); font-style: italic; line-height: 1.5; }
 
@@ -4847,6 +4835,9 @@ body::after { background: radial-gradient(ellipse at center, transparent 58%, rg
 .mem-back .mem-logo { width: 58%; height: auto; filter: drop-shadow(0 3px 6px rgba(201, 123, 158, 0.45)); }
 .mem-back .mem-logo ellipse, .mem-back .mem-logo path[d^="M5"] { stroke: #d98bb0; }
 .mem-back .mem-logo > circle:last-child { fill: #e79bbd; }
+/* Monogram line + dots: deep rose with a white halo so they read on the pink moon. */
+.mem-back .mem-logo g[stroke] { stroke: #9c3f6c; stroke-width: 3.4; paint-order: stroke; filter: drop-shadow(0 0 1.2px #fff); }
+.mem-back .mem-logo g[stroke] g { fill: #9c3f6c; }
 
 /* Scene 6 quiz: one glass card, pill counter, filled letter badges. */
 .quiz {

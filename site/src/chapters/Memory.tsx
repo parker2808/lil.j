@@ -127,17 +127,6 @@ export function Memory({ progress, update }: ChapterProps) {
       lede={t(chapter?.lede)}
     >
       <div className="memory-board">
-        <div className="memory-meta">
-          <button type="button" className="btn btn-quiet later" onClick={() => update((current) => skipAhead(current, "memory"))}>
-            {t(content.memoryCopy.later)}
-          </button>
-          <p className="count">
-            {fillTemplate(t(content.memoryCopy.moves), { n: moves })}
-            {progress.memoryBest != null
-              ? ` · ${fillTemplate(t(content.memoryCopy.best), { n: progress.memoryBest })}`
-              : ""}
-          </p>
-        </div>
         <div className="memory-spark" aria-hidden="true">
           <Spark play={cheer} />
         </div>
@@ -145,7 +134,19 @@ export function Memory({ progress, update }: ChapterProps) {
           <div className="memory-toast-host" aria-live="polite" role="status">
             {toast ? <p className="memory-toast is-visible">{toast}</p> : null}
           </div>
-          <div className="memory-grid">
+          <div className="memory-play">
+            <div className="memory-meta">
+              <button type="button" className="btn btn-quiet later" onClick={() => update((current) => skipAhead(current, "memory"))}>
+                {t(content.memoryCopy.later)}
+              </button>
+              <p className="count">
+                {fillTemplate(t(content.memoryCopy.moves), { n: moves })}
+                {progress.memoryBest != null
+                  ? ` · ${fillTemplate(t(content.memoryCopy.best), { n: progress.memoryBest })}`
+                  : ""}
+              </p>
+            </div>
+            <div className="memory-grid">
           {deck.map((card) => {
             const matchedCard = matched.includes(card.photoId);
             const up = flipped.includes(card.uid) || matchedCard;
@@ -167,6 +168,7 @@ export function Memory({ progress, update }: ChapterProps) {
               </div>
             );
           })}
+            </div>
           </div>
         </div>
         {won ? (

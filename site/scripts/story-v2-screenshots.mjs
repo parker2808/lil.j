@@ -19,6 +19,36 @@ const context = await browser.newContext({ viewport: {width:430,height:932}, dev
 const page = await context.newPage();
 page.setDefaultTimeout(15000);
 const report = [];
+
+async function memoryCardsFullyVisible(page) {
+  return page.evaluate(() => {
+    const pad = 1;
+    const view = { w: window.innerWidth, h: window.innerHeight };
+    const cards = [...document.querySelectorAll('[data-step="memory"] .mem')];
+    if (cards.length !== 12) return { ok: false, reason: `expected 12 cards, got ${cards.length}` };
+    for (const card of cards) {
+      const box = card.getBoundingClientRect();
+      if (box.width <= 0 || box.height <= 0) return { ok: false, reason: "zero-size card" };
+      if (box.top < pad || box.left < pad || box.bottom > view.h - pad || box.right > view.w - pad) {
+        return {
+          ok: false,
+          reason: `clip ${Math.round(box.top)},${Math.round(box.left)},${Math.round(box.bottom)},${Math.round(box.right)} in ${view.w}x${view.h}`,
+        };
+      }
+    }
+    return { ok: true };
+  });
+}
+
+async function auditMemoryLayout(page, label, viewport) {
+  await page.setViewportSize(viewport);
+  await page.waitForSelector('[data-step="memory"]');
+  await delay(200);
+  const result = await memoryCardsFullyVisible(page);
+  report.push({ name: `memory-layout-${label}`, passed: result.ok, detail: result.reason ?? "ok" });
+  if (!result.ok) throw new Error(`Memory layout ${label}: ${result.reason}`);
+}
+
 try {
   let ready = false;
   for (let i=0;i<60;i++) {
@@ -67,6 +97,9 @@ try {
       }
       report.push({name:"memory-match-toast",passed:toastShown});
       if (!toastShown) throw new Error("Memory match toast did not appear");
+      await auditMemoryLayout(page, "390x844", { width: 390, height: 844 });
+      await auditMemoryLayout(page, "1440x900", { width: 1440, height: 900 });
+      await page.setViewportSize({ width: 430, height: 932 });
     }
     if(target==="wish"){
       await page.locator(".wish-field input").focus();

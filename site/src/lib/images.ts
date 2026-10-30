@@ -36,6 +36,16 @@ export function cloudinaryUrl(src: string, width: number): string {
   return `${head}c_limit,w_${widthPx}/f_auto/q_auto/${tail}`;
 }
 
+/** Tiny blurred Cloudinary placeholder (w_40, e_blur). Null for local files. */
+export function cloudinaryBlur(src: string): string | null {
+  const resolved = toDeliveryUrl(src);
+  if (!resolved) return null;
+  const at = resolved.indexOf(UPLOAD);
+  const head = resolved.slice(0, at + UPLOAD.length);
+  const tail = stripTransforms(resolved.slice(at + UPLOAD.length));
+  return `${head}c_limit,w_40/e_blur:400/f_auto/q_auto/${tail}`;
+}
+
 /** srcset for a Cloudinary image. Undefined for files we already host. */
 export function cloudinarySrcSet(src: string, widths: number[]): string | undefined {
   if (!toDeliveryUrl(src)) return undefined;

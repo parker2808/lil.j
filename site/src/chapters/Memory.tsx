@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { content } from "../content.ts";
 import { cloudinaryUrl } from "../lib/images.ts";
 import { skipAhead } from "../lib/progress.ts";
+import { LogoMark } from "../components/LogoMark.tsx";
 import { ChapterFrame } from "../components/ChapterFrame.tsx";
 import { Spark } from "../components/Fireworks.tsx";
 import { useI18n } from "../lib/locale-context.ts";
@@ -150,7 +151,7 @@ export function Memory({ progress, update }: ChapterProps) {
             return (
               <div key={card.uid} className={matchedCard ? "mem is-up is-matched" : up ? "mem is-up" : "mem"}>
                 <div className="mem-inner" aria-hidden="true">
-                  <div className="mem-face mem-back">{content.meta.monogram}</div>
+                  <div className="mem-face mem-back"><LogoMark className="mem-logo" /></div>
                   <div className="mem-face mem-front">
                     <img src={cloudinaryUrl(card.src, 480)} alt="" width={800} height={1000} loading="lazy" decoding="async" />
                   </div>

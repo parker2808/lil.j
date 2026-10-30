@@ -1,9 +1,9 @@
-import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type RefObject } from "react";
 import { createPortal } from "react-dom";
 import { content } from "../content.ts";
 import { ChapterFrame } from "../components/ChapterFrame.tsx";
 import { SpiralGalaxy, type SpiralGalaxyHandle } from "../components/SpiralGalaxy.tsx";
-import { cloudinarySrcSet, cloudinaryUrl } from "../lib/images.ts";
+import { cloudinaryBlur, cloudinarySrcSet, cloudinaryUrl } from "../lib/images.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import { fillTemplate, formatDotted } from "../lib/pure.ts";
 import { useReducedMotion } from "../lib/useReducedMotion.ts";
@@ -44,6 +44,56 @@ function delivered(src: string, width: number, widths: number[], sizes: string) 
   };
 }
 
+const STACK_SIZES = "(min-width: 900px) 360px, 80vw";
+const STACK_WIDTHS = [360, 720, 1080];
+const decoded = new Set<string>();
+
+/** Warm the browser cache with the same srcset the card uses, then decode it. */
+function preloadPhoto(src: string) {
+  if (decoded.has(src) || typeof Image === "undefined") return;
+  decoded.add(src);
+  const blur = cloudinaryBlur(src);
+  if (blur) new Image().src = blur;
+  const img = new Image();
+  const props = delivered(src, 720, STACK_WIDTHS, STACK_SIZES);
+  if (props.srcSet) {
+    img.sizes = props.sizes ?? "";
+    img.srcset = props.srcSet;
+  }
+  img.src = props.src;
+  img.decode?.().catch(() => {});
+}
+
+function StackImage({ src, alt }: { src: string; alt: string }) {
+  const [loaded, setLoaded] = useState(false);
+  const blur = cloudinaryBlur(src);
+  return (
+    <div
+      className={loaded ? "stack-photo is-loaded" : "stack-photo"}
+      style={blur ? ({ "--blur": `url("${blur}")` } as CSSProperties) : undefined}
+    >
+      <img
+        {...delivered(src, 720, STACK_WIDTHS, STACK_SIZES)}
+        alt={alt}
+        width={800}
+        height={1000}
+        loading="eager"
+        decoding="async"
+        draggable={false}
+        ref={(node) => {
+          if (node?.complete && node.naturalWidth > 0 && !loaded) setLoaded(true);
+        }}
+        onLoad={(event) => {
+          const node = event.currentTarget;
+          const done = () => setLoaded(true);
+          if (node.decode) node.decode().then(done, done);
+          else done();
+        }}
+      />
+    </div>
+  );
+}
+
 function Words({ text, delay = 0 }: { text: string; delay?: number }) {
   const words = text.split(/\s+/).filter(Boolean);
   return words.map((word, index) => (
@@ -52,6 +102,8 @@ function Words({ text, delay = 0 }: { text: string; delay?: number }) {
     </span>
   ));
 }
+
+const AUTO_MS = 4000;
 
 function Stack({
   era,
@@ -67,7 +119,9 @@ function Stack({
   onNext,
   onFlip,
   onOpen,
+  suspended = false,
 }: {
+  suspended?: boolean;
   era: Era;
   index: number;
   eraIndex: number;
@@ -91,7 +145,35 @@ function Stack({
   const onBackRef = useRef(onBack);
   const photos = era.photos;
   const visible = photos.slice(index, index + 3);
+  useEffect(() => {
+    for (const photo of photos.slice(Math.max(0, index - 1), index + 4)) preloadPhoto(photo.src);
+  }, [photos, index]);
   const arriving = !reduced && arrivedEra !== era.id;
+  const [playing, setPlaying] = useState(!reduced);
+  const [hold, setHold] = useState(false);
+  const [run, setRun] = useState(0);
+  const onNextRef = useRef(onNext);
+  const holdRef = useRef(setHold);
+  const ticking = playing && !hold && !suspended;
+  const atEnd = index >= photos.length;
+  const stopRef = useRef(() => setPlaying(false));
+
+  useLayoutEffect(() => {
+    onNextRef.current = onNext;
+  });
+
+  useEffect(() => {
+    if (!ticking) return;
+    if (atEnd && !hasNext) return;
+    const timer = window.setTimeout(
+      () => {
+        if (atEnd) onNextRef.current();
+        else controlRef.current.fling(1);
+      },
+      atEnd ? 1400 : AUTO_MS,
+    );
+    return () => window.clearTimeout(timer);
+  }, [ticking, atEnd, hasNext, index, era.id, run, controlRef]);
 
   useLayoutEffect(() => {
     onAdvanceRef.current = onAdvance;
@@ -204,6 +286,7 @@ function Stack({
 
     const onDown = (event: PointerEvent) => {
       if (event.button !== 0 || lock) return;
+      stopRef.current();
       cancelAnimationFrame(spring);
       el.style.transition = "none";
       el.setPointerCapture(event.pointerId);
@@ -322,13 +405,19 @@ function Stack({
   const backLabel = t(content.galleryCopy.backToGalaxy);
 
   return (
-    <div className="stack-view">
+    <div
+      className="stack-view"
+      onPointerEnter={(event) => {
+        if (event.pointerType === "mouse") holdRef.current(true);
+      }}
+      onPointerLeave={(event) => {
+        if (event.pointerType === "mouse") {
+          holdRef.current(false);
+          setRun((n) => n + 1);
+        }
+      }}
+    >
       <header className="stack-head">
-        {visible.length > 0 ? (
-          <button type="button" className="pill-back" onClick={onBack}>
-            {backLabel}
-          </button>
-        ) : null}
         <h2 className="stack-era">{t(era.title)}</h2>
         <p className="stack-count">{progressLabel}</p>
       </header>
@@ -382,17 +471,17 @@ function Stack({
                     <span className="stack-trail" aria-hidden="true" />
                     <div className={isFlipped ? "stack-flip is-flipped" : "stack-flip"}>
                       <div className="stack-face stack-front">
-                        <div className="stack-photo">
-                          <img
-                            {...delivered(photo.src, 720, [360, 720, 1080], "(min-width: 900px) 360px, 80vw")}
-                            alt={label}
-                            width={800}
-                            height={1000}
-                            loading={top ? "eager" : "lazy"}
-                            decoding="async"
-                            draggable={false}
-                          />
-                        </div>
+                        <StackImage src={photo.src} alt={label} />
+                        {date || caption ? (
+                          <p className="stack-meta" aria-hidden="true">
+                            {date ? (
+                              <span className="stack-date">{top ? <Words text={date} /> : date}</span>
+                            ) : null}
+                            {caption ? (
+                              <span className="stack-caption">{top ? <Words text={caption} delay={80} /> : caption}</span>
+                            ) : null}
+                          </p>
+                        ) : null}
                       </div>
                       <div className="stack-face stack-backface">
                         <div className="stack-compliment">
@@ -400,16 +489,6 @@ function Stack({
                         </div>
                       </div>
                     </div>
-                    {date || caption ? (
-                      <p className="stack-meta">
-                        {date ? (
-                          <span className="stack-date">{top ? <Words text={date} /> : date}</span>
-                        ) : null}
-                        {caption ? (
-                          <span className="stack-caption">{top ? <Words text={caption} delay={80} /> : caption}</span>
-                        ) : null}
-                      </p>
-                    ) : null}
                   </div>
                 </div>
               </div>
@@ -419,10 +498,46 @@ function Stack({
       )}
       </div>
       <div className="stack-progress">
+        {visible.length > 0 ? (
+          <button type="button" className="stack-play stack-galaxy" aria-label={backLabel.replace(/^←\s*/, "")} onClick={onBack}>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5.5 16.5L10 7.5l7.5 3.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" opacity="0.7" />
+              <circle cx="5.5" cy="16.5" r="2.2" />
+              <circle cx="10" cy="7.5" r="2.6" />
+              <circle cx="17.5" cy="11" r="2.2" />
+            </svg>
+          </button>
+        ) : null}
+        {photos.length > 1 || hasNext ? (
+          <button
+            type="button"
+            className={playing ? "stack-play is-playing" : "stack-play"}
+            aria-pressed={playing}
+            aria-label={playing ? t(content.galleryCopy.autoPause) : t(content.galleryCopy.autoPlay)}
+            onClick={() => {
+              setPlaying((value) => !value);
+              setRun((n) => n + 1);
+            }}
+          >
+            {playing ? (
+              <svg viewBox="0 0 12 12" aria-hidden="true"><rect x="2.5" y="2" width="2.4" height="8" rx="1" /><rect x="7.1" y="2" width="2.4" height="8" rx="1" /></svg>
+            ) : (
+              <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 2.2v7.6a.6.6 0 0 0 .9.5l6-3.8a.6.6 0 0 0 0-1L4.4 1.7a.6.6 0 0 0-.9.5Z" /></svg>
+            )}
+          </button>
+        ) : null}
         {photos.length <= 12 ? (
           <span className="stack-dots" aria-hidden="true">
             {photos.map((photo, dot) => (
-              <i key={photo.id} className={dot === index ? "is-on" : dot < index ? "is-seen" : ""} />
+              <i key={photo.id} className={dot === index ? "is-on" : dot < index ? "is-seen" : ""}>
+                {dot === index ? (
+                  <b
+                    key={`${era.id}-${index}-${run}`}
+                    className={ticking ? "stack-dot-fill is-running" : "stack-dot-fill"}
+                    style={{ animationDuration: `${AUTO_MS}ms` }}
+                  />
+                ) : null}
+              </i>
             ))}
           </span>
         ) : (
@@ -573,12 +688,32 @@ function Fullscreen({ photo, caption, onClose }: { photo: EraPhoto; caption: str
   );
 }
 
+const ORBIT_GUIDE_KEY = "lilj.guide.galleryOrbit.v1";
+const ALBUM_GUIDE_KEY = "lilj.guide.galleryAlbum.v1";
+
+function guideDone(key: string): boolean {
+  try {
+    return localStorage.getItem(key) === "1";
+  } catch {
+    return true;
+  }
+}
+
+function markGuide(key: string) {
+  try {
+    localStorage.setItem(key, "1");
+  } catch {
+    /* storage unavailable: guide just shows again next time */
+  }
+}
+
 export function Gallery({ progress, update }: ChapterProps) {
   const { t } = useI18n();
   const reduced = useReducedMotion();
   const chapter = content.chapters.find((item) => item.id === "gallery");
   const [mode, setMode] = useState<Mode>({ kind: "orbit" });
   const [cruising, setCruising] = useState(false);
+  const [zoomDir, setZoomDir] = useState<"in" | "out" | null>(null);
   const [fullPhoto, setFullPhoto] = useState<EraPhoto | null>(null);
   const [focusIndex, setFocusIndex] = useState(0);
   const galaxyRef = useRef<SpiralGalaxyHandle>(null);
@@ -588,6 +723,73 @@ export function Gallery({ progress, update }: ChapterProps) {
   const focusPlanetRef = useRef<(delta: number) => void>(() => {});
   const backRef = useRef(() => {});
   const opening = useRef(false);
+  const [orbitGuide, setOrbitGuide] = useState(false);
+  const [albumGuide, setAlbumGuide] = useState(false);
+  const orbitGuideDone = useRef(guideDone(ORBIT_GUIDE_KEY));
+  const albumGuideDone = useRef(guideDone(ALBUM_GUIDE_KEY));
+
+  // Scene 4 onboarding: pulse the first unseen star with a tap hand, hide after ~3s, re-show once after ~5s idle.
+  useEffect(() => {
+    if (mode.kind !== "orbit" || orbitGuideDone.current) return;
+    const timers: number[] = [];
+    timers.push(window.setTimeout(() => setOrbitGuide(true), 700));
+    timers.push(window.setTimeout(() => setOrbitGuide(false), 3700));
+    timers.push(window.setTimeout(() => !orbitGuideDone.current && setOrbitGuide(true), 8700));
+    timers.push(window.setTimeout(() => setOrbitGuide(false), 11700));
+    const stop = () => {
+      orbitGuideDone.current = true;
+      markGuide(ORBIT_GUIDE_KEY);
+      setOrbitGuide(false);
+      timers.forEach((id) => window.clearTimeout(id));
+    };
+    window.addEventListener("pointerdown", stop, { once: true });
+    window.addEventListener("keydown", stop, { once: true });
+    return () => {
+      timers.forEach((id) => window.clearTimeout(id));
+      window.removeEventListener("pointerdown", stop);
+      window.removeEventListener("keydown", stop);
+    };
+  }, [mode.kind]);
+
+  useEffect(() => {
+    const seen = new Set(progress.erasViewed);
+    const target = Math.max(0, content.eras.findIndex((item) => !seen.has(item.id)));
+    if (!orbitGuide) return;
+    let button: HTMLButtonElement | null = null;
+    let frame = 0;
+    let tries = 0;
+    const attach = () => {
+      button = planetRefs.current[target] ?? null;
+      if (!button) {
+        if (tries++ < 120) frame = window.requestAnimationFrame(attach);
+        return;
+      }
+      button.classList.add("is-guide");
+      button.dataset.guide = t(content.galleryCopy.orbit);
+    };
+    attach();
+    return () => {
+      window.cancelAnimationFrame(frame);
+      if (!button) return;
+      button.classList.remove("is-guide");
+      delete button.dataset.guide;
+    };
+  }, [orbitGuide, progress.erasViewed, t]);
+
+  // First album open: faint swipe arrows + glowing back button, once.
+  useEffect(() => {
+    if (mode.kind !== "stack" || albumGuideDone.current) return;
+    albumGuideDone.current = true;
+    markGuide(ALBUM_GUIDE_KEY);
+    setAlbumGuide(true);
+    const id = window.setTimeout(() => setAlbumGuide(false), 3200);
+    const stop = () => setAlbumGuide(false);
+    window.addEventListener("pointerdown", stop, { once: true });
+    return () => {
+      window.clearTimeout(id);
+      window.removeEventListener("pointerdown", stop);
+    };
+  }, [mode.kind]);
 
   const era = mode.kind === "stack" ? content.eras.find((item) => item.id === mode.eraId) : undefined;
 
@@ -603,8 +805,12 @@ export function Gallery({ progress, update }: ChapterProps) {
     backRef.current = () => {
       setFullPhoto(null);
       setCruising(!reduced);
+      setZoomDir(reduced ? null : "out");
       setMode({ kind: "orbit" });
-      void galaxyRef.current?.settle().finally(() => setCruising(false));
+      void galaxyRef.current?.settle().finally(() => {
+        setCruising(false);
+        setZoomDir(null);
+      });
     };
   });
 
@@ -661,9 +867,11 @@ export function Gallery({ progress, update }: ChapterProps) {
     const next = content.eras.findIndex((item) => item.id === id);
     if (next >= 0) setFocusIndex(next);
     setCruising(!reduced);
+    setZoomDir(reduced ? null : "in");
     void galaxyRef.current?.flyTo(id).finally(() => {
       setMode({ kind: "stack", eraId: id, index: 0 });
       setCruising(false);
+      setZoomDir(null);
       opening.current = false;
     });
   }
@@ -683,7 +891,7 @@ export function Gallery({ progress, update }: ChapterProps) {
 
   return (
     <ChapterFrame
-      className={mode.kind === "stack" ? "gallery-scene is-stack" : "gallery-scene"}
+      className={["gallery-scene", mode.kind === "stack" ? "is-stack" : "", zoomDir ? `is-zoom-${zoomDir}` : "", albumGuide ? "is-album-guide" : ""].filter(Boolean).join(" ")}
       kicker={t(chapter?.kicker)}
       title={t(chapter?.title)}
       lede={t(chapter?.lede)}
@@ -748,6 +956,7 @@ export function Gallery({ progress, update }: ChapterProps) {
           }}
           onFlip={toggleFlip}
           onOpen={setFullPhoto}
+          suspended={Boolean(fullPhoto) || zoomDir !== null}
         />
       )}
       {fullPhoto ? <Fullscreen photo={fullPhoto} caption={fullCaption} onClose={() => setFullPhoto(null)} /> : null}

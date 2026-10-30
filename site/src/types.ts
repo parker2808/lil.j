@@ -98,6 +98,7 @@ export type MusicTrack = {
 export type Content = {
   meta: {
     title: Copy;
+    docTitle: Copy;
     description: Copy;
     herName: string;
     constellationName: string;
@@ -141,6 +142,8 @@ export type Content = {
     backToGalaxy: Copy;
     eraProgress: Copy;
     nextEra: Copy;
+    autoPlay: Copy;
+    autoPause: Copy;
     seen: Copy;
     pending: Copy;
     empty: Copy;
@@ -276,6 +279,7 @@ export type Content = {
     musicHint: Copy;
     musicBlocked: Copy;
     journey: Copy;
+    journeyClose: Copy;
     reset: Copy;
     resetConfirm: Copy;
     resetYes: Copy;
@@ -288,6 +292,7 @@ export type Content = {
     summaryTitle: Copy;
     contentError: Copy;
     crash: Copy;
+    crashReload: Copy;
     flip: Copy;
     candleOn: Copy;
     candleOut: Copy;
@@ -299,6 +304,7 @@ export type Content = {
     langVi: Copy;
     langEn: Copy;
     dottedDate: Copy;
+    chapterWord: Copy;
   };
   lock: {
     unlockAt: string;

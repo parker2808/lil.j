@@ -281,8 +281,8 @@ async function fullPlay(page) {
   await passCounter(page);
   await passDreams(page);
   await openLetters(page);
-  await passCake(page);
   await sendWish(page);
+  await passCake(page);
   await openEnvelope(page);
   await sayYes(page);
   await finishLetter(page);
@@ -317,15 +317,16 @@ async function skipPlay(page) {
   await passCounter(page);
   await passDreams(page);
   await page.getByRole("button", { name: /Để dành những lá thư|Save the letters/ }).click();
-  await page.waitForSelector('[data-step="cake"]');
+  await page.waitForSelector('[data-step="wish"]');
   const afterLetters = await saved(page);
   if (Object.keys(afterLetters.openWhen).length !== 0) fail("skip-letters", "openWhen was written");
-  await passCake(page);
   await page.getByRole("button", { name: /Giữ điều ước|Keep this wish/ }).click();
   const afterWish = await saved(page);
   if (afterWish.wishes.length !== 0 || afterWish.wishPrivate !== true) fail("private-wish", "wish record changed");
   if ((await page.locator(".wish-read").innerText()).trim()) fail("private-wish", "sent line is showing");
   await page.locator(".sticky-next").click();
+  await page.waitForSelector('[data-step="cake"]');
+  await passCake(page);
   await page.waitForSelector('[data-step="envelope"]');
   await openEnvelope(page);
   const later = page.getByRole("button", { name: /^Để sau$|^Later$/ });
@@ -410,7 +411,7 @@ async function migrate(page) {
   await page.evaluate((key) => localStorage.setItem(key, "[1,2,3]"), PROGRESS_KEY);
   await page.goto(`${devUrl}`, { waitUntil: "networkidle" });
   const empty = await saved(page);
-  if (empty.step !== 0 || empty.flowVersion !== 4) fail("migrate-corrupt", "corrupt storage was not empty");
+  if (empty.step !== 0 || empty.flowVersion !== 5) fail("migrate-corrupt", "corrupt storage was not empty");
   note("migration", "v3 memory, cake without memory, future version, corrupt array");
 }
 
@@ -486,7 +487,7 @@ async function audio(page) {
     friendsSeen: false,
     letterDone: false,
     wishes: [],
-    flowVersion: 4,
+    flowVersion: 5,
   };
   await page.goto(`${devUrl}`, { waitUntil: "domcontentloaded" });
   await page.evaluate((value) => {
@@ -498,11 +499,11 @@ async function audio(page) {
   await page.locator(".music").click();
   await page.waitForFunction(() => JSON.parse(localStorage.getItem("lilj.progress.v1")).muted === false);
   await page.locator(".sticky-next").click();
-  await page.waitForSelector('[data-step="wish"]');
-  if ((await saved(page)).muted !== false) fail("audio", "wish reset mute");
-  await page.locator(".dev-jump button").nth(12).click();
   await page.waitForSelector('[data-step="envelope"]');
   if ((await saved(page)).muted !== false) fail("audio", "envelope reset mute");
+  await page.locator(".dev-jump button").nth(10).click();
+  await page.waitForSelector('[data-step="wish"]');
+  if ((await saved(page)).muted !== false) fail("audio", "wish reset mute");
   note("audio", "unmute on the cake is still off on the wish and the envelope");
 }
 
@@ -553,7 +554,7 @@ async function chapterList(browser) {
     const record = historical(4, FLOW.indexOf("gallery"), FLOW.indexOf("gallery"));
     record.accessibleSteps = FLOW.slice(0, FLOW.indexOf("gallery") + 1);
     record.gateUnlocked = true;
-    record.flowVersion = 4;
+    record.flowVersion = 5;
     await page.evaluate(({ key, value }) => {
       localStorage.setItem("lilj.locale.v1", "vi");
       localStorage.setItem(key, JSON.stringify(value));
@@ -669,7 +670,7 @@ async function layouts(browser) {
     record.accessibleSteps = [...FLOW];
     record.letterDone = true;
     record.gateUnlocked = true;
-    record.flowVersion = 4;
+    record.flowVersion = 5;
     await page.evaluate(({ key, value }) => {
       localStorage.setItem("lilj.locale.v1", "vi");
       localStorage.setItem(key, JSON.stringify(value));

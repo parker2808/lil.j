@@ -103,10 +103,12 @@ export function BirthSky({ onSeen }: BirthSkyProps) {
       <p className="kicker">{t(content.birth.kicker)}</p>
       <Reveal text={t(content.birth.title)} />
       <p className="lede">{t(content.birth.lede)}</p>
-      <p className="birth-progress" aria-live="polite">
-        {progress}
-      </p>
-      <p className="birth-caption">{caption}</p>
+      <div className="birth-chips">
+        <p className="birth-caption">{caption}</p>
+        <p className="birth-progress" aria-live="polite">
+          {progress}
+        </p>
+      </div>
       <div className="chart">
         <svg viewBox="0 0 100 100" role="img" aria-label={t(content.birth.title)}>
           <defs>

@@ -7,6 +7,7 @@ import { GateBurst } from "./components/Fireworks.tsx";
 import { Gate } from "./components/Gate.tsx";
 import { LockScreen } from "./components/LockScreen.tsx";
 import { LanguageToggle } from "./components/LanguageToggle.tsx";
+import { LogoMark } from "./components/LogoMark.tsx";
 import { MusicButton, MusicCredit } from "./components/MusicButton.tsx";
 import { Starfield } from "./components/Starfield.tsx";
 import { StoryChapterLabel } from "./components/StoryChapterLabel.tsx";
@@ -57,14 +58,15 @@ export function App() {
   const fadeTimer = useRef<number | null>(null);
   const [opening, setOpening] = useState(false);
   const [askReset, setAskReset] = useState(false);
-  const [{ dev, forceLock }] = useState(() => {
+  const [{ dev, forceLock, forceCrash }] = useState(() => {
     const params = new URLSearchParams(window.location.search);
     const devOn = params.get("dev") === "1";
-    return { dev: devOn, forceLock: devOn && params.get("lock") === "1" };
+    return { dev: devOn, forceLock: devOn && params.get("lock") === "1", forceCrash: devOn && params.get("crash") === "1" };
   });
   const [released, setReleased] = useState(
     () => (dev && !forceLock) || !isBeforeUnlock(content.lock?.unlockAt),
   );
+  if (forceCrash) throw new Error("dev crash preview");
   const headerRef = useRef<HTMLElement>(null);
   const footerRef = useRef<HTMLElement>(null);
   const [quizAction, setQuizAction] = useState<StickyAction | null>(null);
@@ -386,28 +388,27 @@ export function App() {
       <div id="fx-mount" className="fx-mount" />
       <header className="chrome" ref={headerRef}>
         <div className="chrome-row">
-          <LanguageToggle />
-          {released && step > 0 && (
+          {!(released && progress.gateUnlocked) && <LanguageToggle />}
+          {released && step > 0 && !progress.gateUnlocked && (
             <button type="button" className="step-back" onClick={() => go(step - 1)} aria-label={t(content.flow.back)}>
               ←
             </button>
           )}
-          <span className="chrome-spacer" />
+          {released && progress.gateUnlocked && (
+            <span className="chrome-left">
+              {step > 0 ? (
+                <button type="button" className="step-back" onClick={() => go(step - 1)} aria-label={t(content.flow.back)}>
+                  ←
+                </button>
+              ) : (
+                <span className="step-back-slot" aria-hidden="true" />
+              )}
+              <LogoMark className="chrome-logo" />
+            </span>
+          )}
+          {released ? <StoryChapterLabel stepId={stepId} /> : <span className="chrome-spacer" />}
           {released && progress.gateUnlocked && (
             <div className="chrome-tools">
-              <JourneyMenu accessible={progress.accessibleSteps} current={stepId} onGo={(index) => go(index)} />
-              <button type="button" className="journey-reset" aria-label={t(content.ui.reset)} onClick={() => setAskReset(true)}>
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path
-                    d="M7.2 7.2V4.4H4.4M7.4 16.6a7 7 0 1 0-.8-8.4"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.7"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
               <MusicButton
                 muted={progress.muted}
                 onMuted={(muted) => update((current) => ({ ...current, muted }))}
@@ -416,10 +417,16 @@ export function App() {
                 onInvite={setMusicInvite}
                 hintVisible={musicInvite && !blockedCue}
               />
+              <JourneyMenu
+                accessible={progress.accessibleSteps}
+                current={stepId}
+                onGo={(index) => go(index)}
+                canReset={FLOW.every((id) => progress.accessibleSteps.includes(id))}
+                onReset={() => setAskReset(true)}
+              />
             </div>
           )}
         </div>
-        {released && <StoryChapterLabel stepId={stepId} />}
         {released && progress.gateUnlocked && musicInvite && !blockedCue && (
           <p className="music-hint" id="music-hint">
             {t(content.ui.musicHint)}

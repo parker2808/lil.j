@@ -6,10 +6,10 @@ import type { StepId } from "../lib/flow.ts";
 export function StoryChapterLabel({ stepId }: { stepId: StepId }) {
   const { t } = useI18n();
   const chapter = chapterFor(stepId);
-  if (!chapter) return null;
+  if (!chapter) return <span className="chrome-spacer" />;
   return (
-    <p className="story-chapter">
-      <span className="story-chapter-index">{chapter}</span>
+    <p className="story-chapter" title={`${t(content.ui.chapterWord)} ${chapter} · ${t(content.storyChapters[chapter])}`}>
+      <span className="story-chapter-index">{t(content.ui.chapterWord)} {chapter} ·</span>
       <span className="story-chapter-title">{t(content.storyChapters[chapter])}</span>
     </p>
   );

@@ -20,10 +20,10 @@ function contentMeta(): Plugin {
     name: "content-meta",
     transformIndexHtml(html) {
       const content = JSON.parse(readFileSync(file, "utf8")) as {
-        meta: { title: { vi: string }; description: { vi: string } };
+        meta: { docTitle: { vi: string }; description: { vi: string } };
       };
       return html
-        .replaceAll("__CONTENT_TITLE__", escapeHtml(content.meta.title.vi))
+        .replaceAll("__CONTENT_TITLE__", escapeHtml(content.meta.docTitle.vi))
         .replaceAll("__CONTENT_DESCRIPTION__", escapeHtml(content.meta.description.vi));
     },
   };

@@ -1,6 +1,6 @@
 ## Common rules
 
-Source: `ai-memory/rules/COMMON_RULES.md` (copied verbatim below).
+Source: `<private-memory-repo>/rules/COMMON_RULES.md` (copied verbatim below).
 
 # COMMON_RULES — Parker's flow (all agents, all repos)
 
@@ -24,12 +24,12 @@ Built only from what the repos, PR history, CI and bot exports actually show (re
 
 ## 3. Merging (absolute)
 - **Never merge, deploy, or close a PR without Parker's explicit OK ("merge").** Open the PR and stop. One PR at a time.
-- Only exception: `parker2808/ai-memory` may be auto-merged after a secrets/PII scan passes.
+- Only exception: `<private-memory-repo>` may be auto-merged after a secrets/PII scan passes.
 - **Never touch PR #27 in `interview-senior-fe`** (GitHub OAuth, in development).
 
 ## 4. PROJECT_CONTEXT.md + context-check CI
 - Every PR to `main` that changes files outside the exempt paths must update `PROJECT_CONTEXT.md` (status/open items + changelog sections) in the same PR.
-- CI `context-check` fails if `PROJECT_CONTEXT.md` is missing at HEAD or not in the diff for non-exempt changes. Exempt: `docs/` (plus content folders in interview-fe-data).
+- CI `context-check` fails if `PROJECT_CONTEXT.md` is missing at HEAD or not in the diff for non-exempt changes. Exempt: `docs/` (plus content folders in <private-content-repo>).
 - The `skip-context` label bypasses the check; use only when Parker agrees.
 - Record new decisions from Parker (with date) in PROJECT_CONTEXT.md in your PR. Never invent rules.
 
@@ -37,7 +37,7 @@ Built only from what the repos, PR history, CI and bot exports actually show (re
 - Never commit, paste, print or log secrets: `.env` values, tokens, passcodes, API keys, deploy hook URLs, auth codes. Not in code, PRs, logs or chat.
 - Never commit Parker's phone number or personal email. Use `<email>` and `<phone>` placeholders.
 - Public repos: `lil.p`, `lil.j`, `interview-senior-fe`. Never name or link private repos there (write `<private-content-repo>`).
-- Private: `interview-fe-data`, `ai-memory`.
+- Private: `<private-content-repo>`, `<private-memory-repo>`.
 
 ## 6. Facts and content
 - Never invent facts, dates, metrics, memories, places, captions or confirmations. Mark unknowns as **(uncertain)** or leave blank and list them as open items.
@@ -54,7 +54,7 @@ Built only from what the repos, PR history, CI and bot exports actually show (re
 ## 8. Checks before opening a PR
 - Run the repo's own checks (listed in its project rules) and paste the results in the PR body.
 - Run a secrets/PII grep on the diff (tokens, `@` emails, phone numbers) before pushing.
-- Package managers: lil.p uses pnpm (workspace, husky + commitlint); interview-senior-fe uses npm (`package-lock.json`); lil.j and interview-fe-data have no package manager (static site / JSON + node scripts).
+- Package managers: lil.p uses pnpm (workspace, husky + commitlint); interview-senior-fe uses npm (`package-lock.json`); lil.j and <private-content-repo> have no package manager (static site / JSON + node scripts).
 
 ## Project rules for lil.j
 
@@ -81,6 +81,7 @@ For the 15-screen visual check, run `node scripts/story-v2-screenshots.mjs` with
 ### CI workflows
 - `.github/workflows/context-check.yml` runs for PRs to `main`. Its script requires `PROJECT_CONTEXT.md` at HEAD and an update to it when files outside `docs/` change. The `skip-context` label bypasses the job only with Parker's agreement. Update §12 status and §13 changelog in the same PR.
 - `.github/workflows/story-v2-verify.yml` runs on PRs, pushes to `main`, and manual dispatch. Shared setup (Node 22, Chrome, `npm ci`) is in `.github/actions/setup-site`. Three groups of jobs run in parallel: `checks` (lint, build, content and progress checks, every `scripts/*.test.mjs`, iPhone screenshots), `journey` (the full Story V2 browser journey) and `overlap (1/6…6/6)` (the overlap check split by `OVERLAP_SHARD`, all parts together cover every case). A new push to a PR cancels its older run; runs on `main` are never cancelled.
+- Any CI change must follow the shared front-end CI/CD lessons in Parker's memory repo and keep this design: parallel jobs, sharded browser checks, the shared setup action, npm cache, stale-PR cancel, `timeout-minutes` on every job, and logs/screenshots uploaded with `if: always()`.
 
 ### Content and data
 - All visitor-facing VI and EN text and scene data live in `site/content.json`; `site/src/content.ts` loads and validates them. Keep copy out of components and include both languages where content uses them.

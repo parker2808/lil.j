@@ -109,7 +109,7 @@ function ScratchCard({
       ctx.fillStyle = "#5c2844";
       const cssWidth = Math.max(card.clientWidth, 1);
       const dpr = width / cssWidth;
-      const labelCss = 18;
+      const labelCss = cssWidth < 260 ? 15 : 17;
       ctx.font = `600 ${Math.round(labelCss * dpr)}px ${getComputedStyle(document.body).fontFamily}`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";

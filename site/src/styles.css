@@ -4819,3 +4819,80 @@ html::-webkit-scrollbar-track, .stage::-webkit-scrollbar-track, .scene::-webkit-
 .stack-photo.is-loaded img { opacity: 1; }
 @keyframes stack-shimmer { to { background-position: 150% 0; } }
 @media (prefers-reduced-motion: reduce) { .stack-photo::before { animation: none; } .stack-photo img { transition: none; } }
+
+/* ── Round 4 ───────────────────────────────────────────── */
+/* Rosier dusk page background (pastel pink family, no deep purple). */
+:root { --bg: #7a4c72; }
+body::before {
+  background:
+    radial-gradient(ellipse at 50% 115%, rgba(250, 182, 210, 0.6), transparent 50%),
+    radial-gradient(ellipse at 88% -8%, rgba(244, 176, 214, 0.55), transparent 46%),
+    radial-gradient(ellipse at 6% 18%, rgba(250, 206, 226, 0.36), transparent 40%),
+    radial-gradient(ellipse at 72% 62%, rgba(248, 196, 176, 0.26), transparent 36%),
+    var(--bg);
+}
+body::after { background: radial-gradient(ellipse at center, transparent 58%, rgba(96, 40, 72, 0.26) 100%); }
+
+/* Subtitles: smaller + italic, still readable (>= 13.5px). */
+.lede { font-size: max(13.5px, calc(var(--text-body) - 1.5px)); font-style: italic; line-height: 1.5; }
+
+/* Scene 5 card backs: light pink glass with the real logo. */
+.mem-back {
+  background:
+    radial-gradient(circle at 30% 18%, rgba(255, 255, 255, 0.85), transparent 46%),
+    linear-gradient(160deg, #fff3f8, #f9d6e6 58%, #f1bcd4);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 0.35), 0 10px 22px rgba(96, 40, 72, 0.22);
+}
+.mem-back .mem-logo { width: 58%; height: auto; filter: drop-shadow(0 3px 6px rgba(201, 123, 158, 0.45)); }
+.mem-back .mem-logo ellipse, .mem-back .mem-logo path[d^="M5"] { stroke: #d98bb0; }
+.mem-back .mem-logo > circle:last-child { fill: #e79bbd; }
+
+/* Scene 6 quiz: one glass card, pill counter, filled letter badges. */
+.quiz {
+  padding: 18px 16px 16px;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 228, 240, 0.4);
+  background: linear-gradient(170deg, rgba(255, 238, 247, 0.2), rgba(250, 200, 224, 0.1));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 18px 40px rgba(96, 40, 72, 0.22);
+}
+.quiz > .count {
+  align-self: flex-start;
+  margin: 0;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #fde6f0, #f4bfd6);
+  color: var(--pink-ink);
+  font-size: var(--text-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+.quiz h2 { margin: 12px 0 14px; font-size: calc(var(--text-h2) - 2px); }
+.option {
+  border-color: rgba(255, 228, 240, 0.45);
+  background: linear-gradient(180deg, rgba(255, 240, 248, 0.2), rgba(250, 206, 226, 0.12));
+}
+.opt-index {
+  border: none;
+  background: linear-gradient(135deg, #fff1f7, #f3b9d2);
+  color: var(--pink-ink);
+  font-weight: 600;
+}
+.option.is-right .opt-index { background: linear-gradient(135deg, #ffd9ea, #e58aab); color: #fff; }
+
+/* Scene 7 scratch cards: compact two-column pink cards. */
+.scratch-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.scratch, .scratch-reveal { min-height: 112px; }
+.scratch {
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: linear-gradient(160deg, #fff6fa, #f9dbe8 60%, #f3c6da);
+  color: var(--pink-ink);
+  box-shadow: 0 12px 26px rgba(96, 40, 72, 0.2);
+}
+.scratch-reveal { padding: 12px 12px; font-size: 15px; line-height: 1.4; }
+@media (min-width: 900px) {
+  .scratch-list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  .scratch, .scratch-reveal { min-height: 140px; }
+}

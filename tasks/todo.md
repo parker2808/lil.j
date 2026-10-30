@@ -43,9 +43,13 @@
 - [x] `concurrency`: hủy lần chạy cũ của cùng PR, không hủy trên `main`. Bỏ nhánh đã merge `fix/story-v2-production-review` khỏi `push`.
 - [x] Không giảm phạm vi kiểm tra: tổng số trường hợp của 6 phần = 2.880.
 - [x] Kiểm tra cục bộ: 6 phần chạy song song trên một preview, cộng lại đủ trường hợp, 0 lỗi; shard sai báo lỗi.
-- [ ] Đẩy PR, đo thời gian CI thật; cập nhật PROJECT_CONTEXT §5, §8, §12, §13.
+- [x] Đẩy PR, đo thời gian CI thật; cập nhật PROJECT_CONTEXT §5, §8, §12, §13.
 
 ### Kết quả cục bộ
 - `OVERLAP_SHARD=7/6` và `abc` báo lỗi rõ ràng.
 - 6 phần chạy song song trên một preview: mỗi phần 480 trường hợp, 0 lỗi (tổng 2.880, bằng bản cũ). Khi chạy 6 phần cùng lúc trên một máy Mac, tiến trình treo sau khi xong (không in tổng kết); chạy riêng như CI thì thoát bình thường.
 - `OVERLAP_SHARD=2/6 npm run overlap` (đúng như CI): 480 trường hợp, 0 lỗi, 118 giây kể cả build.
+
+### Kết quả CI thật (PR #34)
+- Cả lần chạy: 1 phút 45 giây (trước: 7–9 phút). `checks` 1m01, `journey` 1m14, 6 phần overlap 1m20–1m41.
+- 6 phần overlap: mỗi phần 480 trường hợp, tổng 2.880, 0 lỗi. Mọi check xanh.

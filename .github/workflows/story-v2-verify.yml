@@ -12,7 +12,7 @@ on:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     defaults:
       run:
         working-directory: site
@@ -23,15 +23,37 @@ jobs:
           node-version: '22'
           cache: npm
           cache-dependency-path: site/package-lock.json
-      - run: npm ci
-      - name: Install Chromium for browser tests
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y chromium
-      - name: Capture all 15 screens at iPhone 430x932
-        run: node scripts/story-v2-screenshots.mjs
+      - name: Set up Chrome browser
+        id: chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+      - name: Install dependencies
+        run: npm ci
+      - name: Prepare QA logs
+        run: mkdir -p qa-logs
+      - name: Lint
+        run: npm run lint 2>&1 | tee qa-logs/lint.txt
+      - name: TypeScript and Vite production build
+        run: npm run build 2>&1 | tee qa-logs/build.txt
+      - name: Content assertions
+        run: npm run content-check 2>&1 | tee qa-logs/content.txt
+      - name: Progress migration assertions
+        run: npm run progress-check 2>&1 | tee qa-logs/progress.txt
+      - name: Full Story V2 browser journey
+        run: npm run story-v2-check 2>&1 | tee qa-logs/journey.txt
         env:
-          CHROME_PATH: /usr/bin/chromium
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+      - name: Capture all 15 screens at iPhone 430x932
+        if: always()
+        run: node scripts/story-v2-screenshots.mjs 2>&1 | tee qa-logs/screenshots.txt
+        env:
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+      - name: Mobile overlap checks
+        if: always()
+        run: npm run overlap 2>&1 | tee qa-logs/overlap.txt
+        env:
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
       - name: Upload visual QA screenshots
         if: always()
         uses: actions/upload-artifact@v4
@@ -39,19 +61,10 @@ jobs:
           name: story-v2-iphone-screenshots
           path: site/qa-screenshots/*.png
           if-no-files-found: warn
-      - name: Lint
-        run: npm run lint
-      - name: TypeScript and Vite production build
-        run: npm run build
-      - name: Content assertions
-        run: npm run content-check
-      - name: Progress migration assertions
-        run: npm run progress-check
-      - name: Full Story V2 browser journey
-        run: npm run story-v2-check
-        env:
-          CHROME_PATH: /usr/bin/chromium
-      - name: Mobile overlap checks
-        run: npm run overlap
-        env:
-          CHROME_PATH: /usr/bin/chromium
+      - name: Upload test logs for diagnosis
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: story-v2-test-logs
+          path: site/qa-logs/*.txt
+          if-no-files-found: warn

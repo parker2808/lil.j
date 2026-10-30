@@ -3,10 +3,9 @@ name: Story V2 verify
 on:
   push:
     branches:
+      - main
       - fix/story-v2-production-review
   pull_request:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:

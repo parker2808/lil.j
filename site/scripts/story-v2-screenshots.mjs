@@ -62,19 +62,27 @@ try {
     if(target==="finale"){
       const later=page.locator(".no-btn");
       await page.mouse.move(0, 0);
-      const before=await later.getAttribute("style");
+      const before=await later.evaluate((el) => `${el.style.left}|${el.style.top}`);
       const box=await later.boundingBox();
       if (!box) throw new Error("Finale Later button is not visible");
       await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
-      await delay(360);
-      const after=await later.getAttribute("style");
-      const moved=before!==after;
+      await page.waitForFunction(
+        ({ selector, start }) => {
+          const el = document.querySelector(selector);
+          if (!el) return false;
+          const style = `${el.style.left}|${el.style.top}`;
+          const tease = document.querySelector(".finale-tease")?.textContent?.trim();
+          return style !== start && Boolean(tease);
+        },
+        { selector: ".no-btn", start: before },
+      );
+      const after=await later.evaluate((el) => `${el.style.left}|${el.style.top}`);
       const tease=(await page.locator(".finale-tease").innerText()).trim();
-      report.push({name:"finale-button-movement",moved,tease});
-      if (!moved || !tease) throw new Error("Finale button did not move or show its playful feedback");
+      report.push({name:"finale-button-movement",moved:before!==after,tease});
+      if (before===after || !tease) throw new Error("Finale button did not move or show its playful feedback");
       await shoot("14-finale-tease");
       await page.locator(".yes-btn").click();
-      await delay(450);
+      await page.waitForSelector(".finale-celebrate");
       await shoot("14-finale-yes");
     }
   }

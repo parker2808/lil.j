@@ -232,7 +232,8 @@ function tab(kind) {
 function formatTable(sheet, devices) {
   var columns = devices ? 3 : 7;
   var rows = sheet.getMaxRows();
-  sheet.setFrozenRows(1).setHiddenGridlines(true).setTabColor("#d995b5");
+  sheet.setFrozenRows(1);
+  sheet.setHiddenGridlines(true).setTabColor("#d995b5");
   var range = sheet.getRange(1, 1, rows, columns);
   range.setFontFamily("Arial").setFontSize(11).setFontColor("#432b39").setVerticalAlignment("top").setWrap(true);
   sheet.getBandings().forEach(function (band) { band.remove(); });

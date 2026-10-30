@@ -121,7 +121,9 @@ function fakeSheet() {
       return range;
     },
   };
-  for (const name of ["setName", "setFrozenRows", "setHiddenGridlines", "setTabColor", "setRowHeight", "setColumnWidth", "hideColumns", "autoResizeRows"]) sheet[name] = () => sheet;
+  for (const name of ["setName", "setHiddenGridlines", "setTabColor", "setRowHeight", "setColumnWidth", "autoResizeRows"]) sheet[name] = () => sheet;
+  // These return void in Apps Script, so chaining on them must fail here too.
+  for (const name of ["setFrozenRows", "hideColumns"]) sheet[name] = () => undefined;
   return sheet;
 }
 

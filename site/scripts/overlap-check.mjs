@@ -47,7 +47,7 @@ function deviceKind(width, height) {
   return "ipad";
 }
 
-const viewports = baseViewports.flatMap((viewport) => {
+const allViewports = baseViewports.flatMap((viewport) => {
   const kind = deviceKind(viewport.width, viewport.height);
   const bars = viewport.bare ? [0] : kind === "phone" ? (toolbarOffsets.length ? toolbarOffsets : [0]) : [0];
   return bars.map((bar) => ({
@@ -57,6 +57,15 @@ const viewports = baseViewports.flatMap((viewport) => {
     kind,
   }));
 });
+
+// `OVERLAP_SHARD=2/6` checks every sixth viewport starting at the second, so parallel CI jobs cover the full list.
+const shard = process.env.OVERLAP_SHARD || "1/1";
+const [shardIndex, shardCount] = shard.split("/").map(Number);
+if (!/^\d+\/\d+$/.test(shard) || shardCount < 1 || shardIndex < 1 || shardIndex > shardCount) {
+  throw new Error(`OVERLAP_SHARD must look like 2/6, got "${shard}"`);
+}
+const viewports = allViewports.filter((_, index) => index % shardCount === shardIndex - 1);
+if (!viewports.length) throw new Error(`OVERLAP_SHARD ${shard} has no viewports (${allViewports.length} in total)`);
 const locales = (process.env.OVERLAP_LOCALES || "vi,en").split(",").map((item) => item.trim()).filter(Boolean);
 const devModes = (process.env.OVERLAP_DEV || "1,0").split(",").map((item) => item.trim()).filter(Boolean);
 const states = (process.env.OVERLAP_STATES || "done,pending").split(",").map((item) => item.trim()).filter(Boolean);
@@ -756,6 +765,7 @@ async function main() {
   const summary = {
     ok: failures.length === 0,
     cases: checked,
+    shard,
     viewports: viewports.map((item) => item.name),
     locales,
     dev: devModes,

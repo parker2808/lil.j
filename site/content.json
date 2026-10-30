@@ -70,8 +70,15 @@
     }
   },
   "startDate": "2026-07-01T00:00:00+07:00",
-  "firstMeeting": "2022-11-18",
-  "memoryPhotoIds": [],
+  "firstMeeting": null,
+  "memoryPhotoIds": [
+    "g-selfies-bb678f64f7",
+    "g-flowers-3372df2172",
+    "g-camera-2095ecb7ae",
+    "g-travels-c177584edc",
+    "g-together-aa799e7857",
+    "g-cafes-ffd066137a"
+  ],
   "music": {
     "tracks": [
       {
@@ -127,8 +134,8 @@
       "en": "Starting with your birthday"
     },
     "lede": {
-      "vi": "Dưới bầu trời ấy, một cô bé bắt đầu câu chuyện của riêng mình. Ngày 18/11/2022 cô bé ấy gặp anh. Từ 01/07/2026, hai đứa bắt đầu đếm.",
-      "en": "Somewhere beneath this sky, a little girl was beginning her own story. On 18/11/2022 she met me. From 01/07/2026, the two of us started counting."
+      "vi": "Dưới bầu trời này, câu chuyện của em đã bắt đầu. Anh không biết hết những ngày trước khi có anh, nhưng anh muốn được nghe em kể thêm. Còn từ 01/07/2026, hai đứa mình có một cột mốc để cùng nhớ.",
+      "en": "Under this sky, your story began. I don't know every chapter from before we were together, but I'd love to hear more of them from you. Since 1 July 2026, we've had a milestone of our own."
     },
     "north": {
       "vi": "B",
@@ -508,8 +515,8 @@
         "en": "Little Moments, Big Feelings"
       },
       "lede": {
-        "vi": "Những điều anh nhớ từ ngày mình gặp nhau, 18/11/2022. Mình không cần hàng nghìn khoảnh khắc đặc biệt.",
-        "en": "Things I remember from the day we met, 18/11/2022. We don’t need a thousand extraordinary moments."
+        "vi": "Có những tấm ảnh từ trước khi hai đứa bên nhau, có những tấm là kỷ niệm chung. Anh gom lại ở đây để em xem và kể anh nghe thêm nhé.",
+        "en": "Some photos are from before we got together; others are memories we share. I put them here for you to revisit—and maybe tell me a few more stories."
       }
     },
     {
@@ -622,8 +629,8 @@
         "en": "Since we got together"
       },
       "lede": {
-        "vi": "Mình gặp nhau ngày 18/11/2022. Đồng hồ này đếm từ 01/07/2026, ngày em đồng ý. Và chúng mình mới chỉ bắt đầu thôi.",
-        "en": "We met on 18/11/2022. This clock counts from 01/07/2026, the day you said yes. And we’re only getting started."
+        "vi": "Đồng hồ này bắt đầu từ 01/07/2026, ngày em đồng ý yêu anh. Đến giờ, hai đứa đã có thêm kha khá chuyện để kể rồi nhỉ. :)))",
+        "en": "This clock started on 1 July 2026, the day you said yes to us. We've already collected quite a few stories since then. :)))"
       }
     }
   ],

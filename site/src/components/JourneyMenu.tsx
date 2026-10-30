@@ -29,6 +29,7 @@ export function JourneyMenu({ accessible, current, onGo, canReset, onReset }: Jo
       return;
     }
     wasOpen.current = true;
+    document.documentElement.classList.add("journey-open-lock");
     const dialog = dialogRef.current;
     const currentButton = dialog?.querySelector<HTMLElement>("[aria-current='step']");
     const fallback = dialog?.querySelector<HTMLElement>("button");
@@ -55,13 +56,15 @@ export function JourneyMenu({ accessible, current, onGo, canReset, onReset }: Jo
       }
     };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.documentElement.classList.remove("journey-open-lock");
+    };
   }, [open]);
 
   function close() {
     const reduce =
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-      !window.matchMedia("(min-width: 769px)").matches;
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
       setOpen(false);
       return;
@@ -116,6 +119,7 @@ export function JourneyMenu({ accessible, current, onGo, canReset, onReset }: Jo
                 </svg>
               </button>
             </div>
+            <div className="journey-body">
             {STORY_CHAPTERS.map((chapter) => {
               const scenes = chapter.scenes.filter((id) => openSet.has(id));
               if (scenes.length === 0) return null;
@@ -161,6 +165,7 @@ export function JourneyMenu({ accessible, current, onGo, canReset, onReset }: Jo
                 </button>
               </div>
             )}
+            </div>
           </div>
         </div>
       )}

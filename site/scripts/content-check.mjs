@@ -6,7 +6,7 @@ assert.equal(problem, null);
 assert.equal(content.startDate, "2026-07-01T00:00:00+07:00");
 assert.equal(content.firstMeeting, null);
 assert.equal(content.birth.when, "2002-11-18T16:45:00+07:00");
-assert.equal(content.birth.timeConfirmed, false);
+assert.equal(content.birth.timeConfirmed, true);
 
 // Memory deck must remain playable after Galaxy assets change.
 assert.equal(content.memoryPhotoIds.length, 6);

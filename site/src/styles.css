@@ -1967,6 +1967,16 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   overflow: hidden;
 }
 
+.finale-tease {
+  min-height: 2.8em;
+  max-width: min(34ch, 100%);
+  margin: 4px auto 0;
+  color: var(--gold);
+  font-size: var(--text-secondary);
+  line-height: var(--leading-body);
+  text-align: center;
+}
+
 .no-btn {
   position: absolute;
   width: auto;

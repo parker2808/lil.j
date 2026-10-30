@@ -3,6 +3,7 @@ import { content } from "../content.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import { useReducedMotion } from "../lib/useReducedMotion.ts";
 import { Reveal } from "./Reveal.tsx";
+import { Hearts } from "./Hearts.tsx";
 
 type FinaleProps = {
   saidYes: boolean;
@@ -17,6 +18,7 @@ export function Finale({ saidYes, onYes, onLater }: FinaleProps) {
   const laterRef = useRef<HTMLButtonElement>(null);
   const lock = useRef(false);
   const [pos, setPos] = useState({ x: 24, y: 24 });
+  const [teaseIndex, setTeaseIndex] = useState(-1);
 
   useLayoutEffect(() => {
     if (saidYes) return;
@@ -52,14 +54,19 @@ export function Finale({ saidYes, onYes, onLater }: FinaleProps) {
       if (dx * dx + dy * dy > 140 * 140) break;
     }
     setPos({ x, y });
+    if (content.finale.teases.length > 0) {
+      setTeaseIndex((index) => (index + 1) % content.finale.teases.length);
+    }
   }
 
   return (
     <section className="scene finale">
+      <Hearts active={saidYes} />
       {saidYes ? (
         <div className="finale-copy">
           <Reveal text={t(content.finale.yesTitle)} />
           <p className="lede">{t(content.finale.yesBody)}</p>
+          <p className="finale-celebrate">{t(content.finale.celebrate)}</p>
         </div>
       ) : (
         <>
@@ -84,6 +91,9 @@ export function Finale({ saidYes, onYes, onLater }: FinaleProps) {
               {t(content.finale.later)}
             </button>
           </div>
+          <p className="finale-tease" role="status" aria-live="polite">
+            {teaseIndex >= 0 ? t(content.finale.teases[teaseIndex]) : ""}
+          </p>
         </>
       )}
     </section>

@@ -1,9 +1,9 @@
-import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type RefObject } from "react";
 import { createPortal } from "react-dom";
 import { content } from "../content.ts";
 import { ChapterFrame } from "../components/ChapterFrame.tsx";
 import { SpiralGalaxy, type SpiralGalaxyHandle } from "../components/SpiralGalaxy.tsx";
-import { cloudinarySrcSet, cloudinaryUrl } from "../lib/images.ts";
+import { cloudinaryBlur, cloudinarySrcSet, cloudinaryUrl } from "../lib/images.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import { fillTemplate, formatDotted } from "../lib/pure.ts";
 import { useReducedMotion } from "../lib/useReducedMotion.ts";
@@ -42,6 +42,56 @@ function delivered(src: string, width: number, widths: number[], sizes: string) 
     src: cloudinaryUrl(src, width),
     ...(srcSet ? { srcSet, sizes } : {}),
   };
+}
+
+const STACK_SIZES = "(min-width: 900px) 360px, 80vw";
+const STACK_WIDTHS = [360, 720, 1080];
+const decoded = new Set<string>();
+
+/** Warm the browser cache with the same srcset the card uses, then decode it. */
+function preloadPhoto(src: string) {
+  if (decoded.has(src) || typeof Image === "undefined") return;
+  decoded.add(src);
+  const blur = cloudinaryBlur(src);
+  if (blur) new Image().src = blur;
+  const img = new Image();
+  const props = delivered(src, 720, STACK_WIDTHS, STACK_SIZES);
+  if (props.srcSet) {
+    img.sizes = props.sizes ?? "";
+    img.srcset = props.srcSet;
+  }
+  img.src = props.src;
+  img.decode?.().catch(() => {});
+}
+
+function StackImage({ src, alt }: { src: string; alt: string }) {
+  const [loaded, setLoaded] = useState(false);
+  const blur = cloudinaryBlur(src);
+  return (
+    <div
+      className={loaded ? "stack-photo is-loaded" : "stack-photo"}
+      style={blur ? ({ "--blur": `url("${blur}")` } as CSSProperties) : undefined}
+    >
+      <img
+        {...delivered(src, 720, STACK_WIDTHS, STACK_SIZES)}
+        alt={alt}
+        width={800}
+        height={1000}
+        loading="eager"
+        decoding="async"
+        draggable={false}
+        ref={(node) => {
+          if (node?.complete && node.naturalWidth > 0 && !loaded) setLoaded(true);
+        }}
+        onLoad={(event) => {
+          const node = event.currentTarget;
+          const done = () => setLoaded(true);
+          if (node.decode) node.decode().then(done, done);
+          else done();
+        }}
+      />
+    </div>
+  );
 }
 
 function Words({ text, delay = 0 }: { text: string; delay?: number }) {
@@ -95,6 +145,9 @@ function Stack({
   const onBackRef = useRef(onBack);
   const photos = era.photos;
   const visible = photos.slice(index, index + 3);
+  useEffect(() => {
+    for (const photo of photos.slice(Math.max(0, index - 1), index + 4)) preloadPhoto(photo.src);
+  }, [photos, index]);
   const arriving = !reduced && arrivedEra !== era.id;
   const [playing, setPlaying] = useState(!reduced);
   const [hold, setHold] = useState(false);
@@ -365,11 +418,6 @@ function Stack({
       }}
     >
       <header className="stack-head">
-        {visible.length > 0 ? (
-          <button type="button" className="pill-back" onClick={onBack}>
-            {backLabel}
-          </button>
-        ) : null}
         <h2 className="stack-era">{t(era.title)}</h2>
         <p className="stack-count">{progressLabel}</p>
       </header>
@@ -423,17 +471,7 @@ function Stack({
                     <span className="stack-trail" aria-hidden="true" />
                     <div className={isFlipped ? "stack-flip is-flipped" : "stack-flip"}>
                       <div className="stack-face stack-front">
-                        <div className="stack-photo">
-                          <img
-                            {...delivered(photo.src, 720, [360, 720, 1080], "(min-width: 900px) 360px, 80vw")}
-                            alt={label}
-                            width={800}
-                            height={1000}
-                            loading={top ? "eager" : "lazy"}
-                            decoding="async"
-                            draggable={false}
-                          />
-                        </div>
+                        <StackImage src={photo.src} alt={label} />
                         {date || caption ? (
                           <p className="stack-meta" aria-hidden="true">
                             {date ? (
@@ -460,6 +498,16 @@ function Stack({
       )}
       </div>
       <div className="stack-progress">
+        {visible.length > 0 ? (
+          <button type="button" className="stack-play stack-galaxy" aria-label={backLabel.replace(/^←\s*/, "")} onClick={onBack}>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5.5 16.5L10 7.5l7.5 3.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" opacity="0.7" />
+              <circle cx="5.5" cy="16.5" r="2.2" />
+              <circle cx="10" cy="7.5" r="2.6" />
+              <circle cx="17.5" cy="11" r="2.2" />
+            </svg>
+          </button>
+        ) : null}
         {photos.length > 1 || hasNext ? (
           <button
             type="button"

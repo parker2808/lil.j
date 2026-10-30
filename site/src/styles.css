@@ -4666,16 +4666,6 @@ html::-webkit-scrollbar-track, .stage::-webkit-scrollbar-track, .scene::-webkit-
 }
 .journey-head .lang { border-color: var(--pink-line); background: rgba(255, 255, 255, 0.7); }
 :root.keyboard-open .wish-form { margin-top: 14px; }
-@media (max-width: 480px) {
-  .chrome-row > .story-chapter {
-    white-space: normal;
-    overflow: visible;
-    text-overflow: clip;
-    font-size: 12px;
-    line-height: 1.2;
-    text-wrap: balance;
-  }
-}
 
 /* Scene 4 onboarding guide */
 .cluster.is-guide { z-index: 5; }
@@ -4684,15 +4674,31 @@ html::-webkit-scrollbar-track, .stage::-webkit-scrollbar-track, .scene::-webkit-
   animation: guide-pulse 1.3s ease-in-out infinite;
 }
 .cluster.is-guide::after {
-  content: "👆";
+  content: "";
   position: absolute;
   left: 50%;
-  top: 60%;
-  font-size: 26px;
-  line-height: 1;
+  top: 50%;
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 196, 222, 0.9);
+  box-shadow: 0 0 12px rgba(247, 168, 200, 0.7);
   pointer-events: none;
-  filter: drop-shadow(0 2px 6px rgba(74, 35, 64, 0.35));
-  animation: guide-tap 1.3s ease-in-out infinite;
+  animation: guide-ripple 1.6s ease-out infinite;
+}
+.cluster.is-guide .cluster-knot { position: relative; }
+.cluster.is-guide .cluster-knot::after {
+  content: "✦";
+  position: absolute;
+  left: 100%;
+  bottom: 70%;
+  color: #ffe6f1;
+  font-size: 14px;
+  line-height: 1;
+  text-shadow: 0 0 8px rgba(247, 168, 200, 0.95);
+  pointer-events: none;
+  animation: guide-sparkle 1.4s ease-in-out infinite;
 }
 .cluster.is-guide::before {
   content: attr(data-guide);
@@ -4712,10 +4718,11 @@ html::-webkit-scrollbar-track, .stage::-webkit-scrollbar-track, .scene::-webkit-
   animation: guide-bubble 0.35s ease both;
 }
 @keyframes guide-pulse { 50% { transform: scale(1.35); } }
-@keyframes guide-tap { 0%, 100% { transform: translate(-30%, 0); } 50% { transform: translate(-30%, -8px) scale(0.92); } }
+@keyframes guide-ripple { from { transform: scale(0.6); opacity: 0.9; } to { transform: scale(2.6); opacity: 0; } }
+@keyframes guide-sparkle { 0%, 100% { opacity: 0.3; transform: scale(0.7) rotate(0deg); } 50% { opacity: 1; transform: scale(1.15) rotate(20deg); } }
 @keyframes guide-bubble { from { opacity: 0; transform: translate(-50%, 6px); } }
 
-.gallery-scene.is-album-guide .pill-back {
+.gallery-scene.is-album-guide .stack-galaxy {
   box-shadow: 0 0 0 3px rgba(255, 214, 232, 0.55), 0 0 18px rgba(247, 168, 200, 0.8);
   animation: guide-glow 1.1s ease-in-out 2;
 }
@@ -4739,8 +4746,76 @@ html::-webkit-scrollbar-track, .stage::-webkit-scrollbar-track, .scene::-webkit-
 @media (prefers-reduced-motion: reduce) {
   .cluster.is-guide .cluster-knot,
   .cluster.is-guide::after,
+  .cluster.is-guide .cluster-knot::after,
   .cluster.is-guide::before,
-  .gallery-scene.is-album-guide .pill-back,
+  .gallery-scene.is-album-guide .stack-galaxy,
   .gallery-scene.is-album-guide .stack-deck::before,
   .gallery-scene.is-album-guide .stack-deck::after { animation: none; }
 }
+
+/* Wish: confirmation is its own block below the input; nothing floats over the pill. */
+.wish-sky > .wish-read {
+  position: relative;
+  z-index: 5;
+  flex: none;
+  margin: 0 auto 10px;
+  padding: 0 22px;
+  text-align: center;
+  pointer-events: none;
+}
+.wish-sky > .wish-read:empty { display: none; }
+:root.keyboard-open .wish-form { position: relative; bottom: auto; margin-top: 12px; }
+:root.keyboard-open .wish-stars { display: none; }
+:root.keyboard-open .wish-flight { display: none; }
+@media (max-width: 480px) {
+  .chrome-row > .story-chapter { font-size: 12px; }
+}
+.chrome > .music-hint { position: relative; z-index: 2; margin: 2px 0 4px; }
+.stack-galaxy svg { width: 16px; height: 16px; }
+.stack-galaxy svg path { fill: none; }
+
+/* Scene 3 / 5 hierarchy: time + place as a chip, counters as small pills */
+.birth-chips { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px 8px; margin: 12px auto 0; }
+.birth-chips > .birth-caption {
+  margin: 0;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 214, 232, 0.45);
+  background: rgba(255, 228, 240, 0.14);
+  color: #ffe6f1;
+  font-size: var(--text-secondary);
+  line-height: 1.3;
+}
+.birth-chips > .birth-progress,
+.memory-meta .count {
+  margin: 0;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #ffe9f3, #f7c1d9);
+  color: #4a2340;
+  font-size: var(--text-eyebrow);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* Scene 4: never a white gap — blurred placeholder + pink shimmer until the photo is decoded */
+.stack-photo {
+  background:
+    var(--blur, none) center / cover no-repeat,
+    linear-gradient(160deg, #fbe3ee, #f3c9dc);
+}
+.stack-photo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 240, 247, 0.55) 50%, transparent 70%) -150% 0 / 250% 100% no-repeat;
+  animation: stack-shimmer 1.4s linear infinite;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.stack-photo.is-loaded::before { opacity: 0; animation: none; }
+.stack-photo img { background: transparent; opacity: 0; transition: opacity 0.35s ease; position: relative; }
+.stack-photo.is-loaded img { opacity: 1; }
+@keyframes stack-shimmer { to { background-position: 150% 0; } }
+@media (prefers-reduced-motion: reduce) { .stack-photo::before { animation: none; } .stack-photo img { transition: none; } }

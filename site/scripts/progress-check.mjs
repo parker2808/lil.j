@@ -13,7 +13,7 @@ globalThis.localStorage = {
   },
 };
 
-const { FLOW, FLOW_V1, FLOW_V2, FLOW_V3, FLOW_V4, FLOW_V5, FLOW_VERSION, mayContinue, stepDone } = await import("../src/lib/flow.ts");
+const { FLOW, FLOW_V1, FLOW_V2, FLOW_V3, FLOW_V5, FLOW_VERSION, mayContinue, stepDone } = await import("../src/lib/flow.ts");
 const { PROGRESS_KEY, clearProgress, emptyProgress, loadProgress, moveTo, saveProgress, skipAhead } = await import("../src/lib/progress.ts");
 const { content } = await import("../src/content.ts");
 

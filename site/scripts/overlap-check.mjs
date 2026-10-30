@@ -556,6 +556,9 @@ async function audit(page, label) {
 
     for (const el of textNodes) {
       if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) continue;
+      // Header chapter label truncates on purpose (one line, ellipsis, full text in title).
+      const chapterLabel = el.closest(".chrome-row > .story-chapter");
+      if (chapterLabel && getComputedStyle(chapterLabel).textOverflow === "ellipsis") continue;
       const style = getComputedStyle(el);
       if (el.clientWidth > 0 && el.scrollWidth - el.clientWidth > 4) {
         if (style.overflowX !== "auto" && style.overflowX !== "scroll") {

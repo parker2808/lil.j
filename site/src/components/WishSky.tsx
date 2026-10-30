@@ -346,9 +346,6 @@ export function WishSky({ wishes, wishPrivate, onSend, onKeepPrivate }: WishSkyP
           <p className="kicker">{t(content.wish.kicker)}</p>
           <Reveal text={t(content.wish.title)} />
           <p className="lede">{t(content.wish.lede)}</p>
-          <p className={empty ? "wish-read is-empty" : "wish-read"} role="status">
-            {note}
-          </p>
         </div>
         <div className="wish-stars" ref={starsRef}>
           {wishes.map((wish) => {
@@ -438,6 +435,9 @@ export function WishSky({ wishes, wishPrivate, onSend, onKeepPrivate }: WishSkyP
             </button>
           </div>
         </form>
+        <p className={empty ? "wish-read is-empty" : "wish-read"} role="status">
+          {note}
+        </p>
       </div>
     </section>
   );

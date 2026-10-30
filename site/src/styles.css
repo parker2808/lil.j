@@ -1257,31 +1257,10 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   color: var(--ink);
 }
 
-.pair-toast {
-  min-height: 2.8em;
-  margin-top: 8px;
-  padding: 8px 12px;
-  border-radius: var(--radius-md);
-  background: rgba(255, 244, 250, 0.12);
-  border: 1px solid rgba(247, 196, 220, 0.38);
-  text-align: center;
-  color: var(--ink);
-  font-size: var(--text-body);
-  line-height: var(--leading-body);
-}
-
-.pair-toast p { margin: 0; }
-
-.pair-toast .btn { margin-top: 8px; min-height: 44px; }
-
-.pair-toast.is-idle {
-  visibility: hidden;
-}
-
 .memory-board {
   position: relative;
   display: grid;
-  grid-template-rows: auto auto minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
   gap: 10px;
   flex: 1 1 auto;
   min-height: 0;
@@ -1312,9 +1291,56 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   text-align: right;
 }
 
-.memory-board .pair-toast {
-  margin-top: 0;
+.memory-board > .memory-fit {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
+}
+
+.memory-toast-host {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  z-index: 4;
+  width: min(calc(100% - 16px), 360px);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.memory-toast {
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  background: rgba(34, 12, 46, 0.92);
+  border: 1px solid rgba(247, 196, 220, 0.55);
+  box-shadow: 0 10px 28px rgba(16, 6, 28, 0.42);
+  color: #fff7fb;
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease;
+}
+
+.memory-toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.memory-again {
+  display: flex;
+  justify-content: center;
+}
+
+.memory-again .btn {
+  min-height: 44px;
 }
 
 .stage-pane:has(.memory-grid) {
@@ -1331,15 +1357,6 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   height: 100%;
   max-height: 100%;
   overflow: hidden;
-}
-
-.memory-fit {
-  flex: 1 1 0;
-  min-height: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
 }
 
 .memory-grid {

@@ -149,6 +149,7 @@ async function matchMemory(page) {
     const cards = page.locator(".mem").filter({ has: page.locator(`img[src="${src}"]`) });
     await cards.nth(0).locator(".hit").click();
     await cards.nth(1).locator(".hit").click();
+    await page.locator(".memory-toast.is-visible").waitFor({ timeout: 2000 }).catch(() => {});
     await delay(80);
   }
   const record = await saved(page);

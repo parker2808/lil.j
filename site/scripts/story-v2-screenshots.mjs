@@ -54,6 +54,19 @@ try {
     if(target==="memory"){
       const count=await page.locator(".mem").count();
       report.push({name:"memory-deck",cards:count,expect:12,passed:count===12});
+      const cards=page.locator(".mem .hit");
+      let toastShown=false;
+      for (let i=0;i<12 && !toastShown;i++) {
+        for (let j=i+1;j<12;j++) {
+          await cards.nth(i).click();
+          await cards.nth(j).click();
+          toastShown=await page.locator(".memory-toast.is-visible").waitFor({timeout:1200}).then(()=>true).catch(()=>false);
+          if (toastShown) break;
+          await delay(750);
+        }
+      }
+      report.push({name:"memory-match-toast",passed:toastShown});
+      if (!toastShown) throw new Error("Memory match toast did not appear");
     }
     if(target==="wish"){
       await page.locator(".wish-field input").focus();

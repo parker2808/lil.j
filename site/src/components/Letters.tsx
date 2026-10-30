@@ -71,9 +71,9 @@ export function Letters({ progress, update, onSheet }: LettersProps) {
       </div>
       {active &&
         createPortal(
-          <div className="sheet-backdrop" onClick={() => setOpenId(null)}>
+          <div className="sheet-backdrop letter-backdrop" onClick={() => setOpenId(null)}>
             <div
-              className="sheet"
+              className="sheet letter-sheet"
               role="dialog"
               aria-modal="true"
               aria-labelledby="sheet-title"

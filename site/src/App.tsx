@@ -57,14 +57,15 @@ export function App() {
   const fadeTimer = useRef<number | null>(null);
   const [opening, setOpening] = useState(false);
   const [askReset, setAskReset] = useState(false);
-  const [{ dev, forceLock }] = useState(() => {
+  const [{ dev, forceLock, forceCrash }] = useState(() => {
     const params = new URLSearchParams(window.location.search);
     const devOn = params.get("dev") === "1";
-    return { dev: devOn, forceLock: devOn && params.get("lock") === "1" };
+    return { dev: devOn, forceLock: devOn && params.get("lock") === "1", forceCrash: devOn && params.get("crash") === "1" };
   });
   const [released, setReleased] = useState(
     () => (dev && !forceLock) || !isBeforeUnlock(content.lock?.unlockAt),
   );
+  if (forceCrash) throw new Error("dev crash preview");
   const headerRef = useRef<HTMLElement>(null);
   const footerRef = useRef<HTMLElement>(null);
   const [quizAction, setQuizAction] = useState<StickyAction | null>(null);

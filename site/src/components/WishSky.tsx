@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type FormEvent } from "react";
+import { createPortal } from "react-dom";
 import { content } from "../content.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import { playChime } from "../lib/music.ts";
@@ -45,6 +46,9 @@ export function WishSky({ wishes, wishPrivate, onSend, onKeepPrivate }: WishSkyP
   const [empty, setEmpty] = useState(false);
   const [shaking, setShaking] = useState(false);
   const [openId, setOpenId] = useState<string | null>(null);
+  const [bubbleShape, setBubbleShape] = useState(0);
+  const [bubbleCentered, setBubbleCentered] = useState(false);
+  const bubbleRef = useRef<HTMLDivElement>(null);
   const [hiddenId, setHiddenId] = useState<string | null>(null);
   const [flying, setFlying] = useState(false);
   const skyRef = useRef<HTMLDivElement>(null);
@@ -52,6 +56,50 @@ export function WishSky({ wishes, wishPrivate, onSend, onKeepPrivate }: WishSkyP
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const reading = wishes.find((wish) => wish.id === openId);
+
+  function toggleWish(id: string) {
+    if (id === openId) {
+      setOpenId(null);
+      return;
+    }
+    setBubbleShape(Math.floor(Math.random() * BUBBLE_SHAPES.length));
+    setBubbleCentered(window.matchMedia("(max-width: 768px)").matches);
+    setOpenId(id);
+  }
+
+  useEffect(() => {
+    if (!openId) return;
+    const timer = bubbleCentered ? 0 : window.setTimeout(() => setOpenId(null), 6000);
+    const onDown = (event: PointerEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target?.closest(".wish-star, .wish-bubble")) return;
+      setOpenId(null);
+    };
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpenId(null);
+    };
+    document.addEventListener("pointerdown", onDown);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.clearTimeout(timer);
+      document.removeEventListener("pointerdown", onDown);
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [openId, bubbleCentered]);
+
+  useLayoutEffect(() => {
+    const bubble = bubbleRef.current;
+    const sky = skyRef.current;
+    if (!bubble || !sky || bubbleCentered) return;
+    bubble.style.setProperty("--shift", "0px");
+    const box = bubble.getBoundingClientRect();
+    const bounds = sky.getBoundingClientRect();
+    const pad = 8;
+    let shift = 0;
+    if (box.left < bounds.left + pad) shift = bounds.left + pad - box.left;
+    else if (box.right > bounds.right - pad) shift = bounds.right - pad - box.right;
+    bubble.style.setProperty("--shift", `${Math.round(shift)}px`);
+  }, [openId, bubbleShape, bubbleCentered]);
 
   useEffect(() => {
     if (!shaking) return;
@@ -287,7 +335,8 @@ export function WishSky({ wishes, wishPrivate, onSend, onKeepPrivate }: WishSkyP
     if (field instanceof HTMLInputElement) field.blur();
   }
 
-  const note = empty ? t(content.wish.empty) : reading ? reading.text : wishes.length > 0 ? t(content.wish.sent) : "";
+  const note = empty ? t(content.wish.empty) : wishes.length > 0 && !reading ? t(content.wish.sent) : "";
+  const readingSpot = reading ? slot(reading.id) : null;
 
   return (
     <section className="scene wish-scene">
@@ -314,10 +363,39 @@ export function WishSky({ wishes, wishPrivate, onSend, onKeepPrivate }: WishSkyP
                 style={{ left: `${spot.left}%`, top: `${spot.top}%`, ["--hue" as string]: hue }}
                 aria-label={wish.text}
                 aria-pressed={wish.id === openId}
-                onClick={() => setOpenId(wish.id === openId ? null : wish.id)}
+                onClick={() => toggleWish(wish.id)}
               />
             );
           })}
+          {reading && readingSpot && !bubbleCentered ? (
+            <div
+              ref={bubbleRef}
+              key={`${reading.id}-${bubbleShape}`}
+              className={`wish-bubble is-${BUBBLE_SHAPES[bubbleShape]} ${readingSpot.top > 45 ? "is-above" : "is-below"}`}
+              style={{ left: `${readingSpot.left}%`, top: `${readingSpot.top}%` }}
+              role="status"
+              aria-live="polite"
+            >
+              <p>{reading.text}</p>
+            </div>
+          ) : null}
+          {reading && bubbleCentered
+            ? createPortal(
+                <div className="wish-bubble-backdrop" onClick={() => setOpenId(null)}>
+                  <div
+                    key={`${reading.id}-${bubbleShape}`}
+                    className={`wish-bubble is-${BUBBLE_SHAPES[bubbleShape]} is-center`}
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label={reading.text}
+                    onClick={(event) => event.stopPropagation()}
+                  >
+                    <p>{reading.text}</p>
+                  </div>
+                </div>,
+                document.body,
+              )
+            : null}
         </div>
         {!wishPrivate && (
           <button type="button" className="btn btn-quiet later wish-keep" onClick={onKeepPrivate}>
@@ -388,6 +466,8 @@ function sampleWords(text: string, width: number): { x: number; y: number }[] {
   }
   return points.length > 0 ? points : [{ x: width / 2, y: 18 }];
 }
+
+const BUBBLE_SHAPES = ["round", "burst", "cloud", "frame"] as const;
 
 function slot(id: string): { left: number; top: number } {
   const hash = hashOf(id);

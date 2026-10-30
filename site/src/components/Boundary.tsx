@@ -19,9 +19,16 @@ export class Boundary extends Component<BoundaryProps, BoundaryState> {
 
   render() {
     if (this.state.failed) {
+      const locale = readLocale();
       return (
-        <main className="scene">
-          <p>{text(content.ui.crash, readLocale())}</p>
+        <main className="crash-screen">
+          <div className="crash-card" role="alert">
+            <span className="crash-mark" aria-hidden="true">{content.meta.monogram}</span>
+            <p className="crash-text">{text(content.ui.crash, locale)}</p>
+            <button type="button" className="btn btn-gold crash-reload" onClick={() => window.location.reload()}>
+              {text(content.ui.crashReload, locale)}
+            </button>
+          </div>
         </main>
       );
     }

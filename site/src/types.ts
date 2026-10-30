@@ -289,6 +289,7 @@ export type Content = {
     summaryTitle: Copy;
     contentError: Copy;
     crash: Copy;
+    crashReload: Copy;
     flip: Copy;
     candleOn: Copy;
     candleOut: Copy;

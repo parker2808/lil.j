@@ -3516,6 +3516,10 @@
       "vi": "Trang bị khựng một chút rồi. Em thử tải lại nhé.",
       "en": "The page got a little stuck. Try reloading it."
     },
+    "crashReload": {
+      "vi": "Tải lại trang",
+      "en": "Reload the page"
+    },
     "flip": {
       "vi": "Chạm để lật",
       "en": "Tap to flip"

@@ -13,7 +13,7 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
       // The toggle still works for this visit.
     }
     document.documentElement.lang = locale;
-    document.title = text(content.meta.title, locale);
+    document.title = text(content.meta.docTitle, locale);
     document.querySelector('meta[name="description"]')?.setAttribute("content", text(content.meta.description, locale));
   }, [locale]);
 

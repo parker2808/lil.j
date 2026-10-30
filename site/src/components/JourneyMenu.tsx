@@ -4,6 +4,7 @@ import { FLOW, type StepId } from "../lib/flow.ts";
 import type { Copy } from "../lib/i18n.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import { STORY_CHAPTERS } from "../lib/story.ts";
+import { LanguageToggle } from "./LanguageToggle.tsx";
 
 type JourneyMenuProps = {
   accessible: readonly StepId[];
@@ -113,11 +114,14 @@ export function JourneyMenu({ accessible, current, onGo, canReset, onReset }: Jo
           >
             <div className="journey-head">
               <h2 id="journey-title">{t(content.ui.journey)}</h2>
+              <span className="journey-head-tools">
+              <LanguageToggle />
               <button type="button" className="journey-close" aria-label={t(content.ui.journeyClose)} onClick={close}>
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M7 7l10 10M17 7L7 17" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
                 </svg>
               </button>
+              </span>
             </div>
             <div className="journey-body">
             {STORY_CHAPTERS.map((chapter) => {

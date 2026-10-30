@@ -98,6 +98,7 @@ export type MusicTrack = {
 export type Content = {
   meta: {
     title: Copy;
+    docTitle: Copy;
     description: Copy;
     herName: string;
     constellationName: string;
@@ -303,6 +304,7 @@ export type Content = {
     langVi: Copy;
     langEn: Copy;
     dottedDate: Copy;
+    chapterWord: Copy;
   };
   lock: {
     unlockAt: string;

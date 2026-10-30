@@ -13,7 +13,7 @@ mkdirSync(output, { recursive: true });
 const server = process.env.STORY_URL ? null : spawn("npx", ["vite", "preview", "--host", "127.0.0.1", "--port", "4173", "--strictPort"], {
   cwd: new URL("..", import.meta.url), stdio: "ignore",
 });
-const paths = ["gate","sky","birth","gallery","memory","quiz","scratch","counter","dreams","letters","cake","wish","envelope","finale","letter"];
+const paths = ["gate","sky","birth","gallery","memory","quiz","scratch","counter","dreams","letters","wish","cake","envelope","finale","letter"];
 const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH || "/usr/bin/google-chrome-stable", args: ["--no-sandbox", "--disable-dev-shm-usage"] });
 const context = await browser.newContext({ viewport: {width:430,height:932}, deviceScaleFactor:3, isMobile:true, hasTouch:true, reducedMotion:"reduce" });
 const page = await context.newPage();

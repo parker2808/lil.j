@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import type { ElementType } from "react";
+import { Fragment, type ElementType } from "react";
 import { useReducedMotion } from "../lib/useReducedMotion.ts";
 
 type RevealProps = {
@@ -16,7 +16,9 @@ export function Reveal({ text, as: Tag = "h1", className, delay = 0 }: RevealPro
   return (
     <Tag className={className ? `reveal ${className}` : "reveal"}>
       {words.map((word, index) => (
-        <span key={`${word}-${index}`} className="reveal-mask">
+        <Fragment key={`${word}-${index}`}>
+        {index > 0 ? " " : null}
+        <span className="reveal-mask">
           <motion.span
             className="reveal-word"
             initial={{ y: "115%", opacity: 0 }}
@@ -26,6 +28,7 @@ export function Reveal({ text, as: Tag = "h1", className, delay = 0 }: RevealPro
             {word}
           </motion.span>
         </span>
+        </Fragment>
       ))}
     </Tag>
   );

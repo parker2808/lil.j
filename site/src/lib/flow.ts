@@ -73,16 +73,35 @@ export const FLOW_V4 = [
   "letter",
 ] as const;
 
+/** Five chapters, wish before cake (Parker, 2026-10-30). */
+export const FLOW_V5 = [
+  "gate",
+  "sky",
+  "birth",
+  "gallery",
+  "memory",
+  "quiz",
+  "scratch",
+  "counter",
+  "dreams",
+  "letters",
+  "wish",
+  "cake",
+  "envelope",
+  "finale",
+  "letter",
+] as const;
+
 export const FLOW_WITH_FRIENDS = FLOW_V2;
 export const FLOW_WITHOUT_FRIENDS = FLOW_V3;
 
-export const FLOW = INCLUDE_FRIENDS ? FLOW_WITH_FRIENDS : FLOW_V4;
+export const FLOW = INCLUDE_FRIENDS ? FLOW_WITH_FRIENDS : FLOW_V5;
 
 /** The 9-step path from before the middle chapters were restored. */
 export const PREVIOUS_FLOW = FLOW_V1;
 
-/** 2 = 16 steps with friend notes. 3 = those notes removed. 4 = the five-chapter order. */
-export const FLOW_VERSION = INCLUDE_FRIENDS ? 2 : 4;
+/** 2 = 16 steps with friend notes. 3 = those notes removed. 4 = the five-chapter order. 5 = wish before cake. */
+export const FLOW_VERSION = INCLUDE_FRIENDS ? 2 : 5;
 
 export type StepId = (typeof FLOW_WITH_FRIENDS)[number];
 
@@ -96,6 +115,7 @@ export function pathForVersion(version: unknown): readonly string[] {
   if (version === 2) return FLOW_V2;
   if (version === 3) return FLOW_V3;
   if (version === 4) return FLOW_V4;
+  if (version === 5) return FLOW_V5;
   return FLOW_V1;
 }
 

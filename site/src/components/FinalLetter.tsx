@@ -1,3 +1,4 @@
+import { LogoMark } from "./LogoMark.tsx";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { content } from "../content.ts";
 import { useI18n } from "../lib/locale-context.ts";
@@ -91,15 +92,7 @@ export function FinalLetter({ already, onDone, onRestart }: FinalLetterProps) {
             {dateLabel}
           </time>
           <span className="letter-seal" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M12 3.2 13.8 8.6 19.4 9.1 15.2 12.8 16.5 18.2 12 15.4 7.5 18.2 8.8 12.8 4.6 9.1 10.2 8.6Z"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.2"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <LogoMark />
           </span>
         </header>
         <div className="letter-body">

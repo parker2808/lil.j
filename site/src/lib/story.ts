@@ -4,7 +4,7 @@ export const STORY_CHAPTERS = [
   { id: "I", scenes: ["gate", "sky", "birth"] },
   { id: "II", scenes: ["gallery", "memory", "quiz", "scratch"] },
   { id: "III", scenes: ["counter", "dreams", "letters"] },
-  { id: "IV", scenes: ["cake", "wish"] },
+  { id: "IV", scenes: ["wish", "cake"] },
   { id: "V", scenes: ["envelope", "finale", "letter"] },
 ] as const;
 

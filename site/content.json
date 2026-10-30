@@ -4,6 +4,10 @@
       "vi": "Anh có chút quà cho em",
       "en": "A little something for you"
     },
+    "docTitle": {
+      "vi": "MJ🧡",
+      "en": "MJ🧡"
+    },
     "description": {
       "vi": "Một món quà sinh nhật cho MJ, có ảnh, vài trò nhỏ và những điều anh muốn nói.",
       "en": "A birthday gift for MJ, with photos, a few little games, and some things I want to say."
@@ -3399,8 +3403,8 @@
       }
     ],
     "yesTitle": {
-      "vi": "Anh nghe rồi nhé. ❤️",
-      "en": "You said it. ❤️"
+      "vi": "Anh nghe rồi nhé. 🧡",
+      "en": "You said it. 🧡"
     },
     "yesBody": {
       "vi": "Mình còn nhiều món muốn ăn, nhiều nơi muốn đi. Cứ từ từ làm cùng nhau nhé.",
@@ -3571,6 +3575,10 @@
     "dottedDate": {
       "vi": "{d}.{m}.{y}",
       "en": "{d}.{m}.{y}"
+    },
+    "chapterWord": {
+      "vi": "Chương",
+      "en": "Chapter"
     }
   },
   "lock": {

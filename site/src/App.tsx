@@ -7,6 +7,7 @@ import { GateBurst } from "./components/Fireworks.tsx";
 import { Gate } from "./components/Gate.tsx";
 import { LockScreen } from "./components/LockScreen.tsx";
 import { LanguageToggle } from "./components/LanguageToggle.tsx";
+import { LogoMark } from "./components/LogoMark.tsx";
 import { MusicButton, MusicCredit } from "./components/MusicButton.tsx";
 import { Starfield } from "./components/Starfield.tsx";
 import { StoryChapterLabel } from "./components/StoryChapterLabel.tsx";
@@ -387,22 +388,27 @@ export function App() {
       <div id="fx-mount" className="fx-mount" />
       <header className="chrome" ref={headerRef}>
         <div className="chrome-row">
-          <LanguageToggle />
-          {released && step > 0 && (
+          {!(released && progress.gateUnlocked) && <LanguageToggle />}
+          {released && step > 0 && !progress.gateUnlocked && (
             <button type="button" className="step-back" onClick={() => go(step - 1)} aria-label={t(content.flow.back)}>
               ←
             </button>
           )}
-          <span className="chrome-spacer" />
+          {released && progress.gateUnlocked && (
+            <span className="chrome-left">
+              {step > 0 ? (
+                <button type="button" className="step-back" onClick={() => go(step - 1)} aria-label={t(content.flow.back)}>
+                  ←
+                </button>
+              ) : (
+                <span className="step-back-slot" aria-hidden="true" />
+              )}
+              <LogoMark className="chrome-logo" />
+            </span>
+          )}
+          {released ? <StoryChapterLabel stepId={stepId} /> : <span className="chrome-spacer" />}
           {released && progress.gateUnlocked && (
             <div className="chrome-tools">
-              <JourneyMenu
-                accessible={progress.accessibleSteps}
-                current={stepId}
-                onGo={(index) => go(index)}
-                canReset={FLOW.every((id) => progress.accessibleSteps.includes(id))}
-                onReset={() => setAskReset(true)}
-              />
               <MusicButton
                 muted={progress.muted}
                 onMuted={(muted) => update((current) => ({ ...current, muted }))}
@@ -411,10 +417,16 @@ export function App() {
                 onInvite={setMusicInvite}
                 hintVisible={musicInvite && !blockedCue}
               />
+              <JourneyMenu
+                accessible={progress.accessibleSteps}
+                current={stepId}
+                onGo={(index) => go(index)}
+                canReset={FLOW.every((id) => progress.accessibleSteps.includes(id))}
+                onReset={() => setAskReset(true)}
+              />
             </div>
           )}
         </div>
-        {released && <StoryChapterLabel stepId={stepId} />}
         {released && progress.gateUnlocked && musicInvite && !blockedCue && (
           <p className="music-hint" id="music-hint">
             {t(content.ui.musicHint)}

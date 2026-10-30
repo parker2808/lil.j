@@ -13,7 +13,7 @@ globalThis.localStorage = {
   },
 };
 
-const { FLOW, FLOW_V1, FLOW_V2, FLOW_V3, FLOW_V4, FLOW_VERSION, mayContinue, stepDone } = await import("../src/lib/flow.ts");
+const { FLOW, FLOW_V1, FLOW_V2, FLOW_V3, FLOW_V4, FLOW_V5, FLOW_VERSION, mayContinue, stepDone } = await import("../src/lib/flow.ts");
 const { PROGRESS_KEY, clearProgress, emptyProgress, loadProgress, moveTo, saveProgress, skipAhead } = await import("../src/lib/progress.ts");
 const { content } = await import("../src/content.ts");
 
@@ -24,10 +24,10 @@ assert.equal(FLOW_V2.includes("friends"), true);
 assert.equal(FLOW_V3.length, 15);
 assert.equal(FLOW_V3.includes("friends"), false);
 assert.equal(FLOW_V2.indexOf("friends"), 11);
-assert.deepEqual([...FLOW], [...FLOW_V4]);
-assert.equal(FLOW_VERSION, 4);
+assert.deepEqual([...FLOW], [...FLOW_V5]);
+assert.equal(FLOW_VERSION, 5);
 assert.equal(FLOW.indexOf("memory"), 4);
-assert.equal(FLOW.indexOf("wish"), 11);
+assert.equal(FLOW.indexOf("wish"), 10);
 
 function put(value) {
   store.set(PROGRESS_KEY, JSON.stringify(value));
@@ -72,7 +72,7 @@ assert.equal(v3.openWhen.sad, "2026-10-01");
 assert.equal(v3.wishes[0].text, "stay");
 assert.deepEqual(v3.candlesOut, [0]);
 assert.equal(v3.muted, true);
-assert.equal(v3.flowVersion, 4);
+assert.equal(v3.flowVersion, 5);
 assert.equal(v3.accessibleSteps.includes("memory"), true);
 saveProgress(v3);
 const reloaded = loadProgress();
@@ -85,7 +85,7 @@ assert.deepEqual(reloadedAgain.accessibleSteps, v3.accessibleSteps);
 
 put(base(3, 13, 13));
 const wish = loadProgress();
-assert.equal(wish.step, 11);
+assert.equal(wish.step, 10);
 assert.equal(FLOW[wish.step], "wish");
 
 put(base(3, 6, 6));
@@ -124,7 +124,7 @@ assert.equal(kept.accessibleSteps.includes("memory"), false);
 put(base(3, 99, 99));
 assert.equal(FLOW[loadProgress().step], "letter");
 
-const explicit = { ...base(4, FLOW.indexOf("cake"), 14), accessibleSteps: ["gate", "cake"] };
+const explicit = { ...base(5, FLOW.indexOf("cake"), 14), accessibleSteps: ["gate", "cake"] };
 put(explicit);
 const explicitLoaded = loadProgress();
 assert.deepEqual(explicitLoaded.accessibleSteps, ["gate", "cake"]);
@@ -218,12 +218,12 @@ assert.equal(FLOW[afterScratch.step], "counter");
 const afterLetters = skipAhead(standing("letters"), "letters");
 assert.deepEqual(afterLetters.openWhen, {});
 assert.equal(afterLetters.skippedSteps.includes("letters"), true);
-assert.equal(FLOW[afterLetters.step], "cake");
+assert.equal(FLOW[afterLetters.step], "wish");
 
 const liveEra = content.eras[0].id;
 const livePhoto = content.eras[0].photos[0].id;
 const quizStep = FLOW.indexOf("quiz");
-put(base(4, quizStep, quizStep, {
+put(base(5, quizStep, quizStep, {
   erasViewed: ["care", liveEra, "pout", liveEra],
   flippedPhotos: ["care-01", livePhoto, "surprise-02", livePhoto],
   accessibleSteps: FLOW.slice(0, quizStep + 1),
@@ -234,7 +234,7 @@ assert.deepEqual(filtered.flippedPhotos, [livePhoto]);
 assert.equal(filtered.wishes[0].text, "stay");
 assert.deepEqual(filtered.quiz, { q1: 0 });
 assert.equal(filtered.memoryBest, 8);
-assert.equal(filtered.flowVersion, 4);
+assert.equal(filtered.flowVersion, 5);
 assert.equal(FLOW[filtered.step], "quiz");
 saveProgress(filtered);
 const filteredAgain = loadProgress();
@@ -242,7 +242,7 @@ assert.deepEqual(filteredAgain.erasViewed, [liveEra]);
 assert.deepEqual(filteredAgain.flippedPhotos, [livePhoto]);
 assert.equal(filteredAgain.step, filtered.step);
 
-put(base(4, quizStep, quizStep, {
+put(base(5, quizStep, quizStep, {
   erasViewed: ["care", "pout"],
   flippedPhotos: ["care-01"],
   accessibleSteps: FLOW.slice(0, quizStep + 1),

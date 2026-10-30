@@ -372,29 +372,6 @@ function Stack({
         ) : null}
         <h2 className="stack-era">{t(era.title)}</h2>
         <p className="stack-count">{progressLabel}</p>
-        {photos.length > 1 || hasNext ? (
-          <div className="stack-auto">
-            <button
-              type="button"
-              className={playing ? "stack-play is-playing" : "stack-play"}
-              aria-pressed={playing}
-              aria-label={playing ? t(content.galleryCopy.autoPause) : t(content.galleryCopy.autoPlay)}
-              onClick={() => {
-                setPlaying((value) => !value);
-                setRun((n) => n + 1);
-              }}
-            >
-              <span aria-hidden="true">{playing ? "❚❚" : "▶"}</span>
-            </button>
-            <span className="stack-auto-track" aria-hidden="true">
-              <span
-                key={`${era.id}-${index}-${run}`}
-                className={ticking && !(atEnd && !hasNext) ? "stack-auto-bar is-running" : "stack-auto-bar"}
-                style={{ animationDuration: `${atEnd ? 1400 : AUTO_MS}ms` }}
-              />
-            </span>
-          </div>
-        ) : null}
       </header>
       <div className="stack-body">
       {visible.length === 0 ? (
@@ -457,6 +434,16 @@ function Stack({
                             draggable={false}
                           />
                         </div>
+                        {date || caption ? (
+                          <p className="stack-meta" aria-hidden="true">
+                            {date ? (
+                              <span className="stack-date">{top ? <Words text={date} /> : date}</span>
+                            ) : null}
+                            {caption ? (
+                              <span className="stack-caption">{top ? <Words text={caption} delay={80} /> : caption}</span>
+                            ) : null}
+                          </p>
+                        ) : null}
                       </div>
                       <div className="stack-face stack-backface">
                         <div className="stack-compliment">
@@ -464,16 +451,6 @@ function Stack({
                         </div>
                       </div>
                     </div>
-                    {date || caption ? (
-                      <p className="stack-meta">
-                        {date ? (
-                          <span className="stack-date">{top ? <Words text={date} /> : date}</span>
-                        ) : null}
-                        {caption ? (
-                          <span className="stack-caption">{top ? <Words text={caption} delay={80} /> : caption}</span>
-                        ) : null}
-                      </p>
-                    ) : null}
                   </div>
                 </div>
               </div>
@@ -483,10 +460,36 @@ function Stack({
       )}
       </div>
       <div className="stack-progress">
+        {photos.length > 1 || hasNext ? (
+          <button
+            type="button"
+            className={playing ? "stack-play is-playing" : "stack-play"}
+            aria-pressed={playing}
+            aria-label={playing ? t(content.galleryCopy.autoPause) : t(content.galleryCopy.autoPlay)}
+            onClick={() => {
+              setPlaying((value) => !value);
+              setRun((n) => n + 1);
+            }}
+          >
+            {playing ? (
+              <svg viewBox="0 0 12 12" aria-hidden="true"><rect x="2.5" y="2" width="2.4" height="8" rx="1" /><rect x="7.1" y="2" width="2.4" height="8" rx="1" /></svg>
+            ) : (
+              <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 2.2v7.6a.6.6 0 0 0 .9.5l6-3.8a.6.6 0 0 0 0-1L4.4 1.7a.6.6 0 0 0-.9.5Z" /></svg>
+            )}
+          </button>
+        ) : null}
         {photos.length <= 12 ? (
           <span className="stack-dots" aria-hidden="true">
             {photos.map((photo, dot) => (
-              <i key={photo.id} className={dot === index ? "is-on" : dot < index ? "is-seen" : ""} />
+              <i key={photo.id} className={dot === index ? "is-on" : dot < index ? "is-seen" : ""}>
+                {dot === index ? (
+                  <b
+                    key={`${era.id}-${index}-${run}`}
+                    className={ticking ? "stack-dot-fill is-running" : "stack-dot-fill"}
+                    style={{ animationDuration: `${AUTO_MS}ms` }}
+                  />
+                ) : null}
+              </i>
             ))}
           </span>
         ) : (
@@ -637,6 +640,25 @@ function Fullscreen({ photo, caption, onClose }: { photo: EraPhoto; caption: str
   );
 }
 
+const ORBIT_GUIDE_KEY = "lilj.guide.galleryOrbit.v1";
+const ALBUM_GUIDE_KEY = "lilj.guide.galleryAlbum.v1";
+
+function guideDone(key: string): boolean {
+  try {
+    return localStorage.getItem(key) === "1";
+  } catch {
+    return true;
+  }
+}
+
+function markGuide(key: string) {
+  try {
+    localStorage.setItem(key, "1");
+  } catch {
+    /* storage unavailable: guide just shows again next time */
+  }
+}
+
 export function Gallery({ progress, update }: ChapterProps) {
   const { t } = useI18n();
   const reduced = useReducedMotion();
@@ -653,6 +675,73 @@ export function Gallery({ progress, update }: ChapterProps) {
   const focusPlanetRef = useRef<(delta: number) => void>(() => {});
   const backRef = useRef(() => {});
   const opening = useRef(false);
+  const [orbitGuide, setOrbitGuide] = useState(false);
+  const [albumGuide, setAlbumGuide] = useState(false);
+  const orbitGuideDone = useRef(guideDone(ORBIT_GUIDE_KEY));
+  const albumGuideDone = useRef(guideDone(ALBUM_GUIDE_KEY));
+
+  // Scene 4 onboarding: pulse the first unseen star with a tap hand, hide after ~3s, re-show once after ~5s idle.
+  useEffect(() => {
+    if (mode.kind !== "orbit" || orbitGuideDone.current) return;
+    const timers: number[] = [];
+    timers.push(window.setTimeout(() => setOrbitGuide(true), 700));
+    timers.push(window.setTimeout(() => setOrbitGuide(false), 3700));
+    timers.push(window.setTimeout(() => !orbitGuideDone.current && setOrbitGuide(true), 8700));
+    timers.push(window.setTimeout(() => setOrbitGuide(false), 11700));
+    const stop = () => {
+      orbitGuideDone.current = true;
+      markGuide(ORBIT_GUIDE_KEY);
+      setOrbitGuide(false);
+      timers.forEach((id) => window.clearTimeout(id));
+    };
+    window.addEventListener("pointerdown", stop, { once: true });
+    window.addEventListener("keydown", stop, { once: true });
+    return () => {
+      timers.forEach((id) => window.clearTimeout(id));
+      window.removeEventListener("pointerdown", stop);
+      window.removeEventListener("keydown", stop);
+    };
+  }, [mode.kind]);
+
+  useEffect(() => {
+    const seen = new Set(progress.erasViewed);
+    const target = Math.max(0, content.eras.findIndex((item) => !seen.has(item.id)));
+    if (!orbitGuide) return;
+    let button: HTMLButtonElement | null = null;
+    let frame = 0;
+    let tries = 0;
+    const attach = () => {
+      button = planetRefs.current[target] ?? null;
+      if (!button) {
+        if (tries++ < 120) frame = window.requestAnimationFrame(attach);
+        return;
+      }
+      button.classList.add("is-guide");
+      button.dataset.guide = t(content.galleryCopy.orbit);
+    };
+    attach();
+    return () => {
+      window.cancelAnimationFrame(frame);
+      if (!button) return;
+      button.classList.remove("is-guide");
+      delete button.dataset.guide;
+    };
+  }, [orbitGuide, progress.erasViewed, t]);
+
+  // First album open: faint swipe arrows + glowing back button, once.
+  useEffect(() => {
+    if (mode.kind !== "stack" || albumGuideDone.current) return;
+    albumGuideDone.current = true;
+    markGuide(ALBUM_GUIDE_KEY);
+    setAlbumGuide(true);
+    const id = window.setTimeout(() => setAlbumGuide(false), 3200);
+    const stop = () => setAlbumGuide(false);
+    window.addEventListener("pointerdown", stop, { once: true });
+    return () => {
+      window.clearTimeout(id);
+      window.removeEventListener("pointerdown", stop);
+    };
+  }, [mode.kind]);
 
   const era = mode.kind === "stack" ? content.eras.find((item) => item.id === mode.eraId) : undefined;
 
@@ -754,7 +843,7 @@ export function Gallery({ progress, update }: ChapterProps) {
 
   return (
     <ChapterFrame
-      className={["gallery-scene", mode.kind === "stack" ? "is-stack" : "", zoomDir ? `is-zoom-${zoomDir}` : ""].filter(Boolean).join(" ")}
+      className={["gallery-scene", mode.kind === "stack" ? "is-stack" : "", zoomDir ? `is-zoom-${zoomDir}` : "", albumGuide ? "is-album-guide" : ""].filter(Boolean).join(" ")}
       kicker={t(chapter?.kicker)}
       title={t(chapter?.title)}
       lede={t(chapter?.lede)}

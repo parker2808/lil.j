@@ -22,9 +22,6 @@ export function Scratch({ progress, update }: ChapterProps) {
       title={t(chapter?.title)}
       lede={t(chapter?.lede)}
     >
-      <button type="button" className="btn btn-quiet later" onClick={() => update((current) => skipAhead(current, "scratch"))}>
-        {t(content.scratchCopy.later)}
-      </button>
       <div className="scratch-list">
         {content.scratches.map((item) => (
           <ScratchCard
@@ -37,6 +34,15 @@ export function Scratch({ progress, update }: ChapterProps) {
           />
         ))}
       </div>
+      {content.scratches.some((item) => !progress.scratched.includes(item.id)) ? (
+        <button
+          type="button"
+          className="btn btn-quiet scratch-later"
+          onClick={() => update((current) => skipAhead(current, "scratch"))}
+        >
+          {t(content.scratchCopy.later)}
+        </button>
+      ) : null}
     </ChapterFrame>
   );
 }

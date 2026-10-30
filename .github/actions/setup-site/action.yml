@@ -1,0 +1,23 @@
+name: Set up site
+description: Node 22 with the npm cache, stable Chrome (exported as CHROME_PATH), site dependencies and the qa-logs folder.
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+        cache: npm
+        cache-dependency-path: site/package-lock.json
+    - name: Set up Chrome browser
+      id: chrome
+      uses: browser-actions/setup-chrome@v1
+      with:
+        chrome-version: stable
+    - name: Install dependencies
+      shell: bash
+      working-directory: site
+      run: |
+        npm ci
+        mkdir -p qa-logs
+        echo "CHROME_PATH=${{ steps.chrome.outputs.chrome-path }}" >> "$GITHUB_ENV"

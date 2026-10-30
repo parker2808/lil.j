@@ -74,11 +74,11 @@ Run from `site/` after `npm ci`:
 - `npm run overlap`
 - `npm run story-v2-check`
 
-For the 15-screen visual check, run `node scripts/story-v2-screenshots.mjs` with a local Chrome available. The overlap and Story V2 commands also run the build themselves. Report commands not run. For UI changes, review iPhone 14 Pro Max at 430×932 and 430×739.
+For the 15-screen visual check, run `node scripts/story-v2-screenshots.mjs` with a local Chrome available. The overlap and Story V2 commands also run the build themselves. `OVERLAP_SHARD=i/n npm run overlap` checks only every n-th viewport starting at the i-th (used by CI); run it without the variable to check everything. Report commands not run. For UI changes, review iPhone 14 Pro Max at 430×932 and 430×739.
 
 ### CI workflows
 - `.github/workflows/context-check.yml` runs for PRs to `main`. Its script requires `PROJECT_CONTEXT.md` at HEAD and an update to it when files outside `docs/` change. The `skip-context` label bypasses the job only with Parker's agreement. Update §12 status and §13 changelog in the same PR.
-- `.github/workflows/story-v2-verify.yml` runs on PRs, pushes to `main` and `fix/story-v2-production-review`, and manual dispatch. It runs npm install, lint, build, content and progress checks, Memory deck tests, iPhone screenshots, overlap checks, and the full Story V2 browser journey.
+- `.github/workflows/story-v2-verify.yml` runs on PRs, pushes to `main`, and manual dispatch. Shared setup (Node 22, Chrome, `npm ci`) is in `.github/actions/setup-site`. Three groups of jobs run in parallel: `checks` (lint, build, content and progress checks, every `scripts/*.test.mjs`, iPhone screenshots), `journey` (the full Story V2 browser journey) and `overlap (1/6…6/6)` (the overlap check split by `OVERLAP_SHARD`, all parts together cover every case). A new push to a PR cancels its older run; runs on `main` are never cancelled.
 
 ### Content and data
 - All visitor-facing VI and EN text and scene data live in `site/content.json`; `site/src/content.ts` loads and validates them. Keep copy out of components and include both languages where content uses them.

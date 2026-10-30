@@ -33,25 +33,25 @@ jobs:
       - name: Prepare QA logs
         run: mkdir -p qa-logs
       - name: Lint
-        run: npm run lint 2>&1 | tee qa-logs/lint.txt
+        run: set -o pipefail; npm run lint 2>&1 | tee qa-logs/lint.txt
       - name: TypeScript and Vite production build
-        run: npm run build 2>&1 | tee qa-logs/build.txt
+        run: set -o pipefail; npm run build 2>&1 | tee qa-logs/build.txt
       - name: Content assertions
-        run: npm run content-check 2>&1 | tee qa-logs/content.txt
+        run: set -o pipefail; npm run content-check 2>&1 | tee qa-logs/content.txt
       - name: Progress migration assertions
-        run: npm run progress-check 2>&1 | tee qa-logs/progress.txt
+        run: set -o pipefail; npm run progress-check 2>&1 | tee qa-logs/progress.txt
       - name: Full Story V2 browser journey
-        run: npm run story-v2-check 2>&1 | tee qa-logs/journey.txt
+        run: set -o pipefail; npm run story-v2-check 2>&1 | tee qa-logs/journey.txt
         env:
           CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
       - name: Capture all 15 screens at iPhone 430x932
         if: always()
-        run: node scripts/story-v2-screenshots.mjs 2>&1 | tee qa-logs/screenshots.txt
+        run: set -o pipefail; node scripts/story-v2-screenshots.mjs 2>&1 | tee qa-logs/screenshots.txt
         env:
           CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
       - name: Mobile overlap checks
         if: always()
-        run: npm run overlap 2>&1 | tee qa-logs/overlap.txt
+        run: set -o pipefail; npm run overlap 2>&1 | tee qa-logs/overlap.txt
         env:
           CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
       - name: Upload visual QA screenshots

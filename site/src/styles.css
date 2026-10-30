@@ -1312,7 +1312,7 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 8px 12px;
   width: min(100%, calc(3 * var(--mem) + 2 * var(--gap)));
   max-width: 100%;
@@ -1321,7 +1321,7 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 .memory-meta .count {
   margin: 0;
   flex: 0 1 auto;
-  text-align: right;
+  text-align: center;
   white-space: nowrap;
 }
 
@@ -1358,13 +1358,35 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
   transform: translateY(0);
 }
 
-.memory-again {
+.memory-actions {
   display: flex;
+  flex: 0 0 auto;
+  align-items: center;
   justify-content: center;
+  gap: 8px 12px;
+  width: min(100%, calc(3 * var(--mem) + 2 * var(--gap)));
+  min-height: 44px;
 }
 
-.memory-again .btn {
+.memory-actions .btn {
+  width: auto;
   min-height: 44px;
+  margin: 0;
+  padding: 8px 16px;
+  white-space: nowrap;
+}
+
+.memory-actions.is-won {
+  justify-content: space-between;
+}
+
+.memory-win {
+  margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: var(--text-small, 0.875rem);
+  line-height: 1.3;
+  color: var(--ink);
 }
 
 .stage-pane:has(.memory-grid) {

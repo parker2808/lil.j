@@ -115,8 +115,8 @@ export type Content = {
     hints: Copy[];
   };
   startDate: string;
-  /** First meeting, separate from startDate. Date only, YYYY-MM-DD. */
-  firstMeeting: string;
+  /** Only when confirmed; null means the first meeting date is unknown. */
+  firstMeeting: string | null;
   /** The six photos the memory game pairs. Order is the deal order. */
   memoryPhotoIds: string[];
   music: {
@@ -190,7 +190,7 @@ export type Content = {
   };
   birth: {
     when: string;
-    /** Parker confirmed 2002-11-18 16:45 UTC+7. The sky uses this time. */
+    /** Whether the actual birth time has been confirmed; false means the sky is illustrative. */
     timeConfirmed: boolean;
     lat: number;
     lon: number;

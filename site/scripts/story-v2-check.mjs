@@ -62,7 +62,7 @@ function chromePath() {
 }
 
 function startPreview() {
-  const child = spawn("npx", ["vite", "preview", "--host", "127.0.0.1", "--port", "4173", "--strictPort"], {
+  const child = spawn(process.execPath, [new URL("../node_modules/vite/bin/vite.js", import.meta.url).pathname, "preview", "--host", "127.0.0.1", "--port", "4173", "--strictPort"], {
     cwd: new URL("..", import.meta.url),
     stdio: "ignore",
   });
@@ -336,7 +336,8 @@ async function fullPlay(page) {
   if (picked.ids.join(",") !== content.dreams[0].id || picked.items[0] !== content.dreams[0].text.vi || picked.test !== true) {
     fail("sheet-dreams", JSON.stringify(picked));
   }
-  note("sheet-dreams", "the ticked list reaches the sheet with its Vietnamese text");
+  if (!picked.device?.platform || !picked.device?.browser) fail("sheet-device", "missing coarse labels");
+  note("sheet-dreams", "the ticked list reaches the sheet with its Vietnamese text and coarse device labels");
   await openLetters(page);
   await sendWish(page);
   await passCake(page);

@@ -92,3 +92,12 @@ Quyết định của Parker (2026-10-30): dùng Google Sheet để lưu những
 - Bàn phím giả lập (58% chiều cao): ở 430×739 vùng nhìn thấy 429px, đáy công tắc ở 324px, dư 105px; ở 430×932 dư 217px. Tiêu đề, dòng nhắc, ô nhập, công tắc không chồng nhau (VI và EN).
 - Dòng nhắc màn 9 canh giữa giống lede sau khi xem ảnh chụp thật.
 - Còn lại: Parker dựng Sheet theo `tools/sheet-sync/README.md`, rồi thử trên iPhone thật (bàn phím tiếng Việt có thanh gợi ý cao hơn bản giả lập).
+
+## Follow-up 2026-10-31 — UI cùng style, Sheet gọn hơn
+- [x] Parker xác nhận tính năng Sheet hiện tại hoạt động.
+- [x] Tham khảo Google Sheets Tables, giữ galaxy/pastel pink/công tắc sao-trăng.
+- [x] Giảm chữ trùng ở Dreams, xác nhận Wish tự ẩn sau 3 giây.
+- [x] Nhãn thiết bị/trình duyệt thô, tên gợi nhớ chung, tách hàng thử nghiệm.
+- [x] Script nâng cấp sao lưu dữ liệu cũ, bảng có bộ lọc, hàng xen kẽ, giờ Việt Nam.
+- [x] Hoàn tất QA và cập nhật PR #30; chi tiết ở docs/story-v2-qa/sheet-refinement/REPORT.md.
+- [ ] Parker nâng cấp Apps Script và kiểm tra trên Google Sheets/iPhone thật.

@@ -38,10 +38,10 @@ export function Dreams({ progress, update }: ChapterProps) {
     <ChapterFrame
       kicker={t(chapter?.kicker)}
       title={t(chapter?.title)}
-      lede={t(chapter?.lede)}
+      lede={t(content.dreamsCopy.note)}
+      className="dreams-scene"
     >
       <Spark play={cheer} />
-      <p className="dreams-note">{t(content.dreamsCopy.note)}</p>
       <ol className="dreams">
         {content.dreams.map((dream, index) => {
           const done = progress.dreamsDone.includes(dream.id);
@@ -50,7 +50,7 @@ export function Dreams({ progress, update }: ChapterProps) {
               <label className={done ? "dream is-done" : "dream"}>
                 <input type="checkbox" checked={done} onChange={() => toggle(dream.id)} />
                 <span className="dream-index" aria-hidden="true">
-                  {String(index + 1).padStart(2, "0")}
+                  {done ? "✓" : String(index + 1).padStart(2, "0")}
                 </span>
                 <span>
                   <strong>{t(dream.text)}</strong>

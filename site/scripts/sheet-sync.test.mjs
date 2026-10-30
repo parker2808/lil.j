@@ -96,27 +96,33 @@ describe("outbox", () => {
 
 function fakeSheet() {
   const rows = [];
-  return {
-    rows,
-    appendRow(values) {
-      rows.push([...values]);
-    },
-    getLastRow() {
-      return rows.length;
-    },
-    setFrozenRows() {},
+  const sheet = {
+    rows, formulas: {}, filter: null, rules: [],
+    appendRow(values) { rows.push([...values]); },
+    getLastRow() { return rows.length; },
+    getMaxRows() { return Math.max(1000, rows.length); },
+    getBandings() { return []; },
+    getFilter() { return this.filter; },
+    getConditionalFormatRules() { return this.rules; },
+    setConditionalFormatRules(rules) { this.rules = rules; },
+    copyTo(book) { const backup = book.insertSheet("backup"); rows.forEach(r => backup.appendRow(r)); return backup; },
     getRange(row, column, rowCount = 1, columnCount = 1) {
-      return {
-        getValue: () => rows[row - 1][column - 1],
-        getValues: () => rows.slice(row - 1, row - 1 + rowCount).map((cells) => cells.slice(column - 1, column - 1 + columnCount)),
-        setValues: (values) => {
-          values.forEach((cells, i) => cells.forEach((value, j) => {
-            rows[row - 1 + i][column - 1 + j] = value;
-          }));
-        },
+      const range = {
+        getColumn: () => column,
+        getValue: () => rows[row - 1]?.[column - 1] ?? "",
+        getValues: () => Array.from({ length: rowCount }, (_, i) => Array.from({ length: columnCount }, (_, j) => rows[row - 1 + i]?.[column - 1 + j] ?? "")),
+        setValues(values) { values.forEach((cells, i) => cells.forEach((value, j) => { rows[row - 1 + i] ??= []; rows[row - 1 + i][column - 1 + j] = value; })); return range; },
+        setValue(value) { return range.setValues([[value]]); },
+        setFormula(formula) { sheet.formulas[`${row}:${column}`] = formula; return range; },
+        createFilter() { sheet.filter = {}; return range; },
+        applyRowBanding() { return range; },
       };
+      for (const name of ["setWrap", "setVerticalAlignment", "setNumberFormat", "setFontFamily", "setFontSize", "setFontColor", "setFontWeight", "setNote", "setBackground", "setHeaderRowColor", "setFirstRowColor", "setSecondRowColor"]) range[name] = () => range;
+      return range;
     },
   };
+  for (const name of ["setName", "setFrozenRows", "setHiddenGridlines", "setTabColor", "setRowHeight", "setColumnWidth", "hideColumns", "autoResizeRows"]) sheet[name] = () => sheet;
+  return sheet;
 }
 
 function loadScript() {
@@ -134,7 +140,10 @@ function loadScript() {
     },
   };
   const context = vm.createContext({
-    SpreadsheetApp: { getActiveSpreadsheet: () => book },
+    SpreadsheetApp: { getActiveSpreadsheet: () => book, newConditionalFormatRule: () => {
+      const rule = { whenTextEqualTo() { return rule; }, setBackground() { return rule; }, setRanges(ranges) { rule.ranges = ranges; return rule; }, build() { return rule; }, getBooleanCondition() { return { getCriteriaType: () => "TEXT_EQUAL_TO", getCriteriaValues: () => ["có"] }; }, getRanges() { return rule.ranges; } };
+      return rule;
+    } },
     LockService: { getScriptLock: () => ({ waitLock() {}, releaseLock() {} }) },
     ContentService: {
       MimeType: { JSON: "json" },
@@ -154,7 +163,7 @@ describe("apps script", () => {
     context.setup();
     assert.equal(book.zone, "Asia/Ho_Chi_Minh");
     assert.equal(sheets.get("Lựa chọn").rows[0][0], "Cập nhật lúc");
-    assert.equal(sheets.get("Điều ước").rows[0][2], "Điều ước");
+    assert.equal(sheets.get("Điều ước").rows[0][3], "Điều ước");
     assert.equal(context.doGet().ok, true);
   });
 
@@ -183,11 +192,11 @@ describe("apps script", () => {
     assert.equal(send(["d2"], 2000).skipped, "older");
     const rows = sheets.get("Lựa chọn").rows;
     assert.equal(rows.length, 2);
-    assert.equal(rows[1][2], "Việc d1, Việc d3");
-    assert.equal(rows[1][3], "d1,d3");
+    assert.equal(rows[1][3], "Việc d1\nViệc d3");
+    assert.equal(rows[1][6], "d1,d3");
     assert.equal(rows[1][4], "có");
     send([], 4000);
-    assert.equal(rows[1][2], "(chưa chọn gì)");
+    assert.equal(rows[1][3], "(chưa chọn gì)");
   });
 
   it("adds each wish once and stores formula-like text as text", () => {
@@ -197,7 +206,48 @@ describe("apps script", () => {
     assert.equal(post(body).skipped, "duplicate");
     const rows = sheets.get("Điều ước").rows;
     assert.equal(rows.length, 2);
-    assert.equal(rows[1][2], "'=IMPORTXML(\"x\")");
+    assert.equal(rows[1][3], "'=IMPORTXML(\"x\")");
     assert.equal(rows[1][4], "");
+  });
+});
+
+const { detectSheetDevice } = await import("../src/lib/sheet-device.ts");
+describe("device and upgrade", () => {
+  it("uses coarse labels and preserves metadata through offline storage", () => {
+    assert.deepEqual(detectSheetDevice("Mozilla Macintosh Version/18.0 Safari/605", 5), { platform: "iPad", browser: "Safari" });
+    const device = detectSheetDevice("Mozilla iPhone CriOS/131 Mobile Safari/605");
+    assert.deepEqual(device, { platform: "iPhone", browser: "Chrome" });
+    const box = readOutbox(withWish(emptyOutbox(), { ...wish("w-device1"), device }));
+    assert.deepEqual(payloadFor(box.wishes[0], VISITOR).device, device);
+  });
+  it("separates test rows, preserves aliases and labels both sheets", () => {
+    const { post, sheets } = loadScript();
+    const device = { platform: "iPhone", browser: "Safari" };
+    const body = { ...payloadFor(dreams(["d1"], 100), VISITOR), device };
+    post(body);
+    sheets.get("Thiết bị").rows[1][1] = "My phone";
+    post({ ...body, test: true, at: 200 });
+    post({ ...payloadFor(wish("w-device1", 300), VISITOR), device });
+    assert.equal(sheets.get("Lựa chọn").rows.length, 3);
+    assert.equal(sheets.get("Lựa chọn").rows[1][2], "iPhone · Safari");
+    assert.equal(sheets.get("Điều ước").rows[1][2], "iPhone · Safari");
+    assert.equal(sheets.get("Thiết bị").rows[1][1], "My phone");
+    assert.match(sheets.get("Điều ước").formulas["2:2"], /VLOOKUP/);
+    assert.equal(post({ ...body, device: { platform: "=IMPORTXML(x)", browser: "Safari" } }).error, "invalid");
+  });
+  it("backs up and upgrades legacy rows once without losing text, ids or aliases", () => {
+    const { context, book, sheets, post } = loadScript();
+    const old = book.insertSheet("Điều ước");
+    old.appendRow(["Lúc gửi", "Thiết bị", "Điều ước", "Mã điều ước", "Thử nghiệm"]);
+    old.appendRow([1234, VISITOR, "A saved wish", "w-legacy", "có"]);
+    context.setup();
+    assert.deepEqual(old.rows[1], [1234, "", "", "A saved wish", "có", VISITOR, "w-legacy"]);
+    assert.equal(sheets.get("backup").rows[1][2], "A saved wish");
+    const count = sheets.size;
+    sheets.get("Thiết bị").rows[1][1] = "Known browser";
+    context.setup();
+    assert.equal(sheets.size, count);
+    assert.equal(sheets.get("Thiết bị").rows[1][1], "Known browser");
+    assert.equal(post(payloadFor(wish("w-legacy", 600), VISITOR)).skipped, "duplicate");
   });
 });

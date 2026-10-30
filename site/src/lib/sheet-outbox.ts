@@ -1,3 +1,5 @@
+import { readSheetDevice, type SheetDevice } from "./sheet-device.ts";
+
 /** Queue for Parker's sheet. Pure data in and out: no storage, no network. */
 
 export type DreamsEntry = {
@@ -6,6 +8,7 @@ export type DreamsEntry = {
   items: string[];
   at: number;
   test: boolean;
+  device?: SheetDevice;
 };
 
 export type WishEntry = {
@@ -14,6 +17,7 @@ export type WishEntry = {
   text: string;
   at: number;
   test: boolean;
+  device?: SheetDevice;
 };
 
 export type SheetEntry = DreamsEntry | WishEntry;
@@ -63,12 +67,14 @@ export function isEmpty(outbox: Outbox): boolean {
   return !outbox.dreams && outbox.wishes.length === 0;
 }
 
-/** Exactly what leaves the phone: no IP, no device details, only a random visitor id. */
+/** Only shared entries, a random browser id and optional coarse device labels leave the phone. */
 export function payloadFor(entry: SheetEntry, visitor: string): Record<string, unknown> {
+  const device = readSheetDevice(entry.device);
+  const extra = device ? { device } : {};
   if (entry.kind === "dreams") {
-    return { v: 1, kind: "dreams", visitor, at: entry.at, ids: entry.ids, items: entry.items, test: entry.test };
+    return { ...extra, v: 1, kind: "dreams", visitor, at: entry.at, ids: entry.ids, items: entry.items, test: entry.test };
   }
-  return { v: 1, kind: "wish", visitor, at: entry.at, id: entry.id, text: entry.text, test: entry.test };
+  return { ...extra, v: 1, kind: "wish", visitor, at: entry.at, id: entry.id, text: entry.text, test: entry.test };
 }
 
 /**
@@ -104,7 +110,7 @@ function readDreams(value: unknown): DreamsEntry | null {
   const items = strings(record.items);
   const at = finiteTime(record.at);
   if (record.kind !== "dreams" || !ids || !items || ids.length !== items.length || at === null) return null;
-  return { kind: "dreams", ids, items, at, test: record.test === true };
+  return { kind: "dreams", ids, items, at, test: record.test === true, device: readSheetDevice(record.device) };
 }
 
 function readWish(value: unknown): WishEntry | null {
@@ -114,7 +120,7 @@ function readWish(value: unknown): WishEntry | null {
   if (record.kind !== "wish" || typeof record.id !== "string" || typeof record.text !== "string" || at === null) return null;
   const text = record.text.trim().slice(0, TEXT_LIMIT);
   if (!record.id || !text) return null;
-  return { kind: "wish", id: record.id, text, at, test: record.test === true };
+  return { kind: "wish", id: record.id, text, at, test: record.test === true, device: readSheetDevice(record.device) };
 }
 
 /** Reads a stored outbox. Anything malformed is dropped rather than sent. */

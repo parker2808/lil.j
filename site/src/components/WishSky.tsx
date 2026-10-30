@@ -45,6 +45,12 @@ export function WishSky({ wishes, onSend }: WishSkyProps) {
   // Stays as she left it after each wish, so a private streak never flips to shared by surprise.
   const [keep, setKeep] = useState(false);
   const [empty, setEmpty] = useState(false);
+  const [sentAt, setSentAt] = useState(0);
+  useEffect(() => {
+    if (!sentAt) return;
+    const timer = window.setTimeout(() => setSentAt(0), 3000);
+    return () => window.clearTimeout(timer);
+  }, [sentAt]);
   const [shaking, setShaking] = useState(false);
   const [openId, setOpenId] = useState<string | null>(null);
   const [bubbleShape, setBubbleShape] = useState(0);
@@ -332,11 +338,12 @@ export function WishSky({ wishes, onSend }: WishSkyProps) {
     setValue("");
     setOpenId(null);
     onSend(text, keep);
+    setSentAt(Date.now());
     const field = event.currentTarget.querySelector("input");
     if (field instanceof HTMLInputElement) field.blur();
   }
 
-  const note = empty ? t(content.wish.empty) : wishes.length > 0 && !reading ? t(content.wish.sent) : "";
+  const note = empty ? t(content.wish.empty) : sentAt && !reading ? t(content.wish.sent) : "";
   const readingSpot = reading ? slot(reading.id) : null;
 
   return (

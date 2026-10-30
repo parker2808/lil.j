@@ -1,3 +1,4 @@
+import { detectSheetDevice } from "./sheet-device.ts";
 import {
   TEXT_LIMIT,
   emptyOutbox,
@@ -124,14 +125,14 @@ async function run(keepalive: boolean): Promise<void> {
 /** Latest ticked list, in content order. Sent once the ticking settles. */
 export function queueDreams(ids: string[], items: string[]): void {
   if (!sheetSyncOn) return;
-  save(withDreams(load(), { kind: "dreams", ids, items, at: Date.now(), test: isTest() }));
+  save(withDreams(load(), { kind: "dreams", ids, items, at: Date.now(), test: isTest(), device: detectSheetDevice(navigator.userAgent, navigator.maxTouchPoints) }));
   schedule(DREAMS_WAIT);
 }
 
 /** A shared wish. Private wishes never reach this function. */
 export function queueWish(id: string, text: string, at: number): void {
   if (!sheetSyncOn) return;
-  save(withWish(load(), { kind: "wish", id, text: text.slice(0, TEXT_LIMIT), at, test: isTest() }));
+  save(withWish(load(), { kind: "wish", id, text: text.slice(0, TEXT_LIMIT), at, test: isTest(), device: detectSheetDevice(navigator.userAgent, navigator.maxTouchPoints) }));
   schedule(0);
 }
 

@@ -118,7 +118,7 @@
   },
   "birth": {
     "when": "2002-11-18T16:45:00+07:00",
-    "timeConfirmed": true,
+    "timeConfirmed": false,
     "lat": 20.97,
     "lon": 105.78,
     "place": {
@@ -154,8 +154,8 @@
       "en": "W"
     },
     "caption": {
-      "vi": "{when} · {place}",
-      "en": "{when} · {place}"
+      "vi": "18/11/2002 · {place} · Bầu trời minh họa (chưa rõ giờ sinh)",
+      "en": "18 Nov 2002 · {place} · Illustrative sky (birth time unconfirmed)"
     },
     "notes": [
       {

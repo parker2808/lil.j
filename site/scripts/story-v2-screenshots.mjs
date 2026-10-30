@@ -80,6 +80,15 @@ try {
       const tease=(await page.locator(".finale-tease").innerText()).trim();
       report.push({name:"finale-button-movement",moved:before!==after,tease});
       if (before===after || !tease) throw new Error("Finale button did not move or show its playful feedback");
+      for (let tap = 0; tap < 16; tap += 1) {
+        const dodge = page.locator(".no-btn");
+        const hit = await dodge.boundingBox();
+        if (hit) await page.mouse.click(hit.x + hit.width / 2, hit.y + hit.height / 2);
+        await page.waitForFunction(() => document.querySelector("[data-step]")?.getAttribute("data-step") === "finale");
+      }
+      const stuckOnFinale = (await page.locator("[data-step]").getAttribute("data-step")) === "finale";
+      report.push({ name: "finale-later-no-nav", passed: stuckOnFinale, step: await page.locator("[data-step]").getAttribute("data-step") });
+      if (!stuckOnFinale) throw new Error("Finale Later button navigated away from screen 14");
       await shoot("14-finale-tease");
       await page.locator(".yes-btn").click();
       await page.waitForSelector(".finale-celebrate");

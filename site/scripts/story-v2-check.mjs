@@ -337,14 +337,15 @@ async function skipPlay(page) {
     moved = (await place()) !== before;
   }
   if (!moved) fail("finale-dodge", "later stayed put");
-  await later.focus();
-  await page.keyboard.press("Enter");
-  await page.waitForSelector('[data-step="letter"]');
+  await later.click();
+  await page.waitForFunction(() => document.querySelector("[data-step]")?.getAttribute("data-step") === "finale");
+  await page.getByRole("button", { name: /Em đồng ý|I'd love to/ }).click();
+  await page.locator(".sticky-next").waitFor();
+  await advance(page);
   const afterFinale = await saved(page);
-  if (afterFinale.saidYes) fail("skip-finale", "saidYes was set");
-  if (!afterFinale.skippedSteps.includes("finale")) fail("skip-finale", "finale was not skipped");
+  if (!afterFinale.saidYes) fail("skip-finale", "yes was not recorded");
   await finishLetter(page);
-  note("skip-play", "memory, scratch, letters, and finale were skipped without fake records");
+  note("skip-play", "memory, scratch, letters skipped; finale dodge does not navigate");
 }
 
 function historical(version, step, unlocked) {

@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState, type SyntheticEvent } from "react";
 import { content } from "../content.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import { useReducedMotion } from "../lib/useReducedMotion.ts";
@@ -8,10 +8,9 @@ import { Hearts } from "./Hearts.tsx";
 type FinaleProps = {
   saidYes: boolean;
   onYes: () => void;
-  onLater: () => void;
 };
 
-export function Finale({ saidYes, onYes, onLater }: FinaleProps) {
+export function Finale({ saidYes, onYes }: FinaleProps) {
   const { t } = useI18n();
   const reduced = useReducedMotion();
   const stageRef = useRef<HTMLDivElement>(null);
@@ -59,8 +58,12 @@ export function Finale({ saidYes, onYes, onLater }: FinaleProps) {
     }
   }
 
+  function blockFinaleBubble(event: SyntheticEvent) {
+    event.stopPropagation();
+  }
+
   return (
-    <section className="scene finale">
+    <section className="scene finale" onPointerDown={blockFinaleBubble} onClick={blockFinaleBubble}>
       <Hearts active={saidYes} />
       {saidYes ? (
         <div className="finale-copy">
@@ -75,18 +78,26 @@ export function Finale({ saidYes, onYes, onLater }: FinaleProps) {
           <button type="button" className="btn btn-gold yes-btn" onClick={onYes}>
             {t(content.finale.yes)}
           </button>
-          <div className="finale-stage" ref={stageRef}>
+          <div className="finale-stage" ref={stageRef} onPointerDown={blockFinaleBubble} onClick={blockFinaleBubble}>
             <button
               ref={laterRef}
               type="button"
               className="btn later no-btn"
               style={{ left: pos.x, top: pos.y }}
-              onPointerEnter={(event) => jump(event.clientX, event.clientY)}
+              onPointerEnter={(event) => {
+                blockFinaleBubble(event);
+                jump(event.clientX, event.clientY);
+              }}
               onPointerDown={(event) => {
+                blockFinaleBubble(event);
                 event.preventDefault();
                 jump(event.clientX, event.clientY);
               }}
-              onClick={onLater}
+              onClick={(event) => {
+                blockFinaleBubble(event);
+                event.preventDefault();
+                jump(event.clientX, event.clientY);
+              }}
             >
               {t(content.finale.later)}
             </button>

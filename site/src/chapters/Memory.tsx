@@ -99,30 +99,35 @@ export function Memory({ progress, update }: ChapterProps) {
       title={t(chapter?.title)}
       lede={t(chapter?.lede)}
     >
-      <button type="button" className="btn btn-quiet later" onClick={() => update((current) => skipAhead(current, "memory"))}>
-        {t(content.memoryCopy.later)}
-      </button>
-      <p className="count">
-        {fillTemplate(t(content.memoryCopy.moves), { n: moves })}
-        {progress.memoryBest != null
-          ? ` · ${fillTemplate(t(content.memoryCopy.best), { n: progress.memoryBest })}`
-          : ""}
-      </p>
-      <Spark play={cheer} />
-      <div className={matched.length > 0 ? "pair-toast" : "pair-toast is-idle"} role="status" aria-live="polite">
-        {matched.length > 0 ? (
-          <p>
-            {t(content.memoryCopy.lines[(matched.length - 1) % content.memoryCopy.lines.length] ?? content.memoryCopy.win)}
-          </p>
-        ) : null}
-        {won ? (
-          <button type="button" className="btn" onClick={again}>
-            {t(content.memoryCopy.again)}
+      <div className="memory-board">
+        <div className="memory-meta">
+          <button type="button" className="btn btn-quiet later" onClick={() => update((current) => skipAhead(current, "memory"))}>
+            {t(content.memoryCopy.later)}
           </button>
-        ) : null}
-      </div>
-      <div className="memory-fit">
-        <div className="memory-grid">
+          <p className="count">
+            {fillTemplate(t(content.memoryCopy.moves), { n: moves })}
+            {progress.memoryBest != null
+              ? ` · ${fillTemplate(t(content.memoryCopy.best), { n: progress.memoryBest })}`
+              : ""}
+          </p>
+        </div>
+        <div className={matched.length > 0 ? "pair-toast" : "pair-toast is-idle"} role="status" aria-live="polite">
+          {matched.length > 0 ? (
+            <p>
+              {t(content.memoryCopy.lines[(matched.length - 1) % content.memoryCopy.lines.length] ?? content.memoryCopy.win)}
+            </p>
+          ) : null}
+          {won ? (
+            <button type="button" className="btn" onClick={again}>
+              {t(content.memoryCopy.again)}
+            </button>
+          ) : null}
+        </div>
+        <div className="memory-spark" aria-hidden="true">
+          <Spark play={cheer} />
+        </div>
+        <div className="memory-fit">
+          <div className="memory-grid">
           {deck.map((card) => {
             const matchedCard = matched.includes(card.photoId);
             const up = flipped.includes(card.uid) || matchedCard;
@@ -144,6 +149,7 @@ export function Memory({ progress, update }: ChapterProps) {
               </div>
             );
           })}
+          </div>
         </div>
       </div>
     </ChapterFrame>

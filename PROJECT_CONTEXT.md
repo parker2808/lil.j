@@ -114,6 +114,7 @@ Rules (docs/story-v2/implementation.md): memory/scratch/letters have a "later" a
 ## 12. Current status and open items (as of 2026-10-30)
 - `main` @ `3e1c9f3` plus **draft PR #26** (`fix/story-v2-production-review`, merged with current `main`): Story V2 production-review fixes — drop unverified first-meeting date claims (`firstMeeting: null`), set `birth.timeConfirmed: true` with 16:45 in content, restore six Galaxy v3 Memory photo IDs (12 cards), remove Wish keyboard-open rectangle suspect (`.wish-form` backdrop), surface Finale teases and Yes celebration copy, and add `.github/workflows/story-v2-verify.yml` (lint, build, content/progress checks, iPhone screenshots, overlap, full journey).
 - **Confirmed by Parker (2026-10-30):** the six Memory deck photo IDs and birth time **16:45** (matches `birth.timeConfirmed: true` in content/code).
+- **Draft PR #26 (2026-10-30, iPhone preview):** Memory scene grid uses full-width larger tiles and a stacked notice + deck layout; Finale “Later” dodge no longer skips or advances (only Yes + sticky Next after `saidYes`); Yes label uses an orange heart.
 - **Parker review still before merge:** full VI/EN copy across the 15 scenes; test Wish keyboard layout on a real iPhone (CSS fix is unverified on device).
 - **Open: switch the default language to EN** in code (`i18n.ts`) and in tests/acceptance (`story-v2-check`, `docs/story-v2/acceptance.md`). Decided 2026-10-30; not done.
 - **Open: update `README.md`.** Its visit list is an older 16-step path; it should list the 15 Story V2 scenes (§6). Its "English is the default" line is already correct.
@@ -127,6 +128,7 @@ Parker's decision (2026-10-30): anything not shown in the 15 Story V2 scenes (§
 - Frozen old flows `FLOW_V1`–`FLOW_V3`: kept only for progress migration. Don't edit them.
 
 ## 13. Changelog
+- 2026-10-30 — PR #26 mobile fixes: Memory tile layout, Finale Later cannot navigate, orange Yes heart; Parker iPhone feedback on screen 5.
 - 2026-10-30 — Parker confirmed Memory deck photo choices and 16:45 birth time; §12 updated (copy review and iPhone Wish keyboard still open).
 - 2026-10-30 — Draft PR #26 production review: factual/copy fixes (first meeting unknown, birth time 16:45 confirmed in content), Memory deck IDs, Wish/Finale UX, Story V2 verify workflow on PRs and `main`; merged `main` into the branch and refreshed §12/§13 for context-check.
 - 2026-10-30 — PR #27 review fixes: reject missing/deleted context at HEAD; clarify file-level CI enforcement and runtime/content-check translation validation.

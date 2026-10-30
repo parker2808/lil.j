@@ -1289,13 +1289,13 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 
 .memory-play {
   --gap: clamp(6px, 1.5vw, 10px);
-  --mem: max(
-    52px,
-    min(
-      calc((min(100cqi, 520px) - 2 * var(--gap)) / 3),
-      calc((100cqb - 44px - 3 * var(--gap)) / 4)
-    )
+  --mem-w: calc((min(100cqi, 520px) - 2 * var(--gap)) / 3);
+  --mem-h: calc(
+    (
+      100svh - var(--header-h, 0px) - var(--footer-h, 0px) - 9.5rem - 44px - 3 * var(--gap)
+    ) / 4
   );
+  --mem: clamp(48px, min(var(--mem-w), var(--mem-h)), 120px);
   container-type: size;
   display: flex;
   flex-direction: column;
@@ -1370,6 +1370,12 @@ svg:focus, g:focus, svg:focus-visible, g:focus-visible { outline: none; }
 .stage-pane:has(.memory-grid) {
   min-height: 0;
   flex: 1 1 auto;
+}
+
+.stage:has(.memory-grid) {
+  -webkit-mask-image: none;
+  mask-image: none;
+  padding-bottom: 0;
 }
 
 .scene:has(.memory-grid) {

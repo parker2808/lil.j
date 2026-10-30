@@ -269,6 +269,8 @@ assert.deepEqual(
 );
 assert.equal(content.scratches.length, 6);
 assert.equal(content.firstMeeting, null);
+assert.equal(content.birth.timeConfirmed, false);
+assert.ok(content.birth.caption.vi.includes("minh họa"));
 assert.equal(content.startDate, "2026-07-01T00:00:00+07:00");
 assert.equal(content.finalLetter.date, "2026-11-18");
 assert.equal(content.finalLetter.signature.vi, "Parker");

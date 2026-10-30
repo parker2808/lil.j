@@ -1,0 +1,82 @@
+import { spawn } from "node:child_process";
+import { mkdirSync, readFileSync } from "node:fs";
+import { setTimeout as delay } from "node:timers/promises";
+import { chromium } from "playwright-core";
+
+const content = JSON.parse(readFileSync(new URL("../content.json", import.meta.url), "utf8"));
+const url = process.env.STORY_URL || "http://127.0.0.1:4173";
+const output = new URL("../qa-screenshots/", import.meta.url);
+mkdirSync(output, { recursive: true });
+const server = process.env.STORY_URL ? null : spawn("npx", ["vite", "preview", "--host", "127.0.0.1", "--port", "4173", "--strictPort"], {
+  cwd: new URL("..", import.meta.url), stdio: "ignore",
+});
+const paths = ["gate","sky","birth","gallery","memory","quiz","scratch","counter","dreams","letters","cake","wish","envelope","finale","letter"];
+const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH || "/usr/bin/google-chrome-stable", args: ["--no-sandbox", "--disable-dev-shm-usage"] });
+const context = await browser.newContext({ viewport: {width:430,height:932}, deviceScaleFactor:3, isMobile:true, hasTouch:true, reducedMotion:"reduce" });
+const page = await context.newPage();
+page.setDefaultTimeout(15000);
+const report = [];
+try {
+  let ready = false;
+  for (let i=0;i<60;i++) {
+    try { const r=await fetch(url); if(r.ok){ready=true;break;} } catch {}
+    await delay(300);
+  }
+  if (!ready) throw new Error("preview server did not respond");
+  await page.goto(url+"/?dev=1", {waitUntil:"domcontentloaded"});
+  await page.evaluate(() => {localStorage.clear();localStorage.setItem("lilj.locale.v1","vi")});
+  await page.reload({waitUntil:"domcontentloaded"});
+  await page.waitForSelector('[data-step="gate"]');
+  const shoot = async (name) => {
+    const file = new URL(name+".png",output);
+    await page.screenshot({path:file.pathname,fullPage:true,animations:"disabled"});
+    const root = await page.evaluate(() => ({
+      step:document.querySelector("[data-step]")?.getAttribute("data-step"),
+      width:document.documentElement.clientWidth,
+      overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth,
+      error:document.querySelector("[role=alert]")?.textContent?.slice(0,120) || null
+    }));
+    report.push({name,...root});
+  };
+  await shoot("01-gate");
+  await page.locator("#nickname").fill(content.gate.password);
+  await page.locator(".gate-go").click();
+  await page.waitForSelector('[data-step="sky"]');
+  for(let i=1;i<15;i++){
+    const target=paths[i];
+    await page.locator('.dev-jump button').nth(i).click();
+    await page.waitForSelector('[data-step="'+target+'"]');
+    await delay(300);
+    await shoot(String(i+1).padStart(2,"0")+"-"+target);
+    if(target==="memory"){
+      const count=await page.locator(".mem").count();
+      report.push({name:"memory-deck",cards:count,expect:12,passed:count===12});
+    }
+    if(target==="wish"){
+      await page.locator(".wish-field input").focus();
+      await page.evaluate(()=>document.documentElement.classList.add("keyboard-open"));
+      await delay(200);
+      await shoot("12-wish-keyboard-open");
+      await page.evaluate(()=>document.documentElement.classList.remove("keyboard-open"));
+    }
+    if(target==="finale"){
+      const later=page.locator(".no-btn");
+      const before=await later.getAttribute("style");
+      await later.dispatchEvent("pointerenter",{clientX:250,clientY:500});
+      await delay(320);
+      const after=await later.getAttribute("style");
+      report.push({name:"finale-button-movement",moved:before!==after});
+      await shoot("14-finale-tease");
+      await page.locator(".yes-btn").click();
+      await delay(450);
+      await shoot("14-finale-yes");
+    }
+  }
+  const missing=report.filter(x=>x.overflow>2||x.error||x.passed===false);
+  console.log(JSON.stringify({ok:missing.length===0,report},null,2));
+  if(missing.length)process.exitCode=1;
+} finally {
+  await context.close();
+  await browser.close();
+  server?.kill();
+}

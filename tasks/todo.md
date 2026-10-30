@@ -130,3 +130,18 @@ Quyết định của Parker (2026-10-30): dùng Google Sheet để lưu những
 ### Kết quả CI thật (PR #34)
 - Cả lần chạy: 1 phút 45 giây (trước: 7–9 phút). `checks` 1m01, `journey` 1m14, 6 phần overlap 1m20–1m41.
 - 6 phần overlap: mỗi phần 480 trường hợp, tổng 2.880, 0 lỗi. Mọi check xanh.
+
+## Cờ Vercel cho công tắc "Giữ điều ước cho riêng em" (2026-10-31, nhánh `feat/wish-private-flag`)
+
+Parker: env `true` thì bật công tắc (em chọn gửi lên Sheet hay giữ riêng); `false` thì không có công tắc, mặc định gửi.
+
+- [x] `VITE_WISH_PRIVATE_SWITCH` đọc lúc build trong `sheet-sync.ts`. Chỉ đúng chữ `false` (không phân biệt hoa thường) mới tắt; bỏ trống hoặc giá trị khác giữ nguyên như hiện tại để merge không đổi gì trên production.
+- [x] `WishSky`: cờ tắt thì ẩn công tắc, mọi điều ước mới gửi lên Sheet, ghi chú dùng câu mới `wish.noteShared` (VI/EN trong `content.json`, cần Parker duyệt).
+- [x] Điều ước riêng đã lưu trước đó vẫn riêng, không bao giờ bị gửi.
+- [x] Kiểm tra: `npm run wish-flag-check` (build với cờ `false`): không có công tắc, câu mới hiện, điều ước được gửi, điều ước riêng cũ không bị gửi; ảnh 430×932/430×739 VI/EN. Chạy thêm trong job `journey` của CI.
+- [x] Hướng dẫn Vercel trong `tools/sheet-sync/README.md`; cập nhật PROJECT_CONTEXT §1, §5, §12, §13 và `AGENT_RULES.md`.
+
+### Kết quả
+- `wish-flag-check` (cờ `false`): VI/EN ở 430×932 và 430×739, không có công tắc, câu `wish.noteShared` hiện, ghi chú không đè ô nhập, ô nhập không đè footer, điều ước mới gửi đúng một request, điều ước riêng cũ không bị gửi và vẫn `private`. Ảnh: `docs/story-v2-qa/wish-private-flag/`.
+- Cờ mặc định: `story-v2-check` (gồm điều ước riêng không bị gửi) và `sheet-ui-check` vẫn qua.
+- lint (6 cảnh báo cũ), selfcheck, content-check, progress-check, 17/17 unit test.

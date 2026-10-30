@@ -224,6 +224,7 @@ export type Content = {
     send: Copy;
     keep: Copy;
     note: Copy;
+    noteShared: Copy;
     empty: Copy;
     sent: Copy;
     more: Copy;

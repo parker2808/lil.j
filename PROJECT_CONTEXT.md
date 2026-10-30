@@ -9,7 +9,7 @@
 - **Repo:** https://github.com/parker2808/lil.j · **Production:** https://lil-j.vercel.app (Vercel auto-deploys `main`).
 - **Owner / sole decision maker:** Parker. He writes in Vietnamese; reports to him should be in Vietnamese, in plain non-technical language (technical details kept separate) — 2026-10-26.
 - It is a gift, not a product: no accounts, no server, no database. Progress and language live in `localStorage`.
-- **One exception (Parker, 2026-10-30): J's scene 9 ticks and scene 11 wishes are copied to Parker's Google Sheet** through a Google Apps Script web app (`tools/sheet-sync/`). Both scenes say so on screen (`dreamsCopy.note`, `wish.note`). A wish sent with "Giữ điều ước cho riêng em" switched on stays on her device and is never sent. Off when `VITE_SHEET_URL` is empty.
+- **One exception (Parker, 2026-10-30): J's scene 9 ticks and scene 11 wishes are copied to Parker's Google Sheet** through a Google Apps Script web app (`tools/sheet-sync/`). Both scenes say so on screen (`dreamsCopy.note`, `wish.note`). A wish sent with "Giữ điều ước cho riêng em" switched on stays on her device and is never sent. Off when `VITE_SHEET_URL` is empty. Vercel flag `VITE_WISH_PRIVATE_SWITCH` (Parker, 2026-10-31): `false` hides that switch, so every new wish is sent and the note reads `wish.noteShared`; `true` or unset keeps the switch. Wishes already kept private are never sent. Changing it needs a redeploy.
 
 ## 2. People and confirmed facts
 | Fact | Value | Source / status |
@@ -44,7 +44,7 @@
 - Deploy: root `vercel.json` builds `site/` and serves `site/dist` with SPA rewrite.
 - Key files: `site/content.json` (all copy/data), `src/content.ts` (load + validate), `src/lib/flow.ts` (scene order, frozen `FLOW_V1..V4`), `src/lib/story.ts` (5 chapters), `src/lib/progress.ts` (`lilj.progress.v1`, migration), `src/lib/lock.ts`, `src/lib/images.ts` (Cloudinary URLs), `src/lib/i18n.ts` (`lilj.locale.v1`).
 - Scripts (`site/`): `npm run build`, `npm run lint`, `node scripts/selfcheck.mjs`, `npm run content-check`, `npm run progress-check`, `npm run overlap`, `npm run story-v2-check` (builds with a fake sheet URL and checks the sheet sync), `npm run memory-deck-test`, `npm run sheet-sync-test`. `OVERLAP_SHARD=i/n` makes `overlap` check every n-th viewport starting at the i-th (CI runs 6 parts in parallel; together they cover everything).
-- Sheet sync: `src/lib/sheet-outbox.ts` (pure queue logic, `lilj.outbox.v1`), `src/lib/sheet-sync.ts` (sending, retries, `lilj.visitor.v1`), Apps Script in `tools/sheet-sync/Code.gs` with setup steps in `tools/sheet-sync/README.md`.
+- Sheet sync: `src/lib/sheet-outbox.ts` (pure queue logic, `lilj.outbox.v1`), `src/lib/sheet-sync.ts` (sending, retries, `lilj.visitor.v1`), Apps Script in `tools/sheet-sync/Code.gs` with setup steps in `tools/sheet-sync/README.md`. `privateSwitchOn` (from `VITE_WISH_PRIVATE_SWITCH`) lives in `sheet-sync.ts`; `npm run wish-flag-check` builds with it set to `false` (also run in the CI `journey` job).
 - CI (`.github/workflows/story-v2-verify.yml`, shared setup in `.github/actions/setup-site`): parallel jobs `checks` (lint, build, content/progress, all `scripts/*.test.mjs`, 15 iPhone screenshots), `journey` (`story-v2-check`) and `overlap (1/6…6/6)`. A new push to a PR cancels its older run; runs on `main` are never cancelled.
 - `?dev=1` skips the lock and shows the jump row; `?dev=1&lock=1` keeps the countdown for review. Not persisted.
 - Other: `tools/fb-photo-downloader/` (PR #1, local helper, don't touch unless asked).
@@ -115,6 +115,7 @@ Rules (docs/story-v2/implementation.md): memory/scratch/letters have a "later" a
 7. **Skip deferred items (§12a).** Don't work on anything outside the 15 Story V2 scenes unless Parker asks (decision 2026-10-30).
 
 ## 12. Current status and open items (as of 2026-10-31)
+- **Wish private-switch flag (branch `feat/wish-private-flag`, 2026-10-31):** Parker asked for a Vercel flag: `true` keeps "Giữ điều ước cho riêng em", `false` sends every wish by default. Unset behaves like `true`, so merging changes nothing until Parker sets `false` and redeploys. New copy `wish.noteShared` (shown only when the flag is `false`) awaits Parker's approval.
 - **2026-10-31, PR #30 follow-up:** Parker confirmed the original Sheet integration works; approved table-style formatting and coarse browser/device labels with manual aliases across both tabs. UI refinement must preserve the existing galaxy, pastel-pink palette, rounded shapes, typography/reveal, and approved star/moon privacy switch. New script migration backs up old 5-column tabs, preserves records, separates test/real choices, and adds a device alias registry. Live upgrade still needs Parker to paste the new script, run setup and redeploy it.
 - 2026-10-31 — CI standard recorded in `AGENT_RULES.md` (branch `chore/cicd-standard`): future CI changes must keep the current parallel/sharded design. No workflow changed.
 - 2026-10-31 — `AGENT_RULES.md` added on `chore/agent-rules` for review. It copies the shared rules verbatim and records this repo's commands, CI, content locations, and PR conventions. No site behavior or content changed.
@@ -137,6 +138,7 @@ Parker's decision (2026-10-30): anything not shown in the 15 Story V2 scenes (§
 - Frozen old flows `FLOW_V1`–`FLOW_V3`: kept only for progress migration. Don't edit them.
 
 ## 13. Changelog
+- 2026-10-31 — Vercel flag `VITE_WISH_PRIVATE_SWITCH` for scene 11: `false` hides the keep-private switch and shares every new wish (note `wish.noteShared`); old private wishes stay private. New `npm run wish-flag-check` (in CI `journey`), README steps for Vercel.
 - 2026-10-31 — `AGENT_RULES.md` CI workflows: any CI change must follow the shared front-end CI/CD lessons in Parker's memory repo and keep the current design (parallel jobs, sharded browser checks, shared setup action, npm cache, stale-PR cancel, `timeout-minutes`, logs/screenshots uploaded with `if: always()`). Docs only; workflows unchanged.
 - 2026-10-31 — Added `AGENT_RULES.md` with a verbatim copy of `<private-memory-repo>/rules/COMMON_RULES.md` and lil.j rules verified against this repo; linked it from `AGENTS.md`.
 - 2026-10-31 — CI speed-up: Story V2 verify split into parallel jobs (`checks`, `journey`, `overlap` in 6 parts via `OVERLAP_SHARD`), shared setup action, unit tests run as `scripts/*.test.mjs`, superseded PR runs cancelled, merged branch `fix/story-v2-production-review` removed from push triggers. Same checks and coverage as before.

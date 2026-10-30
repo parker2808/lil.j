@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { content } from "../content.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import { playChime } from "../lib/music.ts";
+import { privateSwitchOn } from "../lib/sheet-sync.ts";
 import { useReducedMotion } from "../lib/useReducedMotion.ts";
 import type { Wish } from "../types.ts";
 import { Reveal } from "./Reveal.tsx";
@@ -337,7 +338,7 @@ export function WishSky({ wishes, onSend }: WishSkyProps) {
     setEmpty(false);
     setValue("");
     setOpenId(null);
-    onSend(text, keep);
+    onSend(text, privateSwitchOn && keep);
     setSentAt(Date.now());
     const field = event.currentTarget.querySelector("input");
     if (field instanceof HTMLInputElement) field.blur();
@@ -403,7 +404,7 @@ export function WishSky({ wishes, onSend }: WishSkyProps) {
             : null}
         </div>
         <div className="wish-dock" data-keyboard-block>
-          <p className="wish-note">{t(content.wish.note)}</p>
+          <p className="wish-note">{t(privateSwitchOn ? content.wish.note : content.wish.noteShared)}</p>
           <form className={shaking ? "wish-form shake" : "wish-form"} onSubmit={submit} ref={formRef}>
             <div className="wish-field">
               <label>
@@ -440,26 +441,28 @@ export function WishSky({ wishes, onSend }: WishSkyProps) {
               </button>
             </div>
           </form>
-          <button
-            type="button"
-            role="switch"
-            aria-checked={keep}
-            className="wish-keep"
-            onPointerDown={(event) => event.preventDefault()}
-            onClick={() => setKeep((current) => !current)}
-          >
-            <span>{t(content.wish.keep)}</span>
-            <span className="wish-keep-track" aria-hidden="true">
-              <span className="wish-keep-knob">
-                <svg className="wish-keep-star" viewBox="0 0 24 24">
-                  <path d="M12 1.5c.7 6.3 3.2 9.6 10.5 10.5-7.3.9-9.8 4.2-10.5 10.5-.7-6.3-3.2-9.6-10.5-10.5C8.8 11.1 11.3 7.8 12 1.5Z" />
-                </svg>
-                <svg className="wish-keep-moon" viewBox="0 0 24 24">
-                  <path d="M19.5 15.2A8.2 8.2 0 0 1 8.8 4.5a8.2 8.2 0 1 0 10.7 10.7Z" />
-                </svg>
+          {privateSwitchOn ? (
+            <button
+              type="button"
+              role="switch"
+              aria-checked={keep}
+              className="wish-keep"
+              onPointerDown={(event) => event.preventDefault()}
+              onClick={() => setKeep((current) => !current)}
+            >
+              <span>{t(content.wish.keep)}</span>
+              <span className="wish-keep-track" aria-hidden="true">
+                <span className="wish-keep-knob">
+                  <svg className="wish-keep-star" viewBox="0 0 24 24">
+                    <path d="M12 1.5c.7 6.3 3.2 9.6 10.5 10.5-7.3.9-9.8 4.2-10.5 10.5-.7-6.3-3.2-9.6-10.5-10.5C8.8 11.1 11.3 7.8 12 1.5Z" />
+                  </svg>
+                  <svg className="wish-keep-moon" viewBox="0 0 24 24">
+                    <path d="M19.5 15.2A8.2 8.2 0 0 1 8.8 4.5a8.2 8.2 0 1 0 10.7 10.7Z" />
+                  </svg>
+                </span>
               </span>
-            </span>
-          </button>
+            </button>
+          ) : null}
         </div>
         <p className={empty ? "wish-read is-empty" : "wish-read"} role="status">
           {note}

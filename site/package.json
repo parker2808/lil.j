@@ -15,7 +15,8 @@
     "memory-deck-test": "node --test scripts/memory-deck.test.mjs",
     "sheet-sync-test": "node --test scripts/sheet-sync.test.mjs",
     "story-v2-check": "VITE_SHEET_URL=https://sheet.invalid/exec npm run build && node scripts/story-v2-check.mjs",
-    "sheet-ui-check": "VITE_SHEET_URL=https://sheet.invalid/exec npm run build && node scripts/sheet-ui-check.mjs"
+    "sheet-ui-check": "VITE_SHEET_URL=https://sheet.invalid/exec npm run build && node scripts/sheet-ui-check.mjs",
+    "wish-flag-check": "VITE_SHEET_URL=https://sheet.invalid/exec VITE_WISH_PRIVATE_SWITCH=false npm run build && node scripts/wish-flag-check.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "^5.3.0",

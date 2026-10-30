@@ -22,6 +22,9 @@ const RETRY_WAIT = 30000;
 
 export const sheetSyncOn = ENDPOINT.startsWith("https://");
 
+/** Vercel flag. Only `false` hides "keep this wish to yourself", so every new wish is shared. */
+export const privateSwitchOn = String(import.meta.env.VITE_WISH_PRIVATE_SWITCH ?? "").trim().toLowerCase() !== "false";
+
 /** Mirrors storage so a private-mode refusal still sends during this visit. */
 let memory: Outbox = emptyOutbox();
 let visitor: string | null = null;

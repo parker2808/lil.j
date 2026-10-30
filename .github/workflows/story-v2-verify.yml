@@ -59,6 +59,8 @@ jobs:
       - uses: ./.github/actions/setup-site
       - name: Full Story V2 browser journey
         run: set -o pipefail; npm run story-v2-check 2>&1 | tee qa-logs/journey.txt
+      - name: Wish with the private switch turned off (VITE_WISH_PRIVATE_SWITCH=false)
+        run: set -o pipefail; npm run wish-flag-check 2>&1 | tee qa-logs/wish-flag.txt
       - name: Upload test logs for diagnosis
         if: always()
         uses: actions/upload-artifact@v4

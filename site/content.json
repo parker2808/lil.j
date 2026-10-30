@@ -323,6 +323,10 @@
       "vi": "Gửi lên thì anh đọc được, giữ riêng thì chỉ em biết.",
       "en": "Send it and I'll read it. Keep it, and it's only yours."
     },
+    "noteShared": {
+      "vi": "Điều ước em gửi lên, anh sẽ đọc được.",
+      "en": "Every wish you send, I'll get to read."
+    },
     "sent": {
       "vi": "Điều ước đã lên bầu trời rồi ✨",
       "en": "Your wish is up in the sky ✨"

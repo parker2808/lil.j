@@ -50,6 +50,22 @@ Khi chưa cài link, website vẫn chạy bình thường và không gửi gì.
 
 Vào **Triển khai → Quản lý các lần triển khai → Chỉnh sửa (biểu tượng bút chì) → Phiên bản: Phiên bản mới → Triển khai**. URL được giữ nguyên, nên không phải sửa gì trên Vercel.
 
+## Bật/tắt công tắc "Giữ điều ước cho riêng em" (cờ Vercel)
+
+Biến `VITE_WISH_PRIVATE_SWITCH` trên Vercel quyết định màn 11 có công tắc giữ riêng hay không:
+
+| Giá trị | Màn 11 |
+|---|---|
+| `true` (hoặc không có biến) | Có công tắc. Em chọn gửi lên Sheet hay giữ riêng, như hiện tại. |
+| `false` | Không có công tắc. Mọi điều ước mới đều gửi lên Sheet; dòng ghi chú đổi thành "Điều ước em gửi lên, anh sẽ đọc được." |
+
+Cách đổi:
+1. Vào project **lil-j → Settings → Environment Variables**.
+2. Thêm (hoặc sửa) biến `VITE_WISH_PRIVATE_SWITCH`, giá trị `true` hoặc `false`, chọn môi trường **Production** (và **Preview** nếu muốn thử trước).
+3. Vào **Deployments**, bấm **Redeploy** bản mới nhất của môi trường đó. Website chỉ đọc biến lúc build, nên chưa Redeploy thì chưa đổi.
+
+Điều ước em đã giữ riêng từ trước vẫn nằm trên máy em, không bao giờ bị gửi, kể cả khi cờ là `false`.
+
 ## Tắt tính năng
 
 Xóa biến `VITE_SHEET_URL` trên Vercel rồi Redeploy. Website sẽ ngừng gửi; dữ liệu đã có trên Sheet vẫn còn.

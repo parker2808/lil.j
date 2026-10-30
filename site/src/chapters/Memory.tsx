@@ -136,9 +136,6 @@ export function Memory({ progress, update }: ChapterProps) {
           </div>
           <div className="memory-play">
             <div className="memory-meta">
-              <button type="button" className="btn btn-quiet later" onClick={() => update((current) => skipAhead(current, "memory"))}>
-                {t(content.memoryCopy.later)}
-              </button>
               <p className="count">
                 {fillTemplate(t(content.memoryCopy.moves), { n: moves })}
                 {progress.memoryBest != null
@@ -169,15 +166,26 @@ export function Memory({ progress, update }: ChapterProps) {
             );
           })}
             </div>
+            <div className={won ? "memory-actions is-won" : "memory-actions"}>
+              {won ? (
+                <>
+                  <p className="memory-win">{t(content.memoryCopy.win)}</p>
+                  <button type="button" className="btn btn-quiet memory-again" onClick={again}>
+                    {t(content.memoryCopy.again)}
+                  </button>
+                </>
+              ) : (
+                <button
+                  type="button"
+                  className="btn btn-quiet memory-later"
+                  onClick={() => update((current) => skipAhead(current, "memory"))}
+                >
+                  {t(content.memoryCopy.later)}
+                </button>
+              )}
+            </div>
           </div>
         </div>
-        {won ? (
-          <div className="memory-again">
-            <button type="button" className="btn" onClick={again}>
-              {t(content.memoryCopy.again)}
-            </button>
-          </div>
-        ) : null}
       </div>
     </ChapterFrame>
   );

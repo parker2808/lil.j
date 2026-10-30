@@ -1,3 +1,5 @@
+import type { StepId } from "./lib/flow.ts";
+import type { StoryChapterId } from "./lib/story.ts";
 import type { Copy } from "./lib/i18n.ts";
 
 export type { Copy } from "./lib/i18n.ts";
@@ -42,10 +44,13 @@ export type EraPhoto = {
   date?: string;
 };
 
+export type EraKind = "her-life" | "first-meeting" | "together";
+
 export type Era = {
   id: string;
   title: Copy;
-  date: string;
+  date?: string;
+  kind: EraKind;
   color: string;
   photos: EraPhoto[];
 };
@@ -110,6 +115,10 @@ export type Content = {
     hints: Copy[];
   };
   startDate: string;
+  /** First meeting, separate from startDate. Date only, YYYY-MM-DD. */
+  firstMeeting: string;
+  /** The six photos the memory game pairs. Order is the deal order. */
+  memoryPhotoIds: string[];
   music: {
     tracks: MusicTrack[];
     birthday?: MusicTrack;
@@ -122,6 +131,7 @@ export type Content = {
     enter: Copy;
   };
   chapters: Chapter[];
+  storyChapters: Record<StoryChapterId, Copy>;
   eras: Era[];
   photos: Photo[];
   galleryCopy: {
@@ -147,7 +157,11 @@ export type Content = {
     win: Copy;
     again: Copy;
     back: Copy;
+    later: Copy;
     lines: Copy[];
+  };
+  scratchCopy: {
+    later: Copy;
   };
   dreams: Dream[];
   friendNotes: FriendNote[];
@@ -176,6 +190,8 @@ export type Content = {
   };
   birth: {
     when: string;
+    /** Parker confirmed 2002-11-18 16:45 UTC+7. The sky uses this time. */
+    timeConfirmed: boolean;
     lat: number;
     lon: number;
     place: Copy;
@@ -198,12 +214,14 @@ export type Content = {
     lede: Copy;
     placeholder: Copy;
     send: Copy;
+    keep: Copy;
     empty: Copy;
     sent: Copy;
     more: Copy;
     saved: Copy;
   };
   finalLetter: {
+    date: string;
     kicker: Copy;
     title: Copy;
     lede: Copy;
@@ -231,6 +249,7 @@ export type Content = {
     openedNote: Copy;
     close: Copy;
     next: Copy;
+    later: Copy;
   };
   finale: {
     question: Copy;
@@ -241,6 +260,7 @@ export type Content = {
     yesBody: Copy;
     lead: Copy;
     celebrate: Copy;
+    later: Copy;
   };
   ui: {
     back: Copy;
@@ -255,6 +275,7 @@ export type Content = {
     musicOff: Copy;
     musicHint: Copy;
     musicBlocked: Copy;
+    journey: Copy;
     reset: Copy;
     resetConfirm: Copy;
     resetYes: Copy;
@@ -313,6 +334,12 @@ export type Progress = {
   letterDone: boolean;
   wishes: Wish[];
   flowVersion: number;
+  /** Scenes the visitor may open. This is a set of ids, not a prefix of `unlocked`. */
+  accessibleSteps: StepId[];
+  /** Explicit later choices. Never inferred from missing interaction data. */
+  skippedSteps: StepId[];
+  /** The wish stays on this device with no wish record and no sent line. */
+  wishPrivate: boolean;
 };
 
 export type ChapterProps = {

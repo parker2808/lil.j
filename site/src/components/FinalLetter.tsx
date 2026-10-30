@@ -3,6 +3,7 @@ import { content } from "../content.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import { fadeMusic } from "../lib/music.ts";
 import { formatDotted } from "../lib/pure.ts";
+import { CATALOG, CONSTELLATIONS, starRadius } from "../lib/stars.ts";
 import { useReducedMotion } from "../lib/useReducedMotion.ts";
 import { Petals, StarFall } from "./Fireworks.tsx";
 import { Reveal } from "./Reveal.tsx";
@@ -27,7 +28,7 @@ export function FinalLetter({ already, onDone, onRestart }: FinalLetterProps) {
   const skipAll = ((already && !replay) || reduced) && shown === 0;
   const count = skipAll ? tokens.length : shown;
   const done = count >= tokens.length;
-  const dateLabel = formatDotted(content.birth.when, t(content.ui.dottedDate));
+  const dateLabel = formatDotted(content.finalLetter.date, t(content.ui.dottedDate));
 
   useEffect(() => {
     fadeMusic(8000);
@@ -86,7 +87,7 @@ export function FinalLetter({ already, onDone, onRestart }: FinalLetterProps) {
         }}
       >
         <header className="letter-head">
-          <time className="letter-date" dateTime={content.birth.when.slice(0, 10)}>
+          <time className="letter-date" dateTime={content.finalLetter.date}>
             {dateLabel}
           </time>
           <span className="letter-seal" aria-hidden="true">
@@ -115,6 +116,7 @@ export function FinalLetter({ already, onDone, onRestart }: FinalLetterProps) {
           {!done && <span ref={caretRef} className="ink-caret" aria-hidden="true" />}
         </div>
         {done && <p className="letter-sign">{t(content.finalLetter.signature)}</p>}
+        {done && <ClosingConstellation />}
       </article>
       {!done && (
         <button type="button" className="btn btn-quiet" onClick={skip}>
@@ -142,6 +144,54 @@ export function FinalLetter({ already, onDone, onRestart }: FinalLetterProps) {
       )}
     </section>
   );
+}
+
+function ClosingConstellation() {
+  const { t } = useI18n();
+  const figure = useMemo(() => layoutScorpio(), []);
+  const name = t(content.constellations.sco);
+  return (
+    <figure className="letter-constellation">
+      <svg viewBox="0 0 100 100" role="img" aria-label={name}>
+        {figure.lines.map((line, index) => (
+          <line key={`${line.x1}-${index}`} x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2} />
+        ))}
+        {figure.stars.map((star) => (
+          <circle key={star.id} cx={star.x} cy={star.y} r={star.r} />
+        ))}
+      </svg>
+      <figcaption>{name}</figcaption>
+    </figure>
+  );
+}
+
+function layoutScorpio(): {
+  stars: { id: string; x: number; y: number; r: number }[];
+  lines: { x1: number; y1: number; x2: number; y2: number }[];
+} {
+  const stars = CATALOG.filter((star) => star.group === "sco");
+  const ras = stars.map((star) => star.ra);
+  const decs = stars.map((star) => star.dec);
+  const minRa = Math.min(...ras);
+  const maxRa = Math.max(...ras);
+  const minDec = Math.min(...decs);
+  const maxDec = Math.max(...decs);
+  const spanRa = maxRa - minRa || 1;
+  const spanDec = maxDec - minDec || 1;
+  const placed = stars.map((star) => ({
+    id: star.id,
+    x: 8 + ((star.ra - minRa) / spanRa) * 84,
+    y: 8 + ((maxDec - star.dec) / spanDec) * 84,
+    r: starRadius(star.mag) * 1.35,
+  }));
+  const byId = new Map(placed.map((star) => [star.id, star]));
+  const lines = (CONSTELLATIONS.find((item) => item.id === "sco")?.lines ?? []).flatMap(([from, to]) => {
+    const start = byId.get(from);
+    const end = byId.get(to);
+    if (!start || !end) return [];
+    return [{ x1: start.x, y1: start.y, x2: end.x, y2: end.y }];
+  });
+  return { stars: placed, lines };
 }
 
 function tokenize(body: string): Token[] {

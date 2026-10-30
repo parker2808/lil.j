@@ -1,10 +1,13 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { FLOW, FLOW_VERSION, FLOW_WITH_FRIENDS, INCLUDE_FRIENDS, PREVIOUS_FLOW, migrateIndex, stepDone } from "../src/lib/flow.ts";
+import { FLOW, FLOW_V3, FLOW_VERSION, FLOW_WITH_FRIENDS, INCLUDE_FRIENDS, PREVIOUS_FLOW, migrateIndex, stepDone } from "../src/lib/flow.ts";
+import { STORY_CHAPTERS, chapterFor } from "../src/lib/story.ts";
 import { readLocale } from "../src/lib/i18n.ts";
+import { eraAnchor, project, separatePoints } from "../src/lib/galaxy.ts";
 import { cloudinarySrcSet, cloudinaryUrl } from "../src/lib/images.ts";
 import { countdownParts, isBeforeUnlock, unlockTime } from "../src/lib/lock.ts";
 import { nextTrackIndex } from "../src/lib/music.ts";
+import { emptyProgress, skipAhead } from "../src/lib/progress.ts";
 import { elapsedParts, fillTemplate, formatDotted, formatZoned, nicknamesMatch, todayKey } from "../src/lib/pure.ts";
 import { altAz, projectSky } from "../src/lib/stars.ts";
 
@@ -48,7 +51,7 @@ assert.equal(togetherAtUnlock.hours, 0);
 assert.equal(togetherAtUnlock.minutes, 0);
 assert.equal(new Date("2026-09-06T12:00:00+07:00").getUTCDay(), 0);
 assert.equal(content.constellations.lyr.en, "Lyra");
-assert.equal(content.ui.musicHint.en, "Tap for music");
+assert.equal(content.ui.musicHint.en, "Put some music on with me");
 assert.equal(content.music.credit, undefined);
 assert.deepEqual(
   content.music.tracks.map((track) => (track.artist ? `${track.title} · ${track.artist}` : track.title)),
@@ -142,7 +145,30 @@ assert.equal(stepDone("cake", { ...blank, candlesOut: [0, 1, 2, 2] }, 5, []), fa
 assert.equal(stepDone("cake", { ...blank, candlesOut: [0, 1, 2, 3, 4] }, 5, []), true);
 assert.equal(stepDone("wish", { ...blank, wishes: [{ text: "  " }] }, 1, []), false);
 assert.equal(stepDone("wish", { ...blank, wishes: [{ text: "ở bên" }] }, 1, []), true);
-assert.equal(readLocale(), "en");
+assert.equal(stepDone("wish", { ...blank, wishes: [], wishPrivate: true }, 1, []), true);
+assert.equal(readLocale(), "vi");
+{
+  const store = new Map([["lilj.locale.v1", "en"]]);
+  globalThis.localStorage = {
+    getItem: (key) => store.get(key) ?? null,
+    setItem: (key, value) => store.set(key, value),
+    removeItem: (key) => store.delete(key),
+  };
+  assert.equal(readLocale(), "en");
+  store.set("lilj.locale.v1", "vi");
+  assert.equal(readLocale(), "vi");
+  store.delete("lilj.locale.v1");
+  assert.equal(readLocale(), "vi");
+}
+const indexHtml = readFileSync(new URL("../index.html", import.meta.url), "utf8");
+assert.match(indexHtml, /<html lang="vi">/);
+const viteConfig = readFileSync(new URL("../vite.config.ts", import.meta.url), "utf8");
+assert.match(viteConfig, /title\.vi/);
+assert.match(viteConfig, /description\.vi/);
+assert.equal(stepDone("sky", blank, 5, []), false);
+assert.equal(stepDone("sky", { ...blank, skyDone: true }, 5, []), true);
+assert.equal(stepDone("counter", blank, 5, []), false);
+assert.equal(stepDone("counter", { ...blank, counterSeen: true }, 5, []), true);
 assert.equal(stepDone("gallery", blank, 5, []), false);
 assert.equal(stepDone("gallery", { ...blank, erasViewed: ["first"] }, 5, []), true);
 
@@ -162,39 +188,130 @@ assert.equal(
   cloudinaryUrl("https://res.cloudinary.com/demo/image/upload/w_photos/c_keep.jpg", 200),
   "https://res.cloudinary.com/demo/image/upload/c_limit,w_200/f_auto/q_auto/w_photos/c_keep.jpg",
 );
+const sampleId = "lilj/galaxy-v3/childhood/g-childhood-02cb6fb950";
 assert.equal(
-  cloudinaryUrl("lilj/care/01_IMG_4956", 720),
-  "https://res.cloudinary.com/oiounrmh/image/upload/c_limit,w_720/f_auto/q_auto/lilj/care/01_IMG_4956",
+  cloudinaryUrl(sampleId, 720),
+  `https://res.cloudinary.com/oiounrmh/image/upload/c_limit,w_720/f_auto/q_auto/${sampleId}`,
 );
 assert.equal(
-  cloudinarySrcSet("lilj/care/01_IMG_4956", [360, 720]),
-  "https://res.cloudinary.com/oiounrmh/image/upload/c_limit,w_360/f_auto/q_auto/lilj/care/01_IMG_4956 360w, https://res.cloudinary.com/oiounrmh/image/upload/c_limit,w_720/f_auto/q_auto/lilj/care/01_IMG_4956 720w",
+  cloudinarySrcSet(sampleId, [360, 720]),
+  `https://res.cloudinary.com/oiounrmh/image/upload/c_limit,w_360/f_auto/q_auto/${sampleId} 360w, https://res.cloudinary.com/oiounrmh/image/upload/c_limit,w_720/f_auto/q_auto/${sampleId} 720w`,
 );
 const eraPhotos = content.eras.flatMap((era) => era.photos);
-assert.equal(eraPhotos.length, 39);
-for (const photo of eraPhotos) {
-  assert.equal(photo.date, undefined);
-  assert.equal(photo.caption.vi, "");
-  assert.equal(photo.caption.en, "");
-  assert.match(photo.src, /^lilj\/(?:care|pout|surprise|ordinary|more)\/\d{2}_/);
+assert.equal(content.eras.length, 13);
+assert.equal(eraPhotos.length, 162);
+assert.deepEqual(content.memoryPhotoIds, []);
+let filledCaptions = 0;
+for (const era of content.eras) {
+  assert.equal(era.date, undefined);
+  era.photos.forEach((photo, index) => {
+    assert.equal(photo.date, undefined);
+    assert.equal(typeof photo.caption?.vi, "string");
+    assert.equal(typeof photo.caption?.en, "string");
+    assert.equal(Boolean(photo.caption.vi.trim()), Boolean(photo.caption.en.trim()), photo.id);
+    assert.match(photo.src, /^lilj\/galaxy-v3\/[a-z0-9-]+\/[a-z0-9-]+$/);
+    if (index === 0) {
+      assert.ok(photo.caption.vi.trim(), photo.id);
+      filledCaptions += 1;
+    } else {
+      assert.equal(photo.caption.vi, "");
+      assert.equal(photo.caption.en, "");
+    }
+  });
 }
+assert.equal(filledCaptions, 13);
+for (const [width, height] of [[398, 340], [398, 280]]) {
+  for (let step = 0; step < 8; step += 1) {
+    const spin = (step / 8) * Math.PI * 2;
+    const camera = { spin, zoom: 1, focusX: 0, focusY: 0, parallaxX: 0, parallaxY: 0 };
+    const anchors = content.eras.map((_, index) => eraAnchor(index, content.eras.length));
+    const origin = project(0, 0, 0, camera, width, height);
+    const points = anchors.map((anchor) => {
+      const point = project(anchor.x, anchor.y, 0, camera, width, height);
+      const vx = point.x - origin.x;
+      const vy = point.y - origin.y;
+      const len = Math.hypot(vx, vy) || 1;
+      const halfW = 26;
+      const halfH = 22;
+      return {
+        x: Math.min(width - halfW - 2, Math.max(halfW + 2, point.x + (vx / len) * 22)),
+        y: Math.min(height - halfH - 2, Math.max(halfH + 2, point.y + (vy / len) * 22)),
+        halfW,
+        halfH,
+      };
+    });
+    separatePoints(points, width, height);
+    for (let i = 0; i < points.length; i += 1) {
+      for (let j = i + 1; j < points.length; j += 1) {
+        const overlapX = points[i].halfW + points[j].halfW + 4 - Math.abs(points[i].x - points[j].x);
+        const overlapY = points[i].halfH + points[j].halfH + 4 - Math.abs(points[i].y - points[j].y);
+        assert.ok(overlapX <= 0.6 || overlapY <= 0.6, `${width}x${height} spin ${spin.toFixed(2)}`);
+      }
+    }
+  }
+}
+const togetherAtBirthday = elapsedParts("2026-07-01T00:00:00+07:00", new Date("2026-11-18T00:00:00+07:00"));
+assert.equal(togetherAtBirthday.future, false);
+assert.equal(togetherAtBirthday.days, 140);
+assert.equal(togetherAtBirthday.hours, 0);
+assert.equal(content.quiz.length, 5);
 assert.deepEqual(
-  content.eras.flatMap((era) => era.photos.slice(0, 2).map((photo) => photo.id)).slice(0, 6),
-  ["care-01", "care-02", "pout-01", "pout-02", "surprise-01", "surprise-02"],
+  content.quiz.map((question) => [question.id, question.answer]),
+  [
+    ["q1", 0],
+    ["q2", 0],
+    ["q3", 2],
+    ["q4", 0],
+    ["q5", 0],
+  ],
 );
+assert.equal(content.scratches.length, 6);
+assert.equal(content.firstMeeting, "2022-11-18");
+assert.equal(content.startDate, "2026-07-01T00:00:00+07:00");
+assert.equal(content.finalLetter.date, "2026-11-18");
+assert.equal(content.finalLetter.signature.vi, "Parker");
+assert.equal(content.finalLetter.signature.en, "Parker");
+const finaleLater = skipAhead({ ...emptyProgress(), step: 13, unlocked: 13, accessibleSteps: FLOW.slice(0, 14) }, "finale");
+assert.equal(finaleLater.saidYes, false);
+assert.equal(finaleLater.step, 14);
+assert.deepEqual(finaleLater.skippedSteps, ["finale"]);
+assert.equal(skipAhead(finaleLater, "finale").step, 14);
+assert.equal(content.eras[0].title.vi, "Em hồi bé");
+assert.equal(content.eras[12].title.vi, "Thử một kiểu khác");
+assert.equal(content.galleryCopy.eraProgress.vi.startsWith("Chương "), true);
+assert.equal(content.galleryCopy.eraProgress.en.startsWith("Chapter "), true);
+
+assert.equal(STORY_CHAPTERS.length, 5);
+assert.equal(chapterFor("gate"), "I");
+assert.equal(chapterFor("memory"), "II");
+assert.equal(chapterFor("letters"), "III");
+assert.equal(chapterFor("wish"), "IV");
+assert.equal(chapterFor("letter"), "V");
+assert.equal(chapterFor("friends"), null);
+for (const id of FLOW) assert.ok(chapterFor(id), id);
+assert.equal(content.storyChapters.I.vi, "Một vũ trụ mang tên em");
+assert.equal(content.storyChapters.V.en, "More ahead");
 
 assert.equal(INCLUDE_FRIENDS, false);
-assert.equal(FLOW_VERSION, 3);
+assert.equal(FLOW_VERSION, 4);
 assert.equal(FLOW.length, 15);
 assert.equal(FLOW.includes("friends"), false);
+assert.equal(FLOW[4], "memory");
+assert.equal(FLOW[11], "wish");
 assert.equal(FLOW_WITH_FRIENDS.length, 16);
+assert.equal(migrateIndex(3, 8), 4);
+assert.equal(FLOW[migrateIndex(3, 8)], "memory");
+assert.equal(migrateIndex(3, 13), 11);
+assert.equal(FLOW[migrateIndex(3, 13)], "wish");
 assert.equal(FLOW[migrateIndex(2, FLOW_WITH_FRIENDS.indexOf("friends"))], "dreams");
 assert.equal(FLOW[migrateIndex(2, FLOW_WITH_FRIENDS.indexOf("wish"))], "wish");
 assert.equal(FLOW[migrateIndex(2, FLOW_WITH_FRIENDS.indexOf("letter"))], "letter");
 assert.equal(FLOW[migrateIndex(1, PREVIOUS_FLOW.indexOf("wish"))], "wish");
 assert.equal(FLOW[migrateIndex(1, PREVIOUS_FLOW.indexOf("letter"))], "letter");
-assert.equal(FLOW[migrateIndex(3, FLOW.indexOf("letters"))], "letters");
+assert.equal(FLOW[migrateIndex(3, FLOW_V3.indexOf("letters"))], "letters");
 assert.equal(migrateIndex(3, 0), 0);
 assert.equal(migrateIndex(3, 99), FLOW.length - 1);
+assert.equal(migrateIndex(4, 0), 0);
+assert.equal(migrateIndex(4, 99), FLOW.length - 1);
 
 console.log("selfcheck ok");

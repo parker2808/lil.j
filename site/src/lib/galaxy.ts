@@ -34,6 +34,55 @@ export function eraAnchor(index: number, count: number): { x: number; y: number 
   return { x: Math.cos(theta) * radius, y: Math.sin(theta) * radius };
 }
 
+export type PlacedCluster = {
+  x: number;
+  y: number;
+  halfW: number;
+  halfH: number;
+};
+
+/** Push overlapping chapter knots apart, and keep each one inside the frame. */
+export function separatePoints(points: PlacedCluster[], width: number, height: number, inset = 2): void {
+  const gap = 6;
+  for (let iter = 0; iter < 32; iter += 1) {
+    let moved = false;
+    for (let i = 0; i < points.length; i += 1) {
+      for (let j = i + 1; j < points.length; j += 1) {
+        const a = points[i];
+        const b = points[j];
+        const needX = a.halfW + b.halfW + gap;
+        const needY = a.halfH + b.halfH + gap;
+        const dx = b.x - a.x;
+        const dy = b.y - a.y;
+        const overlapX = needX - Math.abs(dx);
+        const overlapY = needY - Math.abs(dy);
+        if (overlapX <= 0 || overlapY <= 0) continue;
+        if (overlapX < overlapY) {
+          const sign = dx === 0 ? 1 : Math.sign(dx);
+          const push = overlapX / 2;
+          a.x -= sign * push;
+          b.x += sign * push;
+        } else {
+          const sign = dy === 0 ? 1 : Math.sign(dy);
+          const push = overlapY / 2;
+          a.y -= sign * push;
+          b.y += sign * push;
+        }
+        moved = true;
+      }
+    }
+    for (const point of points) {
+      const minX = inset + point.halfW;
+      const maxX = width - inset - point.halfW;
+      const minY = inset + point.halfH;
+      const maxY = height - inset - point.halfH;
+      point.x = minX > maxX ? width / 2 : Math.min(maxX, Math.max(minX, point.x));
+      point.y = minY > maxY ? height / 2 : Math.min(maxY, Math.max(minY, point.y));
+    }
+    if (!moved) break;
+  }
+}
+
 export function project(
   x: number,
   y: number,

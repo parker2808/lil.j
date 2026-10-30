@@ -1,12 +1,12 @@
 {
   "meta": {
     "title": {
-      "vi": "Đến những vì sao cũng biết tên em",
-      "en": "Even the Stars Know Your Name"
+      "vi": "Anh có chút quà cho em",
+      "en": "A little something for you"
     },
     "description": {
-      "vi": "Mỗi ngôi sao ở đây đều có một câu chuyện. Và chẳng hiểu sao, tất cả đều dẫn đến em.",
-      "en": "Every star here has a story. And somehow, they all lead to you."
+      "vi": "Một món quà sinh nhật cho MJ, có ảnh, vài trò nhỏ và những điều anh muốn nói.",
+      "en": "A birthday gift for MJ, with photos, a few little games, and some things I want to say."
     },
     "herName": "MJ",
     "constellationName": "JOLIE",
@@ -15,61 +15,63 @@
   "gate": {
     "password": "mj",
     "question": {
-      "vi": "Một vũ trụ nhỏ, chỉ dành cho em",
-      "en": "A Little Universe, Just for You"
+      "vi": "Có quà cho em đây",
+      "en": "I've got something for you"
     },
     "placeholder": {
-      "vi": "Nhập cái tên mà chỉ một người đặc biệt mới biết.",
-      "en": "Enter the name only one person would know."
+      "vi": "Hai chữ cái anh hay gọi em…",
+      "en": "Those two letters I call you…"
     },
     "submit": {
-      "vi": "Vào",
-      "en": "Enter"
+      "vi": "Mở quà thôi",
+      "en": "Open my gift"
     },
     "empty": {
-      "vi": "Em nhập tên đã.",
-      "en": "Type the name first."
+      "vi": "Em nhập tên trước đã nhé.",
+      "en": "Type your name first."
     },
     "hints": [
       {
-        "vi": "Hai chữ cái nhỏ xíu.",
-        "en": "Two little letters."
+        "vi": "Gợi ý nhé: chỉ có hai chữ cái thôi.",
+        "en": "A hint: just two letters."
       },
       {
-        "vi": "Cái tên anh dùng khi muốn làm em cười.",
-        "en": "The name I use when I want to make you smile."
+        "vi": "Tên anh gọi em ấy, bản ngắn gọn.",
+        "en": "The short name I call you."
       },
       {
-        "vi": "Viết thì ngắn, nhớ thì lâu.",
-        "en": "Short to type, impossible to forget."
+        "vi": "Không cần viết cả tên đâu em.",
+        "en": "No need for your full name."
       },
       {
-        "vi": "Nó thuộc về cô gái mà vũ trụ này dành tặng.",
-        "en": "It belongs to the girl this universe was made for."
+        "vi": "Chủ nhân món quà này chắc chắn biết mà.",
+        "en": "The girl this gift is for definitely knows it."
       },
       {
-        "vi": "Chắc em biết ngay thôi.",
-        "en": "You probably know it already."
+        "vi": "Thử lại nhé, hai chữ cái quen thuộc ấy.",
+        "en": "Try again. Those two familiar letters."
       },
       {
-        "vi": "Thử viết tắt tên của cô gái anh thích nhất xem.",
-        "en": "Try the initials of my favorite girl."
+        "vi": "Viết tắt tên em xem nào. :)))",
+        "en": "Try your initials. :)))"
       }
     ],
     "subtitle": {
-      "vi": "Mỗi ngôi sao ở đây đều có một câu chuyện. Và chẳng hiểu sao, tất cả đều dẫn đến em.",
-      "en": "Every star here has a story. And somehow, they all lead to you."
+      "vi": "Anh làm một góc nhỏ cho sinh nhật em. Nhưng phải đúng chủ nhân mới được vào nhé.",
+      "en": "I made a little place for your birthday. Only the birthday girl gets in, though."
     },
     "found": {
-      "vi": "Em tìm được đường vào rồi, MJ.",
-      "en": "You found your way in, MJ."
+      "vi": "Đúng em rồi, MJ.",
+      "en": "There you are, MJ."
     },
     "welcome": {
-      "vi": "Chào mừng em đến với vũ trụ nhỏ của riêng mình. ✨",
-      "en": "Welcome to your own little universe. ✨"
+      "vi": "Vào xem anh chuẩn bị gì cho em nhé. ✨",
+      "en": "Come see what I've made for you. ✨"
     }
   },
   "startDate": "2026-07-01T00:00:00+07:00",
+  "firstMeeting": "2022-11-18",
+  "memoryPhotoIds": [],
   "music": {
     "tracks": [
       {
@@ -109,6 +111,7 @@
   },
   "birth": {
     "when": "2002-11-18T16:45:00+07:00",
+    "timeConfirmed": true,
     "lat": 20.97,
     "lon": 105.78,
     "place": {
@@ -116,16 +119,16 @@
       "en": "Hà Đông, Hà Nội, Vietnam"
     },
     "kicker": {
-      "vi": "Chiều em sinh ra",
-      "en": "The afternoon you were born"
+      "vi": "Ngày em sinh ra",
+      "en": "The day you were born"
     },
     "title": {
-      "vi": "Bầu trời trong ngày đặc biệt của em",
-      "en": "The Sky on Your Special Day"
+      "vi": "Bắt đầu từ ngày có em",
+      "en": "Starting with your birthday"
     },
     "lede": {
-      "vi": "Dưới bầu trời ấy, một cô bé bắt đầu câu chuyện của riêng mình. Hai mươi bốn năm sau, cô bé ấy trở thành một người rất đặc biệt với anh.",
-      "en": "Somewhere beneath this sky, a little girl was beginning her own story. Twenty-four years later, she became someone very special to me."
+      "vi": "Dưới bầu trời ấy, một cô bé bắt đầu câu chuyện của riêng mình. Ngày 18/11/2022 cô bé ấy gặp anh. Từ 01/07/2026, hai đứa bắt đầu đếm.",
+      "en": "Somewhere beneath this sky, a little girl was beginning her own story. On 18/11/2022 she met me. From 01/07/2026, the two of us started counting."
     },
     "north": {
       "vi": "B",
@@ -151,45 +154,45 @@
       {
         "id": "cas",
         "title": {
-          "vi": "Sự quan tâm của em",
-          "en": "Your kindness"
+          "vi": "Cách em quan tâm",
+          "en": "The way you care"
         },
         "body": {
-          "vi": "Em khiến việc quan tâm đến người khác trở thành một điều rất tự nhiên.",
-          "en": "You make caring feel like the most natural thing in the world."
+          "vi": "Anh thích cách em để ý đến người khác. Và anh cũng mong em dành một phần quan tâm ấy cho chính em nữa.",
+          "en": "I like how thoughtful you are with other people. I hope you save some of that care for yourself, too."
         }
       },
       {
         "id": "lyr",
         "title": {
-          "vi": "Chiếc mặt phụng phịu",
-          "en": "Your little pout"
+          "vi": "Cái mặt khi bị trêu",
+          "en": "That face when I tease you"
         },
         "body": {
-          "vi": "Nhất là mỗi lần anh trêu em. Ừ, anh để ý hết đấy. :)))",
-          "en": "Especially when I tease you. Yes, I notice it every time. :)))"
+          "vi": "Anh biết, lại là anh trêu trước. Nhưng cái mặt em lúc ấy thì khó mà không để ý. :)))",
+          "en": "I know, I'm usually the one who starts it. But that face of yours is hard to miss. :)))"
         }
       },
       {
         "id": "cyg",
         "title": {
-          "vi": "Nụ cười của em",
-          "en": "Your smile"
+          "vi": "Em cứ cười thế nhé",
+          "en": "Keep that smile"
         },
         "body": {
-          "vi": "Một trong những điều anh thích nhìn thấy nhất, nhất là khi biết mình là người khiến em cười.",
-          "en": "One of my favorite things to see, especially when I know I caused it."
+          "vi": "Anh thích nhìn em cười. Nếu hôm nào anh góp được một chút vào đấy thì anh càng vui.",
+          "en": "I love seeing you smile. If I get to be part of the reason, even better."
         }
       },
       {
         "id": "aql",
         "title": {
-          "vi": "Tương lai của em",
-          "en": "Your future"
+          "vi": "Những điều em muốn",
+          "en": "The things you want"
         },
         "body": {
-          "vi": "Anh mong thế giới sẽ cho em thật nhiều lý do để mỉm cười.",
-          "en": "I hope the world gives you a thousand reasons to smile."
+          "vi": "Tuổi mới, anh mong em có thời gian cho những điều mình thích, cả những điều chưa kịp thử nữa.",
+          "en": "This year, I hope you have time for the things you enjoy, and the things you haven't tried yet."
         }
       }
     ],
@@ -198,8 +201,8 @@
       "en": "{n}/{total} notes"
     },
     "sign": {
-      "vi": "Cung của em",
-      "en": "Your sign"
+      "vi": "Cung hoàng đạo của em",
+      "en": "Your zodiac sign"
     }
   },
   "constellations": {
@@ -278,58 +281,63 @@
   },
   "wish": {
     "kicker": {
-      "vi": "Gửi điều ước lên sao",
-      "en": "Send a wish to the stars"
+      "vi": "Đến lượt điều ước của em",
+      "en": "Your turn to make a wish"
     },
     "title": {
-      "vi": "Một điều ước chỉ cần những vì sao biết",
-      "en": "A Wish Only the Stars Need to Know"
+      "vi": "Em muốn ước điều gì?",
+      "en": "What would you wish for?"
     },
     "lede": {
-      "vi": "Nếu được ước một điều, em sẽ ước điều gì?",
-      "en": "If you could wish for one thing, what would it be?"
+      "vi": "Viết một điều em đang mong nhé. Chuyện nhỏ hay chuyện lớn đều được.",
+      "en": "Write down something you're hoping for. Big or small, it belongs here."
     },
     "placeholder": {
-      "vi": "Viết điều ước của em ở đây…",
-      "en": "Write your wish here…"
+      "vi": "Điều em đang mong là…",
+      "en": "Something I'm hoping for…"
     },
     "send": {
-      "vi": "Gửi điều ước ✨",
+      "vi": "Gửi điều ước của em ✨",
       "en": "Send my wish ✨"
     },
     "empty": {
-      "vi": "Em viết điều ước đã.",
+      "vi": "Em viết một điều ước trước nhé.",
       "en": "Write a wish first."
     },
+    "keep": {
+      "vi": "Giữ điều ước cho riêng em",
+      "en": "Keep this wish to yourself"
+    },
     "sent": {
-      "vi": "Điều ước của em đang trên đường đến với những vì sao. Mong rằng từng chút một, nó sẽ tìm được đường đến với em. 🌠",
-      "en": "Your wish is on its way to the stars. May it find its way to you, one little step at a time. 🌠"
+      "vi": "Điều ước đã lên bầu trời nhỏ này rồi. Anh mong em sớm có tin vui về nó. 🌠",
+      "en": "Your wish is up in this little sky. I hope you'll have good news about it soon. 🌠"
     },
     "more": {
-      "vi": "Thêm",
-      "en": "More"
+      "vi": "Ước thêm một điều",
+      "en": "Make another wish"
     },
     "saved": {
-      "vi": "Những ước em đã gửi",
-      "en": "Wishes you've sent"
+      "vi": "Những điều em đã ước",
+      "en": "Your wishes"
     }
   },
   "finalLetter": {
+    "date": "2026-11-18",
     "kicker": {
       "vi": "Lá thư cuối",
       "en": "The last letter"
     },
     "title": {
-      "vi": "Trước khi em rời khỏi vũ trụ nhỏ này",
-      "en": "Before You Leave This Little Universe"
+      "vi": "Còn mấy lời anh muốn nói",
+      "en": "A few more things I want to say"
     },
     "lede": {
-      "vi": "Nếu em đã đi đến tận đây, nghĩa là em vừa khám phá hết những góc nhỏ trong vũ trụ anh làm dành riêng cho em rồi đấy.",
-      "en": "If you’ve made it all the way here, then you’ve explored every little corner of this universe I made for you."
+      "vi": "Đi một vòng cũng dài phết rồi nhỉ. Cho anh thêm vài phút nhé.",
+      "en": "That was quite a trip around this little place. Give me a few more minutes."
     },
     "body": {
-      "vi": "MJ à,\n\nEm bước vào bằng hai chữ cái, tìm thấy tên mình giữa những vì sao, đi qua những kỷ niệm của hai đứa và khám phá một vài điều anh thương ở em.\n\nThật ra, những điều anh thích nhất chẳng phải những khoảnh khắc quá lớn lao.\n\nLà cách em quan tâm anh khi anh ốm.\nLà cái mặt phụng phịu mỗi khi anh trêu em.\nLà gương mặt bất ngờ của em mỗi lần nhận quà.\nLà cách em chia sẻ cuộc sống của mình với anh.\nVà là việc anh biết rằng giữa những ngày bận rộn của em, vẫn có một chỗ dành cho hai đứa mình.\n\nTừ ngày 01/07/2026, hai đứa đã bắt đầu viết câu chuyện của riêng mình. Mình vẫn còn nhiều điều cần tìm hiểu về nhau, nhiều nơi muốn đi, nhiều món muốn ăn cùng nhau và rất nhiều ngày bình thường có thể trở thành những kỷ niệm đáng nhớ.\n\nTrong ngày sinh nhật của em, anh không mong em phải trở thành một người khác hay có một cuộc sống hoàn hảo.\n\nAnh mong em được vui vẻ, được trân trọng, đủ can đảm để theo đuổi những điều mình muốn và luôn nhớ rằng em xứng đáng được đối xử tử tế, kể cả từ chính bản thân mình.\n\nCảm ơn em vì đã đồng ý với hai đứa mình.\n\nChúc mừng sinh nhật MJ. Anh thật sự vui vì chúng ta đã gặp được nhau.\n\nMong rằng phía trước sẽ còn nhiều chuyến đi nhỏ, nhiều khoảnh khắc ngốc nghếch và thật nhiều kỷ niệm cùng em.\n\nThương em,\nNgười thích trêu em nhất. ❤️",
-      "en": "Dear MJ,\n\nYou entered with two little letters, found your name among the stars, travelled through our memories, and discovered a few things I love about you.\n\nAnd honestly, the things I love most aren’t the big, dramatic moments.\n\nIt’s how you take care of me when I’m sick.\nIt’s your little pout when I tease you.\nIt’s the surprised look on your face when I give you something.\nIt’s the way you share your life with me.\nAnd it’s knowing that somewhere in your busy days, there’s a place for us, too.\n\nSince July 1, 2026, we’ve been writing our own little story. We still have so many things to learn about each other, so many places to visit, so many meals to share, and so many ordinary days that might become our favorite memories.\n\nFor your birthday, I don’t wish for you to become someone else or to have a perfect life.\n\nI wish for you to be happy, to feel appreciated, to have the courage to chase the things you want, and to remember that you deserve kindness, including from yourself.\n\nThank you for saying yes to us.\n\nHappy birthday, MJ. I’m really glad our paths crossed.\n\nHere’s to more little adventures, more silly moments, and more memories with you.\n\nWith love,\nYour favorite person to tease. ❤️"
+      "vi": "MJ à,\n\nAnh làm món quà này vì muốn sinh nhật em có thêm một điều để vui. Rồi càng ngồi chọn ảnh, nghĩ câu hỏi, viết mấy lá thư, anh càng thấy mình có khá nhiều điều muốn nói với em.\n\nAnh thích được nghe em kể về một ngày của mình. Có chuyện vui, có chuyện bực, có cả những chuyện chẳng cần kết luận gì, kể xong là thôi. Anh thích cảm giác mình được biết thêm một chút về em như thế.\n\nAnh cũng nhớ những lúc em quan tâm khi anh ốm, cái mặt phụng phịu mỗi lần bị trêu, và vẻ bất ngờ khi em nhận quà. Mấy điều ấy không lớn lao gì, nhưng anh nhớ. Chắc vì là em nên anh để ý hơn một chút.\n\nTừ ngày 01/07/2026, hai đứa bắt đầu bên nhau. Mình vẫn đang học cách hiểu nhau, cả những lúc nói chuyện rất hợp lẫn những lúc phải hỏi lại mới hiểu. Anh muốn mình cứ nói với nhau như thế, có gì vui thì kể, có gì không ổn thì cùng tìm cách.\n\nTuổi 24, anh mong em có thêm thời gian làm những điều mình thích. Công việc thuận lợi hơn, ăn uống ngon miệng, ngủ được những giấc tử tế, thỉnh thoảng có một chuyến đi để mong chờ. Và những hôm mệt, em không phải cố tỏ ra ổn với anh.\n\nAnh còn muốn đi nhiều nơi cùng em, ăn thử nhiều món và có thêm cả những buổi chẳng làm gì đặc biệt. Nếu có ảnh để xem lại thì tốt. Không có ảnh, được ở cùng em cũng vui rồi.\n\nCảm ơn em vì đã chọn bên anh. Anh vui vì trong cuộc sống của mình có em, và vì mình vẫn còn nhiều chuyện để kể tiếp.\n\nChúc mừng sinh nhật, MJ.\n\nThương em,\nParker\n\nP.S. Quà thì anh làm nghiêm túc. Còn trêu em, chắc anh vẫn chưa bỏ được đâu. :)))",
+      "en": "Dear MJ,\n\nI made this because I wanted to give you one more reason to enjoy your birthday. Then, while choosing photos, thinking up questions, and writing these letters, I realised how much I wanted to tell you.\n\nI like hearing about your day. The good bits, the annoying bits, even the stories that don't need a conclusion. I like getting to know you through them.\n\nI remember how you care for me when I'm sick, that little pout when I tease you, and your surprised face when you get a gift. They're small things, but I remember them. I suppose I pay a little more attention because it's you.\n\nWe got together on 1 July 2026. We're still learning to understand each other, both when conversation is easy and when we have to ask again to get it right. I want us to keep talking like that: share what's good, and work through what isn't.\n\nAt 24, I hope you have more time for what you enjoy. Smoother days at work, good meals, proper sleep, and the occasional trip to look forward to. And on the tiring days, you don't have to pretend you're okay with me.\n\nI want more places to go with you, more food to try, and more afternoons with nothing special planned. Photos to look back on would be nice. Even without them, I'd be happy just spending the time with you.\n\nThank you for choosing to be with me. I'm glad you're in my life, and that we've still got more of this story to tell.\n\nHappy birthday, MJ.\n\nWith love,\nParker\n\nP.S. I took the gift seriously. As for teasing you, I don't think I've managed to give that up yet. :)))"
     },
     "skip": {
       "vi": "Đọc hết",
@@ -340,8 +348,8 @@
       "en": "Read it again"
     },
     "closing": {
-      "vi": "Em có thể đọc lại, hoặc quay lại bước trước.",
-      "en": "You can read it again, or step back."
+      "vi": "Muốn đọc lại thì em cứ ở đây thêm chút nhé.",
+      "en": "Stay a little longer if you'd like to read it again."
     },
     "signature": {
       "vi": "Parker",
@@ -350,24 +358,24 @@
   },
   "flow": {
     "next": {
-      "vi": "Tiếp",
-      "en": "Next"
+      "vi": "Đi tiếp",
+      "en": "Continue"
     },
     "back": {
-      "vi": "Bước trước",
-      "en": "Previous step"
+      "vi": "Quay lại",
+      "en": "Go back"
     },
     "progress": {
       "vi": "Bước {n} trên {total}",
       "en": "Step {n} of {total}"
     },
     "done": {
-      "vi": "Xong rồi. Em đi tiếp.",
-      "en": "That's done. Go on."
+      "vi": "Xong rồi, mình đi tiếp nhé.",
+      "en": "All done. Let's keep going."
     },
     "doneLast": {
-      "vi": "Hết một vòng trời.",
-      "en": "That's one turn of the sky."
+      "vi": "Đến dòng cuối rồi. Cảm ơn em đã đọc nhé.",
+      "en": "You've reached the last line. Thanks for reading."
     },
     "devJump": {
       "vi": "Nhảy tới bước {n}",
@@ -375,68 +383,68 @@
     },
     "hints": {
       "gate": {
-        "vi": "Nhập cái tên mà chỉ một người đặc biệt mới biết.",
-        "en": "Enter the name only one person would know."
+        "vi": "Nhập hai chữ cái anh hay gọi em nhé.",
+        "en": "Enter those two letters I call you."
       },
       "sky": {
-        "vi": "Bảy ngôi sao lần lượt xuất hiện, tạo thành tên JOLIE.",
-        "en": "Seven stars appear one by one, forming the name JOLIE."
+        "vi": "Đợi một chút để xem tên em hiện lên nhé.",
+        "en": "Give it a moment to see your name appear."
       },
       "birth": {
-        "vi": "Chạm những sao nhấp nháy để đọc hết lời nhắn.",
-        "en": "Tap the pulsing stars until every note is open."
+        "vi": "Chạm các ngôi sao nhấp nháy để đọc lời anh nhắn.",
+        "en": "Tap the pulsing stars to read my notes."
       },
       "gallery": {
         "vi": "Chạm một chương.",
         "en": "Tap a chapter."
       },
       "quiz": {
-        "vi": "Trả lời hết các câu.",
-        "en": "Answer every question."
+        "vi": "Chọn một đáp án cho mỗi câu nhé. Sai cũng đi tiếp được mà.",
+        "en": "Pick an answer for each question. You can keep going even if you get one wrong."
       },
       "counter": {
-        "vi": "Và chúng mình mới chỉ bắt đầu thôi.",
-        "en": "And we’re only getting started."
+        "vi": "Đồng hồ vẫn đang đếm từ ngày 01/07/2026 đấy.",
+        "en": "The clock's still counting from 1 July 2026."
       },
       "cake": {
-        "vi": "Hít một hơi thật sâu rồi thổi tắt nến nhé.",
-        "en": "Take a deep breath and blow out the candles."
+        "vi": "Bật mic để thổi, hoặc chạm từng ngọn nến nhé.",
+        "en": "Turn on the mic to blow, or tap each candle."
       },
       "envelope": {
-        "vi": "Mở ra khi em sẵn sàng nhé.",
-        "en": "Open when you’re ready."
+        "vi": "Chạm phong bì để đọc lời mời của anh nhé.",
+        "en": "Tap the envelope to read my invitation."
       },
       "memory": {
-        "vi": "Ghép đúng các tấm thẻ để mở khóa lời nhắn nhỏ.",
-        "en": "Match the cards and unlock a little message."
+        "vi": "Lật hai thẻ mỗi lượt, tìm những ảnh giống nhau nhé.",
+        "en": "Flip two cards at a time and find the matching photos."
       },
       "scratch": {
-        "vi": "Cào hết các thẻ.",
-        "en": "Scratch every card."
+        "vi": "Cào từng thẻ để đọc hết sáu điều nhé.",
+        "en": "Scratch each card to read all six."
       },
       "letters": {
-        "vi": "Mở từng lá thư một lần.",
-        "en": "Open each letter once."
+        "vi": "Mở cả bốn lá nhé, sau này cần thì em đọc lại.",
+        "en": "Open all four. You can come back to them whenever you need."
       },
       "friends": {
         "vi": "Đọc những lời bạn bè để lại.",
         "en": "Read the notes your friends left."
       },
       "dreams": {
-        "vi": "Tích một ước.",
-        "en": "Tick one dream."
+        "vi": "Tích một điều em cũng muốn làm cùng anh nhé.",
+        "en": "Tick something you'd like to do with me, too."
       },
       "finale": {
-        "vi": "Trả lời câu hỏi.",
-        "en": "Answer the question."
+        "vi": "Anh chờ câu trả lời của em đây. :)))",
+        "en": "I'm waiting for your answer. :)))"
       },
       "wish": {
-        "vi": "Viết một điều ước rồi gửi đi.",
-        "en": "Write a wish and send it."
+        "vi": "Viết điều ước của em rồi gửi lên đây nhé.",
+        "en": "Write your wish and send it up here."
       },
       "letter": {
-        "vi": "Đọc lá thư đến dòng cuối.",
-        "en": "Read the letter through to the last line."
+        "vi": "Cứ đọc từ từ nhé, anh để lời cuối ở đây.",
+        "en": "Take your time. I've saved my last words for here."
       }
     }
   },
@@ -446,20 +454,42 @@
       "en": "Dear MJ,"
     },
     "sealCaption": {
-      "vi": "Một lời mời nho nhỏ",
-      "en": "A Tiny Invitation"
+      "vi": "Anh có một lời mời",
+      "en": "An invitation from me"
     },
     "openHint": {
-      "vi": "Mở ra khi em sẵn sàng nhé.",
-      "en": "Open when you’re ready."
+      "vi": "Chạm để mở nhé.",
+      "en": "Tap to open."
     },
     "body": {
-      "vi": "Nhiệm vụ sinh nhật của em vẫn chưa kết thúc đâu.\n\nAnh còn muốn cùng em tạo thêm một kỷ niệm mà sau này cả hai đều muốn giữ lại.\n\nVậy nên, đây là lời mời em đi hẹn hò với anh.\n\nEm cứ mang theo nụ cười xinh xắn của mình. Còn lại để anh lo. 😉",
-      "en": "Your birthday mission isn’t over yet.\n\nThere’s one more thing I’d like to do with you: make another memory that we’ll both want to keep.\n\nSo, here’s your invitation to a date with me.\n\nYou bring your pretty smile. I’ll take care of the rest. 😉"
+      "vi": "Quà trên màn hình thì có rồi. Anh còn muốn hẹn em ở ngoài nữa.\n\nMình đi hẹn hò nhé? Ăn gì, đi đâu, hai đứa chốt với nhau sau.\n\nTrước mắt, cho anh xin một chỗ trong lịch của em đã. 😉",
+      "en": "You've got your gift on screen. Now I'd like to see you in person, too.\n\nHow about a date? We'll work out where to go and what to eat together.\n\nFor now, save me a spot in your calendar. 😉"
     },
     "enter": {
-      "vi": "Nhận lời hẹn hò",
-      "en": "Accept the invitation"
+      "vi": "Em nhận lời nhé",
+      "en": "Count me in"
+    }
+  },
+  "storyChapters": {
+    "I": {
+      "vi": "Một vũ trụ mang tên em",
+      "en": "A universe with your name"
+    },
+    "II": {
+      "vi": "Những điều anh nhớ",
+      "en": "Things I remember"
+    },
+    "III": {
+      "vi": "Từ ngày có hai đứa mình",
+      "en": "Since there were two of us"
+    },
+    "IV": {
+      "vi": "Ngày đặc biệt của em",
+      "en": "Your day"
+    },
+    "V": {
+      "vi": "Còn nhiều điều phía trước",
+      "en": "More ahead"
     }
   },
   "chapters": [
@@ -478,8 +508,8 @@
         "en": "Little Moments, Big Feelings"
       },
       "lede": {
-        "vi": "Mình không cần hàng nghìn khoảnh khắc đặc biệt. Đôi khi, những điều nhỏ bé đã là quá đủ rồi.",
-        "en": "We don’t need a thousand extraordinary moments. Sometimes, the little things are more than enough."
+        "vi": "Những điều anh nhớ từ ngày mình gặp nhau, 18/11/2022. Mình không cần hàng nghìn khoảnh khắc đặc biệt.",
+        "en": "Things I remember from the day we met, 18/11/2022. We don’t need a thousand extraordinary moments."
       }
     },
     {
@@ -493,12 +523,12 @@
         "en": "Six little things I love"
       },
       "title": {
-        "vi": "Cào nhẹ để khám phá",
-        "en": "Scratch to Reveal"
+        "vi": "Anh thích gì ở em?",
+        "en": "What do I like about you?"
       },
       "lede": {
-        "vi": "Sáu điều nhỏ bé. Một cô gái rất đặc biệt.",
-        "en": "Six little things. One very special girl."
+        "vi": "Sáu điều anh thương ở em. Cào lúc nào em muốn.",
+        "en": "Six things I love about you. Scratch them whenever you want."
       }
     },
     {
@@ -508,16 +538,16 @@
         "en": "Quiz"
       },
       "kicker": {
-        "vi": "Anh hiểu em bao nhiêu?",
+        "vi": "Em hiểu anh đến đâu?",
         "en": "How well do you know me?"
       },
       "title": {
-        "vi": "Xem em hiểu anh đến đâu nào",
-        "en": "Let’s See If You Know Me"
+        "vi": "Đố em một chút",
+        "en": "A little quiz for you"
       },
       "lede": {
-        "vi": "Trả lời hết các câu.",
-        "en": "Answer every question."
+        "vi": "Trả lời hết năm câu. Sai vẫn qua.",
+        "en": "Answer all five. A wrong answer still counts."
       }
     },
     {
@@ -527,16 +557,16 @@
         "en": "Match"
       },
       "kicker": {
-        "vi": "Lật ảnh tìm cặp",
-        "en": "Find our pairs"
+        "vi": "Lật thẻ tìm cặp",
+        "en": "Flip and find a pair"
       },
       "title": {
-        "vi": "Trí nhớ của em tốt đến đâu?",
-        "en": "How Good Is Your Memory?"
+        "vi": "Thử trí nhớ của em nào",
+        "en": "Let's try your memory"
       },
       "lede": {
-        "vi": "Ghép đúng các tấm thẻ để mở khóa lời nhắn nhỏ.",
-        "en": "Match the cards and unlock a little message."
+        "vi": "Mỗi ảnh có một tấm giống nó. Em lật thẻ tìm đủ các cặp nhé.",
+        "en": "Every photo has a match. Flip the cards and find all the pairs."
       }
     },
     {
@@ -546,16 +576,16 @@
         "en": "Dreams"
       },
       "kicker": {
-        "vi": "Ước mơ của hai đứa",
-        "en": "Our little dreams"
+        "vi": "Những điều muốn làm cùng em",
+        "en": "Things I'd like to do with you"
       },
       "title": {
-        "vi": "Một ngày nào đó, em và anh",
-        "en": "Someday, You and Me"
+        "vi": "Sau hôm nay, mình làm gì nhỉ?",
+        "en": "What shall we do after today?"
       },
       "lede": {
-        "vi": "Một vài điều anh muốn được trải nghiệm cùng em.",
-        "en": "A few things I’d love to experience with you."
+        "vi": "Những việc để hai đứa làm cùng nhau.",
+        "en": "Things for the two of us to do together."
       }
     },
     {
@@ -588,12 +618,12 @@
         "en": "Our little clock"
       },
       "title": {
-        "vi": "Từ ngày em đồng ý",
-        "en": "Since You Said Yes"
+        "vi": "Từ ngày hai đứa bên nhau",
+        "en": "Since we got together"
       },
       "lede": {
-        "vi": "Ngày em đồng ý cũng là ngày câu chuyện nhỏ của hai đứa mình bắt đầu. Và chúng mình mới chỉ bắt đầu thôi.",
-        "en": "The day you said yes became the beginning of our little story. And we’re only getting started."
+        "vi": "Mình gặp nhau ngày 18/11/2022. Đồng hồ này đếm từ 01/07/2026, ngày em đồng ý. Và chúng mình mới chỉ bắt đầu thôi.",
+        "en": "We met on 18/11/2022. This clock counts from 01/07/2026, the day you said yes. And we’re only getting started."
       }
     }
   ],
@@ -615,12 +645,12 @@
       "en": "← Back to the galaxy"
     },
     "eraProgress": {
-      "vi": "Thời {n}/{total} · ảnh {photo}/{photos}",
-      "en": "Era {n} of {total} · photo {photo}/{photos}"
+      "vi": "Chương {n}/{total} · ảnh {photo}/{photos}",
+      "en": "Chapter {n} of {total} · photo {photo}/{photos}"
     },
     "nextEra": {
-      "vi": "Thời tiếp theo",
-      "en": "Next era"
+      "vi": "Chương tiếp theo",
+      "en": "Next chapter"
     },
     "seen": {
       "vi": "Đã xem",
@@ -631,8 +661,8 @@
       "en": "Not yet"
     },
     "empty": {
-      "vi": "Hết thời này rồi.",
-      "en": "That's the end of this era."
+      "vi": "Hết chương này rồi.",
+      "en": "That's the end of this chapter."
     },
     "close": {
       "vi": "Đóng ảnh",
@@ -645,524 +675,2088 @@
   },
   "eras": [
     {
-      "id": "care",
+      "id": "g-childhood",
       "title": {
-        "vi": "Những lúc em chăm anh",
-        "en": "When You Take Care of Me"
+        "vi": "Em hồi bé",
+        "en": "Little you"
       },
-      "date": "2026-07-01",
-      "color": "#f4b4cf",
-      "photos": [
-        {
-          "id": "care-01",
-          "src": "lilj/care/01_IMG_4956",
-          "caption": {
-            "vi": "",
-            "en": ""
-          },
-          "compliment": {
-            "vi": "Sự chu đáo của em là một trong những điều anh thương nhất.",
-            "en": "Your caring heart is one of the things I love most about you."
-          }
-        },
-        {
-          "id": "care-02",
-          "src": "lilj/care/02_IMG_5642",
-          "caption": {
-            "vi": "",
-            "en": ""
-          },
-          "compliment": {
-            "vi": "Sự chu đáo của em là một trong những điều anh thương nhất.",
-            "en": "Your caring heart is one of the things I love most about you."
-          }
-        },
-        {
-          "id": "care-03",
-          "src": "lilj/care/03_IMG_5653",
-          "caption": {
-            "vi": "",
-            "en": ""
-          },
-          "compliment": {
-            "vi": "Sự chu đáo của em là một trong những điều anh thương nhất.",
-            "en": "Your caring heart is one of the things I love most about you."
-          }
-        },
-        {
-          "id": "care-04",
-          "src": "lilj/care/04_IMG_6987",
-          "caption": {
-            "vi": "",
-            "en": ""
-          },
-          "compliment": {
-            "vi": "Sự chu đáo của em là một trong những điều anh thương nhất.",
-            "en": "Your caring heart is one of the things I love most about you."
-          }
-        },
-        {
-          "id": "care-05",
-          "src": "lilj/care/05_77_2999967433508047",
-          "caption": {
-            "vi": "",
-            "en": ""
-          },
-          "compliment": {
-            "vi": "Sự chu đáo của em là một trong những điều anh thương nhất.",
-            "en": "Your caring heart is one of the things I love most about you."
-          }
-        },
-        {
-          "id": "care-06",
-          "src": "lilj/care/06_80_2998892496948874",
-          "caption": {
-            "vi": "",
-            "en": ""
-          },
-          "compliment": {
-            "vi": "Sự chu đáo của em là một trong những điều anh thương nhất.",
-            "en": "Your caring heart is one of the things I love most about you."
-          }
-        }
-      ]
-    },
-    {
-      "id": "pout",
-      "title": {
-        "vi": "Chiếc mặt phụng phịu ấy",
-        "en": "That Little Pout"
-      },
-      "date": "2026-07-01",
+      "kind": "her-life",
       "color": "#c5dff5",
       "photos": [
         {
-          "id": "pout-01",
-          "src": "lilj/pout/01_168_2960321930805931",
+          "id": "g-childhood-02cb6fb950",
+          "src": "lilj/galaxy-v3/childhood/g-childhood-02cb6fb950",
           "caption": {
-            "vi": "",
-            "en": ""
+            "vi": "Tóc buộc hai bên, nhìn máy ảnh rất nghiêm túc. Hồi bé em có hay nghịch không? Hôm nào kể anh nghe nhé.",
+            "en": "Pigtails and such a serious look at the camera. Were you mischievous as a kid? Tell me sometime."
           },
           "compliment": {
-            "vi": "Em chẳng biết mình đáng yêu thế nào mỗi lần giả vờ giận đâu.",
-            "en": "You have no idea how adorable you are when you’re pretending to be annoyed."
-          }
-        },
-        {
-          "id": "pout-02",
-          "src": "lilj/pout/02_IMG_5282",
-          "caption": {
-            "vi": "",
-            "en": ""
-          },
-          "compliment": {
-            "vi": "Em chẳng biết mình đáng yêu thế nào mỗi lần giả vờ giận đâu.",
-            "en": "You have no idea how adorable you are when you’re pretending to be annoyed."
-          }
-        },
-        {
-          "id": "pout-03",
-          "src": "lilj/pout/03_59_3018369325001191",
-          "caption": {
-            "vi": "",
-            "en": ""
-          },
-          "compliment": {
-            "vi": "Em chẳng biết mình đáng yêu thế nào mỗi lần giả vờ giận đâu.",
-            "en": "You have no idea how adorable you are when you’re pretending to be annoyed."
-          }
-        },
-        {
-          "id": "pout-04",
-          "src": "lilj/pout/04_41_3026254517546005",
-          "caption": {
-            "vi": "",
-            "en": ""
-          },
-          "compliment": {
-            "vi": "Em chẳng biết mình đáng yêu thế nào mỗi lần giả vờ giận đâu.",
-            "en": "You have no idea how adorable you are when you’re pretending to be annoyed."
-          }
-        },
-        {
-          "id": "pout-05",
-          "src": "lilj/pout/05_15_3119264744911648",
-          "caption": {
-            "vi": "",
-            "en": ""
-          },
-          "compliment": {
-            "vi": "Em chẳng biết mình đáng yêu thế nào mỗi lần giả vờ giận đâu.",
-            "en": "You have no idea how adorable you are when you’re pretending to be annoyed."
-          }
-        },
-        {
-          "id": "pout-06",
-          "src": "lilj/pout/06_8_3188021311369324",
-          "caption": {
-            "vi": "",
-            "en": ""
-          },
-          "compliment": {
-            "vi": "Em chẳng biết mình đáng yêu thế nào mỗi lần giả vờ giận đâu.",
-            "en": "You have no idea how adorable you are when you’re pretending to be annoyed."
-          }
-        },
-        {
-          "id": "pout-07",
-          "src": "lilj/pout/07_31_3044421229062667",
-          "caption": {
-            "vi": "",
-            "en": ""
-          },
-          "compliment": {
-            "vi": "Em chẳng biết mình đáng yêu thế nào mỗi lần giả vờ giận đâu.",
-            "en": "You have no idea how adorable you are when you’re pretending to be annoyed."
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
           }
         }
       ]
     },
     {
-      "id": "surprise",
+      "id": "g-selfies",
       "title": {
-        "vi": "Gương mặt bất ngờ của em",
-        "en": "Your Surprised Face"
+        "vi": "Mấy tấm selfie",
+        "en": "Your selfies"
       },
-      "date": "2026-07-01",
-      "color": "#e7d4ff",
+      "kind": "together",
+      "color": "#e8c98a",
       "photos": [
         {
-          "id": "surprise-01",
-          "src": "lilj/surprise/01_IMG_4914",
+          "id": "g-selfies-bb678f64f7",
+          "src": "lilj/galaxy-v3/selfies/g-selfies-bb678f64f7",
           "caption": {
-            "vi": "",
-            "en": ""
+            "vi": "Anh định chọn vài tấm thôi, mà cứ chọn xong lại muốn giữ thêm. Em thấy anh hơi tham cũng đúng.",
+            "en": "I meant to pick just a few, but I keep wanting to save more. Fair to say I am a little greedy."
           },
           "compliment": {
-            "vi": "Nhìn em vui thật lòng khiến mọi công sức của anh đều xứng đáng.",
-            "en": "Seeing you genuinely happy makes every little effort worth it."
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
           }
         },
         {
-          "id": "surprise-02",
-          "src": "lilj/surprise/02_IMG_5087",
+          "id": "g-selfies-8c4b419141",
+          "src": "lilj/galaxy-v3/selfies/g-selfies-8c4b419141",
           "caption": {
             "vi": "",
             "en": ""
           },
           "compliment": {
-            "vi": "Nhìn em vui thật lòng khiến mọi công sức của anh đều xứng đáng.",
-            "en": "Seeing you genuinely happy makes every little effort worth it."
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
           }
         },
         {
-          "id": "surprise-03",
-          "src": "lilj/surprise/03_IMG_6126",
+          "id": "g-selfies-543a2be474",
+          "src": "lilj/galaxy-v3/selfies/g-selfies-543a2be474",
           "caption": {
             "vi": "",
             "en": ""
           },
           "compliment": {
-            "vi": "Nhìn em vui thật lòng khiến mọi công sức của anh đều xứng đáng.",
-            "en": "Seeing you genuinely happy makes every little effort worth it."
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
           }
         },
         {
-          "id": "surprise-04",
-          "src": "lilj/surprise/04_IMG_6302",
+          "id": "g-selfies-62c1e9edab",
+          "src": "lilj/galaxy-v3/selfies/g-selfies-62c1e9edab",
           "caption": {
             "vi": "",
             "en": ""
           },
           "compliment": {
-            "vi": "Nhìn em vui thật lòng khiến mọi công sức của anh đều xứng đáng.",
-            "en": "Seeing you genuinely happy makes every little effort worth it."
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
           }
         },
         {
-          "id": "surprise-05",
-          "src": "lilj/surprise/05_IMG_4889",
+          "id": "g-selfies-eb010a604a",
+          "src": "lilj/galaxy-v3/selfies/g-selfies-eb010a604a",
           "caption": {
             "vi": "",
             "en": ""
           },
           "compliment": {
-            "vi": "Nhìn em vui thật lòng khiến mọi công sức của anh đều xứng đáng.",
-            "en": "Seeing you genuinely happy makes every little effort worth it."
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
           }
         },
         {
-          "id": "surprise-06",
-          "src": "lilj/surprise/06_94_2991176137720510",
+          "id": "g-selfies-982cfbe3a4",
+          "src": "lilj/galaxy-v3/selfies/g-selfies-982cfbe3a4",
           "caption": {
             "vi": "",
             "en": ""
           },
           "compliment": {
-            "vi": "Nhìn em vui thật lòng khiến mọi công sức của anh đều xứng đáng.",
-            "en": "Seeing you genuinely happy makes every little effort worth it."
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
           }
         },
         {
-          "id": "surprise-07",
-          "src": "lilj/surprise/07_79_2999967366841387",
+          "id": "g-selfies-1fe10d2f18",
+          "src": "lilj/galaxy-v3/selfies/g-selfies-1fe10d2f18",
           "caption": {
             "vi": "",
             "en": ""
           },
           "compliment": {
-            "vi": "Nhìn em vui thật lòng khiến mọi công sức của anh đều xứng đáng.",
-            "en": "Seeing you genuinely happy makes every little effort worth it."
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
           }
         }
       ]
     },
     {
-      "id": "ordinary",
+      "id": "g-flowers",
       "title": {
-        "vi": "Những ngày bình thường, người anh thích nhất",
-        "en": "Ordinary Days, Favorite Person"
+        "vi": "Em và hoa",
+        "en": "You and flowers"
       },
-      "date": "2026-07-01",
-      "color": "#f8d4c6",
+      "kind": "together",
+      "color": "#c5dfc8",
       "photos": [
         {
-          "id": "ordinary-01",
-          "src": "lilj/ordinary/01_171_2957510864420371",
+          "id": "g-flowers-3372df2172",
+          "src": "lilj/galaxy-v3/flowers/g-flowers-3372df2172",
           "caption": {
-            "vi": "",
-            "en": ""
+            "vi": "Hoa giấy hay những bó hoa em ôm, tấm nào anh cũng muốn giữ. Lần sau em thích được tặng hoa gì?",
+            "en": "Bougainvillea or the bouquets in your arms, I want to keep every photo. What flowers would you like next time?"
           },
           "compliment": {
-            "vi": "Em khiến những ngày bình thường trở nên khác một chút.",
-            "en": "You make ordinary days feel a little less ordinary."
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
           }
         },
         {
-          "id": "ordinary-02",
-          "src": "lilj/ordinary/02_155_2967508246753966",
+          "id": "g-flowers-71d93e11e4",
+          "src": "lilj/galaxy-v3/flowers/g-flowers-71d93e11e4",
           "caption": {
             "vi": "",
             "en": ""
           },
           "compliment": {
-            "vi": "Em khiến những ngày bình thường trở nên khác một chút.",
-            "en": "You make ordinary days feel a little less ordinary."
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
           }
         },
         {
-          "id": "ordinary-03",
-          "src": "lilj/ordinary/03_43_3023470711157719",
+          "id": "g-flowers-50016b482a",
+          "src": "lilj/galaxy-v3/flowers/g-flowers-50016b482a",
           "caption": {
             "vi": "",
             "en": ""
           },
           "compliment": {
-            "vi": "Em khiến những ngày bình thường trở nên khác một chút.",
-            "en": "You make ordinary days feel a little less ordinary."
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
           }
         },
         {
-          "id": "ordinary-04",
-          "src": "lilj/ordinary/04_26_3078222412349215",
+          "id": "g-flowers-e0b7e8aca8",
+          "src": "lilj/galaxy-v3/flowers/g-flowers-e0b7e8aca8",
           "caption": {
             "vi": "",
             "en": ""
           },
           "compliment": {
-            "vi": "Em khiến những ngày bình thường trở nên khác một chút.",
-            "en": "You make ordinary days feel a little less ordinary."
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
           }
         },
         {
-          "id": "ordinary-05",
-          "src": "lilj/ordinary/05_24_3078641785640611",
+          "id": "g-flowers-20fdecb3fd",
+          "src": "lilj/galaxy-v3/flowers/g-flowers-20fdecb3fd",
           "caption": {
             "vi": "",
             "en": ""
           },
           "compliment": {
-            "vi": "Em khiến những ngày bình thường trở nên khác một chút.",
-            "en": "You make ordinary days feel a little less ordinary."
-          }
-        },
-        {
-          "id": "ordinary-06",
-          "src": "lilj/ordinary/06_22_3091347324370057",
-          "caption": {
-            "vi": "",
-            "en": ""
-          },
-          "compliment": {
-            "vi": "Em khiến những ngày bình thường trở nên khác một chút.",
-            "en": "You make ordinary days feel a little less ordinary."
-          }
-        },
-        {
-          "id": "ordinary-07",
-          "src": "lilj/ordinary/07_36_3041001952737928",
-          "caption": {
-            "vi": "",
-            "en": ""
-          },
-          "compliment": {
-            "vi": "Em khiến những ngày bình thường trở nên khác một chút.",
-            "en": "You make ordinary days feel a little less ordinary."
-          }
-        },
-        {
-          "id": "ordinary-08",
-          "src": "lilj/ordinary/08_6_3275170935987694",
-          "caption": {
-            "vi": "",
-            "en": ""
-          },
-          "compliment": {
-            "vi": "Em khiến những ngày bình thường trở nên khác một chút.",
-            "en": "You make ordinary days feel a little less ordinary."
-          }
-        },
-        {
-          "id": "ordinary-09",
-          "src": "lilj/ordinary/09_125_2982091925295598",
-          "caption": {
-            "vi": "",
-            "en": ""
-          },
-          "compliment": {
-            "vi": "Em khiến những ngày bình thường trở nên khác một chút.",
-            "en": "You make ordinary days feel a little less ordinary."
-          }
-        },
-        {
-          "id": "ordinary-10",
-          "src": "lilj/ordinary/10_52_3021328431371947",
-          "caption": {
-            "vi": "",
-            "en": ""
-          },
-          "compliment": {
-            "vi": "Em khiến những ngày bình thường trở nên khác một chút.",
-            "en": "You make ordinary days feel a little less ordinary."
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
           }
         }
       ]
     },
     {
-      "id": "more",
+      "id": "g-streets",
       "title": {
-        "vi": "Những kỷ niệm sắp tới",
-        "en": "More Memories to Come"
+        "vi": "Em đi phố",
+        "en": "Out and about"
       },
-      "date": "2026-07-01",
-      "color": "#d7e8c9",
+      "kind": "together",
+      "color": "#f4b4cf",
       "photos": [
         {
-          "id": "more-01",
-          "src": "lilj/more/01_4_3340374802800640",
+          "id": "g-streets-ea7fee65ff",
+          "src": "lilj/galaxy-v3/streets/g-streets-ea7fee65ff",
           "caption": {
-            "vi": "",
-            "en": ""
+            "vi": "Một góc cầu thang, một kệ sách, một con phố. Hôm nào mình đi bộ, thấy góc nào thích thì dừng lại chụp nhé.",
+            "en": "A staircase, a bookshelf, a street. Next time we take a walk, let us stop for a photo wherever you like."
           },
           "compliment": {
-            "vi": "Anh mong sau này, khi nhìn lại những tấm ảnh này, hai đứa sẽ cười vì đã cùng nhau trưởng thành nhiều đến thế.",
-            "en": "I hope one day we’ll look back at these photos and laugh at how much we’ve grown together."
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
           }
         },
         {
-          "id": "more-02",
-          "src": "lilj/more/02_2_3340374909467296",
+          "id": "g-streets-b0399bcef2",
+          "src": "lilj/galaxy-v3/streets/g-streets-b0399bcef2",
           "caption": {
             "vi": "",
             "en": ""
           },
           "compliment": {
-            "vi": "Anh mong sau này, khi nhìn lại những tấm ảnh này, hai đứa sẽ cười vì đã cùng nhau trưởng thành nhiều đến thế.",
-            "en": "I hope one day we’ll look back at these photos and laugh at how much we’ve grown together."
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
           }
         },
         {
-          "id": "more-03",
-          "src": "lilj/more/03_20_3113258732178916",
+          "id": "g-streets-f91790e0f2",
+          "src": "lilj/galaxy-v3/streets/g-streets-f91790e0f2",
           "caption": {
             "vi": "",
             "en": ""
           },
           "compliment": {
-            "vi": "Anh mong sau này, khi nhìn lại những tấm ảnh này, hai đứa sẽ cười vì đã cùng nhau trưởng thành nhiều đến thế.",
-            "en": "I hope one day we’ll look back at these photos and laugh at how much we’ve grown together."
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
           }
         },
         {
-          "id": "more-04",
-          "src": "lilj/more/04_17_3113258795512243",
+          "id": "g-streets-eb25266b59",
+          "src": "lilj/galaxy-v3/streets/g-streets-eb25266b59",
           "caption": {
             "vi": "",
             "en": ""
           },
           "compliment": {
-            "vi": "Anh mong sau này, khi nhìn lại những tấm ảnh này, hai đứa sẽ cười vì đã cùng nhau trưởng thành nhiều đến thế.",
-            "en": "I hope one day we’ll look back at these photos and laugh at how much we’ve grown together."
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
           }
         },
         {
-          "id": "more-05",
-          "src": "lilj/more/05_13_3137320006439455",
+          "id": "g-streets-4648e6c661",
+          "src": "lilj/galaxy-v3/streets/g-streets-4648e6c661",
           "caption": {
             "vi": "",
             "en": ""
           },
           "compliment": {
-            "vi": "Anh mong sau này, khi nhìn lại những tấm ảnh này, hai đứa sẽ cười vì đã cùng nhau trưởng thành nhiều đến thế.",
-            "en": "I hope one day we’ll look back at these photos and laugh at how much we’ve grown together."
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
           }
         },
         {
-          "id": "more-06",
-          "src": "lilj/more/06_38_3029988970505893",
+          "id": "g-streets-f0e5066fce",
+          "src": "lilj/galaxy-v3/streets/g-streets-f0e5066fce",
           "caption": {
             "vi": "",
             "en": ""
           },
           "compliment": {
-            "vi": "Anh mong sau này, khi nhìn lại những tấm ảnh này, hai đứa sẽ cười vì đã cùng nhau trưởng thành nhiều đến thế.",
-            "en": "I hope one day we’ll look back at these photos and laugh at how much we’ve grown together."
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        }
+      ]
+    },
+    {
+      "id": "g-camera",
+      "title": {
+        "vi": "Đang chụp gì đấy?",
+        "en": "What are you photographing?"
+      },
+      "kind": "together",
+      "color": "#c5dff5",
+      "photos": [
+        {
+          "id": "g-camera-2095ecb7ae",
+          "src": "lilj/galaxy-v3/camera/g-camera-2095ecb7ae",
+          "caption": {
+            "vi": "Áo trắng, cây xanh và chiếc máy ảnh nhỏ. Anh thích bộ này. Còn em đang ngắm chụp gì, kể anh nghe với.",
+            "en": "A white shirt, green trees and a little camera. I like this set. Tell me what you were framing."
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
           }
         },
         {
-          "id": "more-07",
-          "src": "lilj/more/07_32_3044421205729336",
+          "id": "g-camera-f0f5e2e229",
+          "src": "lilj/galaxy-v3/camera/g-camera-f0f5e2e229",
           "caption": {
             "vi": "",
             "en": ""
           },
           "compliment": {
-            "vi": "Anh mong sau này, khi nhìn lại những tấm ảnh này, hai đứa sẽ cười vì đã cùng nhau trưởng thành nhiều đến thế.",
-            "en": "I hope one day we’ll look back at these photos and laugh at how much we’ve grown together."
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
           }
         },
         {
-          "id": "more-08",
-          "src": "lilj/more/08_30_3047179495453507",
+          "id": "g-camera-a8ec3c6637",
+          "src": "lilj/galaxy-v3/camera/g-camera-a8ec3c6637",
           "caption": {
             "vi": "",
             "en": ""
           },
           "compliment": {
-            "vi": "Anh mong sau này, khi nhìn lại những tấm ảnh này, hai đứa sẽ cười vì đã cùng nhau trưởng thành nhiều đến thế.",
-            "en": "I hope one day we’ll look back at these photos and laugh at how much we’ve grown together."
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
           }
         },
         {
-          "id": "more-09",
-          "src": "lilj/more/09_121_2982647715240019",
+          "id": "g-camera-cbd971ac42",
+          "src": "lilj/galaxy-v3/camera/g-camera-cbd971ac42",
           "caption": {
             "vi": "",
             "en": ""
           },
           "compliment": {
-            "vi": "Anh mong sau này, khi nhìn lại những tấm ảnh này, hai đứa sẽ cười vì đã cùng nhau trưởng thành nhiều đến thế.",
-            "en": "I hope one day we’ll look back at these photos and laugh at how much we’ve grown together."
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-camera-e6bab2aa4d",
+          "src": "lilj/galaxy-v3/camera/g-camera-e6bab2aa4d",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-camera-4449f1de3a",
+          "src": "lilj/galaxy-v3/camera/g-camera-4449f1de3a",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-camera-e140d296ef",
+          "src": "lilj/galaxy-v3/camera/g-camera-e140d296ef",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-camera-ab7fd48175",
+          "src": "lilj/galaxy-v3/camera/g-camera-ab7fd48175",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-camera-b55ec6857a",
+          "src": "lilj/galaxy-v3/camera/g-camera-b55ec6857a",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-camera-ef3784337e",
+          "src": "lilj/galaxy-v3/camera/g-camera-ef3784337e",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-camera-2b0e899855",
+          "src": "lilj/galaxy-v3/camera/g-camera-2b0e899855",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-camera-305bebd6b5",
+          "src": "lilj/galaxy-v3/camera/g-camera-305bebd6b5",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        }
+      ]
+    },
+    {
+      "id": "g-red-flags",
+      "title": {
+        "vi": "Em với cờ đỏ",
+        "en": "You with the red flags"
+      },
+      "kind": "together",
+      "color": "#e8c98a",
+      "photos": [
+        {
+          "id": "g-red-flags-aad26b5369",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-aad26b5369",
+          "caption": {
+            "vi": "Áo dài trắng với khăn đỏ, nhìn em nổi bật thật. Cả bộ 45 tấm, bảo anh chọn ít thôi thì hơi khó.",
+            "en": "You really stand out in that white ao dai and red scarf. With 45 photos, picking just a few is hard."
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-0a65652027",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-0a65652027",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-f86b9cc858",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-f86b9cc858",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-1ec1e828e9",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-1ec1e828e9",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-3e3769c135",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-3e3769c135",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-1880c63cdd",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-1880c63cdd",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-b6395c7d0c",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-b6395c7d0c",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-35c3abd8a5",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-35c3abd8a5",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-86648216ae",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-86648216ae",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-ad64cbbb7d",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-ad64cbbb7d",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-be6dcc9dfd",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-be6dcc9dfd",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-db97bff9cb",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-db97bff9cb",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-d1fb9af4a2",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-d1fb9af4a2",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-4bcad218ff",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-4bcad218ff",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-7686d73509",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-7686d73509",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-2124ea6c39",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-2124ea6c39",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-502e34b619",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-502e34b619",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-f55f21b776",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-f55f21b776",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-c455036015",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-c455036015",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-790ac5ee63",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-790ac5ee63",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-02486e8d29",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-02486e8d29",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-471b713b9f",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-471b713b9f",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-01d536556b",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-01d536556b",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-904045ca31",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-904045ca31",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-471c7acd55",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-471c7acd55",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-524f7d37c6",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-524f7d37c6",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-0730d36b0a",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-0730d36b0a",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-76c75f371c",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-76c75f371c",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-be578491be",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-be578491be",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-740e88cf28",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-740e88cf28",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-affcd7757a",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-affcd7757a",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-f13fdfeca5",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-f13fdfeca5",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-bd7fd5c7f0",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-bd7fd5c7f0",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-e64896c75f",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-e64896c75f",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-69b4cc6e4b",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-69b4cc6e4b",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-c74328388f",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-c74328388f",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-4477c08fcc",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-4477c08fcc",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-ba0e39f092",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-ba0e39f092",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-7f3ab5691b",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-7f3ab5691b",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-aa91fa0822",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-aa91fa0822",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-a874f2578b",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-a874f2578b",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-116e3a3151",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-116e3a3151",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-a4ee2a4b8f",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-a4ee2a4b8f",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-73c328afbd",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-73c328afbd",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-red-flags-daad1da203",
+          "src": "lilj/galaxy-v3/red-flags/g-red-flags-daad1da203",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        }
+      ]
+    },
+    {
+      "id": "g-travels",
+      "title": {
+        "vi": "Những chuyến đi của em",
+        "en": "Your travels"
+      },
+      "kind": "together",
+      "color": "#c5dfc8",
+      "photos": [
+        {
+          "id": "g-travels-c177584edc",
+          "src": "lilj/galaxy-v3/travels/g-travels-c177584edc",
+          "caption": {
+            "vi": "Anh xem cảnh một lúc lại quay sang nhìn em. Mong sau này có thêm ảnh chuyến châu Âu hai đứa vẫn nhắc đến.",
+            "en": "I look at the scenery, then back at you. I hope we add photos from that Europe trip we keep talking about."
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-travels-cd4b3bd1f5",
+          "src": "lilj/galaxy-v3/travels/g-travels-cd4b3bd1f5",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-travels-7e1d6875ac",
+          "src": "lilj/galaxy-v3/travels/g-travels-7e1d6875ac",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-travels-32284628cf",
+          "src": "lilj/galaxy-v3/travels/g-travels-32284628cf",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-travels-ad48558232",
+          "src": "lilj/galaxy-v3/travels/g-travels-ad48558232",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-travels-489e404ba0",
+          "src": "lilj/galaxy-v3/travels/g-travels-489e404ba0",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-travels-06b5524488",
+          "src": "lilj/galaxy-v3/travels/g-travels-06b5524488",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-travels-3a7a0f5731",
+          "src": "lilj/galaxy-v3/travels/g-travels-3a7a0f5731",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-travels-975e5132b8",
+          "src": "lilj/galaxy-v3/travels/g-travels-975e5132b8",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-travels-91fd69ddf1",
+          "src": "lilj/galaxy-v3/travels/g-travels-91fd69ddf1",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-travels-2255a786e3",
+          "src": "lilj/galaxy-v3/travels/g-travels-2255a786e3",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-travels-be02ded5c9",
+          "src": "lilj/galaxy-v3/travels/g-travels-be02ded5c9",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-travels-e06ca3b8b5",
+          "src": "lilj/galaxy-v3/travels/g-travels-e06ca3b8b5",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-travels-75b614094b",
+          "src": "lilj/galaxy-v3/travels/g-travels-75b614094b",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        }
+      ]
+    },
+    {
+      "id": "g-white-dress",
+      "title": {
+        "vi": "Em dưới cổng xanh",
+        "en": "Under the green arch"
+      },
+      "kind": "together",
+      "color": "#f4b4cf",
+      "photos": [
+        {
+          "id": "g-white-dress-5f340ddb53",
+          "src": "lilj/galaxy-v3/white-dress/g-white-dress-5f340ddb53",
+          "caption": {
+            "vi": "Váy trắng, cổng xanh, những mái ngói đỏ. Anh thích bộ này. Hôm nào em kể anh nghe về chỗ này nhé.",
+            "en": "A white dress, a green arch, red tiled roofs. I like this set. Tell me about this place sometime."
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-white-dress-a038abea9b",
+          "src": "lilj/galaxy-v3/white-dress/g-white-dress-a038abea9b",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-white-dress-a3ca2cf1eb",
+          "src": "lilj/galaxy-v3/white-dress/g-white-dress-a3ca2cf1eb",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-white-dress-181a9dac5f",
+          "src": "lilj/galaxy-v3/white-dress/g-white-dress-181a9dac5f",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-white-dress-caa8ae2dfd",
+          "src": "lilj/galaxy-v3/white-dress/g-white-dress-caa8ae2dfd",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-white-dress-10a9c118ee",
+          "src": "lilj/galaxy-v3/white-dress/g-white-dress-10a9c118ee",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-white-dress-8d58a6d46b",
+          "src": "lilj/galaxy-v3/white-dress/g-white-dress-8d58a6d46b",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-white-dress-5be6cc4a86",
+          "src": "lilj/galaxy-v3/white-dress/g-white-dress-5be6cc4a86",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        }
+      ]
+    },
+    {
+      "id": "g-birthdays",
+      "title": {
+        "vi": "Những mùa sinh nhật",
+        "en": "Birthday moments"
+      },
+      "kind": "together",
+      "color": "#c5dff5",
+      "photos": [
+        {
+          "id": "g-birthdays-77a627fab5",
+          "src": "lilj/galaxy-v3/birthdays/g-birthdays-77a627fab5",
+          "caption": {
+            "vi": "Anh gom mấy tấm sinh nhật để em xem lại. Đến tuổi 24, anh muốn góp thêm một món quà của mình.",
+            "en": "I gathered these birthday photos for you to revisit. For your 24th, I want to add a gift of my own."
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-birthdays-b9887bd75f",
+          "src": "lilj/galaxy-v3/birthdays/g-birthdays-b9887bd75f",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-birthdays-4266dd596e",
+          "src": "lilj/galaxy-v3/birthdays/g-birthdays-4266dd596e",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-birthdays-552b9f165f",
+          "src": "lilj/galaxy-v3/birthdays/g-birthdays-552b9f165f",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-birthdays-8fc72e327a",
+          "src": "lilj/galaxy-v3/birthdays/g-birthdays-8fc72e327a",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-birthdays-1ef5381dd5",
+          "src": "lilj/galaxy-v3/birthdays/g-birthdays-1ef5381dd5",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-birthdays-9771bfe370",
+          "src": "lilj/galaxy-v3/birthdays/g-birthdays-9771bfe370",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-birthdays-98cb0db47b",
+          "src": "lilj/galaxy-v3/birthdays/g-birthdays-98cb0db47b",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        }
+      ]
+    },
+    {
+      "id": "g-together",
+      "title": {
+        "vi": "Có cả hai đứa",
+        "en": "Both of us"
+      },
+      "kind": "together",
+      "color": "#e8c98a",
+      "photos": [
+        {
+          "id": "g-together-aa799e7857",
+          "src": "lilj/galaxy-v3/together/g-together-aa799e7857",
+          "caption": {
+            "vi": "Một tấm bên hồ, một tấm nắm tay. Mới có hai ảnh thôi, mình chụp thêm dần nhé.",
+            "en": "One by the lake, one holding hands. Just two photos so far. Let us keep adding more."
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-together-18a5604cfb",
+          "src": "lilj/galaxy-v3/together/g-together-18a5604cfb",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        }
+      ]
+    },
+    {
+      "id": "g-cafes",
+      "title": {
+        "vi": "Em chọn quán nhé",
+        "en": "You pick the place"
+      },
+      "kind": "together",
+      "color": "#c5dfc8",
+      "photos": [
+        {
+          "id": "g-cafes-ffd066137a",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-ffd066137a",
+          "caption": {
+            "vi": "Xem ảnh xong anh lại muốn rủ em đi ăn. Em chọn quán nhé, món thì cho anh góp ý với.",
+            "en": "These photos make me want to take you out for food. You pick the place, but let me help choose the dishes."
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-9cda8f8716",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-9cda8f8716",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-d369dc6f0e",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-d369dc6f0e",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-712da0c210",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-712da0c210",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-98c4c20bb9",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-98c4c20bb9",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-fcb6dd8c06",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-fcb6dd8c06",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-ab55cc20a0",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-ab55cc20a0",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-b86f69c926",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-b86f69c926",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-1551630290",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-1551630290",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-267527e68a",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-267527e68a",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-9f863eb07c",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-9f863eb07c",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-1eb5bec867",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-1eb5bec867",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-43f452f90e",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-43f452f90e",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-8e96e18501",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-8e96e18501",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-8f43135535",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-8f43135535",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-8b0bc5e058",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-8b0bc5e058",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-8f2014e0ad",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-8f2014e0ad",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-a80161ab37",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-a80161ab37",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-0116c169d8",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-0116c169d8",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-2741f0b28a",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-2741f0b28a",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-d4cd9d8cb2",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-d4cd9d8cb2",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-6797b301dd",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-6797b301dd",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-4c0fbc638e",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-4c0fbc638e",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-5f51137ea6",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-5f51137ea6",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-32650d64fb",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-32650d64fb",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-4e3cb56eaa",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-4e3cb56eaa",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-1e263717d0",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-1e263717d0",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-a57004f120",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-a57004f120",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-45529e8dfb",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-45529e8dfb",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-fdb0eafc68",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-fdb0eafc68",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-2263ba1ed2",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-2263ba1ed2",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-add4f18df7",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-add4f18df7",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-ddf71d77f9",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-ddf71d77f9",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-c416743a00",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-c416743a00",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-5af4b2386e",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-5af4b2386e",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-5ad86244eb",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-5ad86244eb",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-a37a02f846",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-a37a02f846",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-4238f64829",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-4238f64829",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-73b623dde8",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-73b623dde8",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-319ca8248c",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-319ca8248c",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-cafes-8725e57286",
+          "src": "lilj/galaxy-v3/cafes/g-cafes-8725e57286",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        }
+      ]
+    },
+    {
+      "id": "g-christmas",
+      "title": {
+        "vi": "Mấy mùa Giáng sinh",
+        "en": "Christmas moments"
+      },
+      "kind": "together",
+      "color": "#f4b4cf",
+      "photos": [
+        {
+          "id": "g-christmas-a26eb46348",
+          "src": "lilj/galaxy-v3/christmas/g-christmas-a26eb46348",
+          "caption": {
+            "vi": "Có tấm em ôm quà, có tấm ôm gấu bông. Giáng sinh năm nay, cho anh xin một chỗ cạnh em trong ảnh nhé.",
+            "en": "In one you hug a gift, in another a teddy bear. Save me a spot beside you in this year’s Christmas photos."
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-christmas-d71cbe686d",
+          "src": "lilj/galaxy-v3/christmas/g-christmas-d71cbe686d",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-christmas-2ec0bdb4f8",
+          "src": "lilj/galaxy-v3/christmas/g-christmas-2ec0bdb4f8",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-christmas-13acf72c50",
+          "src": "lilj/galaxy-v3/christmas/g-christmas-13acf72c50",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-christmas-578747068c",
+          "src": "lilj/galaxy-v3/christmas/g-christmas-578747068c",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-christmas-93123a0894",
+          "src": "lilj/galaxy-v3/christmas/g-christmas-93123a0894",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-christmas-a9f317407a",
+          "src": "lilj/galaxy-v3/christmas/g-christmas-a9f317407a",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        }
+      ]
+    },
+    {
+      "id": "g-creative",
+      "title": {
+        "vi": "Thử một kiểu khác",
+        "en": "Trying another look"
+      },
+      "kind": "together",
+      "color": "#c5dff5",
+      "photos": [
+        {
+          "id": "g-creative-35dc580921",
+          "src": "lilj/galaxy-v3/creative/g-creative-35dc580921",
+          "caption": {
+            "vi": "Mấy phiên bản ảnh thử anh để riêng ở đây. Có kiểu nào em muốn chụp ngoài đời không? Mình chọn thử một kiểu nhé.",
+            "en": "I kept these creative versions separate. Is there a look you want to photograph in real life? Let us pick one."
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-creative-f0bf5e65c6",
+          "src": "lilj/galaxy-v3/creative/g-creative-f0bf5e65c6",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-creative-1c4dccf6ee",
+          "src": "lilj/galaxy-v3/creative/g-creative-1c4dccf6ee",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-creative-586f462e35",
+          "src": "lilj/galaxy-v3/creative/g-creative-586f462e35",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-creative-87ae8f6272",
+          "src": "lilj/galaxy-v3/creative/g-creative-87ae8f6272",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
+          }
+        },
+        {
+          "id": "g-creative-e4ae800be5",
+          "src": "lilj/galaxy-v3/creative/g-creative-e4ae800be5",
+          "caption": {
+            "vi": "",
+            "en": ""
+          },
+          "compliment": {
+            "vi": "Anh muốn giữ tấm này để sau này còn xem lại.",
+            "en": "I want to keep this one to look back on."
           }
         }
       ]
@@ -1172,67 +2766,67 @@
     {
       "id": "s1",
       "cover": {
-        "vi": "Sự chu đáo của em",
-        "en": "Your Caring Heart"
+        "vi": "Em để ý đến anh",
+        "en": "You look out for me"
       },
       "reveal": {
-        "vi": "Những lúc anh ốm, em luôn quan tâm đến anh. Chuyện nhỏ thôi, nhưng với anh rất có ý nghĩa.",
-        "en": "You take care of me when I’m sick. It’s a small thing, but it means a lot."
+        "vi": "Những lúc anh ốm, được em quan tâm làm anh thấy dễ chịu hơn nhiều. Anh nhớ những việc nhỏ ấy đấy.",
+        "en": "When I'm sick, your care makes things a lot easier. I remember those little things."
       }
     },
     {
       "id": "s2",
       "cover": {
-        "vi": "Chiếc mặt phụng phịu",
-        "en": "Your Little Pout"
+        "vi": "Cái mặt khi bị trêu",
+        "en": "That face when I tease you"
       },
       "reveal": {
-        "vi": "Cái mặt em làm mỗi lần bị anh trêu. Xin lỗi nhé, nhưng anh vẫn thấy buồn cười. :)))",
-        "en": "That face you make when I tease you. Sorry, not sorry. :)))"
+        "vi": "Anh thích cái mặt phụng phịu ấy. Nhưng nếu em giận thật thì anh phải nghe em nói, không trêu tiếp đâu.",
+        "en": "I like that little pout. But if you're actually upset, it's time for me to listen, not keep teasing."
       }
     },
     {
       "id": "s3",
       "cover": {
-        "vi": "Cách em chia sẻ",
-        "en": "How You Share"
+        "vi": "Em kể anh nghe",
+        "en": "You tell me about your day"
       },
       "reveal": {
-        "vi": "Anh thích việc em kể anh nghe về một ngày của mình và cho anh được bước vào thế giới của em.",
-        "en": "I love that you tell me about your day and let me be part of your world."
+        "vi": "Chuyện vui, chuyện bực, hôm nay ăn gì… Anh thích được nghe mấy chuyện rất bình thường của em.",
+        "en": "The good bits, the annoying bits, what you had for lunch… I like hearing about your ordinary days."
       }
     },
     {
       "id": "s4",
       "cover": {
-        "vi": "Sự tử tế của em",
-        "en": "Your Kindness"
+        "vi": "Cách em đối xử với mọi người",
+        "en": "The way you treat people"
       },
       "reveal": {
-        "vi": "Em có một nét dịu dàng khiến người khác cảm thấy được quan tâm.",
-        "en": "You have a gentle side that makes people feel cared for."
+        "vi": "Anh thích sự tử tế của em, cả trong những việc em thấy chẳng có gì đáng kể.",
+        "en": "I like your kindness, even in the little things you don't think much of."
       }
     },
     {
       "id": "s5",
       "cover": {
-        "vi": "Món ăn em nấu",
-        "en": "Your Cooking"
+        "vi": "Đồ ăn em nấu",
+        "en": "Your cooking"
       },
       "reveal": {
-        "vi": "Em đúng là nấu ăn ngon hơn anh thật. Anh sẵn lòng làm phụ bếp để được ăn đồ em nấu.",
-        "en": "You’re definitely the better cook. I’ll happily be your assistant chef."
+        "vi": "Khoản này anh nhận thua. Em nấu, anh phụ và ăn thật có trách nhiệm. :)))",
+        "en": "You win this one. You cook, I'll help and take the eating very seriously. :)))"
       }
     },
     {
       "id": "s6",
       "cover": {
-        "vi": "Đơn giản là em",
-        "en": "Simply You"
+        "vi": "Được hiểu em hơn",
+        "en": "Getting to know you"
       },
       "reveal": {
-        "vi": "Anh không cần em phải hoàn hảo. Anh vui vì được hiểu con người thật của em, từng chút một.",
-        "en": "I don’t need you to be perfect. I’m happy to know the real you, little by little."
+        "vi": "Anh thích việc mình vẫn còn nhiều điều để tìm hiểu về nhau. Cứ là em thôi, mình từ từ kể tiếp.",
+        "en": "I like that there's still more for us to learn about each other. Be yourself. We've got time to keep talking."
       }
     }
   ],
@@ -1240,8 +2834,8 @@
     {
       "id": "q1",
       "question": {
-        "vi": "Một trong những điều anh thích làm cùng em là gì?",
-        "en": "What’s one of my favorite things to do with you?"
+        "vi": "Nếu được chọn một trong ba việc này để làm cùng em, anh sẽ chọn gì?",
+        "en": "Which of these three things would I choose to do with you?"
       },
       "options": [
         {
@@ -1249,29 +2843,29 @@
           "en": "Go shopping together"
         },
         {
-          "vi": "Chẳng làm gì cả",
-          "en": "Do absolutely nothing"
+          "vi": "Đi họp cả ngày",
+          "en": "Sit in meetings all day"
         },
         {
-          "vi": "Ngồi xem em chọn món ăn",
-          "en": "Watch you pick what we should eat"
+          "vi": "Đi xếp hàng làm giấy tờ",
+          "en": "Queue up to do paperwork"
         }
       ],
       "answer": 0,
       "rightNote": {
-        "vi": "Em hiểu anh hơi bị rõ đấy. ❤️",
-        "en": "You know me a little too well. ❤️"
+        "vi": "Chuẩn rồi. Đi với em thì anh có hứng thú hẳn. :)))",
+        "en": "Exactly. Shopping with you is a different story. :)))"
       },
       "wrongNote": {
-        "vi": "Hình như mình cần thêm một buổi hẹn nữa rồi.",
-        "en": "Hmm… looks like we need another date."
+        "vi": "Anh chọn đi mua sắm cùng em cơ. Thêm một buổi để em nhớ nhé?",
+        "en": "I'd pick shopping with you. Another trip to help you remember?"
       }
     },
     {
       "id": "q2",
       "question": {
-        "vi": "Điều gì anh rất muốn hai đứa làm cùng nhau trong tương lai?",
-        "en": "What’s something I really want us to do someday?"
+        "vi": "Anh muốn hai đứa cùng làm điều gì trong tương lai?",
+        "en": "What would I like us to do together someday?"
       },
       "options": [
         {
@@ -1289,19 +2883,19 @@
       ],
       "answer": 0,
       "rightNote": {
-        "vi": "Châu Âu, em và anh. Chốt kèo nhé. ✈️",
-        "en": "Europe, you and me. It’s a plan. ✈️"
+        "vi": "Đúng rồi. Có dịp thì mình cùng lên kế hoạch nhé. ✈️",
+        "en": "That's the one. Let's plan it together when we can. ✈️"
       },
       "wrongNote": {
-        "vi": "Chuẩn bị xếp vali tưởng tượng thôi nào.",
-        "en": "Better start packing your imaginary suitcase."
+        "vi": "Châu Âu nhé em. Mặt trăng thì để sau. :)))",
+        "en": "Europe. We can leave the moon for later. :)))"
       }
     },
     {
       "id": "q3",
       "question": {
-        "vi": "Điều gì anh thích ở em?",
-        "en": "What’s one thing I love about you?"
+        "vi": "Trong mấy điều này, anh thích điều nào ở em?",
+        "en": "Which of these do I like about you?"
       },
       "options": [
         {
@@ -1319,12 +2913,12 @@
       ],
       "answer": 2,
       "rightNote": {
-        "vi": "Chính xác. Anh thích việc em cho anh được bước vào thế giới của em.",
-        "en": "Exactly. I love that you let me be part of your world."
+        "vi": "Đúng, anh tham thế đấy. Anh thích cả hai.",
+        "en": "Yes, I'm greedy like that. I like both."
       },
       "wrongNote": {
-        "vi": "Nhiều điều quá nên anh không chọn riêng một điều được.",
-        "en": "There are too many answers to choose just one."
+        "vi": "Điều em chọn đúng là anh thích, nhưng còn điều kia nữa. Đáp án là tất cả nhé.",
+        "en": "I do like the one you picked, but I like the other one, too. It's all of the above."
       }
     },
     {
@@ -1349,19 +2943,19 @@
       ],
       "answer": 0,
       "rightNote": {
-        "vi": "Cuối cùng cũng có người nói thật. :)))",
-        "en": "Finally, an honest answer. :)))"
+        "vi": "Em chứ ai. Anh tự giác nhận chân phụ bếp. :)))",
+        "en": "You, obviously. I'll volunteer as kitchen assistant. :)))"
       },
       "wrongNote": {
-        "vi": "MJ, mình cần nói chuyện một chút.",
-        "en": "MJ, we need to talk."
+        "vi": "Đáp án là em nhé. Anh nhận phần phụ bếp thôi. :)))",
+        "en": "The answer is you. I'll stick to helping in the kitchen. :)))"
       }
     },
     {
       "id": "q5",
       "question": {
-        "vi": "Điều gì khiến một ngày bình thường trở nên đặc biệt với anh?",
-        "en": "What would make an ordinary day feel special to me?"
+        "vi": "Trong ba điều này, anh muốn nhất điều gì cho một ngày bình thường?",
+        "en": "Which of these would I most like on an ordinary day?"
       },
       "options": [
         {
@@ -1379,12 +2973,12 @@
       ],
       "answer": 0,
       "rightNote": {
-        "vi": "Đúng rồi. Với anh, có em ở bên rất quan trọng.",
-        "en": "That’s right. You being there means a lot to me."
+        "vi": "Đúng rồi. Có em thì anh muốn dành thời gian hơn hẳn.",
+        "en": "That's right. With you there, I want to make time for it."
       },
       "wrongNote": {
-        "vi": "Đồ ăn vặt cũng hấp dẫn đấy, nhưng anh vẫn chọn em.",
-        "en": "The snacks are tempting, but you’re still my first choice."
+        "vi": "Mấy món kia cũng hấp dẫn, nhưng câu này anh chọn có em.",
+        "en": "The other options are tempting, but for this one, I pick you."
       }
     }
   ],
@@ -1406,37 +3000,41 @@
       "en": "Fewest moves: {n}"
     },
     "win": {
-      "vi": "Một khoảnh khắc nhỏ, một kỷ niệm dễ thương.",
-      "en": "A little moment, a lovely memory."
+      "vi": "Ghép đủ rồi! Anh biết em làm được mà.",
+      "en": "All matched! I knew you'd get there."
     },
     "again": {
       "vi": "Chơi lại",
       "en": "Play again"
     },
     "back": {
-      "vi": "Mặt sau",
-      "en": "Face down"
+      "vi": "Thẻ đang úp",
+      "en": "Face-down card"
+    },
+    "later": {
+      "vi": "Chơi sau",
+      "en": "Play later"
     },
     "lines": [
       {
-        "vi": "Một khoảnh khắc nhỏ, một kỷ niệm dễ thương.",
-        "en": "A little moment, a lovely memory."
+        "vi": "Đúng cặp rồi, nhớ vị trí giỏi đấy em.",
+        "en": "A match. Nice memory."
       },
       {
-        "vi": "Anh vẫn nhớ tấm này. Còn em?",
-        "en": "I remember this one. Do you?"
+        "vi": "Lại tìm được một cặp nữa rồi.",
+        "en": "Another pair found."
       },
       {
-        "vi": "Bằng chứng rằng chẳng cần dịp đặc biệt để vui vẻ cùng nhau.",
-        "en": "Proof that we don’t need a special occasion to have fun."
+        "vi": "Chơi một chút rồi mình xem tiếp nhé.",
+        "en": "A little game, then we'll keep going."
       },
       {
-        "vi": "Vẫn còn rất nhiều kỷ niệm đang chờ phía trước.",
-        "en": "More memories waiting to be made."
+        "vi": "Cặp này xong, mình tìm tiếp nào.",
+        "en": "That pair's done. Let's find the next one."
       },
       {
-        "vi": "Điều anh thích nhất trong tấm ảnh này à? Là em.",
-        "en": "My favorite part of this photo? You."
+        "vi": "Anh thích ảnh có em. Câu này chắc không bất ngờ lắm. :)))",
+        "en": "I like photos with you in them. Probably not a surprise. :)))"
       }
     ]
   },
@@ -1444,78 +3042,78 @@
     {
       "id": "d1",
       "text": {
-        "vi": "Cùng nhau đến châu Âu",
-        "en": "Europe Together"
+        "vi": "Một chuyến đi châu Âu",
+        "en": "A trip to Europe"
       },
       "detail": {
-        "vi": "Đi qua những con phố xa lạ, chụp thật nhiều ảnh và giả vờ như hai đứa biết mình đang đi đâu.",
-        "en": "Walk through unfamiliar streets, take too many photos, and pretend we know where we’re going."
+        "vi": "Có dịp thì mình lên kế hoạch, chọn vài nơi cả hai cùng thích. Lạc đường chút cũng được, miễn cuối cùng tìm được đồ ăn.",
+        "en": "When we can, let's plan a trip to places we both like. Getting a little lost is fine, as long as we find food eventually."
       }
     },
     {
       "id": "d2",
       "text": {
         "vi": "Một buổi hẹn ăn uống",
-        "en": "A Food Date"
+        "en": "A food date"
       },
       "detail": {
-        "vi": "Tìm được quán ngon, gọi những món mình thích rồi tranh luận vui xem món nào ngon hơn.",
-        "en": "Find a good place to eat, order what we like, and argue playfully over which dish is better."
+        "vi": "Chọn một quán hai đứa muốn thử, gọi vài món rồi vừa ăn vừa chấm điểm. Quan trọng là được ăn cùng em.",
+        "en": "Pick somewhere we both want to try, order a few things, and give them our very serious ratings. Mostly, I'd just like to eat with you."
       }
     },
     {
       "id": "d3",
       "text": {
         "vi": "Đi mua sắm cùng nhau",
-        "en": "Shopping Together"
+        "en": "Shopping together"
       },
       "detail": {
-        "vi": "Đi hết cửa hàng này đến cửa hàng khác, thử đủ thứ rồi cuối cùng mua nhiều hơn dự định.",
-        "en": "Walk around, try things on, and somehow leave with more bags than we planned."
+        "vi": "Em chọn đồ, anh góp ý. Ý kiến của anh có được duyệt không thì chưa biết. :)))",
+        "en": "You pick things out, I offer an opinion. Whether my opinion gets approved is another matter. :)))"
       }
     },
     {
       "id": "d4",
       "text": {
-        "vi": "Em nấu, anh phụ",
-        "en": "Your Cooking, My Assistance"
+        "vi": "Em nấu, anh phụ bếp",
+        "en": "You cook, I'll help"
       },
       "detail": {
-        "vi": "Em nấu ăn, anh phụ giúp. Cả hai đều biết ai mới là người có quyền quyết định trong bếp. :)))",
-        "en": "You cook. I help. We both know who’s actually in charge of the kitchen. :)))"
+        "vi": "Anh phụ những gì làm được. Còn nêm nếm, anh xin nghe người có chuyên môn hơn.",
+        "en": "I'll help with whatever I can. For seasoning, I'll defer to the expert."
       }
     },
     {
       "id": "d5",
       "text": {
-        "vi": "Một ngày yên bình bên nhau",
-        "en": "A Quiet Day Together"
+        "vi": "Một ngày chẳng cần đi đâu xa",
+        "en": "A day with no big plans"
       },
       "detail": {
-        "vi": "Không cần kế hoạch gì lớn lao. Chỉ cần dành thời gian cho nhau và tận hưởng việc hai đứa đang ở cạnh nhau.",
-        "en": "No big plans. Just spend time together and enjoy the fact that we’re there."
+        "vi": "Ăn một bữa, ngồi cạnh nhau, kể vài chuyện linh tinh. Anh cũng muốn có những ngày như thế với em.",
+        "en": "Share a meal, sit together, talk about nothing much. I'd like days like that with you, too."
       }
     },
     {
       "id": "d6",
       "text": {
-        "vi": "Thêm nhiều bất ngờ",
-        "en": "More Surprises"
+        "vi": "Thỉnh thoảng làm em bất ngờ",
+        "en": "A surprise now and then"
       },
       "detail": {
-        "vi": "Anh muốn tiếp tục được nhìn thấy gương mặt bất ngờ của em mỗi khi có điều gì đó khiến em vui thật lòng.",
-        "en": "I want to keep seeing that surprised face of yours when something makes you genuinely happy."
+        "vi": "Không phải lần nào cũng cần quà lớn. Anh muốn có thêm vài dịp khiến em vui mà chưa kịp đoán ra.",
+        "en": "It doesn't have to be a big gift. I'd like a few more chances to make you happy before you see it coming."
       }
     },
     {
       "id": "d7",
       "text": {
-        "vi": "Cùng nhau trưởng thành",
-        "en": "Growing Together"
+        "vi": "Hiểu nhau thêm một chút",
+        "en": "Keep getting to know each other"
       },
       "detail": {
-        "vi": "Tiếp tục tìm hiểu nhau, thành thật với nhau và cùng tìm cách vượt qua những điều cuộc sống mang đến.",
-        "en": "Keep learning about each other, communicating honestly, and finding our way through whatever life brings."
+        "vi": "Có gì thì nói với nhau, có lúc chưa hiểu thì hỏi lại. Anh muốn hai đứa làm được những việc nhỏ ấy trước.",
+        "en": "Talk things through, ask when we don't understand. I'd like us to keep doing those small things."
       }
     }
   ],
@@ -1615,16 +3213,16 @@
   },
   "cake": {
     "title": {
-      "vi": "Ước một điều đi, cô gái sinh nhật",
-      "en": "Make a Wish, Birthday Girl"
+      "vi": "Thổi nến nhé",
+      "en": "Blow out the candles"
     },
     "kicker": {
       "vi": "Chiếc bánh sinh nhật",
       "en": "Your birthday cake"
     },
     "lede": {
-      "vi": "Hít một hơi thật sâu rồi thổi tắt nến nhé.",
-      "en": "Take a deep breath and blow out the candles."
+      "vi": "Chạm một ngọn nến, hoặc bật mic rồi thổi.",
+      "en": "Tap a candle, or turn the mic on and blow."
     },
     "candles": 5,
     "mic": {
@@ -1636,32 +3234,32 @@
       "en": "Stop the mic"
     },
     "listening": {
-      "vi": "Đang nghe… thổi một hơi.",
-      "en": "Listening… blow once."
+      "vi": "Mic đang nghe… em thổi từng hơi nhé.",
+      "en": "The mic is listening… give it a blow at a time."
     },
     "micError": {
-      "vi": "Không mở được mic. Em chạm vào nến cũng được.",
-      "en": "The mic won't open. Tapping a candle works too."
+      "vi": "Mic chưa dùng được. Em chạm từng ngọn nến để tắt nhé.",
+      "en": "Couldn't use the mic. Tap each candle to put it out."
     },
     "tapHint": {
-      "vi": "Hít một hơi thật sâu rồi thổi tắt nến nhé.",
-      "en": "Take a deep breath and blow out the candles."
+      "vi": "Chạm nến cũng được.",
+      "en": "Tapping a candle works too."
     },
     "letterTitle": {
-      "vi": "Một điều ước dành cho em, một bất ngờ nhỏ từ anh.",
-      "en": "One wish for you, one little surprise from me."
+      "vi": "Một lời chúc ngắn",
+      "en": "A short note"
     },
     "letter": {
-      "vi": "Chúc mừng sinh nhật MJ! 🎂\n\nAnh mong tuổi mới sẽ mang đến cho em nhiều ngày vui hơn, bớt áp lực công việc, nhiều món ngon, những bất ngờ dễ thương và thật nhiều lý do để cười.\n\nNhững lúc mọi thứ trở nên quá tải, anh mong em nhớ rằng em không nhất thiết phải tự mình giải quyết tất cả.\n\nAnh vẫn luôn cổ vũ cho em.",
-      "en": "Happy birthday, MJ! 🎂\n\nI hope this new year of your life brings you more happy days, less stress from work, good food, lovely surprises, and plenty of reasons to smile.\n\nAnd when things get a little overwhelming, I hope you remember that you don’t have to handle everything alone.\n\nI’m cheering for you, always."
+      "vi": "Chúc mừng sinh nhật MJ.\n\nAnh mong tuổi mới bớt áp lực, nhiều món ngon, và nhiều lý do để cười. Em không phải một mình lo hết.\n\nAnh vẫn cổ vũ cho em.",
+      "en": "Happy birthday, MJ.\n\nI hope this year brings less stress, good food, and more reasons to smile. You don't have to handle it all alone.\n\nI'm still cheering for you."
     },
     "skip": {
       "vi": "Đọc hết",
       "en": "Read it all"
     },
     "next": {
-      "vi": "Những lá thư mở khi…",
-      "en": "Letters to open when…"
+      "vi": "Đến điều ước của em",
+      "en": "Time for your wish"
     }
   },
   "openWhen": [
@@ -1672,8 +3270,8 @@
         "en": "Open when you’re sad"
       },
       "body": {
-        "vi": "MJ à,\n\nEm không cần lúc nào cũng phải tỏ ra ổn đâu. Nếu hôm nay có nhiều chuyện khiến em mệt mỏi, cứ hít thở một chút và cho bản thân thời gian nhé.\n\nEm không cần giải quyết tất cả ngay lập tức. Anh sẵn sàng lắng nghe, kể cả khi em chỉ muốn nói ra những điều đang chất chứa trong lòng.\n\nMột ngày khó khăn không định nghĩa con người em đâu. ❤️",
-        "en": "Hey, MJ.\n\nYou don’t have to pretend to be okay all the time. If today feels heavy, take a breath and give yourself a little time.\n\nYou don’t need to solve everything right now. I’m here to listen, even if all you want to do is talk about it.\n\nOne difficult day doesn’t define you. ❤️"
+        "vi": "MJ à,\n\nHôm nay có chuyện gì làm em buồn thế? Muốn kể thì anh nghe. Chưa muốn nói cũng được, mình ngồi yên một chút.\n\nAnh không chắc mình có ngay cách giải quyết, nhưng anh muốn biết em đang thế nào. Em cứ nói anh biết lúc nào cần anh nhé.\n\nCòn bây giờ, đừng bắt mình phải vui ngay.",
+        "en": "Hey, MJ.\n\nWhat happened today? If you want to talk, I'm listening. If you're not ready, we can just sit for a bit.\n\nI might not have an answer straight away, but I want to know how you're doing. Let me know when you need me.\n\nFor now, you don't have to make yourself feel better on cue."
       }
     },
     {
@@ -1683,8 +3281,8 @@
         "en": "Open when you miss me"
       },
       "body": {
-        "vi": "Nhớ anh một chút rồi à? :)))\n\nThử tưởng tượng anh đang ngồi cạnh em, thỉnh thoảng nhìn em rồi hỏi hôm nay muốn ăn gì.\n\nTrong lúc chưa gặp được nhau, hãy dành cho anh một chút chỗ trong ngày của em nhé. Anh cũng đang mong đến lần tiếp theo được gặp em.",
-        "en": "Miss me a little? :)))\n\nImagine me sitting beside you, stealing a glance at you and asking what you want to eat.\n\nUntil we can see each other again, save me a little space in your day. I’ll be looking forward to the next time I get to see you."
+        "vi": "Nhớ anh rồi à? :)))\n\nAnh đoán thôi, vì em vừa mở đúng lá này mà.\n\nNhắn anh một câu đi, kể chuyện gì cũng được. Nếu anh chưa trả lời ngay thì lát anh đọc rồi nói chuyện với em nhé.\n\nCòn gặp nhau hôm nào, mình chốt một buổi. Anh cũng muốn gặp em.",
+        "en": "Missing me? :)))\n\nJust a guess, since you opened this letter.\n\nSend me a message. Anything you like. If I don't reply right away, I'll read it and catch up with you when I can.\n\nAnd let's find a time to meet. I'd like to see you, too."
       }
     },
     {
@@ -1694,8 +3292,8 @@
         "en": "Open when you’re angry with me"
       },
       "body": {
-        "vi": "Đầu tiên, anh sẽ nghe em nói.\n\nCó thể anh không hiểu mọi chuyện ngay lập tức, và anh cũng có lúc mắc lỗi. Nhưng anh không muốn hai đứa bỏ qua những điều khiến nhau buồn hay giả vờ như chẳng có gì xảy ra.\n\nKhi cả hai sẵn sàng, mình nói chuyện với nhau nhé. Anh muốn hiểu em, chứ không phải thắng một cuộc tranh luận.",
-        "en": "Okay, first things first: I’m listening.\n\nI may not always understand everything immediately, and I might make mistakes. But I don’t want us to ignore what hurts or pretend everything is fine.\n\nLet’s talk when we’re both ready. I want to understand you, not win an argument."
+        "vi": "Lần này anh làm em giận chuyện gì rồi?\n\nEm nói anh nghe nhé. Anh sẽ nghe hết, không lấy chuyện trêu em ra để lảng đi.\n\nNếu anh làm em buồn, anh cần hiểu mình đã làm gì và sửa ở đâu. Nếu hai đứa đang nóng thì mình nghỉ một chút rồi nói tiếp.\n\nAnh muốn mình nói cho ra chuyện, để lần sau biết quan tâm nhau hơn.",
+        "en": "What have I done this time?\n\nTell me. I'll hear you out, without trying to joke my way around it.\n\nIf I've hurt you, I need to understand what I did and what needs to change. If we're both worked up, we can take a little time and talk again.\n\nI want us to work it through so we can take better care of each other."
       }
     },
     {
@@ -1705,91 +3303,105 @@
         "en": "Open when you can’t sleep"
       },
       "body": {
-        "vi": "Muộn rồi đấy, MJ.\n\nĐặt điện thoại xuống một chút, thả lỏng vai và hít thở thật chậm nhé.\n\nNhững lo lắng của ngày mai cứ để ngày mai giải quyết. Em cũng xứng đáng được nghỉ ngơi mà.\n\nNgủ ngon nhé, cô gái sinh nhật. 🌙",
-        "en": "It’s late, MJ.\n\nPut your phone down for a moment, relax your shoulders, and take a slow breath.\n\nYou can leave tomorrow’s worries for tomorrow. You deserve some rest, too.\n\nSleep well, birthday girl. 🌙"
+        "vi": "Vẫn chưa ngủ được hả em?\n\nNếu đang mải nghĩ chuyện gì, em có thể ghi lại để mai tính tiếp. Còn nếu chỉ là chưa buồn ngủ, anh gửi em một lời chúc ngủ ngon trước nhé.\n\nĐọc xong thì cho mắt nghỉ một chút. Không cần cố giải quyết hết mọi việc trong đêm nay đâu.\n\nNgủ ngon, MJ.",
+        "en": "Still awake?\n\nIf something's on your mind, you could jot it down and come back to it tomorrow. If you're just not sleepy yet, here's a goodnight from me anyway.\n\nAfter this, give your eyes a little break. Everything doesn't need sorting out tonight.\n\nSleep well, MJ."
       }
     }
   ],
   "lettersCopy": {
     "title": {
-      "vi": "Dành cho những ngày em cần một chút gì đó",
-      "en": "For the Days You Need a Little Something"
+      "vi": "Anh để mấy lá thư ở đây",
+      "en": "I've left a few letters here"
     },
     "kicker": {
       "vi": "Thư mở khi…",
       "en": "Open when…"
     },
     "lede": {
-      "vi": "Mỗi lá mở được một lần trong ngày. Mai niêm lại, em có thể mở nữa.",
-      "en": "Each letter opens once a day. Tomorrow it's sealed again, and you can open it once more."
+      "vi": "Những lá thư để dành. Em mở lúc nào cũng được, không cần mở hết hôm nay.",
+      "en": "Letters to save for later. Open them whenever you want. You don't have to open them all today."
     },
     "sealed": {
       "vi": "Chạm để mở",
-      "en": "Touch to open"
+      "en": "Tap to open"
     },
     "openedNote": {
-      "vi": "Hôm nay em đã mở lá này. Mai mình niêm lại.",
-      "en": "You opened this one today. We'll seal it again tomorrow."
+      "vi": "Lá này ở đây khi em muốn đọc lại.",
+      "en": "This one stays here whenever you want to read it again."
     },
     "close": {
       "vi": "Gấp thư lại",
       "en": "Fold it closed"
     },
     "next": {
-      "vi": "Một câu hỏi cuối",
-      "en": "One last question"
+      "vi": "Đến chiếc bánh thôi",
+      "en": "Time for cake"
+    },
+    "later": {
+      "vi": "Để dành những lá thư",
+      "en": "Save the letters for later"
+    }
+  },
+  "scratchCopy": {
+    "later": {
+      "vi": "Khám phá sau",
+      "en": "Explore later"
     }
   },
   "finale": {
     "question": {
-      "vi": "Cho anh thương em thêm một năm nữa nhé?",
-      "en": "Will you let me love you for another year?"
+      "vi": "Mình cứ tiếp tục bên nhau nhé?",
+      "en": "Shall we keep doing this together?"
     },
     "yes": {
-      "vi": "Dạ được ạ! ❤️",
-      "en": "Yes, of course! ❤️"
+      "vi": "Em đồng ý ❤️",
+      "en": "I'd love to ❤️"
     },
     "no": {
-      "vi": "Không cơ 😈",
-      "en": "No 😈"
+      "vi": "Để em nghĩ đã 😈",
+      "en": "Let me think 😈"
     },
     "teases": [
       {
-        "vi": "Em chắc chưa? Nhìn lại chiếc website dễ thương này đi.",
-        "en": "Are you sure? Look at this cute website again."
+        "vi": "Anh đang hồi hộp đấy, em biết không. :)))",
+        "en": "You know I'm a little nervous, right? :)))"
       },
       {
-        "vi": "Hình như em bấm nhầm nút rồi thì phải.",
-        "en": "Hmm… I think you clicked the wrong button."
+        "vi": "Nút này cũng biết ngại cơ.",
+        "en": "Even this button gets shy."
       },
       {
-        "vi": "MJ ơi, suy nghĩ lại đi mà. :)))",
-        "en": "MJ, please reconsider. :)))"
+        "vi": "Anh vẫn đang chờ đây, MJ ơi.",
+        "en": "Still here, MJ."
       },
       {
-        "vi": "Vũ trụ đang lịch sự đề nghị em thử lại.",
-        "en": "The universe is politely asking you to try again."
+        "vi": "Trêu anh thêm một chút nữa à?",
+        "en": "Teasing me a little longer?"
       },
       {
-        "vi": "Thôi, cơ hội cuối cùng nhé… đi mà em!",
-        "en": "Okay, one last chance… pretty please?"
+        "vi": "Rồi, anh hít thở lại đã. :)))",
+        "en": "Okay, let me catch my breath. :)))"
       }
     ],
     "yesTitle": {
-      "vi": "Vậy chốt nhé.",
-      "en": "Then it’s a date."
+      "vi": "Anh nghe rồi nhé. ❤️",
+      "en": "You said it. ❤️"
     },
     "yesBody": {
-      "vi": "Thêm một năm để hiểu nhau hơn, cùng cười, quan tâm nhau và tạo thêm thật nhiều kỷ niệm. ❤️",
-      "en": "One more year of learning, laughing, caring, and making memories together. ❤️"
+      "vi": "Mình còn nhiều món muốn ăn, nhiều nơi muốn đi. Cứ từ từ làm cùng nhau nhé.",
+      "en": "There are still meals to share and places to go. Let's take our time and do them together."
     },
     "lead": {
-      "vi": "MJ à, anh hỏi câu cuối nhé…",
-      "en": "MJ, One Last Question…"
+      "vi": "MJ ơi, còn một câu anh muốn hỏi…",
+      "en": "MJ, there's one more thing I want to ask…"
     },
     "celebrate": {
-      "vi": "Cả vũ trụ đang ăn mừng cho hai đứa mình!",
-      "en": "The universe is celebrating us!"
+      "vi": "Cho anh vui một chút. Rồi còn lá thư cuối cho em.",
+      "en": "Let me enjoy this for a moment. Then there's one last letter for you."
+    },
+    "later": {
+      "vi": "Để sau",
+      "en": "Later"
     }
   },
   "ui": {
@@ -1806,12 +3418,12 @@
       "en": "{n}/7 stars lit"
     },
     "waiting": {
-      "vi": "Giữa hàng tỷ cái tên trong vũ trụ, đây là cái tên anh thích nhìn thấy nhất.",
-      "en": "Out of all the names in the universe, this is the one I love seeing the most."
+      "vi": "Đợi anh một chút, tên em sắp hiện ra rồi.",
+      "en": "Give it a moment. Your name is about to appear."
     },
     "formed": {
-      "vi": "Có những cái tên chỉ đơn giản là một cái tên. Còn tên em thì luôn khiến anh mỉm cười.",
-      "en": "Some names are just names. Yours always makes me smile."
+      "vi": "Tên em ở đây rồi. Giờ mình đi xem tiếp nhé.",
+      "en": "There's your name. Let's see what's next."
     },
     "doorCake": {
       "vi": "Bánh sinh nhật",
@@ -1830,32 +3442,36 @@
       "en": "Play music"
     },
     "musicOff": {
-      "vi": "Tắt nhạc",
+      "vi": "Tạm dừng nhạc",
       "en": "Pause music"
     },
     "musicHint": {
-      "vi": "Bật nhạc nhé",
-      "en": "Tap for music"
+      "vi": "Bật nhạc nghe cùng anh nhé",
+      "en": "Put some music on with me"
     },
     "musicBlocked": {
-      "vi": "Trình duyệt đang chặn nhạc. Chạm nút nhạc giúp anh.",
-      "en": "The browser is blocking the music. Tap the music button."
+      "vi": "Nhạc chưa phát được. Em thử chạm nút nhạc nhé.",
+      "en": "The music hasn't started. Try tapping the music button."
+    },
+    "journey": {
+      "vi": "Hành trình",
+      "en": "Journey"
     },
     "reset": {
-      "vi": "Chạy lại từ đầu",
+      "vi": "Xem lại từ đầu",
       "en": "Start over"
     },
     "resetConfirm": {
-      "vi": "Hành trình trên máy này sẽ về cổng. Nhạc vẫn giữ nguyên.",
-      "en": "This journey returns to the gate. The music stays as it is."
+      "vi": "Xem lại từ cổng nhé? Tiến trình trên máy này sẽ được đặt lại; lựa chọn nhạc vẫn giữ nguyên.",
+      "en": "Start again at the gate? This device's journey progress will reset; your music setting will stay the same."
     },
     "resetYes": {
-      "vi": "Chạy lại",
-      "en": "Start over"
+      "vi": "Về đầu nhé",
+      "en": "Start again"
     },
     "resetNo": {
-      "vi": "Ở lại",
-      "en": "Stay"
+      "vi": "Xem tiếp",
+      "en": "Keep going"
     },
     "startOver": {
       "vi": "Xem lại từ đầu",
@@ -1878,16 +3494,16 @@
       "en": "See again"
     },
     "summaryTitle": {
-      "vi": "Kết quả nhỏ",
-      "en": "A small result"
+      "vi": "Em được mấy câu nào?",
+      "en": "How did you do?"
     },
     "contentError": {
-      "vi": "content.json đang lệch. Anh xem lại giúp em.",
-      "en": "content.json is out of shape. Take another look."
+      "vi": "Phần này chưa mở được rồi. Em thử tải lại trang nhé.",
+      "en": "This part couldn't open. Try reloading the page."
     },
     "crash": {
-      "vi": "Có gì đó lệch quỹ đạo. Em tải lại trang giúp anh.",
-      "en": "Something slipped out of orbit. Reload the page for me."
+      "vi": "Trang bị khựng một chút rồi. Em thử tải lại nhé.",
+      "en": "The page got a little stuck. Try reloading it."
     },
     "flip": {
       "vi": "Chạm để lật",
@@ -1937,12 +3553,12 @@
   "lock": {
     "unlockAt": "2026-11-18T00:00:00+07:00",
     "title": {
-      "vi": "Đến sinh nhật của em",
-      "en": "Until your birthday"
+      "vi": "Quà của em đang chờ đến sinh nhật",
+      "en": "Your gift is waiting for your birthday"
     },
     "subtitle": {
-      "vi": "Nửa đêm ngày 18 tháng 11, giờ Việt Nam.",
-      "en": "Midnight on 18 November, Vietnam time."
+      "vi": "Em mở quà lúc 0 giờ ngày 18/11/2026, giờ Việt Nam nhé.",
+      "en": "You can open your gift at midnight on 18 November 2026, Vietnam time."
     },
     "days": {
       "vi": "ngày",

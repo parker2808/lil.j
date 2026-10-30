@@ -1,22 +1,24 @@
-import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { content, validateContent } from "./content.ts";
 import { Envelope } from "./components/Envelope.tsx";
+import { JourneyMenu } from "./components/JourneyMenu.tsx";
 import { GateBurst } from "./components/Fireworks.tsx";
 import { Gate } from "./components/Gate.tsx";
 import { LockScreen } from "./components/LockScreen.tsx";
 import { LanguageToggle } from "./components/LanguageToggle.tsx";
 import { MusicButton, MusicCredit } from "./components/MusicButton.tsx";
 import { Starfield } from "./components/Starfield.tsx";
+import { StoryChapterLabel } from "./components/StoryChapterLabel.tsx";
 import { StickyNext } from "./components/StickyNext.tsx";
 import { StickyNextContext, type StickyAction } from "./components/sticky-next-context.ts";
 import { Universe } from "./components/Universe.tsx";
-import { FLOW, clampStep, stepDone, type StepId } from "./lib/flow.ts";
+import { FLOW, clampStep, mayContinue, stepDone, type StepId } from "./lib/flow.ts";
 import { useI18n } from "./lib/locale-context.ts";
 import { bindMusicVisibility, bindPlaylist, musicIsPlaying, playBirthday, restoreMusicVolume, resumePlaylist, startMusic, subscribeMusic } from "./lib/music.ts";
 import { bindViewport } from "./lib/viewport.ts";
 import { isBeforeUnlock } from "./lib/lock.ts";
-import { clearProgress, restartedProgress } from "./lib/progress.ts";
+import { clearProgress, moveTo, restartedProgress, skipAhead } from "./lib/progress.ts";
 import { fillTemplate } from "./lib/pure.ts";
 import { useReducedMotion } from "./lib/useReducedMotion.ts";
 import { useProgress } from "./lib/useProgress.ts";
@@ -66,6 +68,10 @@ export function App() {
   const headerRef = useRef<HTMLElement>(null);
   const footerRef = useRef<HTMLElement>(null);
   const [quizAction, setQuizAction] = useState<StickyAction | null>(null);
+  const [letterSheet, setLetterSheetState] = useState(false);
+  const setLetterSheet = useCallback((open: boolean) => {
+    setLetterSheetState((current) => (current === open ? current : open));
+  }, []);
   const setStickyAction = useCallback((action: StickyAction | null) => {
     setQuizAction((current) => {
       if (!action && !current) return current;
@@ -90,17 +96,9 @@ export function App() {
   const go = useCallback(
     (target: number, jump = false) => {
       update((current) => {
-        const next = clampStep(target);
-        const unlocked = clampStep(current.unlocked);
-        if (!jump && (next < 0 || next > unlocked + 1)) return current;
-        const raised = Math.max(unlocked, next);
-        if (next === current.step && raised === unlocked) return current;
-        return {
-          ...current,
-          step: next,
-          unlocked: raised,
-          gateUnlocked: next > 0 || current.gateUnlocked,
-        };
+        const index = clampStep(current.step);
+        const id = (FLOW[index] ?? "gate") as StepId;
+        return moveTo(current, target, jump, mayContinue(id, current, CANDLES, QUIZ_IDS, SCRATCH_IDS, LETTER_IDS));
       });
     },
     [update],
@@ -117,13 +115,17 @@ export function App() {
     [update],
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (stepId !== "counter" || progress.counterSeen) return;
+    if (reduced) {
+      update((current) => (current.counterSeen ? current : { ...current, counterSeen: true }));
+      return;
+    }
     const timer = window.setTimeout(() => {
       update((current) => (current.counterSeen ? current : { ...current, counterSeen: true }));
     }, 2000);
     return () => window.clearTimeout(timer);
-  }, [progress.counterSeen, stepId, update]);
+  }, [progress.counterSeen, reduced, stepId, update]);
 
   useEffect(() => {
     if (stepId !== "friends" || progress.friendsSeen) return;
@@ -254,19 +256,17 @@ export function App() {
     setOpening(true);
     void startMusic(progress.muted).catch(() => showMusicNote(false));
     window.setTimeout(() => {
-      update((current) => ({
-        ...current,
-        gateUnlocked: true,
-        step: Math.max(current.step, 1),
-        unlocked: Math.max(current.unlocked, 1),
-      }));
+      update((current) =>
+        moveTo({ ...current, gateUnlocked: true }, Math.max(clampStep(current.step), 1), false, true),
+      );
       setOpening(false);
     }, reduced ? 0 : 1200);
   }
 
   const done = stepDone(stepId, progress, CANDLES, QUIZ_IDS, SCRATCH_IDS, LETTER_IDS);
+  const canContinue = mayContinue(stepId, progress, CANDLES, QUIZ_IDS, SCRATCH_IDS, LETTER_IDS);
   const flowAction: StickyAction | null =
-    stepId === "letter" || stepId === "gate" || quizAction || !done
+    stepId === "letter" || stepId === "gate" || quizAction || letterSheet || !canContinue
       ? null
       : {
           label: t(content.flow.next),
@@ -335,7 +335,7 @@ export function App() {
   } else if (stepId === "letters") {
     node = (
       <Suspense fallback={<p className="scene loading">{t(content.ui.loading)}</p>}>
-        <Letters progress={progress} update={update} />
+        <Letters progress={progress} update={update} onSheet={setLetterSheet} />
       </Suspense>
     );
   } else if (stepId === "friends") {
@@ -356,13 +356,21 @@ export function App() {
         <Finale
           saidYes={progress.saidYes}
           onYes={() => update((current) => (current.saidYes ? current : { ...current, saidYes: true }))}
+          onLater={() => update((current) => skipAhead(current, "finale"))}
         />
       </Suspense>
     );
   } else if (stepId === "wish") {
     node = (
       <Suspense fallback={<p className="scene loading">{t(content.ui.loading)}</p>}>
-        <WishSky wishes={progress.wishes} onSend={sendWish} />
+        <WishSky
+          wishes={progress.wishes}
+          wishPrivate={progress.wishPrivate}
+          onSend={sendWish}
+          onKeepPrivate={() =>
+            update((current) => (current.wishPrivate ? current : { ...current, wishPrivate: true }))
+          }
+        />
       </Suspense>
     );
   } else {
@@ -388,6 +396,7 @@ export function App() {
           <span className="chrome-spacer" />
           {released && progress.gateUnlocked && (
             <div className="chrome-tools">
+              <JourneyMenu accessible={progress.accessibleSteps} current={stepId} onGo={(index) => go(index)} />
               <button type="button" className="journey-reset" aria-label={t(content.ui.reset)} onClick={() => setAskReset(true)}>
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path
@@ -411,6 +420,7 @@ export function App() {
             </div>
           )}
         </div>
+        {released && <StoryChapterLabel stepId={stepId} />}
         {released && progress.gateUnlocked && musicInvite && !blockedCue && (
           <p className="music-hint" id="music-hint">
             {t(content.ui.musicHint)}

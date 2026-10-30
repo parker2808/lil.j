@@ -1,5 +1,6 @@
-import rawJson from "../content.json";
+import rawJson from "../content.json" with { type: "json" };
 import { FLOW } from "./lib/flow.ts";
+import { STORY_CHAPTERS } from "./lib/story.ts";
 import { collectCopyProblems } from "./lib/i18n.ts";
 import { CONSTELLATION_IDS, projectSky } from "./lib/stars.ts";
 import type { Content, Copy, Era, MusicTrack, Photo } from "./types.ts";
@@ -13,8 +14,8 @@ function captionBlank(copy: Copy | undefined): boolean {
   return !copy?.vi.trim() && !copy?.en.trim();
 }
 
-function flattenPhotos(eras: Era[]): Photo[] {
-  const pairIds = new Set(eras.flatMap((era) => era.photos.slice(0, 2).map((photo) => photo.id)));
+function flattenPhotos(eras: Era[], memoryPhotoIds: string[]): Photo[] {
+  const pairIds = new Set(memoryPhotoIds);
   return eras.flatMap((era) =>
     era.photos.map((photo) => ({
       id: photo.id,
@@ -29,7 +30,7 @@ function flattenPhotos(eras: Era[]): Photo[] {
 
 export const content: Content = {
   ...raw,
-  photos: flattenPhotos(raw.eras ?? []),
+  photos: flattenPhotos(raw.eras ?? [], raw.memoryPhotoIds ?? []),
 };
 
 function musicTrackProblem(track: MusicTrack | undefined, label: string): string | null {
@@ -62,16 +63,26 @@ export function validateContent(value: Content): string | null {
     if (!ids.includes(id)) return `content.json thiếu chương "${id}".`;
   }
   if (!Array.isArray(value.eras) || value.eras.length < 1) {
-    return "content.json cần ít nhất một thời của ảnh.";
+    return "content.json cần ít nhất một chương ảnh.";
   }
   for (const era of value.eras) {
-    if (!era.photos?.length) return `Thời "${era.id}" chưa có ảnh.`;
+    if (!era.photos?.length) return `Chương "${era.id}" chưa có ảnh.`;
   }
   if (!Array.isArray(value.photos) || value.photos.length < 1) {
     return "content.json cần ít nhất một ảnh.";
   }
-  if (value.photos.filter((photo) => photo.pair).length < 2) {
-    return "content.json cần ít nhất 2 ảnh có pair: true để chơi trò nhớ.";
+  if (!Array.isArray(value.memoryPhotoIds) || value.memoryPhotoIds.length > 6) {
+    return "content.json cần tối đa 6 memoryPhotoIds.";
+  }
+  const photoIds = new Set(value.eras.flatMap((era) => era.photos.map((photo) => photo.id)));
+  if (new Set(value.memoryPhotoIds).size !== value.memoryPhotoIds.length) {
+    return "memoryPhotoIds bị trùng.";
+  }
+  for (const id of value.memoryPhotoIds) {
+    if (!photoIds.has(id)) return `memoryPhotoIds có ảnh không tồn tại: ${id}.`;
+  }
+  if (value.photos.filter((photo) => photo.pair).length !== value.memoryPhotoIds.length) {
+    return "Ảnh pair phải đúng bằng memoryPhotoIds.";
   }
   if (!Array.isArray(value.quiz) || value.quiz.length < 1) return "content.json thiếu câu đố.";
   for (const question of value.quiz) {
@@ -87,9 +98,22 @@ export function validateContent(value: Content): string | null {
   if (!value.startDate || Number.isNaN(Date.parse(value.startDate))) {
     return "startDate không phải ngày hợp lệ.";
   }
-  const startDay = value.startDate.slice(0, 10);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value.firstMeeting) || Number.isNaN(Date.parse(`${value.firstMeeting}T00:00:00+07:00`))) {
+    return "firstMeeting không phải ngày hợp lệ.";
+  }
+  if (value.birth?.timeConfirmed !== true) return "birth.timeConfirmed cần là true.";
+  if (!value.birth?.when?.includes("T16:45:00+07:00")) return "birth.when cần giữ 16:45 UTC+7.";
   for (const era of value.eras) {
-    if (era.date < startDay) return `Thời "${era.id}" bắt đầu trước ngày bên nhau.`;
+    if (era.kind !== "her-life" && era.kind !== "first-meeting" && era.kind !== "together") {
+      return `Chương "${era.id}" cần kind her-life, first-meeting hoặc together.`;
+    }
+    if (
+      era.date != null &&
+      era.date !== "" &&
+      (!/^\d{4}-\d{2}-\d{2}$/.test(era.date) || Number.isNaN(Date.parse(`${era.date}T00:00:00+07:00`)))
+    ) {
+      return `Chương "${era.id}" có ngày không hợp lệ.`;
+    }
     for (const photo of era.photos) {
       if (photo.date && !/^\d{4}-\d{2}-\d{2}$/.test(photo.date)) {
         return `Ảnh "${photo.id}" có ngày không hợp lệ.`;
@@ -200,6 +224,9 @@ export function validateContent(value: Content): string | null {
   if (!value.finalLetter?.body?.vi?.trim() || !value.finalLetter?.body?.en?.trim()) {
     return "content.json thiếu lá thư cuối (cả vi và en).";
   }
+  if (value.finalLetter.date !== "2026-11-18") {
+    return "finalLetter.date phải là 2026-11-18.";
+  }
   if (!value.constellations) return "content.json thiếu tên chòm sao.";
   for (const id of CONSTELLATION_IDS) {
     const name = value.constellations[id];
@@ -226,6 +253,10 @@ export function validateContent(value: Content): string | null {
   for (const id of FLOW) {
     const hint = value.flow?.hints?.[id];
     if (!hint?.vi?.trim() || !hint?.en?.trim()) return `content.json thiếu flow.hints.${id}.`;
+  }
+  for (const chapter of STORY_CHAPTERS) {
+    const title = value.storyChapters?.[chapter.id];
+    if (!title?.vi?.trim() || !title?.en?.trim()) return `content.json thiếu storyChapters.${chapter.id}.`;
   }
   const copyProblem = collectCopyProblems(value)[0];
   return copyProblem ?? null;

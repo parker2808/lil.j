@@ -13,18 +13,18 @@ function escapeHtml(value: string): string {
   });
 }
 
-/** First paint uses the English title and description from content.json. */
+/** First paint uses the Vietnamese title and description from content.json. */
 function contentMeta(): Plugin {
   const file = fileURLToPath(new URL("./content.json", import.meta.url));
   return {
     name: "content-meta",
     transformIndexHtml(html) {
       const content = JSON.parse(readFileSync(file, "utf8")) as {
-        meta: { title: { en: string }; description: { en: string } };
+        meta: { title: { vi: string }; description: { vi: string } };
       };
       return html
-        .replaceAll("__CONTENT_TITLE__", escapeHtml(content.meta.title.en))
-        .replaceAll("__CONTENT_DESCRIPTION__", escapeHtml(content.meta.description.en));
+        .replaceAll("__CONTENT_TITLE__", escapeHtml(content.meta.title.vi))
+        .replaceAll("__CONTENT_DESCRIPTION__", escapeHtml(content.meta.description.vi));
     },
   };
 }

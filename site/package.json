@@ -9,7 +9,10 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "placeholders": "node scripts/make-placeholders.mjs",
-    "overlap": "npm run build && node scripts/overlap-check.mjs"
+    "overlap": "npm run build && node scripts/overlap-check.mjs",
+    "progress-check": "node scripts/progress-check.mjs",
+    "content-check": "node scripts/content-check.mjs",
+    "story-v2-check": "npm run build && node scripts/story-v2-check.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "^5.3.0",

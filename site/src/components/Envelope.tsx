@@ -23,10 +23,14 @@ export function Envelope({ open, onOpen }: EnvelopeProps) {
     if (shown || cracking) return;
     if (reduced) {
       setRevealed(true);
+      onOpen();
       return;
     }
     setCracking(true);
-    timer.current = window.setTimeout(() => setRevealed(true), 480);
+    timer.current = window.setTimeout(() => {
+      setRevealed(true);
+      onOpen();
+    }, 480);
   }
 
   return (
@@ -39,11 +43,6 @@ export function Envelope({ open, onOpen }: EnvelopeProps) {
           <div className="env-paper">
             <p className="greet">{t(content.envelope.greeting)}</p>
             <p>{t(content.envelope.body)}</p>
-            {!open && (
-              <button type="button" className="btn btn-gold env-accept" onClick={onOpen}>
-                {t(content.envelope.enter)}
-              </button>
-            )}
           </div>
         )}
         <div className="env-pocket">

@@ -82,6 +82,9 @@ function progressFor(stepIndex, done) {
     for (const question of content.quiz) quiz[question.id] = question.answer;
   }
   const candles = Math.max(1, Math.min(8, content.cake.candles || 5));
+  const frontier = done ? FLOW.length - 1 : stepIndex;
+  const accessibleSteps = [];
+  for (let index = 0; index <= frontier; index += 1) accessibleSteps.push(FLOW[index]);
   return {
     gateUnlocked: done || stepIndex > 0,
     envelopeOpened: done,
@@ -97,7 +100,10 @@ function progressFor(stepIndex, done) {
     openWhen: done ? Object.fromEntries(content.openWhen.map((letter) => [letter.id, "2026-10-26"])) : {},
     muted: true,
     step: stepIndex,
-    unlocked: FLOW.length - 1,
+    unlocked: frontier,
+    accessibleSteps,
+    skippedSteps: [],
+    wishPrivate: false,
     skyDone: done,
     birthSeen: done,
     counterSeen: done,
@@ -595,6 +601,17 @@ async function extras(page, id, label) {
     await page.locator(".constellation-hit").first().click({ timeout: 3000 });
     await page.waitForSelector(".chart-float", { timeout: 2000 }).catch(() => {});
     found.push(...(await scrollAudit(page, `${label} chart-label`)));
+  }
+  if (id === "memory" && (await page.locator(".journey-open").count()) > 0) {
+    const before = await page.evaluate(() => JSON.parse(localStorage.getItem("lilj.progress.v1")).accessibleSteps);
+    await page.locator(".journey-open").click();
+    await page.waitForSelector("#journey-menu", { timeout: 2000 });
+    await page.keyboard.press("Escape");
+    await page.waitForSelector("#journey-menu", { state: "detached", timeout: 2000 });
+    const after = await page.evaluate(() => JSON.parse(localStorage.getItem("lilj.progress.v1")).accessibleSteps);
+    if (JSON.stringify(before) !== JSON.stringify(after)) {
+      found.push({ kind: "journey-unlock", detail: "the menu changed which scenes are open", where: label });
+    }
   }
   if (id === "letters" && (await page.locator(".seal-card").count()) > 0) {
     await page.locator(".seal-card").first().click();

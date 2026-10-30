@@ -8,7 +8,9 @@ import { Reveal } from "./Reveal.tsx";
 
 type WishSkyProps = {
   wishes: Wish[];
+  wishPrivate: boolean;
   onSend: (text: string) => void;
+  onKeepPrivate: () => void;
 };
 
 type Particle = {
@@ -36,7 +38,7 @@ const HUES = ["#fff7fb", "#f7c6dc", "#e7d4ff", "#c9e2f8", "#ffd0e4", "#f8d4c6"];
 let flownId: string | null = null;
 let seeded = false;
 
-export function WishSky({ wishes, onSend }: WishSkyProps) {
+export function WishSky({ wishes, wishPrivate, onSend, onKeepPrivate }: WishSkyProps) {
   const { t } = useI18n();
   const reduced = useReducedMotion();
   const [value, setValue] = useState("");
@@ -317,6 +319,11 @@ export function WishSky({ wishes, onSend }: WishSkyProps) {
             );
           })}
         </div>
+        {!wishPrivate && (
+          <button type="button" className="btn btn-quiet later wish-keep" onClick={onKeepPrivate}>
+            {t(content.wish.keep)}
+          </button>
+        )}
         <form className={shaking ? "wish-form shake" : "wish-form"} onSubmit={submit} ref={formRef}>
           <div className="wish-field">
             <label>

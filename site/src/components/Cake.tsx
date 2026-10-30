@@ -79,7 +79,11 @@ export function Cake({ progress, update }: CakeProps) {
           audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: true },
           video: false,
         });
-        if (stopped) return;
+        if (stopped) {
+          stream.getTracks().forEach((track) => track.stop());
+          stream = null;
+          return;
+        }
         const Ctx =
           window.AudioContext ??
           (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;

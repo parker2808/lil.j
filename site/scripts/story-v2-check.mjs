@@ -498,6 +498,8 @@ async function locks(browser) {
         const fixed = stamp;
         Date.now = () => fixed;
       }, now);
+      await context.route((url) => url.searchParams.has("clock"), (route) =>
+        route.fulfill({ status: 200, headers: { date: new Date(now).toUTCString() }, body: "" }));
     }
     const page = await context.newPage();
     await page.goto(base, { waitUntil: "domcontentloaded" });

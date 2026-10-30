@@ -14,11 +14,13 @@ import { StoryChapterLabel } from "./components/StoryChapterLabel.tsx";
 import { StickyNext } from "./components/StickyNext.tsx";
 import { StickyNextContext, type StickyAction } from "./components/sticky-next-context.ts";
 import { Universe } from "./components/Universe.tsx";
+import { devQuery } from "./lib/dev-mode.ts";
 import { FLOW, clampStep, mayContinue, stepDone, type StepId } from "./lib/flow.ts";
 import { useI18n } from "./lib/locale-context.ts";
 import { bindMusicVisibility, bindPlaylist, musicIsPlaying, playBirthday, restoreMusicVolume, resumePlaylist, startMusic, subscribeMusic } from "./lib/music.ts";
 import { bindViewport } from "./lib/viewport.ts";
 import { isBeforeUnlock } from "./lib/lock.ts";
+import { serverNow, syncServerClock } from "./lib/server-clock.ts";
 import { clearProgress, moveTo, restartedProgress } from "./lib/progress.ts";
 import { fillTemplate } from "./lib/pure.ts";
 import { useReducedMotion } from "./lib/useReducedMotion.ts";
@@ -62,12 +64,29 @@ export function App() {
   const [askReset, setAskReset] = useState(false);
   const [{ dev, forceLock, forceCrash }] = useState(() => {
     const params = new URLSearchParams(window.location.search);
-    const devOn = params.get("dev") === "1";
+    const devOn = devQuery();
     return { dev: devOn, forceLock: devOn && params.get("lock") === "1", forceCrash: devOn && params.get("crash") === "1" };
   });
-  const [released, setReleased] = useState(
-    () => (dev && !forceLock) || !isBeforeUnlock(content.lock?.unlockAt),
-  );
+  const [released, setReleased] = useState(() => dev && !forceLock);
+  // A device that already reads past the birthday shows nothing until the server agrees, instead of flashing the lock.
+  const [clockAnswered, setClockAnswered] = useState(() => isBeforeUnlock(content.lock?.unlockAt));
+  useEffect(() => {
+    if (released) return;
+    let stopped = false;
+    let retry = 0;
+    const check = async () => {
+      const synced = await syncServerClock();
+      if (stopped) return;
+      setClockAnswered(true);
+      if (!synced) retry = window.setTimeout(check, 5000);
+      else if (!isBeforeUnlock(content.lock?.unlockAt, serverNow())) setReleased(true);
+    };
+    void check();
+    return () => {
+      stopped = true;
+      window.clearTimeout(retry);
+    };
+  }, [released]);
   if (forceCrash) throw new Error("dev crash preview");
   const headerRef = useRef<HTMLElement>(null);
   const footerRef = useRef<HTMLElement>(null);
@@ -462,7 +481,7 @@ export function App() {
         <div className="stage">
           <AnimatePresence mode="wait">
             {!released ? (
-              <motion.div
+              clockAnswered && <motion.div
                 key="lock"
                 className="stage-pane"
                 data-step={stepId}

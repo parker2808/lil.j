@@ -133,7 +133,11 @@ Deploy is a static Vite build. From this repository, the root [`vercel.json`](ve
 
 Add `?dev=1` to skip the countdown and to show a numbered row in the header. Each number jumps straight to that step. The × at the end clears saved progress and reloads. The flag is read from the query string only. It is not written to `localStorage`.
 
+`?dev=1` works only on a build made with the Vercel variable `VITE_DEV_MODE=true` (and always under `npm run dev`). Unset or any other value ignores it, so a deploy without the variable shows what a visitor sees. Changing the variable needs a redeploy.
+
 `?dev=1&lock=1` keeps the countdown up before the birthday. The jump row stays hidden until the real unlock instant, so the lock can be reviewed on its own.
+
+The countdown and the unlock follow the server's clock: the site reads the `Date` header of a `HEAD` request to itself, so setting the phone's date forward does not open it. Until that answer arrives, a phone that already reads past the birthday shows an empty stage instead of the lock, and the request retries every 5 seconds if it fails. The story itself still ships in the JavaScript bundle, so this stops a changed clock, not someone reading the code.
 
 Saved progress is `lilj.progress.v1`: the current step, the furthest step unlocked, and the flags for everything the visitor has already done. An older save is mapped onto the current path by step name. Deleting the key starts the story over and leaves the language choice alone.
 

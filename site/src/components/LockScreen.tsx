@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { content } from "../content.ts";
-import { countdownParts, msUntilUnlock } from "../lib/lock.ts";
+import { countdownParts, isBeforeUnlock, msUntilUnlock } from "../lib/lock.ts";
+import { serverClockSynced, serverNow } from "../lib/server-clock.ts";
 import { useI18n } from "../lib/locale-context.ts";
 import { useReducedMotion } from "../lib/useReducedMotion.ts";
 import { Reveal } from "./Reveal.tsx";
@@ -90,7 +91,7 @@ export function LockScreen({ onOpen }: LockScreenProps) {
   const { t } = useI18n();
   const reduced = useReducedMotion();
   const openRef = useRef(onOpen);
-  const [now, setNow] = useState(() => Date.now());
+  const [now, setNow] = useState(() => serverNow());
 
   useEffect(() => {
     openRef.current = onOpen;
@@ -98,12 +99,12 @@ export function LockScreen({ onOpen }: LockScreenProps) {
 
   useEffect(() => {
     const finish = () => {
-      const next = Date.now();
+      const next = serverNow();
       setNow(next);
-      if (!content.lock?.unlockAt || Date.parse(content.lock.unlockAt) <= next) openRef.current();
+      if (serverClockSynced() && !isBeforeUnlock(content.lock?.unlockAt, next)) openRef.current();
     };
     const interval = window.setInterval(finish, 1000);
-    const wait = msUntilUnlock(content.lock.unlockAt);
+    const wait = msUntilUnlock(content.lock.unlockAt, serverNow());
     const timeout = wait == null ? 0 : window.setTimeout(finish, wait);
     return () => {
       window.clearInterval(interval);

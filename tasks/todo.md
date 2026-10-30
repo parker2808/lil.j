@@ -145,3 +145,17 @@ Parker: env `true` thì bật công tắc (em chọn gửi lên Sheet hay giữ 
 - `wish-flag-check` (cờ `false`): VI/EN ở 430×932 và 430×739, không có công tắc, câu `wish.noteShared` hiện, ghi chú không đè ô nhập, ô nhập không đè footer, điều ước mới gửi đúng một request, điều ước riêng cũ không bị gửi và vẫn `private`. Ảnh: `docs/story-v2-qa/wish-private-flag/`.
 - Cờ mặc định: `story-v2-check` (gồm điều ước riêng không bị gửi) và `sheet-ui-check` vẫn qua.
 - lint (6 cảnh báo cũ), selfcheck, content-check, progress-check, 17/17 unit test.
+
+## Cờ dev mode và khóa theo giờ server (2026-10-31, nhánh `feat/dev-mode-flag`)
+
+Parker: thêm biến Vercel để bật dev mode, không đặt là tắt; khóa đếm ngược lấy giờ server để chỉnh ngày giờ máy không mở được. Không cần Parker review, CI xanh thì merge.
+
+- [x] `src/lib/dev-mode.ts`: `?dev=1` chỉ có tác dụng khi build có `VITE_DEV_MODE=true` (hoặc `npm run dev`). `App.tsx` và `sheet-sync.ts` dùng chung.
+- [x] `src/lib/server-clock.ts`: đọc header `Date` của request `HEAD` tới chính site. `App.tsx` chỉ mở khi server xác nhận đã qua giờ mở; `LockScreen` đếm theo giờ server và chỉ tự mở khi đã có giờ server. Máy đã đọc qua ngày sinh nhật thì sân khấu trống tới khi server trả lời (không nháy màn khóa). Lỗi mạng thì thử lại mỗi 5 giây.
+- [x] Các kiểm tra mở `?dev=1` build với `VITE_DEV_MODE=true`; thêm `npm run screenshots`; test khóa trong `story-v2-check` giả cả giờ server.
+- [x] `npm run lock-check` (build không có cờ, CI `journey`): máy chỉnh qua ngày sinh nhật mà server chưa tới thì vẫn khóa; máy chậm mà server đã qua thì mở; `?dev=1` không hiện dãy số, không đánh dấu "test".
+- [x] README, `site/README.md`, `tools/sheet-sync/README.md`, `AGENT_RULES.md`, PROJECT_CONTEXT §5, §12, §13.
+
+### Kết quả
+- `lock-check` qua. Kiểm tra ngược: build có `VITE_DEV_MODE=true` thì `lock-check` báo lỗi; bản chỉ dùng giờ máy thì `lock-check` báo "lock opened".
+- `story-v2-check` ok, `sheet-ui-check`, `wish-flag-check`, `screenshots`, overlap phần 1/6 (CI chạy đủ 6 phần), lint (6 cảnh báo cũ), selfcheck, content-check, progress-check, 17/17 unit test.

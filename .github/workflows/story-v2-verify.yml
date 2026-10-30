@@ -35,7 +35,7 @@ jobs:
         run: set -o pipefail; node --test scripts/*.test.mjs 2>&1 | tee qa-logs/unit.txt
       - name: Capture all 15 screens at iPhone 430x932
         if: always()
-        run: set -o pipefail; node scripts/story-v2-screenshots.mjs 2>&1 | tee qa-logs/screenshots.txt
+        run: set -o pipefail; npm run screenshots 2>&1 | tee qa-logs/screenshots.txt
       - name: Upload visual QA screenshots
         if: always()
         uses: actions/upload-artifact@v4
@@ -61,6 +61,8 @@ jobs:
         run: set -o pipefail; npm run story-v2-check 2>&1 | tee qa-logs/journey.txt
       - name: Wish with the private switch turned off (VITE_WISH_PRIVATE_SWITCH=false)
         run: set -o pipefail; npm run wish-flag-check 2>&1 | tee qa-logs/wish-flag.txt
+      - name: Birthday lock follows server time; ?dev=1 ignored without VITE_DEV_MODE
+        run: set -o pipefail; npm run lock-check 2>&1 | tee qa-logs/lock.txt
       - name: Upload test logs for diagnosis
         if: always()
         uses: actions/upload-artifact@v4

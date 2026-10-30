@@ -200,7 +200,9 @@ assert.equal(
 const eraPhotos = content.eras.flatMap((era) => era.photos);
 assert.equal(content.eras.length, 13);
 assert.equal(eraPhotos.length, 162);
-assert.deepEqual(content.memoryPhotoIds, []);
+assert.equal(content.memoryPhotoIds.length, 6);
+assert.equal(new Set(content.memoryPhotoIds).size, 6);
+assert.ok(content.memoryPhotoIds.every((id) => eraPhotos.some((photo) => photo.id === id)));
 let filledCaptions = 0;
 for (const era of content.eras) {
   assert.equal(era.date, undefined);
@@ -266,7 +268,7 @@ assert.deepEqual(
   ],
 );
 assert.equal(content.scratches.length, 6);
-assert.equal(content.firstMeeting, "2022-11-18");
+assert.equal(content.firstMeeting, null);
 assert.equal(content.startDate, "2026-07-01T00:00:00+07:00");
 assert.equal(content.finalLetter.date, "2026-11-18");
 assert.equal(content.finalLetter.signature.vi, "Parker");

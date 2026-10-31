@@ -1,0 +1,9 @@
+# Token savings: keep large, generated or binary files out of Cursor Agent context.
+# .gitignore, .env files and lockfiles are already ignored by Cursor.
+graphify-out/*
+!graphify-out/GRAPH_REPORT.md
+**/node_modules/
+**/dist/
+site/public/music/
+site/public/**/*.mp3
+site/public/**/*.mp4

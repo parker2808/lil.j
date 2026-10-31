@@ -141,7 +141,8 @@ Parker's decision (2026-10-30): anything not shown in the 15 Story V2 scenes (§
 
 ## 13. Changelog
 
-- 2026-10-31: Added Graphify code map (`graphify-out/GRAPH_REPORT.md` committed, rest of `graphify-out/` gitignored; built with `--code-only`, no model calls) and shortened `AGENT_RULES.md` to ~30 lines pointing to the shared common rules and TOKEN_FLOW in `<private-memory-repo>`. Pending Parker's review.
+- 2026-10-31 — Refreshed Graphify code map (`graphify update .`, code-only) from current `main`.
+- 2026-10-31: Added Graphify code map (`graphify-out/GRAPH_REPORT.md` committed, rest of `graphify-out/` gitignored; built with `--code-only`, no model calls) and shortened `AGENT_RULES.md` to ~30 lines pointing to the shared common rules and TOKEN_FLOW in `<private-memory-repo>`. Merged (PR #38).
 - 2026-10-31 — Vercel flag `VITE_DEV_MODE`: `?dev=1` works only when it is `true` (unset is off). The birthday lock and countdown follow the server's `Date` header instead of the device clock. New `npm run lock-check` (in CI `journey`) and `npm run screenshots`; browser checks build with `VITE_DEV_MODE=true`; `story-v2-check` lock test fakes the server time too.
 - 2026-10-31 — Vercel flag `VITE_WISH_PRIVATE_SWITCH` for scene 11: `false` hides the keep-private switch and shares every new wish (note `wish.noteShared`); old private wishes stay private. New `npm run wish-flag-check` (in CI `journey`), README steps for Vercel.
 - 2026-10-31 — `AGENT_RULES.md` CI workflows: any CI change must follow the shared front-end CI/CD lessons in Parker's memory repo and keep the current design (parallel jobs, sharded browser checks, shared setup action, npm cache, stale-PR cancel, `timeout-minutes`, logs/screenshots uploaded with `if: always()`). Docs only; workflows unchanged.

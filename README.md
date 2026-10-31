@@ -107,6 +107,14 @@ tools/fb-photo-downloader/  optional local helper for saving photos
 
 Vite 8 needs Node `^20.19.0` or `>=22.12.0`.
 
+Before committing from this worktree, enable the repository's pre-commit hook:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+The hook blocks commits on `main` and `master` and scans staged changes with Gitleaks when it is installed. CI scans pull requests and pushes to `main`.
+
 ```bash
 cd site
 npm install

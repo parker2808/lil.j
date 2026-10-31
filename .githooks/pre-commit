@@ -1,0 +1,16 @@
+#!/bin/sh
+set -eu
+
+branch=$(git symbolic-ref --quiet --short HEAD || true)
+case "$branch" in
+  main|master)
+    echo "Commit blocked: work on a feature branch, not $branch." >&2
+    exit 1
+    ;;
+esac
+
+if command -v gitleaks >/dev/null 2>&1; then
+  gitleaks protect --staged --redact
+else
+  echo "Warning: gitleaks is not installed; skipping staged secret scan." >&2
+fi

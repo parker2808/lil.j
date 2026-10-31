@@ -144,6 +144,7 @@ Parker's decision (2026-10-30): anything not shown in the 15 Story V2 scenes (§
 
 Older and full entries: `docs/CHANGELOG_ARCHIVE.md` (read only when needed).
 
+- 2026-11-01 — Token savings: `.cursorignore` and AGENTS.md rules to skip Graphify on small tasks and avoid reading large files.
 - 2026-11-01 — Trimmed this changelog to the latest 5 entries; full history moved to `docs/CHANGELOG_ARCHIVE.md`.
 - 2026-10-31 — Agent rules consolidated in `AGENTS.md`, `docs/LESSONS.md`, Gitleaks pre-commit hook and CI secret scan.
 - 2026-10-31 — Graphify code map added (PR #38) and refreshed from `main`.

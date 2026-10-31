@@ -5,7 +5,8 @@ Read `PROJECT_CONTEXT.md` in full before doing anything. Read `docs/LESSONS.md` 
 ## Start and scope
 - Work in a T3 worktree on a task branch, never in the main checkout or on `main`/`master`. One task = one branch/worktree = one PR.
 - Check `git status` and the diff first. Preserve other agents' work; edit only files and keys in your task's scope.
-- Read `graphify-out/GRAPH_REPORT.md`; query exact names with `graphify explain` or `graphify path` when useful. Open only needed source ranges; refresh with `graphify update .` after code changes.
+- Small tasks: skip Graphify; find code with `rg` and open only needed ranges. Big tasks: read `graphify-out/GRAPH_REPORT.md`, query `graphify explain`/`graphify path`, refresh with `graphify update .` after code changes.
+- Token budget: never read lockfiles, `site/public/**` media or `site/content.json` in full; use `rg`/line ranges and `tail -n 80` for long command output. See `.cursorignore`.
 - Small tasks can proceed directly. For big tasks, write a plan (20 lines or fewer) and a spec in `docs/specs/` before coding; work in checked steps, then hand off the plan and diff for review.
 - Use `~/ai-tools/t3-run.sh` watchdog for agent work so model failures or quota problems are reported.
 - Do not add dependencies or merge outside the agreed plan. Record new decisions from Parker in `PROJECT_CONTEXT.md`; ask when facts are missing.

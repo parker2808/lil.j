@@ -143,6 +143,8 @@ Parker's decision (2026-10-30): anything not shown in the 15 Story V2 scenes (§
 
 ## 13. Changelog
 
+- 2026-11-18: Document Parker’s task-scoped full decision authority in AGENTS.md and link it from the README; all existing gates remain mandatory. No runtime change.
+
 Older and full entries: `docs/CHANGELOG_ARCHIVE.md` (read only when needed).
 
 - 2026-11-18: Make the Story V2 journey lock assertion deterministic by checking one day before the configured unlock with a fixed browser and mocked server clock; preserve the at/after checks.

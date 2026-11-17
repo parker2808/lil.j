@@ -151,6 +151,10 @@ The countdown and the unlock follow the server's clock: the site reads the `Date
 
 Saved progress is `lilj.progress.v1`: the current step, the furthest step unlocked, and the flags for everything the visitor has already done. An older save is mapped onto the current path by step name. Deleting the key starts the story over and leaves the language choice alone.
 
+## Agent rules
+
+The task-scoped [full decision authority rule](./AGENTS.md#full-decision-authority) applies only when Parker assigns it; all existing review, privacy, CI, and deployment gates still apply.
+
 ## Editing the story
 
 Change [`site/content.json`](site/content.json), then refresh the dev server or rebuild. Components read that file. They do not hold the copy.

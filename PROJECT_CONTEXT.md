@@ -116,6 +116,8 @@ Rules (docs/story-v2/implementation.md): memory/scratch/letters have a "later" a
 7. **Skip deferred items (§12a).** Don't work on anything outside the 15 Story V2 scenes unless Parker asks (decision 2026-10-30).
 
 ## 12. Current status and open items (as of 2026-10-31)
+- 2026-11-18: Full decision authority documentation PR is open; no merge or deployment.
+
 - **Git guardrails and canonical agent rules (branch `chore/guardrails-agents-md`, 2026-10-31):** `AGENTS.md` consolidates the rules; `AGENT_RULES.md` points to it. `docs/LESSONS.md` records three workflow lessons. A documented pre-commit hook blocks `main`/`master` commits and scans staged changes when Gitleaks is installed; CI runs Gitleaks on PRs and `main` pushes.
 - **Dev mode flag and server-time lock (branch `feat/dev-mode-flag`, 2026-10-31):** Parker asked for a Vercel variable to enable dev mode, unset meaning off, and for the lock to use server time so a changed device date cannot open it. After merge `?dev=1` stops working on Production until `VITE_DEV_MODE=true` is set there; Parker should set it on Preview for testing.
 - **Wish private-switch flag (PR #36, merged 2026-10-31):** Parker asked for a Vercel flag: `true` keeps "Giữ điều ước cho riêng em", `false` sends every wish by default. Unset behaves like `true`. Copy `wish.noteShared` shown only when the flag is `false`.
@@ -141,6 +143,8 @@ Parker's decision (2026-10-30): anything not shown in the 15 Story V2 scenes (§
 - Frozen old flows `FLOW_V1`–`FLOW_V3`: kept only for progress migration. Don't edit them.
 
 ## 13. Changelog
+
+- 2026-11-18: Document Parker’s task-scoped full decision authority in AGENTS.md; all existing gates remain mandatory. No runtime change.
 
 Older and full entries: `docs/CHANGELOG_ARCHIVE.md` (read only when needed).
 

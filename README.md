@@ -131,6 +131,8 @@ node scripts/selfcheck.mjs
 npm run overlap    # production build, then the layout matrix
 ```
 
+`npm run story-v2-check` verifies the complete browser journey, including the countdown one day before the configured unlock and the gate at and after unlock. It fixes both the browser and mocked server clocks for these checks, so they remain valid after the birthday.
+
 `npm run overlap` needs Chrome (`google-chrome`, `google-chrome-stable`, `chromium`, or `CHROME_PATH`). It walks every step in Vietnamese and English, with the dev jump row on and off, and with each step both finished and still waiting. Viewports run from a 320px phone through iPad sizes to a 1920×1080 desktop, including 430×932 and the shorter 430×739 iPhone 14 Pro Max frame, plus a phone toolbar that steals 80px of height. The command fails if text or controls collide with the header or footer, if a line is clipped, or if the page overflows sideways.
 
 Useful limits, all optional: `OVERLAP_VIEWPORTS`, `OVERLAP_LOCALES`, `OVERLAP_STEPS`, `OVERLAP_DEV`, `OVERLAP_STATES`, `OVERLAP_URL`.

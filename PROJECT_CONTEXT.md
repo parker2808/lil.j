@@ -116,6 +116,7 @@ Rules (docs/story-v2/implementation.md): memory/scratch/letters have a "later" a
 7. **Skip deferred items (§12a).** Don't work on anything outside the 15 Story V2 scenes unless Parker asks (decision 2026-10-30).
 
 ## 12. Current status and open items (as of 2026-10-31)
+- 2026-11-18: The Story V2 journey check now fixes both clocks for its pre-unlock assertion; browser behavior and the at/after-unlock assertions are unchanged.
 - **Git guardrails and canonical agent rules (branch `chore/guardrails-agents-md`, 2026-10-31):** `AGENTS.md` consolidates the rules; `AGENT_RULES.md` points to it. `docs/LESSONS.md` records three workflow lessons. A documented pre-commit hook blocks `main`/`master` commits and scans staged changes when Gitleaks is installed; CI runs Gitleaks on PRs and `main` pushes.
 - **Dev mode flag and server-time lock (branch `feat/dev-mode-flag`, 2026-10-31):** Parker asked for a Vercel variable to enable dev mode, unset meaning off, and for the lock to use server time so a changed device date cannot open it. After merge `?dev=1` stops working on Production until `VITE_DEV_MODE=true` is set there; Parker should set it on Preview for testing.
 - **Wish private-switch flag (PR #36, merged 2026-10-31):** Parker asked for a Vercel flag: `true` keeps "Giữ điều ước cho riêng em", `false` sends every wish by default. Unset behaves like `true`. Copy `wish.noteShared` shown only when the flag is `false`.
@@ -144,6 +145,7 @@ Parker's decision (2026-10-30): anything not shown in the 15 Story V2 scenes (§
 
 Older and full entries: `docs/CHANGELOG_ARCHIVE.md` (read only when needed).
 
+- 2026-11-18: Make the Story V2 journey lock assertion deterministic by checking one day before the configured unlock with a fixed browser and mocked server clock; preserve the at/after checks.
 - 2026-11-01: Weekly Graphify refresh of `graphify-out/GRAPH_REPORT.md` (code-only, no model calls).
 - 2026-11-01 — Token savings: `.cursorignore` and AGENTS.md rules to skip Graphify on small tasks and avoid reading large files.
 - 2026-11-01 — Trimmed this changelog to the latest 5 entries; full history moved to `docs/CHANGELOG_ARCHIVE.md`.

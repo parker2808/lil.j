@@ -510,7 +510,7 @@ async function locks(browser) {
     await context.close();
     return { step, lock };
   }
-  const before = await visit(null);
+  const before = await visit(unlockAt - 86_400_000);
   if (before.lock !== 1) fail("lock-before", "countdown is missing");
   const at = await visit(unlockAt);
   if (at.lock !== 0 || at.step !== "gate") fail("lock-at", JSON.stringify(at));

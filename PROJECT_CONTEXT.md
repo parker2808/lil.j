@@ -155,3 +155,6 @@ Older and full entries: `docs/CHANGELOG_ARCHIVE.md` (read only when needed).
 - 2026-10-31 — Graphify code map added (PR #38) and refreshed from `main`.
 - 2026-10-31 — Vercel flag `VITE_DEV_MODE` gates `?dev=1`; birthday lock follows server time; `lock-check` and `screenshots` scripts.
 - 2026-10-31 — Vercel flag `VITE_WISH_PRIVATE_SWITCH` for scene 11 (`false` shares every new wish); `wish-flag-check` in CI.
+
+## Changelog
+- 2026-11-22: Graphify refresh (auto weekly, parker bot).
